@@ -1,0 +1,1 @@
+In this folder belong all diagrams that explain the system's behaviour in png format.

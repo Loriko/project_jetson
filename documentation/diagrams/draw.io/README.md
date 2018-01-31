@@ -1,0 +1,1 @@
+In this folder belong the draw.io xml source files used to generate diagrams used to explain the system's behaviour.
