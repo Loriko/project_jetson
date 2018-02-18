@@ -10,7 +10,13 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class DataMessage
     {
-        public PerSecondStats[] RealTimeStats { get; }
-        public int MessageSeconds { get; }
+        public DataMessage(int sizeInSeconds)
+        {
+            this.MessageSizeSeconds = sizeInSeconds;
+            this.RealTimeStats = new PerSecondStats[sizeInSeconds];
+        }
+
+        public PerSecondStats[] RealTimeStats { get; set; }
+        public int? MessageSizeSeconds { get; set; }
     }
 }

@@ -7,6 +7,9 @@ using WebAPI.Object_Classes;
 
 namespace WebAPI.Controllers
 {
+    /// <summary>
+    /// Controller to receive data storage requests from Capture system.
+    /// </summary>
     [Route("api/[controller]")]
     public class DataReceivalController : ControllerBase
     {

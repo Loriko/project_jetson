@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Object_Classes;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebAPI.Controllers
 {
@@ -22,17 +21,38 @@ namespace WebAPI.Controllers
         /// </summary>
         // GET statistics between a specified interval. (called constantly for real-time graph and for on-demand requests.)
         [HttpGet]
-        public DataMessage Get ([FromBody] TimeInterval timeInterval)
+        public IActionResult Get ([FromBody] TimeInterval timeInterval)
         {
-            // Validate correct interval, return error if not valid.
+            if (timeInterval.isValidInterval() == false)
+                return BadRequest();
+
 
             // Query database for all results between interval and group into a DataMessage object.
+
+            // obtain count of number of results
 
             // Return data message object.
 
             // Not sure if every single second is required by front end...
 
-            return (null);
+            // Create DataMessage and fill in attributes.
+
+
+
+            // Convert to JSON response
+
+            #region Test code
+            PerSecondStats testSec = new PerSecondStats(2018, 2, 18, 10, 48, 55,6);
+
+            DataMessage test = new DataMessage(1);
+
+            test.RealTimeStats[0] = testSec;
+
+            JsonResult jsonStats = new JsonResult(test);
+
+            return (jsonStats);
+
+            #endregion
         }
 
     }
