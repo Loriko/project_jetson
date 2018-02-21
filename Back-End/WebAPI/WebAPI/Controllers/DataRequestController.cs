@@ -42,7 +42,7 @@ namespace WebAPI.Controllers
             // Convert to JSON response
 
             #region Test code
-            PerSecondStats testSec = new PerSecondStats(2018, 2, 18, 10, 48, 55,6);
+            PerSecondStats testSec = new PerSecondStats(1, 2018, 2, 18, 10, 48, 55,6);
 
             DataMessage test = new DataMessage(1);
 
