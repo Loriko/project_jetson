@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using WebAPI.Models;
 
 namespace WebAPI
 {
@@ -24,6 +25,9 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            // Allow the use of the MySQL Database as a service in this project.
+            services.Add(new ServiceDescriptor(typeof(StatisticsDatabaseContext), new StatisticsDatabaseContext(Configuration.GetConnectionString("DefaultConnection"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
