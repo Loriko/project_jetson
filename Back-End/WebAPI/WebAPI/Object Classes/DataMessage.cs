@@ -17,6 +17,8 @@ namespace WebAPI.Object_Classes
         }
 
         public PerSecondStats[] RealTimeStats { get; set; }
+
+        // Completely optional parameter for clients to provide, however when API returns this type of object, attribute will be filled up for simplicity for clients. 
         public int? MessageSizeSeconds { get; set; }
     }
 }
