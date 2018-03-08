@@ -36,7 +36,7 @@ namespace WebAPI.Object_Classes
         {
             #region Verify Start Attributes (lower bound of interval)
             // Start Year
-            if (this.StartYear < 2000 || this.StartYear > 9999)
+            if (this.StartYear < 1900 || this.StartYear > 9999)
                 return (false);
 
             //Start Month
@@ -85,7 +85,7 @@ namespace WebAPI.Object_Classes
 
             #region Verify End Attributes (upper bound of interval)
             // End Year
-            if (this.EndYear < 2000 || this.EndYear > 9999)
+            if (this.EndYear < 1900 || this.EndYear > 9999)
                 return (false);
 
             //End Month

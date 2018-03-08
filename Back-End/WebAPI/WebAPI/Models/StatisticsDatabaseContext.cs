@@ -28,7 +28,7 @@ namespace WebAPI.Models
 
         // The following methods are to be used by the Web API controllers.
 
-        #region Methods to retrieve data from the StatisticsDatabase
+        #region Methods to retrieve data from the StatisticsDatabase using a TimeInterval object
 
         /// <summary>
         /// Queries all PerSecondStats objects in the StatisticsDatabase, groups them in a single DataMessage which will be serialized to JSON and returned to Front-End Clients.
@@ -46,7 +46,7 @@ namespace WebAPI.Models
 
         #endregion
 
-        #region Methods to store data into the StatisticsDatabase
+        #region Methods to store data into the StatisticsDatabase from a DataMessage object
 
         /// <summary>
         /// Stores every individual PerSecondStat object from a DataMessage (received from Capture System) into the StatisticsDatabase.
@@ -77,5 +77,27 @@ namespace WebAPI.Models
         }
 
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="averagesOfDayRequest"></param>
+        /// <returns></returns>
+        public AveragesOfDayResponse getHourlyAveragesForDay(AveragesOfDayRequest averagesOfDayRequest)
+        {
+            AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse();
+
+            // Query the 24 Hourly Averages in the database.
+
+            // If result does not contain 24 rows, then recalculate all of them and store the averages in the database, at the same time place them in the return object. 
+            // If it does, put them in the averagesOfDayResponse object and return.
+
+            for (int z = 0; z < 24; z++)
+            {
+
+            }
+
+            return (averagesOfDayResponse);
+        }
     }
 }

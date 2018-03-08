@@ -42,5 +42,25 @@ namespace WebAPI.Controllers
             // Return HTTP OK and JSON-serialized DataMessage containint all requsted query results. 
             return Ok(jsonResponseMessage);
         }
+
+        [HttpGet]
+        public IActionResult Get([FromBody] AveragesOfDayRequest averagesOfDayRequest)
+        {
+            // Validate the date which the hourly averages are being requested for from Front-End API client.
+            if (averagesOfDayRequest.hasValidDay() == false)
+                return BadRequest(new JsonResult("Invalid date provided in request object."));
+
+            // Obtain database context.
+            StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
+
+            // Obtain DataMessage using special method of the database context class.
+            AveragesOfDayResponse responseMessage = context.getHourlyAveragesFromDay();
+
+            // Serialize DataMessage to JSON format.
+            JsonResult jsonResponseMessage = new JsonResult(responseMessage);
+
+            // Return HTTP OK and JSON-serialized DataMessage containint all requsted query results. 
+            return Ok(jsonResponseMessage);
+        }
     }
 }
