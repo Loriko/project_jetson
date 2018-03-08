@@ -12,6 +12,14 @@ namespace WebAPI.Models
     {
         // Database version of this object is the same as the defined object, but with a database context.
         private StatisticsDatabaseContext databaseContext;
-        public PerSecondStats perSecondStats;
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
+        public int Hour { get; set; }
+        public int Minute { get; set; }
+        public int Second { get; set; }
+        public int CameraID { get; set; }
+        public int NumTrackedPeople { get; set; }
+        public bool HasSavedImage { get; set; }
     }
 }

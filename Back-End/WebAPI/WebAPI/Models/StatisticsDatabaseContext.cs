@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using WebAPI.Object_Classes;
-
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
 namespace WebAPI.Models
 {
     public class StatisticsDatabaseContext
     {
+        #region Database Context
         // Connection String Attribute
         public string ConnectionString { get; set; }
 
@@ -25,28 +25,70 @@ namespace WebAPI.Models
         {
             return new MySqlConnection(ConnectionString);
         }
-
-        // The following methods are to be used by the Web API controllers.
-
-        #region Methods to retrieve data from the StatisticsDatabase using a TimeInterval object
-
-        /// <summary>
-        /// Queries all PerSecondStats objects in the StatisticsDatabase, groups them in a single DataMessage which will be serialized to JSON and returned to Front-End Clients.
-        /// </summary>
-        /// <param name="verifiedTimeInterval">Verification of the TimeInterval must be performed by the controller before calling this method.</param>
-        /// <returns></returns>
-        public DataMessage getStatsFromInterval(TimeInterval verifiedTimeInterval)
-        {
-            // Query the MySQL database using the interval, group results in an array of PerSecondStats, create a Datamessage object and return it.
-
-
-            // will be removed.
-            return (null);
-        }
-
         #endregion
 
-        #region Methods to store data into the StatisticsDatabase from a DataMessage object
+        /* The following methods are to be used by the Web API controllers. */
+
+        /// <summary>
+        /// Queries all PerSecondStats objects in the StatisticsDatabase, groups them in a single DataMessage which will be serialized by the to JSON by the controller and returned to Front-End Clients.
+        /// </summary>
+        /// <param name="verifiedTimeInterval">Verification of the TimeInterval must be performed by the controller before calling this method.</param>
+        /// <returns>All requested PerSecondStats within the specified interval, grouped in a DataMessage object.</returns>
+        public DataMessage getStatsFromInterval(TimeInterval verifiedTimeInterval)
+        {
+            List<DatabasePerSecondStats> perSecondStatsList = new List<DatabasePerSecondStats>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                // Stuck on query, not sure how I will be able to query between year, month, day, hour, minute, second...
+
+                string query = "";
+
+                if ()
+                {
+
+                }
+                else if ()
+                {
+
+                }
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStatsList.Add(new DatabasePerSecondStats()
+                        {
+                            Year = Convert.ToInt32(reader["Year"]),
+                            Month = Convert.ToInt32(reader["Month"]),
+                            Day = Convert.ToInt32(reader["Day"]),
+                            Hour = Convert.ToInt32(reader["Hour"]),
+                            Minute = Convert.ToInt32(reader["Minute"]),
+                            Second = Convert.ToInt32(reader["Second"]),
+                            CameraID = Convert.ToInt32(reader["CameraID"]),
+                            NumTrackedPeople = Convert.ToInt32(reader["NumTrackedPeople"]),
+                            HasSavedImage = Convert.ToBoolean(reader["HasSavedImage"])
+                        });
+                    }
+                }
+
+            }
+
+            int numQueryResults = perSecondStatsList.Count;
+            DataMessage responseDataMessage = new DataMessage(numQueryResults);
+            int i = 0;
+
+            foreach (DatabasePerSecondStats second in perSecondStatsList)
+            {
+                responseDataMessage.RealTimeStats[i] = new PerSecondStats(second.CameraID, second.Year, second.Month, second.Day, second.Hour, second.Minute, second.Second, second.NumTrackedPeople, second.HasSavedImage);
+                i++;
+            }
+
+            return (responseDataMessage);
+        }
 
         /// <summary>
         /// Stores every individual PerSecondStat object from a DataMessage (received from Capture System) into the StatisticsDatabase.
@@ -76,7 +118,6 @@ namespace WebAPI.Models
             return (true);
         }
 
-        #endregion
 
         /// <summary>
         /// 
@@ -99,5 +140,6 @@ namespace WebAPI.Models
 
             return (averagesOfDayResponse);
         }
+
     }
 }

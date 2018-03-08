@@ -10,9 +10,9 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class AveragesOfDayRequest
     {
-        public int? Year { get; }
-        public int? Month { get; }
-        public int? Day { get; }
+        public int Year { get; }
+        public int Month { get; }
+        public int Day { get; }
 
         // Only the Front-End clients would create this object. API will use the hasValidDay validation method before processing request.
         public AveragesOfDayRequest() { }

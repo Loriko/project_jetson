@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+// Information why uint isn't being used in the API : https://stackoverflow.com/questions/3095805/using-uint-vs-int
+
 namespace WebAPI.Object_Classes
 {
     /// <summary>
@@ -23,16 +25,16 @@ namespace WebAPI.Object_Classes
         public int Second { get; set; }
 
         // The ID of the camera which produced these statistics for this exact second.
-        public uint CameraID { get; set; } 
+        public int CameraID { get; set; } 
 
         // Statistic #1: Stores the number of people identified within the second.
         public int NumTrackedPeople { get; set; }
 
         // Statistic #2: Indicates if the embedded system has stored an image locally of this second. This happens when a key statistic has occured. 
-        public bool? HasSavedImage { get; set; }
+        public bool HasSavedImage { get; set; }
 
         // Constructor with a flag of false by default for HasSavedImage.
-        public PerSecondStats (uint cameraID, int year, int month, int day, int hour, int minute, int second, int numTrackedPeople, bool hasSavedImage = false)
+        public PerSecondStats (int cameraID, int year, int month, int day, int hour, int minute, int second, int numTrackedPeople, bool hasSavedImage = false)
         {
             this.CameraID = cameraID;
             this.Year = year;
