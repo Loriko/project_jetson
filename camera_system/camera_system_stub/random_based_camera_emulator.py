@@ -41,7 +41,7 @@ def serve_made_up_stats_to_server(camera_id, token):
 
 
 def send_one_per_second_stat(camera_id, token, per_second_stat):
-    http_service.send_per_second_stat(camera_id, token, (per_second_stat.to_json(),))
+    http_service.send_per_second_stat(camera_id, token, [per_second_stat.to_json(), ])
 
 
 # We take the previous per_second_stat and use it to calculate the next one.
@@ -50,6 +50,8 @@ def generate_random_per_second_stat(camera_id, previous_per_second_stat):
     previous_people_count = previous_per_second_stat.num_tracked_people
     people_count_variation = random.choice((-4, -3, -2, -2, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4,))
     new_people_count = previous_people_count + people_count_variation
+    if new_people_count < 0:
+        new_people_count = 0
     today_datetime = datetime.datetime.now()
     generated_per_second_stat = PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, new_people_count, False)
     return generated_per_second_stat
