@@ -11,20 +11,20 @@ namespace WebAPI.Object_Classes
     public class TimeInterval
     {
         // Start DateTime.
-        public int? StartYear { get; }
-        public int? StartMonth { get; }
-        public int? StartDay { get; }
-        public int? StartHour { get; }
-        public int? StartMinute { get; }
-        public int? StartSecond { get; }
+        public int StartYear { get; }
+        public int StartMonth { get; }
+        public int StartDay { get; }
+        public int StartHour { get; }
+        public int StartMinute { get; }
+        public int StartSecond { get; }
 
         // End DateTime.
-        public int? EndYear { get; }
-        public int? EndMonth { get; }
-        public int? EndDay { get; }
-        public int? EndHour { get; }
-        public int? EndMinute { get; }
-        public int? EndSecond { get; }
+        public int EndYear { get; }
+        public int EndMonth { get; }
+        public int EndDay { get; }
+        public int EndHour { get; }
+        public int EndMinute { get; }
+        public int EndSecond { get; }
 
         public TimeInterval() { }
 
@@ -36,7 +36,7 @@ namespace WebAPI.Object_Classes
         {
             #region Verify Start Attributes (lower bound of interval)
             // Start Year
-            if (this.StartYear < 2000 || this.StartYear > 9999)
+            if (this.StartYear < 1900 || this.StartYear > 9999)
                 return (false);
 
             //Start Month
@@ -85,7 +85,7 @@ namespace WebAPI.Object_Classes
 
             #region Verify End Attributes (upper bound of interval)
             // End Year
-            if (this.EndYear < 2000 || this.EndYear > 9999)
+            if (this.EndYear < 1900 || this.EndYear > 9999)
                 return (false);
 
             //End Month

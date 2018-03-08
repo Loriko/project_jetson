@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Object_Classes;
+using WebAPI.Models;
 
 namespace WebAPI.Controllers
 {
@@ -17,43 +18,49 @@ namespace WebAPI.Controllers
         // Authentication will be considered later in development.
 
         /// <summary>
-        /// Returns all statistics between a given Date/Time interval. Uses 24 hour clock.
+        /// Returns all statistics between a given Date/Time interval. Uses 24 hour clock. 
+        /// Called constantly for real-time graph and occasionally for on-demand requests.
         /// </summary>
-        // GET statistics between a specified interval. (called constantly for real-time graph and for on-demand requests.)
+        /// <param name="timeInterval"></param>
+        /// <returns>HTTP BAD REQUEST or HTTP OK with JSON-serialized Data Message containing query results.</returns>
         [HttpGet]
         public IActionResult Get ([FromBody] TimeInterval timeInterval)
         {
+            // Validate provided time interval from API client.
             if (timeInterval.isValidInterval() == false)
-                return BadRequest();
+                return BadRequest( new JsonResult("Invalid TimeInterval object provided.") );
 
+            // Obtain database context.
+            StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
+            
+            // Obtain DataMessage using special method of the database context class.
+            DataMessage responseMessage = context.getStatsFromInterval(timeInterval);
 
-            // Query database for all results between interval and group into a DataMessage object.
+            // Serialize DataMessage to JSON format.
+            JsonResult jsonResponseMessage = new JsonResult(responseMessage);
 
-            // obtain count of number of results
-
-            // Return data message object.
-
-            // Not sure if every single second is required by front end...
-
-            // Create DataMessage and fill in attributes.
-
-
-
-            // Convert to JSON response
-
-            #region Test code
-            PerSecondStats testSec = new PerSecondStats(1, 2018, 2, 18, 10, 48, 55,6);
-
-            DataMessage test = new DataMessage(1);
-
-            test.RealTimeStats[0] = testSec;
-
-            JsonResult jsonStats = new JsonResult(test);
-
-            return (jsonStats);
-
-            #endregion
+            // Return HTTP OK and JSON-serialized DataMessage containint all requested query results. 
+            return Ok(jsonResponseMessage);
         }
 
+        [HttpGet]
+        public IActionResult Get([FromBody] AveragesOfDayRequest averagesOfDayRequest)
+        {
+            // Validate the date which the hourly averages are being requested for from Front-End API client.
+            if (averagesOfDayRequest.hasValidDay() == false)
+                return BadRequest(new JsonResult("Invalid date provided in request object."));
+
+            // Obtain database context.
+            StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
+
+            // Obtain AveragesOfDayResponse using special method of the database context class.
+            AveragesOfDayResponse responseMessage = context.getHourlyAveragesForDay(averagesOfDayRequest);
+
+            // Serialize DataMessage to JSON format.
+            JsonResult jsonResponseMessage = new JsonResult(responseMessage);
+
+            // Return HTTP OK and JSON-serialized Response object.
+            return Ok(jsonResponseMessage);
+        }
     }
 }
