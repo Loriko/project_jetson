@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
             // Serialize DataMessage to JSON format.
             JsonResult jsonResponseMessage = new JsonResult(responseMessage);
 
-            // Return HTTP OK and JSON-serialized DataMessage containint all requsted query results. 
+            // Return HTTP OK and JSON-serialized DataMessage containint all requested query results. 
             return Ok(jsonResponseMessage);
         }
 
@@ -53,13 +53,13 @@ namespace WebAPI.Controllers
             // Obtain database context.
             StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
 
-            // Obtain DataMessage using special method of the database context class.
-            AveragesOfDayResponse responseMessage = context.getHourlyAveragesFromDay();
+            // Obtain AveragesOfDayResponse using special method of the database context class.
+            AveragesOfDayResponse responseMessage = context.getHourlyAveragesForDay(averagesOfDayRequest);
 
             // Serialize DataMessage to JSON format.
             JsonResult jsonResponseMessage = new JsonResult(responseMessage);
 
-            // Return HTTP OK and JSON-serialized DataMessage containint all requsted query results. 
+            // Return HTTP OK and JSON-serialized Response object.
             return Ok(jsonResponseMessage);
         }
     }
