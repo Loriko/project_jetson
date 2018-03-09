@@ -12,14 +12,19 @@ namespace WebAPI.Object_Classes
     {
         public PerSecondStats[] RealTimeStats { get; set; }
 
-        // Completely optional parameter for clients to provide, however when API returns this type of object, attribute will be filled up for simplicity for clients. 
-        public int? MessageSizeSeconds { get; set; }
-
         // Constructor
         public DataMessage(int sizeInSeconds)
         {
-            this.MessageSizeSeconds = sizeInSeconds;
             this.RealTimeStats = new PerSecondStats[sizeInSeconds];
+        }
+
+        /// <summary>
+        /// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeStats attribute array.
+        /// </summary>
+        /// <returns></returns>
+        public int getNumberSeconds()
+        {
+            return (this.RealTimeStats.Length);
         }
     }
 }
