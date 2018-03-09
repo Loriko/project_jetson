@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Object_Classes;
+using Newtonsoft.Json;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
@@ -11,7 +13,7 @@ namespace WebAPI.Controllers
     /// <summary>
     /// Controller to receive data storage requests from Capture system.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/[controller]/datamessage")]
     public class DataReceivalController : ControllerBase
     {
 
@@ -19,9 +21,17 @@ namespace WebAPI.Controllers
         /* TESTER method to see if controller is working via Postman. */
         // POST a string to: api/datareceival
         [HttpPost]
-        public string Post([FromBody]string value)
+        public string Post()
         {
-            return ("Data Receival controller accessed !!! You have submitted the following string via POST request: " + value);
+            string requestBody;
+            using (StreamReader streamReader = new StreamReader(Request.Body))
+            {
+                requestBody = streamReader.ReadToEnd();
+            }
+            DataMessage dataMessage = JsonConvert.DeserializeObject<DataMessage>(requestBody);
+            
+            return "Received DataMessage from camera with id " + dataMessage.CameraId + " containing " +
+                   dataMessage.RealTimeStats.Length + " people count readings.";
         }
 
         /* TESTER method to see if controller is accessible via browser. */

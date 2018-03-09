@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 // Information why uint isn't being used in the API : https://stackoverflow.com/questions/3095805/using-uint-vs-int
 
@@ -25,7 +26,7 @@ namespace WebAPI.Object_Classes
         public int Second { get; set; }
 
         // The ID of the camera which produced these statistics for this exact second.
-        public int CameraID { get; set; } 
+        public int CameraId { get; set; } 
 
         // Statistic #1: Stores the number of people identified within the second.
         public int NumTrackedPeople { get; set; }
@@ -34,9 +35,9 @@ namespace WebAPI.Object_Classes
         public bool HasSavedImage { get; set; }
 
         // Constructor with a flag of false by default for HasSavedImage.
-        public PerSecondStats (int cameraID, int year, int month, int day, int hour, int minute, int second, int numTrackedPeople, bool hasSavedImage = false)
+        public PerSecondStats (int cameraId, int year, int month, int day, int hour, int minute, int second, int numTrackedPeople, bool hasSavedImage = false)
         {
-            this.CameraID = cameraID;
+            this.CameraId = cameraId;
             this.Year = year;
             this.Month = month;
             this.Day = day;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace WebAPI.Object_Classes
 {
@@ -10,14 +11,16 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class DataMessage
     {
-        public PerSecondStats[] RealTimeStats { get; set; }
-
-        // Constructor
-        public DataMessage(int sizeInSeconds)
+        [JsonConstructor]
+        public DataMessage(string cameraId, PerSecondStats[] perSecondStats)
         {
-            this.RealTimeStats = new PerSecondStats[sizeInSeconds];
+            this.CameraId = cameraId;
+            this.RealTimeStats = perSecondStats;
         }
 
+        public string CameraId { get; set; }
+        public PerSecondStats[] RealTimeStats { get; set; }
+        
         /// <summary>
         /// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeStats attribute array.
         /// </summary>
