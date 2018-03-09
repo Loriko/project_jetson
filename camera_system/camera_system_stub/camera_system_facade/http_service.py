@@ -4,7 +4,7 @@ import json
 
 ENDPOINT_HOST = "http://localhost"
 ENDPOINT_PORT = "5000"
-ENDPOINT_PATH = "/datamessage"
+ENDPOINT_PATH = "/api/datareceival/datamessage"
 
 
 # Real implementation of the function that will send the passed in per_second_stat objects to the back-end
@@ -12,14 +12,15 @@ ENDPOINT_PATH = "/datamessage"
 # but this implementation supports multiple stats
 def send_per_second_stat(camera_id, token, per_second_stats):
     url = ENDPOINT_HOST + ":" + ENDPOINT_PORT + ENDPOINT_PATH
+    headers = {'Content-type': 'application/json'}
     json_data = {
-        "CameraID": camera_id,
+        "CameraId": camera_id,
         "Token": token,
-        "RealTimeStats": json.dumps(per_second_stats)
+        "RealTimeStats": per_second_stats
     }
-    encoded_data = urllib.urlencode(json_data)
+    json_encoded_data = json.dumps(json_data)
     try:
-        req = urllib2.Request(url, encoded_data)
+        req = urllib2.Request(url=url, data=json_encoded_data , headers=headers)
         response = urllib2.urlopen(req)
         print response.read()
     except:

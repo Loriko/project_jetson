@@ -12,7 +12,7 @@ class PerSecondStats:
 
     def to_json(self):
         return {
-            "CameraID": self.camera_id,
+            "CameraId": self.camera_id,
             "Year": self.year,
             "Month": self.month,
             "Day": self.day,
