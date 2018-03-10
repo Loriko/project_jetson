@@ -17,6 +17,7 @@ namespace WebAPI.Object_Classes
         public int Day { get; set; }
         #endregion 
 
+        /*
         [JsonConstructor]
         public AveragesOfDayRequest(int Year, int Month, int Day)
         {
@@ -24,6 +25,7 @@ namespace WebAPI.Object_Classes
             this.Month = Month;
             this.Day = Day;
         }
+        */
 
         // Only the Front-End clients would create this object. API will use the hasValidDay validation method before processing request.
         public AveragesOfDayRequest() { }

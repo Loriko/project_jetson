@@ -11,6 +11,7 @@ namespace WebAPI.Controllers
 {
     /// <summary>
     /// Controller to support requests from the Front-End.
+    /// Use "api/datarequest" ar the URL.
     /// </summary>
     [Route("api/[controller]")]
     public class DataRequestController : Controller

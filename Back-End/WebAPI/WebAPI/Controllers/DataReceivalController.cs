@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Object_Classes;
-using Newtonsoft.Json;
+// using Newtonsoft.Json;
 using WebAPI.Models;
 
 namespace WebAPI.Controllers
@@ -17,11 +17,7 @@ namespace WebAPI.Controllers
     [Route("api/[controller]/datamessage")]
     public class DataReceivalController : ControllerBase
     {
-        /*
-        #region HTTP Tester methods 
-
-        // TESTER method to see if controller is working via Postman.
-        // POST a string to: api/datareceival
+        /* ALTERNATIVE DOES NOT SATISFY NEEDS
         [HttpPost]
         public string Post()
         {
@@ -35,15 +31,6 @@ namespace WebAPI.Controllers
             
             return "Received DataMessage";
         }
-
-        // TESTER method to see if controller is accessible via browser. 
-        // GET request to: api/datareceival
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "nvidia", "is better", "than", "rasberry pi" };
-        }
-        #endregion
         */
         
         /// <summary>
@@ -54,8 +41,8 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] DataMessage receivedMessage)
         {
-            return (new JsonResult("Received DataMessage test. Here is the year of persecondstat: " + receivedMessage.RealTimeStats[0].Year));
-            /*
+            //return (new JsonResult("Received DataMessage test. Here is the year of persecondstat: " + receivedMessage.RealTimeStats[0].Year));
+            
             // Obtain database context.
             StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
 
@@ -69,7 +56,6 @@ namespace WebAPI.Controllers
 
             // Else, bad client request (problem with DataMessage object or something else).
             return (BadRequest(new JsonResult("There was a problem storing the data you provided into the database. Please verify your DataMessage object and its contents.")));
-            */
         }
     }
 }

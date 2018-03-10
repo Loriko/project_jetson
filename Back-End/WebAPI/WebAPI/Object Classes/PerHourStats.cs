@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
+// using Newtonsoft.Json;
 
 namespace WebAPI.Object_Classes
 {
@@ -14,7 +14,7 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class PerHourStats
     {
-        // Date Attributes, representing the Date of the statistics. (Primary key is these three attributes.)
+        // Date Attributes, representing the Date of the statistics.
         public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }

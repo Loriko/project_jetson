@@ -35,7 +35,9 @@ namespace WebAPI.Object_Classes
         // Empty constructor, required.
         public TimeInterval() { }
 
-        // Same order and exact spelling in API user's http request (frontend,camera system), is our best best to ensure proper deserialization.
+        /* 
+         * NOT NEEDED, BUT DO NOT DELETE YET
+         * 
         [JsonConstructor]
         public TimeInterval(int StartYear, int StartMonth, int StartDay, int StartHour, int StartMinute, int StartSecond,
             int EndYear, int EndMonth, int EndDay, int EndHour, int EndMinute, int EndSecond)
@@ -53,6 +55,7 @@ namespace WebAPI.Object_Classes
             this.EndMinute = EndMinute;
             this.EndSecond = EndSecond;
         }
+        */
         #endregion
 
         /// <summary>
