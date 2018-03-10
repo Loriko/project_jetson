@@ -11,15 +11,19 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class DataMessage
     {
+        public PerSecondStats[] RealTimeStats { get; set; }
+
         [JsonConstructor]
-        public DataMessage(string cameraId, PerSecondStats[] perSecondStats)
+        public DataMessage(PerSecondStats[] perSecondStats)
         {
-            this.CameraId = cameraId;
             this.RealTimeStats = perSecondStats;
         }
 
-        public string CameraId { get; set; }
-        public PerSecondStats[] RealTimeStats { get; set; }
+        // Normal constructor.
+        public DataMessage(int sizeInSeconds)
+        {
+            this.RealTimeStats = new PerSecondStats[sizeInSeconds];
+        }
         
         /// <summary>
         /// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeStats attribute array.

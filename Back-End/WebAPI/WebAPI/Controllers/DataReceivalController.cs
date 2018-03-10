@@ -28,6 +28,7 @@ namespace WebAPI.Controllers
             {
                 requestBody = streamReader.ReadToEnd();
             }
+
             DataMessage dataMessage = JsonConvert.DeserializeObject<DataMessage>(requestBody);
             
             return "Received DataMessage from camera with id " + dataMessage.CameraId + " containing " +
