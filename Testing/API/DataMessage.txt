@@ -1,0 +1,13 @@
+Use PostMan
+Add the JSON to the HTTP Post Body
+
+Use: 
+http://localhost:49491/api/datareceival/datamessage
+
+
+Select: 
+raw
+application/json
+
+Body:
+{"RealTimeStats":[{"Year":2000,"Month":9,"Day":20,"Hour":12,"Minute":34,"Second":50,"CameraId":1,"NumTrackedPeople":5,"HasSavedImage":false}]}

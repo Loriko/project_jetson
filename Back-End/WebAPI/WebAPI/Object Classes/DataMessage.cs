@@ -18,11 +18,13 @@ namespace WebAPI.Object_Classes
         #endregion
 
         #region Constructors and Json Deserializing Constructors
+        /*
         [JsonConstructor]
         public DataMessage(PerSecondStats[] RealTimeStats)
         {
             this.RealTimeStats = RealTimeStats;
         }
+        */
 
         /// <summary>
         /// Normal Constructor
