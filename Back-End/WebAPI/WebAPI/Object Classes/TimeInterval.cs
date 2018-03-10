@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+// https://stackoverflow.com/questions/6702705/how-to-convert-javascript-datetime-to-c-sharp-datetime
 
 namespace WebAPI.Object_Classes
 {
     /// <summary>
-    /// Represents a DateTime interval. Simplified without time zones.
+    /// Represents a DateTime interval. Simplified without time zones for time being.
     /// </summary>
     public class TimeInterval
     {
+        #region Attributes
         // Start DateTime.
         public int StartYear { get; }
         public int StartMonth { get; }
@@ -25,8 +29,31 @@ namespace WebAPI.Object_Classes
         public int EndHour { get; }
         public int EndMinute { get; }
         public int EndSecond { get; }
+        #endregion
 
+        #region Constructors and Json Deserializing Constructors
+        // Empty constructor, required.
         public TimeInterval() { }
+
+        // Same order and exact spelling in API user's http request (frontend,camera system), is our best best to ensure proper deserialization.
+        [JsonConstructor]
+        public TimeInterval(int StartYear, int StartMonth, int StartDay, int StartHour, int StartMinute, int StartSecond,
+            int EndYear, int EndMonth, int EndDay, int EndHour, int EndMinute, int EndSecond)
+        {
+            this.StartYear = StartYear;
+            this.StartMonth = StartMonth;
+            this.StartDay = StartDay;
+            this.StartHour = StartHour;
+            this.StartMinute = StartMinute;
+            this.StartSecond = StartSecond;
+            this.EndYear = EndYear;
+            this.EndMonth = EndMonth;
+            this.EndDay = EndDay;
+            this.EndHour = EndHour;
+            this.EndMinute = EndMinute;
+            this.EndSecond = EndSecond;
+        }
+        #endregion
 
         /// <summary>
         /// Method to validate a TimeInterval object.

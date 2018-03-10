@@ -43,7 +43,7 @@ namespace WebAPI.Models
                 // Stuck on query, not sure how I will be able to query between year, month, day, hour, minute, second...
 
                 string query = "";
-
+                /*
                 if ()
                 {
 
@@ -52,6 +52,7 @@ namespace WebAPI.Models
                 {
 
                 }
+                */
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);

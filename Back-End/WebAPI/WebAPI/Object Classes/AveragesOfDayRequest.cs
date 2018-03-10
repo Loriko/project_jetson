@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace WebAPI.Object_Classes
 {
@@ -10,9 +11,19 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class AveragesOfDayRequest
     {
-        public int Year { get; }
-        public int Month { get; }
-        public int Day { get; }
+        #region Attributes
+        public int Year { get; set; }
+        public int Month { get; set; }
+        public int Day { get; set; }
+        #endregion 
+
+        [JsonConstructor]
+        public AveragesOfDayRequest(int Year, int Month, int Day)
+        {
+            this.Year = Year;
+            this.Month = Month;
+            this.Day = Day;
+        }
 
         // Only the Front-End clients would create this object. API will use the hasValidDay validation method before processing request.
         public AveragesOfDayRequest() { }
