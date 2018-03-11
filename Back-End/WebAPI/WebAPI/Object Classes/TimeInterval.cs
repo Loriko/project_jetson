@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 // https://stackoverflow.com/questions/6702705/how-to-convert-javascript-datetime-to-c-sharp-datetime
 
@@ -15,32 +14,27 @@ namespace WebAPI.Object_Classes
     {
         #region Attributes
         // Start DateTime.
-        public int StartYear { get; }
-        public int StartMonth { get; }
-        public int StartDay { get; }
-        public int StartHour { get; }
-        public int StartMinute { get; }
-        public int StartSecond { get; }
+        public int StartYear { get; set; }
+        public int StartMonth { get; set; }
+        public int StartDay { get; set; }
+        public int StartHour { get; set; }
+        public int StartMinute { get; set; }
+        public int StartSecond { get; set; }
 
         // End DateTime.
-        public int EndYear { get; }
-        public int EndMonth { get; }
-        public int EndDay { get; }
-        public int EndHour { get; }
-        public int EndMinute { get; }
-        public int EndSecond { get; }
+        public int EndYear { get; set; }
+        public int EndMonth { get; set; }
+        public int EndDay { get; set; }
+        public int EndHour { get; set; }
+        public int EndMinute { get; set; }
+        public int EndSecond { get; set; }
         #endregion
 
-        #region Constructors and Json Deserializing Constructors
-        // Empty constructor, required.
-        public TimeInterval() { }
+        #region Json Deserializing Constructor
 
-        /* 
-         * NOT NEEDED, BUT DO NOT DELETE YET
-         * 
-        [JsonConstructor]
-        public TimeInterval(int StartYear, int StartMonth, int StartDay, int StartHour, int StartMinute, int StartSecond,
-            int EndYear, int EndMonth, int EndDay, int EndHour, int EndMinute, int EndSecond)
+        // Constructor required only for ASP.Net Core's automatic Json deserialization.
+        // Web API will not need to create TimeInterval objects.
+        public TimeInterval(int StartYear, int StartMonth, int StartDay, int StartHour, int StartMinute, int StartSecond, int EndYear, int EndMonth, int EndDay, int EndHour, int EndMinute, int EndSecond)
         {
             this.StartYear = StartYear;
             this.StartMonth = StartMonth;
@@ -55,7 +49,6 @@ namespace WebAPI.Object_Classes
             this.EndMinute = EndMinute;
             this.EndSecond = EndSecond;
         }
-        */
         #endregion
 
         /// <summary>

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-// using Newtonsoft.Json;
 
 namespace WebAPI.Object_Classes
 {
@@ -18,11 +17,9 @@ namespace WebAPI.Object_Classes
         public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }
-
         // Statistic: Average of all the PerSecondStats of ALL CAMERAS for a single hour.
         public double HourlyAverage { get; set; }
 
-        // Constructor with a flag of false by default for HasSavedImage.
         public PerHourStats(int year, int month, int day, double hourlyAverage)
         {
             this.Year = year;

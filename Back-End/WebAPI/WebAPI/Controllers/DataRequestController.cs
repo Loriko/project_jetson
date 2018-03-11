@@ -10,7 +10,7 @@ using WebAPI.Models;
 namespace WebAPI.Controllers
 {
     /// <summary>
-    /// Controller to support requests from the Front-End.
+    /// Controller to support requests from the Web Server.
     /// Use "api/datarequest" ar the URL.
     /// </summary>
     [Route("api/[controller]")]
@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public IActionResult Get ([FromBody] TimeInterval timeInterval)
         {
-            // Validate provided time interval from API client.
+            // Validate provided TimeInterval from Web Server.
             if (timeInterval.isValidInterval() == false)
                 return BadRequest( new JsonResult("Invalid TimeInterval object provided.") );
 
@@ -40,10 +40,15 @@ namespace WebAPI.Controllers
             // Serialize DataMessage to JSON format.
             JsonResult jsonResponseMessage = new JsonResult(responseMessage);
 
-            // Return HTTP OK and JSON-serialized DataMessage containint all requested query results. 
+            // Return HTTP OK and JSON-serialized DataMessage containing all requested query results. 
             return Ok(jsonResponseMessage);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="averagesOfDayRequest"></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get([FromBody] AveragesOfDayRequest averagesOfDayRequest)
         {

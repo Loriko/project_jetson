@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace WebAPI.Object_Classes
 {
@@ -11,24 +10,17 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class AveragesOfDayRequest
     {
-        #region Attributes
         public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }
-        #endregion 
 
-        /*
-        [JsonConstructor]
+        // Constructor, only added in order to enable proper deserialization.
         public AveragesOfDayRequest(int Year, int Month, int Day)
         {
             this.Year = Year;
             this.Month = Month;
             this.Day = Day;
         }
-        */
-
-        // Only the Front-End clients would create this object. API will use the hasValidDay validation method before processing request.
-        public AveragesOfDayRequest() { }
 
         /// <summary>
         /// Method to validate a AveragesOfDayRequest object by checking if the requested day is valid.
