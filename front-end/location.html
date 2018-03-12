@@ -10,28 +10,17 @@
     <div class="topnav">
       <a href="#about" style = "float:right">Welcome user</a>
     </div>
-    <div class="center">
-      <h4>Choose location of camera you wish to see</h4>
-          <select class="limitedNumbChosen" multiple="true">
-          <option value="1">Monday</option>
-          <option value="2">Tuesday</option>
-          <option value="3">Wednesday</option>
-          <option value="4">Thursday</option>
-          <option value="5">Friday</option>
-          <option value="6">Saturday</option>
-          <option value="7">Sunday</option>
-          </select>
-      <h4>Choose which area you would like to see</h4>
-          <select class="limitedNumbSelect2" multiple="true">
-          <option value="1">Monday</option>
-          <option value="2">Tuesday</option>
-          <option value="3">Wednesday</option>
-          <option value="4">Thursday</option>
-          <option value="5">Friday</option>
-          <option value="6">Saturday</option>
-          <option value="6">Sunday</option>
-          </select>
-      <button type="submit">Select</button>
+    <h2 style ="margin: auto; width: 40%; padding: 5px;">Choose which location you would like to see</h2>
+    <div class="center1">
+      <select class="limitedNumbSelect2" multiple="false">
+      <option value="1">DMV Merivale</option>
+      <option value="2">DMV Ridgemont</option>
+      <option value="3">DMV Walkley</option>
+      <option value="4">DMV Westgate</option>
+      </select>
+      <form action = "location2.html" method="get">
+        <button type="submit">Select</button>
+      </form>
     </div>
 
   </body>

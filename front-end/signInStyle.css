@@ -103,56 +103,6 @@ button:hover {
 }
 
 /* keyframes */
-@-webkit-keyframes led {
-  from {
-    opacity:.2;
-  }
-
-  to {
-    opacity:1;
-  }
-}
-
-@-moz-keyframes led {
-  from {
-    opacity:.2;
-  }
-
-  to {
-    opacity:1;
-  }
-}
-
-@-ms-keyframes led {
-  from {
-    opacity:.2;
-  }
-
-  to {
-    opacity:1;
-  }
-}
-
-@-o-keyframes led {
-  from {
-    opacity:.2;
-  }
-
-  to {
-    opacity:1;
-  }
-}
-
-@keyframes led {
-  from {
-    opacity:.2;
-  }
-
-  to {
-    opacity:1;
-  }
-}
-
 @-webkit-keyframes btn {
   from {
     margin-top:0px;
