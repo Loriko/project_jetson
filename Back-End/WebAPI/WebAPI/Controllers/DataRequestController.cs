@@ -68,5 +68,18 @@ namespace WebAPI.Controllers
             // Return HTTP OK and JSON-serialized Response object.
             return Ok(jsonResponseMessage);
         }
+
+        [Route("api/[controller]/dbtest")]
+        [HttpGet]
+        public string Get()
+        {
+            // Ensure the Default Connection String matches your SQL Local Server. Look at appsettings.json
+
+            StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
+
+
+
+            return ("test");
+        }
     }
 }

@@ -17,9 +17,15 @@ namespace WebAPI.Object_Classes
         // Attribute
         public PerSecondStats[] RealTimeStats { get; set; }
 
+        [JsonConstructor]
         public DataMessage(PerSecondStats[] perSecondStats)
         {
             this.RealTimeStats = perSecondStats;
+        }
+
+        public DataMessage(int numPerSecondStats)
+        {
+            this.RealTimeStats = new PerSecondStats[numPerSecondStats];
         }
 
         /// <summary>
