@@ -55,7 +55,7 @@ button:hover {
 .shadow {
   position: absolute;
   left:45%;
-  top:23%;
+  top:24.5%;
   width: 100px; height: 20px;
   border-radius: 50%;
   background-color: rgba(0,0,0,.3);
