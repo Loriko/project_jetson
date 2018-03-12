@@ -28,7 +28,11 @@ namespace WebAPI.Controllers
             //return (new JsonResult("Received DataMessage test. Here is the year of persecondstat: " + receivedMessage.RealTimeStats[0].Year));
             
             if (receivedMessage.isValidMessage() == false)
-                return (BadRequest(new JsonResult("There is a problem with the data you provided. Please verify your DataMessage object and its contents.")));
+            {
+                string errorMessage = "There is a problem with the data you provided. Please verify your DataMessage object and its contents.";
+                BasicResponse error = new BasicResponse((int)StatusCodes.InvalidDataProvided, nameof(RequestTypes.DataPersistRequest), errorMessage);
+                return (BadRequest(new JsonResult(error)));
+            }
 
             // Obtain database context.
             StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
@@ -38,11 +42,14 @@ namespace WebAPI.Controllers
 
             if (wasPersistSuccesful)
             {
-                return ( Ok( new JsonResult("Data Message's contents stored succesfully to database.") ) );
+                BasicResponse success = new BasicResponse((int)StatusCodes.Success,nameof(RequestTypes.DataPersistRequest));
+                return ( Ok( new JsonResult(success) ) );
             }
 
-            // Else, bad client request (problem with DataMessage object or something else).
-            return (BadRequest(new JsonResult("There was a problem storing the data you provided into the database. Please verify your DataMessage object and its contents.")));
+            // Else, bad client request or database problem.
+            string persistErrorMessage = "There was a problem storing the data you provided into the database. Please verify your DataMessage object and its contents.";
+            BasicResponse persistError = new BasicResponse((int)StatusCodes.UnableToPersistReceivedData,nameof(RequestTypes.DataPersistRequest),persistErrorMessage);
+            return (BadRequest(new JsonResult(persistError)));
         }
     }
 }
