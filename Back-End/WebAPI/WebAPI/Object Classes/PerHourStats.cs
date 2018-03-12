@@ -13,15 +13,13 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class PerHourStats
     {
-        // Date Attributes, representing the Date of the statistics. (Primary key is these three attributes.)
+        // Date Attributes, representing the Date of the statistics.
         public int Year { get; set; }
         public int Month { get; set; }
         public int Day { get; set; }
-
         // Statistic: Average of all the PerSecondStats of ALL CAMERAS for a single hour.
         public double HourlyAverage { get; set; }
 
-        // Constructor with a flag of false by default for HasSavedImage.
         public PerHourStats(int year, int month, int day, double hourlyAverage)
         {
             this.Year = year;

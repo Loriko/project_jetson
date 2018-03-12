@@ -1,0 +1,11 @@
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.deps.json
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.runtimeconfig.json
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.runtimeconfig.dev.json
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.dll
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.csprojResolveAssemblyReference.cache
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.csproj.CoreCompileInputs.cache
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.AssemblyInfoInputs.cache
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.AssemblyInfo.cs
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\bin\Debug\netcoreapp2.0\WebApplication.pdb
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.dll
+C:\Users\Kevin\DotNetProject\project_jetson\front-end\WebApplication\WebApplication\obj\Debug\netcoreapp2.0\WebApplication.pdb

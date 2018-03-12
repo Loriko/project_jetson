@@ -29,6 +29,32 @@ namespace WebAPI.Models
 
         /* The following methods are to be used by the Web API controllers. */
 
+        // Return DatabasePerSecondStats, not PerSecondStats, this is faster to implement for a simple test.
+        public List<TestObject> testDatabase()
+        {
+            List<TestObject> perSecondStatsList = new List<TestObject>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "select * from test";
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStatsList.Add(new TestObject()
+                        {
+                            CameraID = Convert.ToInt32(reader["idtest"])
+                        });
+                    }
+                }
+
+            }
+            return (perSecondStatsList);
+        }
+
         /// <summary>
         /// Queries all PerSecondStats objects in the StatisticsDatabase, groups them in a single DataMessage which will be serialized by the to JSON by the controller and returned to Front-End Clients.
         /// </summary>
@@ -43,7 +69,7 @@ namespace WebAPI.Models
                 // Stuck on query, not sure how I will be able to query between year, month, day, hour, minute, second...
 
                 string query = "";
-
+                /*
                 if ()
                 {
 
@@ -52,6 +78,7 @@ namespace WebAPI.Models
                 {
 
                 }
+                */
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
