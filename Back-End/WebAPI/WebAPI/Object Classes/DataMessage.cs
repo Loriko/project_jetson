@@ -61,6 +61,8 @@ namespace WebAPI.Object_Classes
 
             string[] result = new string[attributesList.Count];
 
+            /* Will be implemented */
+
             return (result);
         }
     }

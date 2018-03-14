@@ -9,7 +9,7 @@ namespace WebAPI.Error_Response_Classes
     {
         string Message;
 
-        public FailedPersistResponseBody(string[] InvalidAttributes)
+        public FailedPersistResponseBody()
         {
             this.Message = "Unable to persist received data to the database.";
         }

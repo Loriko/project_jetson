@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using WebAPI.Object_Classes;
 using WebAPI.Models;
 using WebAPI.Error_Response_Classes;
@@ -31,8 +32,8 @@ namespace WebAPI.Controllers
             if (receivedMessage.isValidMessage() == false)
             {
                 String[] invalidAttributes = receivedMessage.getInvalidAttributes();
-                InvalidAttributesResponseBody body = new InvalidAttributesResponseBody();
-                return (BadRequest(new JsonResult(error)));
+                InvalidAttributesResponseBody body = new InvalidAttributesResponseBody(invalidAttributes);
+                return (BadRequest(new JsonResult(body)));
             }
 
             // Obtain database context.
@@ -46,10 +47,10 @@ namespace WebAPI.Controllers
                 return (Ok());
             }
 
-            // Else, bad client request or database problem.
-            string persistErrorMessage = "There was a problem storing the data you provided into the database. Please verify your DataMessage object and its contents.";
-            BasicResponse persistError = new BasicResponse((int)StatusCodes.UnableToPersistReceivedData,nameof(RequestTypes.DataPersistRequest),persistErrorMessage);
-            return (StatusCode(500));
+            // Else, database persist problem.
+            FailedPersistResponseBody persistBody = new FailedPersistResponseBody();
+
+            return (StatusCode(500, new JsonResult(persistBody)));
         }
     }
 }
