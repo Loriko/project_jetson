@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Object_Classes;
 using WebAPI.Models;
+using WebAPI.Error_Response_Classes;
 
 namespace WebAPI.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebAPI.Controllers
     /// Controller to receive data storage requests from a Capture system (Jetson TX2 or other).
     /// Use "api/datareceival/datamessage" as the URL path.
     /// </summary>
-    [Route("api/[controller]/datamessage")]
+    [Route("api/[controller]")]
     public class DataReceivalController : ControllerBase
     {
         /// <summary>
@@ -29,8 +30,8 @@ namespace WebAPI.Controllers
             
             if (receivedMessage.isValidMessage() == false)
             {
-                string errorMessage = "There is a problem with the data you provided. Please verify your DataMessage object and its contents.";
-                BasicResponse error = new BasicResponse((int)StatusCodes.InvalidDataProvided, nameof(RequestTypes.DataPersistRequest), errorMessage);
+                String[] invalidAttributes = receivedMessage.getInvalidAttributes();
+                InvalidAttributesResponseBody body = new InvalidAttributesResponseBody();
                 return (BadRequest(new JsonResult(error)));
             }
 
@@ -42,14 +43,13 @@ namespace WebAPI.Controllers
 
             if (wasPersistSuccesful)
             {
-                BasicResponse success = new BasicResponse((int)StatusCodes.Success,nameof(RequestTypes.DataPersistRequest));
-                return ( Ok( new JsonResult(success) ) );
+                return (Ok());
             }
 
             // Else, bad client request or database problem.
             string persistErrorMessage = "There was a problem storing the data you provided into the database. Please verify your DataMessage object and its contents.";
             BasicResponse persistError = new BasicResponse((int)StatusCodes.UnableToPersistReceivedData,nameof(RequestTypes.DataPersistRequest),persistErrorMessage);
-            return (BadRequest(new JsonResult(persistError)));
+            return (StatusCode(500));
         }
     }
 }

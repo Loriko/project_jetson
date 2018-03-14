@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -49,6 +49,19 @@ namespace WebAPI.Object_Classes
                     return (false);
             }
             return (true);
+        }
+
+        /// <summary>
+        /// Will be used by the DataReceival controller after a DataMessage is checked not to be valid.
+        /// </summary>
+        /// <returns>An array of strings indicating the name of the attributes which were detected invalid.</returns>
+        public string[] getInvalidAttributes()
+        {
+            ArrayList attributesList = new ArrayList();
+
+            string[] result = new string[attributesList.Count];
+
+            return (result);
         }
     }
 }

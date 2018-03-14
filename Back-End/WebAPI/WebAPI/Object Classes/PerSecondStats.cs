@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-// Information why uint isn't being used in the API : https://stackoverflow.com/questions/3095805/using-uint-vs-int
+using WebAPI.Helper_Classes;
 
 namespace WebAPI.Object_Classes
 {
@@ -12,17 +11,10 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class PerSecondStats
     {
-        // The following attributes are defined of passing a DateTime object to the API. This should be simpler for API clients.
+        #region Attributes 
 
-        // Date Attributes, representing the Date of the statistics.
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
-
-        // Time Attributes, representing the exact time, to second precision, of the statistics. Assuming same timezone between client and API for initial simplicity.
-        public int Hour { get; set; }
-        public int Minute { get; set; }
-        public int Second { get; set; }
+        // Date and Time Information, representing the exact second represented by the statistics in this object.
+        public long UnixTime { get; set; }
 
         // The ID of the camera which produced these statistics for this exact second.
         public int CameraId { get; set; } 
@@ -33,16 +25,13 @@ namespace WebAPI.Object_Classes
         // Statistic #2: Indicates if the embedded system has stored an image locally of this second. This happens when a key statistic has occured. 
         public bool HasSavedImage { get; set; }
 
+        #endregion
+
         // Constructor with a flag of false by default for HasSavedImage.
-        public PerSecondStats (int cameraId, int year, int month, int day, int hour, int minute, int second, int numTrackedPeople, bool hasSavedImage = false)
+        public PerSecondStats (int cameraId, long unixTime, int numTrackedPeople, bool hasSavedImage = false)
         {
             this.CameraId = cameraId;
-            this.Year = year;
-            this.Month = month;
-            this.Day = day;
-            this.Hour = hour;
-            this.Minute = minute;
-            this.Second = second;
+            this.UnixTime = unixTime;
             this.NumTrackedPeople = numTrackedPeople;
             this.HasSavedImage = hasSavedImage;
         }
@@ -59,52 +48,62 @@ namespace WebAPI.Object_Classes
             if (NumTrackedPeople < 0)
                 return (false);
 
+            // Convert to DateTime object and verify it.
+
+            DateTime toCheck = this.UnixTime.toDateTime();
+            int Year = toCheck.Year;
+            int Month = toCheck.Month;
+            int Day = toCheck.Day;
+            int Hour = toCheck.Hour;
+            int Minute = toCheck.Minute;
+            int Second = toCheck.Second;
+
             #region Verify Date and Time
 
             // Start Year
-            if (this.Year < 1900 || this.Year > 9999)
+            if (Year < 1900 || Year > 9999)
                 return (false);
 
             //Start Month
-            if (this.Month < 1 || this.Month > 12)
+            if (Month < 1 || Month > 12)
                 return (false);
 
             // Validate StartDay based on the month and leap year (for February).
-            if (this.Month == 1 || this.Month == 3 || this.Month == 5 || this.Month == 7 || this.Month == 8 || this.Month == 10 || this.Month == 12)
+            if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12)
             {
-                if (this.Day < 1 || this.Day > 31)
+                if (Day < 1 || Day > 31)
                     return (false);
             }
-            else if (this.Month == 4 || this.Month == 6 || this.Month == 9 || this.Month == 11)
+            else if (Month == 4 || Month == 6 || Month == 9 || Month == 11)
             {
-                if (this.Day < 1 || this.Day > 30)
+                if (Day < 1 || Day > 30)
                     return (false);
             }
             else
             {
-                // Only occurs when: this.StartMonth == 2
-                if (DateTime.IsLeapYear((int)this.Year))
+                // Only occurs when: StartMonth == 2
+                if (DateTime.IsLeapYear((int)Year))
                 {
-                    if (this.Day < 1 || this.Day > 29)
+                    if (Day < 1 || Day > 29)
                         return (false);
                 }
                 else
                 {
-                    if (this.Day < 1 || this.Day > 28)
+                    if (Day < 1 || Day > 28)
                         return (false);
                 }
             }
 
             // Start Hour
-            if (this.Hour < 1 || this.Hour > 23)
+            if (Hour < 1 || Hour > 23)
                 return (false);
 
             // Start Minute
-            if (this.Minute < 0 || this.Minute > 59)
+            if (Minute < 0 || Minute > 59)
                 return (false);
 
             // Start Second
-            if (this.Second < 0 || this.Second > 59)
+            if (Second < 0 || Second > 59)
                 return (false);
 
             #endregion
