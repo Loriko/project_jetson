@@ -28,12 +28,12 @@ namespace WebAPI.Object_Classes
         #endregion
 
         // Constructor with a flag of false by default for HasSavedImage.
-        public PerSecondStats (int cameraId, long unixTime, int numTrackedPeople, bool hasSavedImage = false)
+        public PerSecondStats (int CameraId, long UnixTime, int NumTrackedPeople, bool HasSavedImage = false)
         {
-            this.CameraId = cameraId;
-            this.UnixTime = unixTime;
-            this.NumTrackedPeople = numTrackedPeople;
-            this.HasSavedImage = hasSavedImage;
+            this.CameraId = CameraId;
+            this.UnixTime = UnixTime;
+            this.NumTrackedPeople = NumTrackedPeople;
+            this.HasSavedImage = HasSavedImage;
         }
 
         /// <summary>
@@ -48,67 +48,10 @@ namespace WebAPI.Object_Classes
             if (NumTrackedPeople < 0)
                 return (false);
 
-            // Convert to DateTime object and verify it.
+            // Convert Unix Time to DateTime object and verify it.
+            DateTime toValidate = this.UnixTime.toDateTime();
 
-            DateTime toCheck = this.UnixTime.toDateTime();
-            int Year = toCheck.Year;
-            int Month = toCheck.Month;
-            int Day = toCheck.Day;
-            int Hour = toCheck.Hour;
-            int Minute = toCheck.Minute;
-            int Second = toCheck.Second;
-
-            #region Verify Date and Time
-
-            // Start Year
-            if (Year < 1900 || Year > 9999)
-                return (false);
-
-            //Start Month
-            if (Month < 1 || Month > 12)
-                return (false);
-
-            // Validate StartDay based on the month and leap year (for February).
-            if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12)
-            {
-                if (Day < 1 || Day > 31)
-                    return (false);
-            }
-            else if (Month == 4 || Month == 6 || Month == 9 || Month == 11)
-            {
-                if (Day < 1 || Day > 30)
-                    return (false);
-            }
-            else
-            {
-                // Only occurs when: StartMonth == 2
-                if (DateTime.IsLeapYear((int)Year))
-                {
-                    if (Day < 1 || Day > 29)
-                        return (false);
-                }
-                else
-                {
-                    if (Day < 1 || Day > 28)
-                        return (false);
-                }
-            }
-
-            // Start Hour
-            if (Hour < 1 || Hour > 23)
-                return (false);
-
-            // Start Minute
-            if (Minute < 0 || Minute > 59)
-                return (false);
-
-            // Start Second
-            if (Second < 0 || Second > 59)
-                return (false);
-
-            #endregion
-
-            return (true);
+            return (DateTimeTools.validateDateTime(toValidate));
         }
     }
 }

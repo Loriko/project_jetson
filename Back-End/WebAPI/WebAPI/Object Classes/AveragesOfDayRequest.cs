@@ -10,61 +10,21 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class AveragesOfDayRequest
     {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
+        public SingleSecondTime SingleSecondTime;
 
-        // Constructor, only added in order to enable proper deserialization.
-        public AveragesOfDayRequest(int Year, int Month, int Day)
+        // Constructor, only added in order to enable proper deserialization. Web API does not create this request object.
+        public AveragesOfDayRequest(SingleSecondTime SingleSecondTime)
         {
-            this.Year = Year;
-            this.Month = Month;
-            this.Day = Day;
+            this.SingleSecondTime = SingleSecondTime;
         }
 
         /// <summary>
         /// Method to validate a AveragesOfDayRequest object by checking if the requested day is valid.
         /// </summary>
         /// <returns>Returns TRUE if the date is valid, returns FALSE if date is not valid.</returns>
-        public bool hasValidDay()
+        public bool isValidRequest()
         {
-            #region Verify Start Attributes (lower bound of interval)
-            // Start Year
-            if (this.Year < 1900 || this.Year > 9999)
-                return (false);
-
-            //Start Month
-            if (this.Month < 1 || this.Month > 12)
-                return (false);
-
-            // Validate StartDay based on the month and leap year (for February).
-            if (this.Month == 1 || this.Month == 3 || this.Month == 5 || this.Month == 7 || this.Month == 8 || this.Month == 10 || this.Month == 12)
-            {
-                if (this.Day < 1 || this.Day > 31)
-                    return (false);
-            }
-            else if (this.Month == 4 || this.Month == 6 || this.Month == 9 || this.Month == 11)
-            {
-                if (this.Day < 1 || this.Day > 30)
-                    return (false);
-            }
-            else
-            {
-                // Only occurs when: this.StartMonth == 2
-                if (DateTime.IsLeapYear((int)this.Year))
-                {
-                    if (this.Day < 1 || this.Day > 29)
-                        return (false);
-                }
-                else
-                {
-                    if (this.Day < 1 || this.Day > 28)
-                        return (false);
-                }
-            }
-            #endregion
-
-            return (true);
+            return (this.SingleSecondTime.isValidSingleSecondTime());
         }
     }
 }

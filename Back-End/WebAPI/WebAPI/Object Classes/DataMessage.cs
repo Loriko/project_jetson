@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WebAPI.Helper_Classes;
 
 namespace WebAPI.Object_Classes
 {
@@ -14,18 +16,20 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class DataMessage
     {
-        // Attribute
+        // Attribute(s)
         public PerSecondStats[] RealTimeStats { get; set; }
 
+        // Constructor which is also the Json deserialising constructor.
         [JsonConstructor]
-        public DataMessage(PerSecondStats[] perSecondStats)
+        public DataMessage(PerSecondStats[] PerSecondStats)
         {
-            this.RealTimeStats = perSecondStats;
+            this.RealTimeStats = PerSecondStats;
         }
 
-        public DataMessage(int numPerSecondStats)
+        // Constructor required by certain specific Web API methods/controllers.
+        public DataMessage(int NumPerSecondStats)
         {
-            this.RealTimeStats = new PerSecondStats[numPerSecondStats];
+            this.RealTimeStats = new PerSecondStats[NumPerSecondStats];
         }
 
         /// <summary>
@@ -41,7 +45,7 @@ namespace WebAPI.Object_Classes
         /// Verifies validity of all contents of the DataMessage.
         /// </summary>
         /// <returns>Boolean indicating if DataMessage is valid.</returns>
-        public bool isValidMessage()
+        public bool isValidDataMessage()
         {
             for (int z=0; z < this.getLength(); z++)
             {
@@ -57,11 +61,33 @@ namespace WebAPI.Object_Classes
         /// <returns>An array of strings indicating the name of the attributes which were detected invalid.</returns>
         public string[] getInvalidAttributes()
         {
-            ArrayList attributesList = new ArrayList();
+            List<string> temp = new List<string>();
 
-            string[] result = new string[attributesList.Count];
+            for (int c = 0; c < this.getLength(); c++)
+            {
+                if (this.RealTimeStats[c].CameraId < 0)
+                    temp.Add("CameraId");
 
-            /* Will be implemented */
+                if (this.RealTimeStats[c].NumTrackedPeople < 0)
+                    temp.Add("NumTrackedPeople");
+
+                if (this.RealTimeStats[c].UnixTime.toDateTime().validateDateTime() == false)
+                    temp.Add("UnixTime");
+            }
+
+            // Removes all duplicates from the list of failed attributes.
+            temp = temp.Distinct().ToList<string>();
+
+            // Counter for next step.
+            int x = 0;
+            string[] result = new string[temp.Count];
+
+            // Store values in an array of strings.
+            foreach (string distinctAttribute in temp)
+            {
+                result[x] = distinctAttribute;
+                x++;
+            }
 
             return (result);
         }

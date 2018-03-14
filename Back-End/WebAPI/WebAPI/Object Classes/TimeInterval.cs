@@ -2,169 +2,40 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-// https://stackoverflow.com/questions/6702705/how-to-convert-javascript-datetime-to-c-sharp-datetime
+using WebAPI.Helper_Classes;
 
 namespace WebAPI.Object_Classes
 {
     /// <summary>
-    /// Represents a DateTime interval. Simplified without time zones for time being.
+    /// Represents a DateTime interval using Unix Time attributes. Received during/from Web Server requests.
     /// </summary>
     public class TimeInterval
     {
-        #region Attributes
-        // Start DateTime.
-        public int StartYear { get; set; }
-        public int StartMonth { get; set; }
-        public int StartDay { get; set; }
-        public int StartHour { get; set; }
-        public int StartMinute { get; set; }
-        public int StartSecond { get; set; }
-
-        // End DateTime.
-        public int EndYear { get; set; }
-        public int EndMonth { get; set; }
-        public int EndDay { get; set; }
-        public int EndHour { get; set; }
-        public int EndMinute { get; set; }
-        public int EndSecond { get; set; }
-        #endregion
-
-        #region Json Deserializing Constructor
+        public long StartUnixTime { get; set; }
+        public long EndUnixTime { get; set; }
 
         // Constructor required only for ASP.Net Core's automatic Json deserialization.
         // Web API will not need to create TimeInterval objects.
-        public TimeInterval(int StartYear, int StartMonth, int StartDay, int StartHour, int StartMinute, int StartSecond, int EndYear, int EndMonth, int EndDay, int EndHour, int EndMinute, int EndSecond)
+        public TimeInterval(long StartUnixTime, long EndUnixTime)
         {
-            this.StartYear = StartYear;
-            this.StartMonth = StartMonth;
-            this.StartDay = StartDay;
-            this.StartHour = StartHour;
-            this.StartMinute = StartMinute;
-            this.StartSecond = StartSecond;
-            this.EndYear = EndYear;
-            this.EndMonth = EndMonth;
-            this.EndDay = EndDay;
-            this.EndHour = EndHour;
-            this.EndMinute = EndMinute;
-            this.EndSecond = EndSecond;
+            this.StartUnixTime = StartUnixTime;
+            this.EndUnixTime = EndUnixTime;
         }
-        #endregion
 
-        /// <summary>
-        /// Method to validate a TimeInterval object.
-        /// </summary>
-        /// <returns>Returns TRUE if the Time Interval object has all 12 attributes checked to be valid and that the Start DateTime is smaller or equal to the End DateTime.</returns>
-        public bool isValidInterval()
+        public bool isValidTimeInterval()
         {
-            #region Verify Start Attributes (lower bound of interval)
-            // Start Year
-            if (this.StartYear < 1900 || this.StartYear > 9999)
+            DateTime startTime = this.StartUnixTime.toDateTime();
+            DateTime endTime = this.EndUnixTime.toDateTime();
+
+            if (DateTimeTools.validateDateTime(startTime) == false)
                 return (false);
 
-            //Start Month
-            if (this.StartMonth < 1 || this.StartMonth > 12)
+            if (DateTimeTools.validateDateTime(endTime) == false)
                 return (false);
 
-            // Validate StartDay based on the month and leap year (for February).
-            if (this.StartMonth == 1 || this.StartMonth == 3 || this.StartMonth == 5 || this.StartMonth == 7 || this.StartMonth == 8 || this.StartMonth == 10 || this.StartMonth == 12)
-            {
-                if (this.StartDay < 1 || this.StartDay > 31)
-                    return (false);
-            }
-            else if (this.StartMonth == 4 || this.StartMonth == 6 || this.StartMonth == 9 || this.StartMonth == 11)
-            {
-                if (this.StartDay < 1 || this.StartDay > 30)
-                    return (false);
-            }
-            else
-            {
-                // Only occurs when: this.StartMonth == 2
-                if (DateTime.IsLeapYear((int)this.StartYear))
-                {
-                    if (this.StartDay < 1 || this.StartDay > 29)
-                        return (false);
-                }
-                else
-                {
-                    if (this.StartDay < 1 || this.StartDay > 28)
-                        return (false);
-                }
-            }
-
-            // Start Hour
-            if (this.StartHour < 1 || this.StartHour > 23)
+            // The start time must be before the end time or the start time must be identical to the end time.
+            if (DateTime.Compare(startTime, endTime) > 0)
                 return (false);
-
-            // Start Minute
-            if (this.StartMinute < 0 || this.StartMinute > 59)
-                return (false);
-
-            // Start Second
-            if (this.StartSecond < 0 || this.StartSecond > 59)
-                return (false);
-
-            #endregion
-
-            #region Verify End Attributes (upper bound of interval)
-            // End Year
-            if (this.EndYear < 1900 || this.EndYear > 9999)
-                return (false);
-
-            //End Month
-            if (this.EndMonth < 1 || this.EndMonth > 12)
-                return (false);
-
-            // Validate EndDay based on the month and leap year (for February).
-            if (this.EndMonth == 1 || this.EndMonth == 3 || this.EndMonth == 5 || this.EndMonth == 7 || this.EndMonth == 8 || this.EndMonth == 10 || this.EndMonth == 12)
-            {
-                if (this.EndDay < 1 || this.EndDay > 31)
-                    return (false);
-            }
-            else if (this.EndMonth == 4 || this.EndMonth == 6 || this.EndMonth == 9 || this.EndMonth == 11)
-            {
-                if (this.EndDay < 1 || this.EndDay > 30)
-                    return (false);
-            }
-            else
-            {
-                // Only occurs when: this.EndMonth == 2
-                if (DateTime.IsLeapYear((int)this.EndYear))
-                {
-                    if (this.EndDay < 1 || this.EndDay > 29)
-                        return (false);
-                }
-                else
-                {
-                    if (this.EndDay < 1 || this.EndDay > 28)
-                        return (false);
-                }
-            }
-
-            // End Hour
-            if (this.EndHour < 1 || this.EndHour > 23)
-                return (false);
-
-            // End Minute
-            if (this.EndMinute < 0 || this.EndMinute > 59)
-                return (false);
-
-            // End Second
-            if (this.EndSecond < 0 || this.EndSecond > 59)
-                return (false);
-
-            #endregion
-
-            #region Since start and end DateTimes are checked to be valid, compare if start datetime is before/equal to end datetime.
-            // https://msdn.microsoft.com/en-us/library/272ba130(v=vs.110).aspx
-
-            DateTime start = new DateTime((int)this.StartYear, (int)this.StartMonth, (int)this.StartDay, (int)this.StartHour, (int)this.StartMinute, (int)this.StartSecond);
-            DateTime end = new DateTime((int)this.EndYear, (int)this.EndMonth, (int)this.EndDay, (int)this.EndHour, (int)this.EndMinute, (int)this.EndSecond);
-
-            // Check if start time is later than end time.
-            if (DateTime.Compare(start,end) > 0)
-                return (false);
-            #endregion
 
             return (true);
         }

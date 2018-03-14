@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Helper_Classes;
 
 namespace WebAPI.Object_Classes
 {
@@ -13,19 +14,17 @@ namespace WebAPI.Object_Classes
     /// </summary>
     public class PerHourStats
     {
-        // Date Attributes, representing the Date of the statistics.
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
+        // Ignoring minutes and seconds. Returned in responses. Is in a format easily supported by JavaScript.
+        public long UnixTime { get; set; }
         // Statistic: Average of all the PerSecondStats of ALL CAMERAS for a single hour.
         public double HourlyAverage { get; set; }
 
-        public PerHourStats(int year, int month, int day, double hourlyAverage)
+        public PerHourStats(long UnixTime, double HourlyAverage)
         {
-            this.Year = year;
-            this.Month = month;
-            this.Day = day;
-            this.HourlyAverage = hourlyAverage;
+            this.UnixTime = UnixTime;
+            this.HourlyAverage = HourlyAverage;
         }
+
+        // No validation needed as this is never provided by browser client requests, only sent in responses to web server.
     }
 }

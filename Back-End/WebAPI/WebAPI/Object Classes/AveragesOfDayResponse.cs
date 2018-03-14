@@ -16,9 +16,9 @@ namespace WebAPI.Object_Classes
         public PerHourStats[] HourlyAverages { get; set; }
 
         // Constructor
-        public AveragesOfDayResponse()
+        public AveragesOfDayResponse(PerHourStats[] PerHourStats)
         {
-            this.HourlyAverages = new PerHourStats[24];
+            this.HourlyAverages = PerHourStats;
         }
     }
 }

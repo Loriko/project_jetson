@@ -9,8 +9,8 @@ namespace WebAPI.Error_Response_Classes
 {
     public class InvalidAttributesResponseBody
     {
-        string[] InvalidAttributes;
         string Message;
+        string[] InvalidAttributes; 
 
         public InvalidAttributesResponseBody(string[] InvalidAttributes)
         {
