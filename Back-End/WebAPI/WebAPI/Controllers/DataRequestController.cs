@@ -27,7 +27,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="timeInterval">A TimeInterval object specifying the start and end times in unix time (seconds).</param>
         /// <returns>HTTP Response. May have an empty body, a reponse object or JSON-serialized Data Message containing query results.</returns>
-        [HttpGet]
+        [HttpPost]
         public IActionResult GetPerSecondStatsFromTimeInterval ([FromBody] TimeInterval timeInterval)
         {
             // Validate provided TimeInterval received from Web Server.
@@ -58,7 +58,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="averagesOfDayRequest"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public IActionResult GetHourlyAveragesForDayFromRequest ([FromBody] AveragesOfDayRequest averagesOfDayRequest)
         {
             // Validate the date which the hourly averages are being requested from Web Server.
@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="singleSecondTime"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public IActionResult GetPerSecondStatFromSingleSecondTime ([FromBody] SingleSecondTime singleSecondTime)
         {
             if (singleSecondTime.isValidSingleSecondTime() == false)

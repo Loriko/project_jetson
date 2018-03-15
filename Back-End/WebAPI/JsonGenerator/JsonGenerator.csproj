@@ -60,8 +60,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\AveragesOfDayRequest.cs" />
     <Compile Include="Classes\DataMessage.cs" />
     <Compile Include="Classes\PerSecondStats.cs" />
+    <Compile Include="Classes\SingleSecondTime.cs" />
+    <Compile Include="Classes\TimeInterval.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

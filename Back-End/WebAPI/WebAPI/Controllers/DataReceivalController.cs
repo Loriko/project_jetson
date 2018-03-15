@@ -19,7 +19,7 @@ namespace WebAPI.Controllers
         /// <param name="receivedMessage">DataMessage object received from a capture system. May contain PerSecondStats from multiple cameras.</param>
         /// <returns>HTTP Status Code: OK or BAD REQUEST</returns>
         [HttpPost]
-        public IActionResult Post([FromBody] DataMessage receivedMessage)
+        public IActionResult Persist([FromBody] DataMessage receivedMessage)
         {
             // DO NOT DELETE
             // For testing purposes, use this line of code:
