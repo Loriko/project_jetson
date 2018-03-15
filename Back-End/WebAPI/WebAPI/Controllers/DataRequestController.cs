@@ -1,35 +1,38 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Object_Classes;
+using WebAPI.Data_Request_Classes;
+using WebAPI.Data_Response_Classes;
+using WebAPI.Error_Response_Classes;
+using WebAPI.Helper_Classes;
 using WebAPI.Models;
+using WebAPI.Object_Classes;
 
 namespace WebAPI.Controllers
 {
     /// <summary>
     /// Controller to support requests from the Web Server.
-    /// Use "api/datarequest" ar the URL.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] // "api/datarequest"
     public class DataRequestController : Controller
     {
         // Authentication will be considered later in development.
 
+        
         /// <summary>
-        /// Returns all statistics between a given Date/Time interval. Uses 24 hour clock. 
-        /// Called constantly for real-time graph and occasionally for on-demand requests.
+        /// Returns all statistics between a given Date/Time interval.
+        /// Can be called constantly for real-time graph and for on-demand requests.
         /// </summary>
-        /// <param name="timeInterval"></param>
-        /// <returns>HTTP BAD REQUEST or HTTP OK with JSON-serialized Data Message containing query results.</returns>
+        /// <param name="timeInterval">A TimeInterval object specifying the start and end times in unix time (seconds).</param>
+        /// <returns>HTTP Response. May have an empty body, a reponse object or JSON-serialized Data Message containing query results.</returns>
         [HttpGet]
-        public IActionResult Get ([FromBody] TimeInterval timeInterval)
+        public IActionResult GetPerSecondStatsFromTimeInterval ([FromBody] TimeInterval timeInterval)
         {
-            // Validate provided TimeInterval from Web Server.
-            if (timeInterval.isValidInterval() == false)
-                return BadRequest( new JsonResult("Invalid TimeInterval object provided.") );
+            // Validate provided TimeInterval received from Web Server.
+            if (timeInterval.isValidTimeInterval() == false)
+                return BadRequest( new JsonResult(new InvalidTimeIntervalResponseBody()) );
 
             // Obtain database context.
             StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
@@ -37,11 +40,17 @@ namespace WebAPI.Controllers
             // Obtain DataMessage using special method of the database context class.
             DataMessage responseMessage = context.getStatsFromInterval(timeInterval);
 
-            // Serialize DataMessage to JSON format.
-            JsonResult jsonResponseMessage = new JsonResult(responseMessage);
-
-            // Return HTTP OK and JSON-serialized DataMessage containing all requested query results. 
-            return Ok(jsonResponseMessage);
+            if (responseMessage == null)
+            {
+                return (NoContent());
+            }
+            else if (responseMessage.getLength() < 1)
+            {
+                return (NoContent());
+            }
+            
+            // Return HTTP OK along with the JSON-serialized DataMessage object containing all requested query results. 
+            return Ok(new JsonResult(responseMessage));
         }
 
         /// <summary>
@@ -50,26 +59,71 @@ namespace WebAPI.Controllers
         /// <param name="averagesOfDayRequest"></param>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Get([FromBody] AveragesOfDayRequest averagesOfDayRequest)
+        public IActionResult GetHourlyAveragesForDayFromRequest ([FromBody] AveragesOfDayRequest averagesOfDayRequest)
         {
-            // Validate the date which the hourly averages are being requested for from Front-End API client.
-            if (averagesOfDayRequest.hasValidDay() == false)
-                return BadRequest(new JsonResult("Invalid date provided in request object."));
+            // Validate the date which the hourly averages are being requested from Web Server.
+            if (averagesOfDayRequest.isValidRequest() == false)
+                return BadRequest(new JsonResult( new InvalidAveragesOfDayRequestResponseBody()));
 
             // Obtain database context.
             StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
 
             // Obtain AveragesOfDayResponse using special method of the database context class.
-            AveragesOfDayResponse responseMessage = context.getHourlyAveragesForDay(averagesOfDayRequest);
+            AveragesOfDayResponse responseData = context.getHourlyAveragesForDay(averagesOfDayRequest);
 
-            // Serialize DataMessage to JSON format.
-            JsonResult jsonResponseMessage = new JsonResult(responseMessage);
+            if (responseData == null)
+            {
+                return (NoContent());
+            }
+            else if (responseData.HourlyAverages.Length < 1)
+            {
+                return (NoContent());
+            }
 
             // Return HTTP OK and JSON-serialized Response object.
-            return Ok(jsonResponseMessage);
+            return Ok(new JsonResult(responseData));
         }
 
-        [Route("api/[controller]/dbtest")]
+        /// <summary>
+        /// To request statistics for a single second, call GET and provide a SingleSecondTime object (Json-serialized).
+        /// This method does not need its own Request class or Response class, as it can simple take a single SingleSecondTime
+        /// object and return a single PerSecondStats object.
+        /// </summary>
+        /// <param name="singleSecondTime"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult GetPerSecondStatFromSingleSecondTime ([FromBody] SingleSecondTime singleSecondTime)
+        {
+            if (singleSecondTime.isValidSingleSecondTime() == false)
+                return (BadRequest(new JsonResult(new InvalidSingleSecondTimeResponseBody())));
+
+            // Obtain database context.
+            StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
+
+            // Obtain AveragesOfDayResponse using special method of the database context class.
+            PerSecondStats responseData = context.getSpecificSecond(singleSecondTime);
+
+            if (responseData == null)
+                return (NoContent());
+
+            // Return HTTP OK and JSON-serialized Response object.
+            return Ok(new JsonResult(responseData));
+        }
+
+        [HttpGet("location/{LocationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/18"
+        public IActionResult GetCamerasFromLocationId (int LocationId)
+        {
+
+
+            return (Ok(new JsonResult(LocationId)));
+        }
+
+        /*
+        /// <summary>
+        /// For testing connection to the database...
+        /// PLEASE IGNORE
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public string Get()
         {
@@ -77,9 +131,8 @@ namespace WebAPI.Controllers
 
             StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
 
-
-
             return ("test");
         }
+        */
     }
 }

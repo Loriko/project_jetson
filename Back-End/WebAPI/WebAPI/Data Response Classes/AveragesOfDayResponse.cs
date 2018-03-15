@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Object_Classes;
 
-namespace WebAPI.Object_Classes
+namespace WebAPI.Data_Response_Classes
 {
     /// <summary>
     /// Represents a response object to an AveragesOfDayRequest from the Front-End client.

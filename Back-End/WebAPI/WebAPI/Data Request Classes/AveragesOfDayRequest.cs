@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebAPI.Object_Classes;
 
-namespace WebAPI.Object_Classes
+namespace WebAPI.Data_Request_Classes
 {
     /// <summary>
     /// Represents a request for the hourly averages of an entire day. Simplified without time zones.

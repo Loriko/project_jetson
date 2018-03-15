@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebAPI.Helper_Classes;
 
 namespace WebAPI.Object_Classes
 {
+    /// <summary>
+    /// This class also acts as a SingleSecondTimeRequest class.
+    /// </summary>
     public class SingleSecondTime
     {
         public long UnixTime { get; set; }

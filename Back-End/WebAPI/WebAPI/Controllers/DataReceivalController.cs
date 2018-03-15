@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using WebAPI.Object_Classes;
@@ -13,9 +9,8 @@ namespace WebAPI.Controllers
 {
     /// <summary>
     /// Controller to receive data storage requests from a Capture system (Jetson TX2 or other).
-    /// Use "api/datareceival/datamessage" as the URL path.
     /// </summary>
-    [Route("api/[controller]")]
+    [Route("api/[controller]")] // "api/datareceival"
     public class DataReceivalController : ControllerBase
     {
         /// <summary>
@@ -26,14 +21,15 @@ namespace WebAPI.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] DataMessage receivedMessage)
         {
+            // DO NOT DELETE
             // For testing purposes, use this line of code:
-            //return (new JsonResult("Received DataMessage test. Here is the year of persecondstat: " + receivedMessage.RealTimeStats[0].Year));
+            // return (new JsonResult("Received DataMessage test. Here is the year of persecondstat: " + receivedMessage.RealTimeStats[0].Year));
             
-            if (receivedMessage.isValidMessage() == false)
+            if (receivedMessage.isValidDataMessage() == false)
             {
-                String[] invalidAttributes = receivedMessage.getInvalidAttributes();
-                InvalidAttributesResponseBody body = new InvalidAttributesResponseBody(invalidAttributes);
-                return (BadRequest(new JsonResult(body)));
+                string[] invalidAttributes = receivedMessage.getInvalidAttributes();
+                InvalidDataMessageResponseBody invalidResponseBody = new InvalidDataMessageResponseBody(invalidAttributes);
+                return (BadRequest(new JsonResult(invalidResponseBody)));
             }
 
             // Obtain database context.

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
 using WebAPI.Object_Classes;
+using WebAPI.Data_Request_Classes;
+using WebAPI.Data_Response_Classes;
+
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
 namespace WebAPI.Models
@@ -110,7 +112,7 @@ namespace WebAPI.Models
 
             foreach (DatabasePerSecondStats second in perSecondStatsList)
             {
-                responseDataMessage.RealTimeStats[i] = new PerSecondStats(second.CameraID, second.Year, second.Month, second.Day, second.Hour, second.Minute, second.Second, second.NumTrackedPeople, second.HasSavedImage);
+                //responseDataMessage.RealTimeStats[i] = new PerSecondStats(second.CameraID, second.Year, second.Month, second.Day, second.Hour, second.Minute, second.Second, second.NumTrackedPeople, second.HasSavedImage);
                 i++;
             }
 
@@ -153,7 +155,7 @@ namespace WebAPI.Models
         /// <returns></returns>
         public AveragesOfDayResponse getHourlyAveragesForDay(AveragesOfDayRequest averagesOfDayRequest)
         {
-            AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse();
+            //AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse();
 
             // Query the 24 Hourly Averages in the database.
 
@@ -165,8 +167,14 @@ namespace WebAPI.Models
 
             }
 
-            return (averagesOfDayResponse);
+            return (null);
         }
 
+        public PerSecondStats getSpecificSecond(SingleSecondTime singleSecondTime)
+        {
+
+
+            return (null);
+        }
     }
 }
