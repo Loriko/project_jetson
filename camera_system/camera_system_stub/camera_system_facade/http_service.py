@@ -14,8 +14,8 @@ def send_per_second_stat(camera_id, token, per_second_stats):
     url = ENDPOINT_HOST + ":" + ENDPOINT_PORT + ENDPOINT_PATH
     headers = {'Content-type': 'application/json'}
     json_data = {
-        "CameraId": camera_id,
-        "Token": token,
+        # "CameraId": camera_id,
+        # "Token": token,
         "RealTimeStats": per_second_stats
     }
     json_encoded_data = json.dumps(json_data)
