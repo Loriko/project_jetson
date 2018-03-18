@@ -110,12 +110,32 @@ namespace WebAPI.Controllers
             return Ok(new JsonResult(responseData));
         }
 
-        [HttpGet("location/{LocationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/18"
+        [HttpGet("location/{LocationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/location/18"
         public IActionResult GetCamerasFromLocationId (int LocationId)
         {
+            // Testing Code:
+            // return (Ok(new JsonResult(LocationId)));
 
+            if (LocationId < 0)
+            {
+                return (BadRequest(new JsonResult(new InvalidLocationIdResponseBody())));
+            }
 
-            return (Ok(new JsonResult(LocationId)));
+            // Obtain database context.
+            StatisticsDatabaseContext context = HttpContext.RequestServices.GetService(typeof(WebAPI.Models.StatisticsDatabaseContext)) as StatisticsDatabaseContext;
+
+            Camera[] camerasForRequestedLocation = context.getCamerasForLocation(LocationId);
+
+            if (camerasForRequestedLocation == null)
+            {
+                return (NoContent());
+            }
+            else if (camerasForRequestedLocation.Length == 0)
+            {
+                return (NoContent());
+            }
+
+            return (Ok(new JsonResult(camerasForRequestedLocation)));
         }
 
         /*

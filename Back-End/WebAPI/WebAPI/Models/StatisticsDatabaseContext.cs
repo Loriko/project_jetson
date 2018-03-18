@@ -5,6 +5,7 @@ using MySql.Data.MySqlClient;
 using WebAPI.Object_Classes;
 using WebAPI.Data_Request_Classes;
 using WebAPI.Data_Response_Classes;
+using WebAPI.Helper_Classes;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
@@ -68,20 +69,10 @@ namespace WebAPI.Models
 
             using (MySqlConnection conn = GetConnection())
             {
-                // Stuck on query, not sure how I will be able to query between year, month, day, hour, minute, second...
+                // I finished this one without the query, so you know how to complete the other ones.
 
+                // FRANCIS*****************************************************************
                 string query = "";
-                /*
-                if ()
-                {
-
-                }
-                else if ()
-                {
-
-                }
-                */
-
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -91,15 +82,13 @@ namespace WebAPI.Models
                     {
                         perSecondStatsList.Add(new DatabasePerSecondStats()
                         {
-                            Year = Convert.ToInt32(reader["Year"]),
-                            Month = Convert.ToInt32(reader["Month"]),
-                            Day = Convert.ToInt32(reader["Day"]),
-                            Hour = Convert.ToInt32(reader["Hour"]),
-                            Minute = Convert.ToInt32(reader["Minute"]),
-                            Second = Convert.ToInt32(reader["Second"]),
-                            CameraID = Convert.ToInt32(reader["CameraID"]),
-                            NumTrackedPeople = Convert.ToInt32(reader["NumTrackedPeople"]),
-                            HasSavedImage = Convert.ToBoolean(reader["HasSavedImage"])
+                            // FRANCIS **********************************************************************************************************
+                            // The strings within the reader[] section must match the column names that SARMAD specified in the My SQL schema.
+
+                            UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["Datetime ???"])).toUnixTime(),
+                            CameraID = Convert.ToInt32(reader["CameraID ???"]),
+                            NumTrackedPeople = Convert.ToInt32(reader["NumTrackedPeople ???"]),
+                            HasSavedImage = Convert.ToBoolean(reader["HasSavedImage ???"])
                         });
                     }
                 }
@@ -107,14 +96,16 @@ namespace WebAPI.Models
             }
 
             int numQueryResults = perSecondStatsList.Count;
-            DataMessage responseDataMessage = new DataMessage(numQueryResults);
             int i = 0;
+            PerSecondStats[] temp = new PerSecondStats[numQueryResults];
 
             foreach (DatabasePerSecondStats second in perSecondStatsList)
             {
-                //responseDataMessage.RealTimeStats[i] = new PerSecondStats(second.CameraID, second.Year, second.Month, second.Day, second.Hour, second.Minute, second.Second, second.NumTrackedPeople, second.HasSavedImage);
+                temp[i] = new PerSecondStats(second.CameraID, second.UnixTime, second.NumTrackedPeople, second.HasSavedImage);
                 i++;
             }
+
+            DataMessage responseDataMessage = new DataMessage(temp);
 
             return (responseDataMessage);
         }
@@ -172,6 +163,15 @@ namespace WebAPI.Models
 
         public PerSecondStats getSpecificSecond(SingleSecondTime singleSecondTime)
         {
+
+
+            return (null);
+        }
+
+        public Camera[] getCamerasForLocation(int locationId)
+        {
+
+
 
 
             return (null);
