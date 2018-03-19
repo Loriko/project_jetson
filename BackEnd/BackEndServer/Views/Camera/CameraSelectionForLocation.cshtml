@@ -1,0 +1,23 @@
+﻿@model BackEndServer.Models.ViewModels.CameraInformationList
+
+<h1 class="page-title center-align">Please select the camera whose information you wish to see</h1>
+<!--<div class="collection">
+    @foreach (var camera in Model.CameraList){
+        <a href="CameraSelected?cameraId=@camera.CameraId" class="collection-item">@camera.CameraRoomName</a>
+    }
+</div>-->
+
+<div class="row">
+    @foreach (var camera in Model.CameraList){
+        <div class="col s6 m4">
+            <div class="card camera-card">
+                <div class="card-image clickable">
+                    <a href="CameraInformation?cameraId=@camera.CameraId">
+                        <img class="camera-card-image" src="~/images/camera_images/camera_image_@(camera.CameraId).png">
+                        <span class="camera-card-title card-title">@camera.CameraRoomName</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

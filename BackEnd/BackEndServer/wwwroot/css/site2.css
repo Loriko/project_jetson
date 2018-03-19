@@ -1,0 +1,311 @@
+﻿/* Old css from before migration */
+.tab a.active {
+    color: #009688 !important;
+    background-color: #009688 !important
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto
+}
+
+    button:hover {
+        opacity: 0.8
+    }
+
+span.psw {
+    float: right;
+    padding-top: 16px
+}
+
+.limitedNumbChosen, .limitedNumbSelect2 {
+    width: 400px
+}
+
+.topnav {
+    background-color: #333;
+    overflow: hidden
+}
+
+    /* Style the links inside the navigation bar */
+    .topnav a {
+        float: left;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px
+    }
+
+        /* Change the color of links on hover */
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black
+        }
+
+        /* Add a color to the active/current link */
+        .topnav a.active {
+            background-color: #4CAF50;
+            color: white
+        }
+
+.center {
+    margin: auto;
+    width: 35%;
+    padding: 150px;
+    display: inline
+}
+
+.center1 {
+    margin: auto;
+    width: 35%;
+    padding: 10px
+}
+
+.image {
+    padding: 30px;
+    display: inline
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
+    transition: .5s ease;
+    opacity: 0;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center
+}
+
+.image:hover .overlay {
+    opacity: 1
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto
+}
+
+    button:hover {
+        opacity: 0.8
+    }
+
+
+.camera {
+    position: absolute;
+    left: 45%;
+    width: 100px;
+    height: 100px;
+    background: #eaeaea;
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 20px;
+}
+
+
+.btn {
+    position: absolute;
+    top: 9px;
+    right: 11px;
+    width: 12px;
+    height: 12px;
+    background-color: #2e3e4f;
+    border-radius: 15px;
+    box-shadow: 0px 1px 0px rgba(0,0,0,.4)
+}
+
+    .btn:hover {
+        cursor: pointer;
+        margin-top: 2px;
+        box-shadow: 0px 1px 0px rgba(0,0,0,.4)
+    }
+
+.shadow {
+    position: absolute;
+    left: 45%;
+    top: 24.5%;
+    width: 100px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,.3)
+}
+
+.lens {
+    position: absolute;
+    top: 80%;
+    left: 75%;
+    width: 144px;
+    height: 144px;
+    margin: -90px
+}
+
+    .lens:before {
+        content: '';
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        margin: 27px;
+        border: 15px solid rgb(60, 60, 60);
+        border-radius: 50%;
+        background: rgb(34, 34, 34)
+    }
+
+    .lens:after {
+        content: '';
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        margin: 57px;
+        border: 6px solid rgb(22, 22, 22);
+        border-radius: 50%;
+        background: rgb(131, 131, 131)
+    }
+
+.led {
+    position: absolute;
+    left: 13px;
+    top: 9px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(255, 136, 115);
+    box-shadow: inset 0px 1px 0px rgba(0,0,0,.1);
+    -webkit-animation: led .8s infinite;
+    -moz-animation: led .8s infinite;
+    -ms-animation: led .8s infinite;
+    -o-animation: led .8s infinite;
+    animation: led .8s infinite
+}
+
+/* keyframes */
+@-webkit-keyframes btn {
+    from {
+        margin-top: 0px;
+        top: 22px
+    }
+
+    to {
+        margin-top: 2px;
+        box-shadow: 0px 1px 0px rgba(0,0,0,.4)
+    }
+}
+
+@-moz-keyframes btn {
+    from {
+        margin-top: 0px;
+        top: 22px
+    }
+
+    to {
+        margin-top: 2px;
+        box-shadow: 0px 1px 0px rgba(0,0,0,.4)
+    }
+}
+
+@-ms-keyframes btn {
+    from {
+        margin-top: 0px;
+        top: 22px
+    }
+
+    to {
+        margin-top: 2px;
+        box-shadow: 0px 1px 0px rgba(0,0,0,.4)
+    }
+}
+
+@-o-keyframes btn {
+    from {
+        margin-top: 0px;
+        top: 22px
+    }
+
+    to {
+        margin-top: 2px;
+        box-shadow: 0px 1px 0px rgba(0,0,0,.4)
+    }
+}
+
+@keyframes btn {
+    from {
+        margin-top: 0px;
+        top: 22px
+    }
+
+    to {
+        margin-top: 2px;
+        box-shadow: 0px 1px 0px rgba(0,0,0,.4)
+    }
+}
+
+.container {
+    padding: 16px 400px
+}
+
+.containerCamera {
+    width: 625px;
+    height: 125px;
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-block
+}
+
+.containerLog {
+    width: 625px;
+    height: 25px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px
+}
