@@ -1,0 +1,48 @@
+﻿@model BackEndServer.Models.ViewModels.CameraStatistics
+
+<h1 class="page-title center-align">Here is the most recent information concerning the data captured by:<br><b>@Model.CameraInformation.CameraName</b></h1>
+<div class="row flex">
+    <div class="col s12 m6">
+        <div class="col s10 offset-s1">
+            <div class="card camera-card">
+            <div class="card-image">
+                <img class="camera-card-image" src="~/images/camera_images/camera_image_@(Model.CameraInformation.CameraId).png">
+                <span class="camera-card-title card-title">@Model.CameraInformation.CameraRoomName</span>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="col s12 m6 center-align main-statistics valign-wrapper">
+        <div class="valign-wrapper-subcontainer">
+            <div class="last-updated-time">
+                Recorded on: @Model.LastUpdatedTime.ToString("yyyy/MM/dd hh:mm tt")
+            </div>
+            <div class="people-count">
+    <!--            <p class="">-->
+                    Number of people spotted: @Model.MostRecentPeopleCount
+    <!--            </p>-->
+            </div>
+            <div>
+    <!--                <a class="waves-effect waves-light btn"><i class="material-icons right">refresh</i>refresh</a>-->
+                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">refresh</i></a>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="row flex">
+    <div class="col m6 s12 center-align">
+        <div class="average-section-title">
+            Average number of people spotted at similar times:
+        </div>
+        <div class="average-stat">
+            @(Model.DayTimeOfTheWeekAverageCountDisplayString) : @(Model.DayTimeOfTheWeekAverageCount)
+        </div>
+        <div class="average-stat">
+            @(Model.PeriodOfTheDayAverageCountDisplayString) : @(Model.PeriodOfTheDayAverageCount)
+        </div>
+        <a id="camera-stats-link" class="waves-effect waves-light btn"><i class="material-icons right">show_chart</i>View statistics and trends over past data</a>
+    </div>
+    <div class="col m6 s12 center-align">
+    </div>
+</div>

@@ -1,0 +1,8 @@
+@model BackEndServer.Models.ViewModels.LocationInformationList
+
+<h1 class="page-title center-align">To view information about a camera, please first select the location where the camera is located</h1>
+<div class="collection">
+    @foreach (var location in Model.LocationList){
+        <a href="LocationSelected?locationId=@location.LocationId" class="collection-item">@location.LocationName</a>
+    }
+</div>
