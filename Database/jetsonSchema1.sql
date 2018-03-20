@@ -66,7 +66,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`perSecondStat` (
   `idStat` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `Camera_idCamera` INT UNSIGNED NOT NULL,
-  `Camera_User_idUser` INT UNSIGNED NOT NULL,
   `dateTime` DATETIME NOT NULL,
   `hasSavedImage` TINYINT(1) DEFAULT 0,
   `numDetectedObjects` INT NOT NULL DEFAULT 0,
