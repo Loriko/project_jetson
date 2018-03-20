@@ -67,9 +67,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`perSecondStat` (
   `idStat` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `Camera_idCamera` INT UNSIGNED NOT NULL,
   `Camera_User_idUser` INT UNSIGNED NOT NULL,
-  `date` DATE NOT NULL,
-  `time` TIME NOT NULL,
-  `numObject` INT NOT NULL DEFAULT 0,
+  `dateTime` DATETIME NOT NULL,
+  `hasSavedImage` TINYINT(1) DEFAULT 0,
+  `numDetectedObjects` INT NOT NULL DEFAULT 0,
   PRIMARY KEY (`idStat`, `Camera_idCamera`, `Camera_User_idUser`),
   UNIQUE INDEX `idStat_UNIQUE` (`idStat` ASC),
   CONSTRAINT `fk_perSecondStat_Camera1`
