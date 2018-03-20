@@ -161,18 +161,52 @@ namespace WebAPI.Models
             return (null);
         }
 
+        /// <summary>
+        /// Service to obtain the statistics for a specified single second.
+        /// </summary>
+        /// <param name="singleSecondTime"></param>
+        /// <returns>Null if nothing was found in the database. A PerSecondStats object if found.</returns>
         public PerSecondStats getSpecificSecond(SingleSecondTime singleSecondTime)
         {
+            List<DatabasePerSecondStats> perSecondStatsList = new List<DatabasePerSecondStats>();
 
+            using (MySqlConnection conn = GetConnection())
+            {
+                string timeToObtain = singleSecondTime.UnixTime.toDateTime().toMySqlDateTime();
+                string query = "select * from perSecondStat where dateTime = " + timeToObtain;
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
 
-            return (null);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStatsList.Add(new DatabasePerSecondStats()
+                        {
+                            UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["dateTime"])).toUnixTime(),
+                            CameraID = Convert.ToInt32(reader["Camera_idCamera"]),
+                            NumTrackedPeople = Convert.ToInt32(reader["numDetectedObjects"]),
+                            HasSavedImage = Convert.ToBoolean(reader["hasSavedImage"])
+                        });
+                    }
+                }
+            }
+
+            DatabasePerSecondStats temp = perSecondStatsList.ElementAt(0);
+            PerSecondStats result = null;
+            
+            // If a result was found by the query.
+            if (temp != null)
+            {
+                result = new PerSecondStats(temp.CameraID, temp.UnixTime, temp.NumTrackedPeople, temp.HasSavedImage);
+            }
+
+            return (result);
         }
 
         public Camera[] getCamerasForLocation(int locationId)
         {
-
-
-
+            // Will be implemented by me soon.
 
             return (null);
         }
