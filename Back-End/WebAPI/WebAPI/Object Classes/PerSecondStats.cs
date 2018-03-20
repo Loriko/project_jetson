@@ -6,7 +6,7 @@ namespace WebAPI.Object_Classes
     /// <summary>
     /// An object which represents information extracted for each second of real-time monitoring.
     /// </summary>
-    public class PerSecondStats
+    public class PerSecondStats : IComparable<PerSecondStats>
     {
         #region Attributes 
 
@@ -49,6 +49,32 @@ namespace WebAPI.Object_Classes
             DateTime toValidate = this.UnixTime.toDateTime();
 
             return (DateTimeTools.validateDateTime(toValidate));
+        }
+
+        /// <summary>
+        /// To be used for eliminating possible duplicates in a DataMessage.
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public int CompareTo(PerSecondStats other)
+        {
+            if (this.UnixTime > other.UnixTime)
+                return (-1);
+            if (this.UnixTime < other.UnixTime)
+                return (1);
+            // this.UnixTime == other.UnixTime
+            return (0);
+        }
+
+        /// <summary>
+        /// To be used for eliminating possible duplicates in a DataMessage.
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            PerSecondStats other = obj as PerSecondStats;
+            return (other.UnixTime == this.UnixTime);
         }
     }
 }

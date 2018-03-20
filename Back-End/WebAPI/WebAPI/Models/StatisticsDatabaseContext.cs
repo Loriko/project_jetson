@@ -69,10 +69,12 @@ namespace WebAPI.Models
 
             using (MySqlConnection conn = GetConnection())
             {
-                // I finished this one without the query, so you know how to complete the other ones.
+                string lowerBoundMySqlTime = verifiedTimeInterval.StartUnixTime.toDateTime().toMySqlDateTime();
+                string upperBoundMySqlTime = verifiedTimeInterval.EndUnixTime.toDateTime().toMySqlDateTime();
 
-                // FRANCIS*****************************************************************
-                string query = "";
+                string query = "select * from perSecondStat where dateTime >= " + lowerBoundMySqlTime;
+                query += " and dateTime <= " + upperBoundMySqlTime;
+
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -82,13 +84,10 @@ namespace WebAPI.Models
                     {
                         perSecondStatsList.Add(new DatabasePerSecondStats()
                         {
-                            // FRANCIS **********************************************************************************************************
-                            // The strings within the reader[] section must match the column names that SARMAD specified in the My SQL schema.
-
-                            UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["Datetime ???"])).toUnixTime(),
-                            CameraID = Convert.ToInt32(reader["CameraID ???"]),
-                            NumTrackedPeople = Convert.ToInt32(reader["NumTrackedPeople ???"]),
-                            HasSavedImage = Convert.ToBoolean(reader["HasSavedImage ???"])
+                            UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["dateTime"])).toUnixTime(),
+                            CameraID = Convert.ToInt32(reader["Camera_idCamera"]),
+                            NumTrackedPeople = Convert.ToInt32(reader["numDetectedObjects"]),
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader["hasSavedImage"]))
                         });
                     }
                 }
@@ -117,27 +116,54 @@ namespace WebAPI.Models
         /// <returns>True if persist operations were successful. False if something is wrong. Returns a boolean to inform controller of what response code to return to the HTTP client.</returns>
         public bool storeStatsFromMessage(DataMessage dataMessage)
         {
-            if (dataMessage.RealTimeStats == null || dataMessage.RealTimeStats.Length < 1)
+            if (dataMessage.RealTimeStats == null || dataMessage.getLength() < 1)
                 return (false);
 
-            int length = dataMessage.RealTimeStats.Length;
+            int initialLength = dataMessage.getLength();
+            List<PerSecondStats> temp = new List<PerSecondStats>();
 
-            for (int x = 0; x < length; x++)
+            for (int y = 0; y < initialLength; y++)
             {
-                try
-                {
-                    // Store element x from array into the database.
-
-                    // use this.StoreSQL or similar
-                }
-                catch(Exception e)
-                {
-                    return (false);
-                }
+                temp.Add(dataMessage.RealTimeStats[y]);
             }
+
+            // Remove any possible duplicates.
+            List<PerSecondStats> distinctListOfSecondStats = temp.Distinct().ToList();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                foreach (PerSecondStats second in distinctListOfSecondStats)
+                {
+                    string mySqlDateTime = second.UnixTime.toDateTime().toMySqlDateTime();
+                    string camId = second.CameraId.ToString();
+                    string numPeople = second.NumTrackedPeople.ToString();
+                    string hasImage = "0";
+
+                    if (second.HasSavedImage == true)
+                    {
+                        hasImage = "1";
+                    }
+
+                    try
+                    {
+                        string insertCommand = "insert into perSecondStat (dateTime,Camera_idCamera,numDetectedObjects,hasSavedImage) ";
+                        insertCommand += "values (" + mySqlDateTime + "," + camId + "," + numPeople + "," + hasImage + ")";
+
+                        MySqlCommand cmd = new MySqlCommand(insertCommand, conn);
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception e)
+                    {
+                        // write to log
+
+                        return (false);
+                    }
+                }
+
+            }
+
             return (true);
         }
-
 
         /// <summary>
         /// 
@@ -146,6 +172,8 @@ namespace WebAPI.Models
         /// <returns></returns>
         public AveragesOfDayResponse getHourlyAveragesForDay(AveragesOfDayRequest averagesOfDayRequest)
         {
+            // Will be implemented by me.
+            
             //AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse();
 
             // Query the 24 Hourly Averages in the database.
@@ -186,7 +214,7 @@ namespace WebAPI.Models
                             UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["dateTime"])).toUnixTime(),
                             CameraID = Convert.ToInt32(reader["Camera_idCamera"]),
                             NumTrackedPeople = Convert.ToInt32(reader["numDetectedObjects"]),
-                            HasSavedImage = Convert.ToBoolean(reader["hasSavedImage"])
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader["hasSavedImage"]))
                         });
                     }
                 }
@@ -197,9 +225,7 @@ namespace WebAPI.Models
             
             // If a result was found by the query.
             if (temp != null)
-            {
                 result = new PerSecondStats(temp.CameraID, temp.UnixTime, temp.NumTrackedPeople, temp.HasSavedImage);
-            }
 
             return (result);
         }
