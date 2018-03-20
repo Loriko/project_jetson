@@ -53,11 +53,15 @@ namespace WebAPI.Object_Classes
 
         /// <summary>
         /// To be used for eliminating possible duplicates in a DataMessage.
+        /// Must consider camera ids because a DataMessage can have the same second from multiple cameras.
         /// </summary>
         /// <param name="other"></param>
         /// <returns></returns>
         public int CompareTo(PerSecondStats other)
         {
+            if (this.CameraId != other.CameraId)
+                return (-1);
+
             if (this.UnixTime > other.UnixTime)
                 return (-1);
             if (this.UnixTime < other.UnixTime)
@@ -68,13 +72,14 @@ namespace WebAPI.Object_Classes
 
         /// <summary>
         /// To be used for eliminating possible duplicates in a DataMessage.
+        /// Must consider camera ids because a DataMessage can have the same second from multiple cameras.
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         public override bool Equals(object obj)
         {
             PerSecondStats other = obj as PerSecondStats;
-            return (other.UnixTime == this.UnixTime);
+            return (other.UnixTime == this.UnixTime && this.CameraId != other.CameraId);
         }
     }
 }
