@@ -27,5 +27,10 @@ namespace BackEndServer.Controllers.FrontEndControllers
             CameraStatistics cameraStatisticsModel = cameraService.getCameraStatisticsForNowById(cameraId);
             return View(cameraStatisticsModel);
         }
+
+        public IActionResult CameraSelected(int cameraId)
+        {
+            return RedirectToAction("GraphDashboard", "Graph", new { cameraId });
+        }
     }
 }

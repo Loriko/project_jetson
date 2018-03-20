@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using BackEndServer.Models.ViewModels;
+using BackEndServer.Services.PlaceholderServices;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,7 +15,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
         // GET: /<controller>/
         public IActionResult GraphDashboard()
         {
-            return View();
+            GraphStatistics graphStatistics = new PlaceholderGraphStatisticsService().getMaxStatistics(1);
+            return View(graphStatistics);
         }
     }
 }
