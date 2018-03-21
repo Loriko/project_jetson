@@ -94,14 +94,13 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `mydb`.`perSecondStat_has_perHourStat` (
   `perSecondStat_idStat` INT UNSIGNED NOT NULL,
   `perSecondStat_Camera_idCamera` INT UNSIGNED NOT NULL,
-  `perSecondStat_Camera_User_idUser` INT UNSIGNED NOT NULL,
   `perHourStat_idHourStat` INT NOT NULL,
-  PRIMARY KEY (`perSecondStat_idStat`, `perSecondStat_Camera_idCamera`, `perSecondStat_Camera_User_idUser`, `perHourStat_idHourStat`),
+  PRIMARY KEY (`perSecondStat_idStat`, `perSecondStat_Camera_idCamera`, `perHourStat_idHourStat`),
   INDEX `fk_perSecondStat_has_perHourStat_perHourStat1_idx` (`perHourStat_idHourStat` ASC),
   INDEX `fk_perSecondStat_has_perHourStat_perSecondStat1_idx` (`perSecondStat_idStat` ASC, `perSecondStat_Camera_idCamera` ASC, `perSecondStat_Camera_User_idUser` ASC),
   CONSTRAINT `fk_perSecondStat_has_perHourStat_perSecondStat1`
-    FOREIGN KEY (`perSecondStat_idStat` , `perSecondStat_Camera_idCamera` , `perSecondStat_Camera_User_idUser`)
-    REFERENCES `mydb`.`perSecondStat` (`idStat` , `Camera_idCamera` , `Camera_User_idUser`)
+    FOREIGN KEY (`perSecondStat_idStat` , `perSecondStat_Camera_idCamera`)
+    REFERENCES `mydb`.`perSecondStat` (`idStat` , `Camera_idCamera`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_perSecondStat_has_perHourStat_perHourStat1`
