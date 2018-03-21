@@ -48,7 +48,7 @@ def send_one_per_second_stat(camera_id, token, per_second_stat):
 # We do this by adding or substracting a random but reasonable amount from the previous people_count
 def generate_random_per_second_stat(camera_id, previous_per_second_stat):
     previous_people_count = previous_per_second_stat.num_tracked_people
-    people_count_variation = random.choice((-4, -3, -2, -2, -1, -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 3, 4,))
+    people_count_variation = random.choice((-4, -3, -2, -1, -1, -1, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 4,))
     new_people_count = previous_people_count + people_count_variation
     if new_people_count < 0:
         new_people_count = 0
