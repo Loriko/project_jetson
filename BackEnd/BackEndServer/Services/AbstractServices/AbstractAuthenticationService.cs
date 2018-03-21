@@ -4,6 +4,6 @@ namespace BackEndServer.Services.AbstractServices
 {
     public interface AbstractAuthenticationService
     {
-        bool validateCredentials(string username, string password);
+        bool ValidateCredentials(string username, string password);
     }
 }

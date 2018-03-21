@@ -14,17 +14,28 @@
     </div>
     <div class="col s12 m6 center-align main-statistics valign-wrapper">
         <div class="valign-wrapper-subcontainer">
-            <div class="last-updated-time">
-                Recorded on: @Model.LastUpdatedTime.ToString("yyyy/MM/dd hh:mm tt")
-            </div>
-            <div class="people-count">
-    <!--            <p class="">-->
-                    Number of people spotted: @Model.MostRecentPeopleCount
-    <!--            </p>-->
-            </div>
+            @{
+                if (@Model.LastUpdatedTime != null)
+                {
+                    <div class="last-updated-time">
+                        Page last updated on: @DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt")
+                    </div>
+                    <div class="last-updated-time">
+                        Recorded on: @Model.LastUpdatedTime.Value.ToString("yyyy/MM/dd hh:mm:ss tt")
+                    </div>
+                    <div class="people-count">
+                        Number of people spotted: @Model.MostRecentPeopleCount
+                    </div>
+                }
+                else
+                {
+                    <div class="people-count">
+                        Nothing captured by the camera so far
+                    </div>
+                }
+            }
             <div>
-    <!--                <a class="waves-effect waves-light btn"><i class="material-icons right">refresh</i>refresh</a>-->
-                <a class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">refresh</i></a>
+                <a asp-controller="Camera" asp-action="CameraInformation" asp-route-cameraId="@Model.CameraInformation.CameraId" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">refresh</i></a>
             </div>
         </div>
     </div>
@@ -35,12 +46,29 @@
         <div class="average-section-title">
             Average number of people spotted at similar times:
         </div>
-        <div class="average-stat">
-            @(Model.DayTimeOfTheWeekAverageCountDisplayString) : @(Model.DayTimeOfTheWeekAverageCount)
-        </div>
-        <div class="average-stat">
-            @(Model.PeriodOfTheDayAverageCountDisplayString) : @(Model.PeriodOfTheDayAverageCount)
-        </div>
+        @{
+            if (!@Model.DayTimeOfTheWeekAverageCountAvailable && !@Model.PeriodOfTheDayAverageCountAvailable)
+            {
+                <div class="unavailable-message average-stat">
+                    Not enough data - Past data comparisons unavailable
+                </div>        
+            }
+            else
+            {
+                if (@Model.DayTimeOfTheWeekAverageCountAvailable)
+                {
+                    <div class="average-stat">
+                        @(Model.DayTimeOfTheWeekAverageCountDisplayString) : @(Model.DayTimeOfTheWeekAverageCount)
+                    </div>           
+                }
+                else
+                {
+                    <div class="average-stat">
+                        @(Model.DayTimeOfTheWeekAverageCountDisplayString) : @(Model.DayTimeOfTheWeekAverageCount)
+                    </div>
+                }
+            }
+        }
         <a href="CameraSelected?cameraId=@Model.CameraInformation.CameraId" id="camera-stats-link" class="waves-effect waves-light btn"><i class="material-icons right">show_chart</i>View statistics and trends over past data</a>
     </div>
     <div class="col m6 s12 center-align">

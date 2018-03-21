@@ -13,7 +13,16 @@
             <div class="card camera-card">
                 <div class="card-image clickable">
                     <a href="CameraInformation?cameraId=@camera.CameraId">
-                        <img class="camera-card-image" src="~/images/camera_images/camera_image_@(camera.CameraId).png">
+                        @{
+                            if (@camera.CameraId <= 4)
+                            {
+                                <img class="camera-card-image" src="~/images/camera_images/camera_image_@(camera.CameraId).png" alt="@camera.CameraRoomName">
+                            }
+                            else
+                            {
+                                <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@camera.CameraRoomName">
+                            }
+                        }
                         <span class="camera-card-title card-title">@camera.CameraRoomName</span>
                     </a>
                 </div>
