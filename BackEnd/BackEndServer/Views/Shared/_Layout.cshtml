@@ -48,40 +48,47 @@
                 </ul>
             </div>
         </nav>
-        <main class="container body-content">
+        <div class="container body-content">
             @RenderBody()
-        </main>
+        </div>
 
         <footer class="page-footer teal darken-1">
-          <!--<div class="container">
-            <div class="row">
-              <div class="col l6 s12">
-                <h5 class="white-text">Footer Content</h5>
-                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-              </div>
-              <div class="col l4 offset-l2 s12">
-                <h5 class="white-text">Links</h5>
-                <ul>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-                </ul>
-              </div>
+            <!--<div class="container">
+          <div class="row">
+            <div class="col l6 s12">
+              <h5 class="white-text">Footer Content</h5>
+              <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
             </div>
-          </div>-->
-          <div class="footer-copyright">
-            <div class="container">
-            © 2018 Project Jetson
+            <div class="col l4 offset-l2 s12">
+              <h5 class="white-text">Links</h5>
+              <ul>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+              </ul>
             </div>
           </div>
+        </div>-->
+            <div class="footer-copyright">
+                <div class="container">
+                    © 2018 Project Jetson
+                </div>
+            </div>
         </footer>
-        
+
         <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
             <script src="~/lib/materialize/js/materialize.js"></script>
+
+            <script>
+                $(document).ready(function () {
+                    $(".dropdown-button").dropdown();
+                    $('select').material_select();
+                });
+            </script>
         </environment>
         <environment exclude="Development">
             <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
