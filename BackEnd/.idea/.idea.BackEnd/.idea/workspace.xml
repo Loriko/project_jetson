@@ -1,70 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/contentModel.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/riderModule.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/DataRequestClasses/AveragesOfDayRequest.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/DataResponseClasses/AveragesOfDayResponse.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/SingleSecondTime.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/TimeInterval.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/FailedPersistResponseBody.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/InvalidAveragesOfDayRequestResponseBody.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/InvalidDataMessageResponseBody.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/InvalidLocationIdResponseBody.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/InvalidSingleSecondTimeResponseBody.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/InvalidTimeIntervalResponseBody.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseAddress.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerHourStats.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStats.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/TestObject.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/AuthenticationService.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/HelperServices/DateTimeTools.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/HelperServices/MySqlDateTimeConverter.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/HelperServices/UnixTimeConverter.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/BackEndServer/wwwroot/images/camera_images/no_location_picture.png" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/BackEndServer.csproj" afterPath="$PROJECT_DIR$/BackEndServer/BackEndServer.csproj" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" afterPath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" afterPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" afterPath="$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Startup.cs" afterPath="$PROJECT_DIR$/BackEndServer/Startup.cs" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" afterPath="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" afterPath="$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/appsettings.Development.json" afterPath="$PROJECT_DIR$/BackEndServer/appsettings.Development.json" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/appsettings.json" afterPath="$PROJECT_DIR$/BackEndServer/appsettings.json" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css" afterPath="$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css" />
-    </list>
+    <list default="true" id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -86,65 +23,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GraphController.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="24" column="41" lean-forward="false" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-              <folding>
-                <marker date="1521606108699" expanded="true" signature="6:250" ph="..." />
-                <marker date="1521606108699" expanded="true" signature="421:903" ph="{...}" />
-                <marker date="1521606108699" expanded="true" signature="469:901" ph="{...}" />
-                <marker date="1521606108699" expanded="true" signature="552:895" ph="{...}" />
-                <marker date="1521606108699" expanded="true" signature="636:723" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="GraphDashboard.cshtml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
               <caret line="9" column="45" lean-forward="false" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-              <folding>
-                <marker date="1521606995001" expanded="true" signature="72:2181" ph="&lt;script.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="249:2171" ph="{...}" />
-                <marker date="1521606995001" expanded="true" signature="528:1641" ph="/* var data2 = new google.visualization.arrayToDataTable([ ... */" />
-                <marker date="1521606995001" expanded="true" signature="1665:1720" ph="{...}" />
-                <marker date="1521606995001" expanded="true" signature="1897:2165" ph="/* chart = new google.visualization.LineChart(document.getElementById('curve_chart2')); ... */" />
-                <marker date="1521606995001" expanded="true" signature="2184:3703" ph="&lt;div.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="2206:2740" ph="&lt;div.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="2235:2729" ph="&lt;ul.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="2745:3067" ph="&lt;div.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="2786:3021" ph="&lt;select.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="3072:3449" ph="&lt;div.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="3113:3391" ph="&lt;select.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="3706:3999" ph="&lt;div.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="3728:3992" ph="&lt;div.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="3758:3981" ph="&lt;div.../&gt;" />
-                <marker date="1521606995001" expanded="true" signature="3789:3966" ph="&lt;div.../&gt;" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataReceivalController.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="41" column="12" lean-forward="false" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
-              <folding>
-                <marker date="1521608717242" expanded="false" signature="6:301" ph="..." />
-                <marker date="1521608717242" expanded="true" signature="331:2484" ph="{...}" />
-                <marker date="1521608717242" expanded="true" signature="338:467" ph="/// Controller to receive data storage requests from a Capture system (Jetson TX2 or other). ... " />
-                <marker date="1521608717242" expanded="true" signature="578:2482" ph="{...}" />
-                <marker date="1521608717242" expanded="true" signature="593:973" ph="/// API service that allows a capture system to store statistics into the database by providing a DataMessage Obj ... " />
-                <marker date="1521608717242" expanded="true" signature="1103:2476" ph="{...}" />
-                <marker date="1521608717242" expanded="true" signature="1126:1348" ph="/* DO NOT DELETE ... */" />
-                <marker date="1521608717242" expanded="true" signature="1424:1735" ph="{...}" />
-                <marker date="1521608717242" expanded="true" signature="2206:2265" ph="{...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -152,71 +36,10 @@
       <file leaf-file-name="DatabaseQueryService.cs" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="168" column="0" lean-forward="false" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+            <state relative-caret-position="7800">
+              <caret line="325" column="0" lean-forward="false" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
               <folding>
-                <marker date="1521610659899" expanded="false" signature="6:328" ph="..." />
-                <marker date="1521610659899" expanded="true" signature="454:15732" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="494:15730" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="509:1366" ph="Database Context" />
-                <marker date="1521610659899" expanded="true" signature="710:784" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="794:976" ph="/* Quick hack because I can't figure out dependency injection right now ... */" />
-                <marker date="1521610659899" expanded="true" signature="1014:1155" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="1269:1347" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="1563:2385" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="1711:2342" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="1934:2327" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="1994:2309" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="2104:2285" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="2630:3373" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="2774:3322" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="2994:3307" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="3054:3289" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="3165:3265" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="3383:3898" ph="/// Queries all PerSecondStats objects in the StatisticsDatabase, groups them in a single DataMessage which will  ... " />
-                <marker date="1521610659899" expanded="true" signature="3981:5915" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="4149:5384" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="4711:5369" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="4771:5351" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="4894:5327" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="5616:5792" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="5925:6624" ph="/// Stores every individual PerSecondStat object from a DataMessage (received from Capture System) into the Stati ... " />
-                <marker date="1521610659899" expanded="true" signature="6694:8676" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="7001:7085" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="7282:8641" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="7411:8627" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="7877:7961" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="7986:8401" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="8441:8609" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="8687:8824" ph="///  ... " />
-                <marker date="1521610659899" expanded="true" signature="8928:9453" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="8951:9345" ph="/* AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse(); ... */" />
-                <marker date="1521610659899" expanded="true" signature="9387:9416" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="9463:9735" ph="/// Service to obtain the statistics for a specified single second. ... " />
-                <marker date="1521610659899" expanded="true" signature="9818:11386" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="9986:11016" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="10344:11002" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="10404:10984" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="10527:10960" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="11470:12672" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="11596:12628" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="11910:12613" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="12013:12595" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="12128:12572" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="12739:13800" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="12851:13763" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="13120:13748" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="13177:13730" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="13278:13707" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="13883:15001" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="14027:14960" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="14307:14945" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="14367:14927" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="14474:14903" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="15087:15724" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="15156:15688" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="15465:15673" ph="{...}" />
-                <marker date="1521610659899" expanded="true" signature="15574:15655" ph="{...}" />
+                <marker date="1521638827382" expanded="true" signature="15724:15730" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -225,152 +48,36 @@
       <file leaf-file-name="CameraInformation.cshtml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="20" column="59" lean-forward="false" selection-start-line="20" selection-start-column="59" selection-end-line="20" selection-end-column="59" />
+            <state relative-caret-position="192">
+              <caret line="8" column="40" lean-forward="false" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
               <folding>
-                <marker date="1521610914927" expanded="true" signature="213:1917" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="240:680" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="273:669" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="317:654" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="360:639" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="685:1910" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="762:1899" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="816:1620" ph="@..." />
-                <marker date="1521610914927" expanded="true" signature="870:1413" ph="{...}" />
-                <marker date="1521610914927" expanded="true" signature="909:1062" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="1083:1242" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="1263:1395" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="1434:1606" ph="{...}" />
-                <marker date="1521610914927" expanded="true" signature="1473:1588" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="1633:1884" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="1946:3349" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="1973:3289" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="2019:2132" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="2141:3050" ph="@..." />
-                <marker date="1521610914927" expanded="true" signature="2253:2447" ph="{...}" />
-                <marker date="1521610914927" expanded="true" signature="2284:2425" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="2464:3040" ph="{...}" />
-                <marker date="1521610914927" expanded="true" signature="2544:2780" ph="{...}" />
-                <marker date="1521610914927" expanded="true" signature="2583:2751" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="2801:3026" ph="{...}" />
-                <marker date="1521610914927" expanded="true" signature="2840:3008" ph="&lt;div.../&gt;" />
-                <marker date="1521610914927" expanded="true" signature="3294:3342" ph="&lt;div.../&gt;" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataMessage.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1080">
-              <caret line="48" column="49" lean-forward="false" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
-              <folding>
-                <marker date="1521603366467" expanded="false" signature="6:120" ph="..." />
-                <marker date="1521603366467" expanded="true" signature="184:567" ph="/// Object which acts as a container for one or more PerSecondStats objects. ... " />
-                <marker date="1521603366467" expanded="true" signature="596:3264" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="846:915" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="1047:1139" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="1149:1397" ph="/// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeSta ... " />
-                <marker date="1521603366467" expanded="true" signature="1428:1496" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="1506:1683" ph="/// Verifies validity of all contents of the DataMessage. ... " />
-                <marker date="1521603366467" expanded="true" signature="1724:1960" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="1787:1923" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="1970:2228" ph="/// Will be used by the DataReceival controller after a DataMessage is checked not to be valid. ... " />
-                <marker date="1521603366467" expanded="true" signature="2275:3258" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="2393:2770" ph="{...}" />
-                <marker date="1521603366467" expanded="true" signature="3122:3218" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PerSecondStats.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
-              <caret line="22" column="64" lean-forward="false" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
-              <folding>
-                <marker date="1521605160855" expanded="false" signature="6:58" ph="..." />
-                <marker date="1521605160855" expanded="true" signature="115:3284" ph="{...}" />
-                <marker date="1521605160855" expanded="true" signature="122:352" ph="/// An object which represents information extracted for each second of real-time monitoring. ... " />
-                <marker date="1521605160855" expanded="true" signature="414:3282" ph="{...}" />
-                <marker date="1521605160855" expanded="true" signature="429:1090" ph="Attributes" />
-                <marker date="1521605160855" expanded="true" signature="1275:1473" ph="{...}" />
-                <marker date="1521605160855" expanded="true" signature="1483:1686" ph="/// Checks the validity of the attributes of the PerSecondStat object. ... " />
-                <marker date="1521605160855" expanded="true" signature="1726:2075" ph="{...}" />
-                <marker date="1521605160855" expanded="true" signature="2093:2386" ph="/// To be used for eliminating possible duplicates in a DataMessage. ... " />
-                <marker date="1521605160855" expanded="true" signature="2437:2760" ph="{...}" />
-                <marker date="1521605160855" expanded="true" signature="2770:3061" ph="/// To be used for eliminating possible duplicates in a DataMessage. ... " />
-                <marker date="1521605160855" expanded="true" signature="3109:3276" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OldDataMessage.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="48" column="42" lean-forward="false" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
-              <folding>
-                <marker date="1521609635526" expanded="false" signature="6:120" ph="..." />
-                <marker date="1521609635526" expanded="true" signature="177:3337" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="184:567" ph="/// Object which acts as a container for one or more PerSecondStats objects. ... " />
-                <marker date="1521609635526" expanded="true" signature="599:3335" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="856:925" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="1060:1154" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="1164:1412" ph="/// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeSta ... " />
-                <marker date="1521609635526" expanded="true" signature="1443:1511" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="1521:1698" ph="/// Verifies validity of all contents of the DataMessage. ... " />
-                <marker date="1521609635526" expanded="true" signature="1739:1994" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="1802:1959" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="1875:1945" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="2004:2262" ph="/// Will be used by the DataReceival controller after a DataMessage is checked not to be valid. ... " />
-                <marker date="1521609635526" expanded="true" signature="2309:3329" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="2427:2841" ph="{...}" />
-                <marker date="1521609635526" expanded="true" signature="2672:2827" ph="/* TODO: Non unix time equivalent here ... */" />
-                <marker date="1521609635526" expanded="true" signature="3193:3289" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OldPerSecondStat.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="55" column="12" lean-forward="false" selection-start-line="55" selection-start-column="12" selection-end-line="55" selection-end-column="12" />
-              <folding>
-                <marker date="1521608401210" expanded="false" signature="6:96" ph="..." />
-                <marker date="1521608401210" expanded="true" signature="270:4162" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="277:407" ph="/// An object which represents information extracted for each second of real-time monitoring. ... " />
-                <marker date="1521608401210" expanded="true" signature="441:4160" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="456:646" ph="/* The following attributes are defined of passing a DateTime object to the API. This should be simpler for API c ... */" />
-                <marker date="1521608401210" expanded="true" signature="1746:2094" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="2104:2307" ph="/// Checks the validity of the attributes of the PerSecondStat object. ... " />
-                <marker date="1521608401210" expanded="true" signature="2347:4154" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="2504:4116" ph="Verify Date and Time" />
-                <marker date="1521608401210" expanded="true" signature="2987:3102" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="3198:3313" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="3330:3756" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="3459:3590" ph="{...}" />
-                <marker date="1521608401210" expanded="true" signature="3611:3742" ph="{...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PerHourStats.cs" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <marker date="1521603366470" expanded="true" signature="56:1136" ph="{...}" />
-                <marker date="1521603366470" expanded="true" signature="63:501" ph="/// An object which represents the average number of people for every second within a single hour. ... " />
-                <marker date="1521603366470" expanded="true" signature="531:1134" ph="{...}" />
-                <marker date="1521603366470" expanded="true" signature="897:1003" ph="{...}" />
+                <marker date="1521638827385" expanded="true" signature="213:1917" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="240:680" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="273:669" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="317:654" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="360:639" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="685:1910" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="762:1899" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="816:1620" ph="@..." />
+                <marker date="1521638827385" expanded="true" signature="870:1413" ph="{...}" />
+                <marker date="1521638827385" expanded="true" signature="909:1062" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="1083:1242" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="1263:1395" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="1434:1606" ph="{...}" />
+                <marker date="1521638827385" expanded="true" signature="1473:1588" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="1633:1884" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="1946:3349" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="1973:3289" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="2019:2132" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="2141:3050" ph="@..." />
+                <marker date="1521638827385" expanded="true" signature="2253:2447" ph="{...}" />
+                <marker date="1521638827385" expanded="true" signature="2284:2425" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="2464:3040" ph="{...}" />
+                <marker date="1521638827385" expanded="true" signature="2544:2780" ph="{...}" />
+                <marker date="1521638827385" expanded="true" signature="2583:2751" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="2801:3026" ph="{...}" />
+                <marker date="1521638827385" expanded="true" signature="2840:3008" ph="&lt;div.../&gt;" />
+                <marker date="1521638827385" expanded="true" signature="3294:3342" ph="&lt;div.../&gt;" />
               </folding>
             </state>
           </provider>
@@ -398,59 +105,59 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseAddress.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/FailedPersistResponseBody.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/549E3A02-C30C-4A42-B0AB-FC9E12496C38/e4/43b64d0d/MySqlConnection.cs" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/TimeInterval.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/27/e15c06eb/ExecutionContextSwitcher.cs" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseAddress.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/TestObject.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStats.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/549E3A02-C30C-4A42-B0AB-FC9E12496C38/e4/43b64d0d/MySqlConnection.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/FailedPersistResponseBody.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/TimeInterval.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/HelperServices/MySqlDateTimeConverter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/27/e15c06eb/ExecutionContextSwitcher.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderLocationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderCameraService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/HelperServices/MySqlDateTimeConverter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/a2/4a473184/Nullable`1.cs" root0="SKIP_INSPECTION" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7F8C3ACB-0FAC-4C88-B257-0BC9852782D6/ff/6547d9fb/RazorPage`1.cs" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderCameraService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/a2/4a473184/Nullable`1.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7F8C3ACB-0FAC-4C88-B257-0BC9852782D6/ff/6547d9fb/RazorPage`1.cs" root0="SKIP_INSPECTION" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -508,6 +215,7 @@
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="SolutionExplorer" proportions="" version="1">
       <flattenPackages />
@@ -523,7 +231,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
@@ -542,12 +249,14 @@
         <option name="show-file-system" value="false" />
         <option name="show-all-items" value="false" />
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="SearchEverywhereHistoryKey" value="camera&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;layout&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Shared/_Layout.cshtml&#10;camerainforma&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;gethourly&#9;null&#9;null&#10;camera.cs&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs&#10;databaseq&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;cameracontro&#9;null&#9;null&#10;database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;Database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;locationservice&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/LocationService.cs&#10;d&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;LocationCon&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -601,7 +310,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25527000" />
+    <option name="totallyTimeSpent" value="26220000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -614,31 +323,45 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2219482" sideWeight="0.5028612" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2219482" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18618989" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2219482" sideWeight="0.49713877" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36251542" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2532189" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18125771" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2219482" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18618989" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18125771" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -759,23 +482,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="16" column="90" lean-forward="false" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
-          <folding>
-            <marker date="1521487869037" expanded="false" signature="6:133" ph="..." />
-            <marker date="1521487869037" expanded="true" signature="187:2983" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="255:2981" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="335:1149" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="426:1077" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1077:1139" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1222:1834" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1254:1352" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1388:1486" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1522:1620" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1656:1745" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1763:1824" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="1911:2975" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="2055:2903" ph="{...}" />
-            <marker date="1521487869037" expanded="true" signature="2903:2965" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -979,13 +685,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1521606300676" expanded="false" signature="6:236" ph="..." />
-            <marker date="1521606300676" expanded="true" signature="290:1136" ph="{...}" />
-            <marker date="1521606300676" expanded="true" signature="375:1134" ph="{...}" />
-            <marker date="1521606300676" expanded="true" signature="443:1128" ph="{...}" />
-            <marker date="1521606300676" expanded="true" signature="745:930" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1000,13 +699,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="24" column="41" lean-forward="false" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-          <folding>
-            <marker date="1521606108699" expanded="true" signature="6:250" ph="..." />
-            <marker date="1521606108699" expanded="true" signature="421:903" ph="{...}" />
-            <marker date="1521606108699" expanded="true" signature="469:901" ph="{...}" />
-            <marker date="1521606108699" expanded="true" signature="552:895" ph="{...}" />
-            <marker date="1521606108699" expanded="true" signature="636:723" ph="{...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1014,24 +707,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="9" column="45" lean-forward="false" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-          <folding>
-            <marker date="1521606995001" expanded="true" signature="72:2181" ph="&lt;script.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="249:2171" ph="{...}" />
-            <marker date="1521606995001" expanded="true" signature="528:1641" ph="/* var data2 = new google.visualization.arrayToDataTable([ ... */" />
-            <marker date="1521606995001" expanded="true" signature="1665:1720" ph="{...}" />
-            <marker date="1521606995001" expanded="true" signature="1897:2165" ph="/* chart = new google.visualization.LineChart(document.getElementById('curve_chart2')); ... */" />
-            <marker date="1521606995001" expanded="true" signature="2184:3703" ph="&lt;div.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="2206:2740" ph="&lt;div.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="2235:2729" ph="&lt;ul.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="2745:3067" ph="&lt;div.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="2786:3021" ph="&lt;select.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="3072:3449" ph="&lt;div.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="3113:3391" ph="&lt;select.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="3706:3999" ph="&lt;div.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="3728:3992" ph="&lt;div.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="3758:3981" ph="&lt;div.../&gt;" />
-            <marker date="1521606995001" expanded="true" signature="3789:3966" ph="&lt;div.../&gt;" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1039,12 +715,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1521603366470" expanded="true" signature="56:1136" ph="{...}" />
-            <marker date="1521603366470" expanded="true" signature="63:501" ph="/// An object which represents the average number of people for every second within a single hour. ... " />
-            <marker date="1521603366470" expanded="true" signature="531:1134" ph="{...}" />
-            <marker date="1521603366470" expanded="true" signature="897:1003" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1052,22 +722,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1080">
           <caret line="48" column="49" lean-forward="false" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
-          <folding>
-            <marker date="1521603366467" expanded="false" signature="6:120" ph="..." />
-            <marker date="1521603366467" expanded="true" signature="184:567" ph="/// Object which acts as a container for one or more PerSecondStats objects. ... " />
-            <marker date="1521603366467" expanded="true" signature="596:3264" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="846:915" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="1047:1139" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="1149:1397" ph="/// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeSta ... " />
-            <marker date="1521603366467" expanded="true" signature="1428:1496" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="1506:1683" ph="/// Verifies validity of all contents of the DataMessage. ... " />
-            <marker date="1521603366467" expanded="true" signature="1724:1960" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="1787:1923" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="1970:2228" ph="/// Will be used by the DataReceival controller after a DataMessage is checked not to be valid. ... " />
-            <marker date="1521603366467" expanded="true" signature="2275:3258" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="2393:2770" ph="{...}" />
-            <marker date="1521603366467" expanded="true" signature="3122:3218" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1075,20 +729,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="254">
           <caret line="22" column="64" lean-forward="false" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
-          <folding>
-            <marker date="1521605160855" expanded="false" signature="6:58" ph="..." />
-            <marker date="1521605160855" expanded="true" signature="115:3284" ph="{...}" />
-            <marker date="1521605160855" expanded="true" signature="122:352" ph="/// An object which represents information extracted for each second of real-time monitoring. ... " />
-            <marker date="1521605160855" expanded="true" signature="414:3282" ph="{...}" />
-            <marker date="1521605160855" expanded="true" signature="429:1090" ph="Attributes" />
-            <marker date="1521605160855" expanded="true" signature="1275:1473" ph="{...}" />
-            <marker date="1521605160855" expanded="true" signature="1483:1686" ph="/// Checks the validity of the attributes of the PerSecondStat object. ... " />
-            <marker date="1521605160855" expanded="true" signature="1726:2075" ph="{...}" />
-            <marker date="1521605160855" expanded="true" signature="2093:2386" ph="/// To be used for eliminating possible duplicates in a DataMessage. ... " />
-            <marker date="1521605160855" expanded="true" signature="2437:2760" ph="{...}" />
-            <marker date="1521605160855" expanded="true" signature="2770:3061" ph="/// To be used for eliminating possible duplicates in a DataMessage. ... " />
-            <marker date="1521605160855" expanded="true" signature="3109:3276" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1096,25 +736,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="114">
           <caret line="48" column="42" lean-forward="false" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
-          <folding>
-            <marker date="1521609635526" expanded="false" signature="6:120" ph="..." />
-            <marker date="1521609635526" expanded="true" signature="177:3337" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="184:567" ph="/// Object which acts as a container for one or more PerSecondStats objects. ... " />
-            <marker date="1521609635526" expanded="true" signature="599:3335" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="856:925" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="1060:1154" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="1164:1412" ph="/// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeSta ... " />
-            <marker date="1521609635526" expanded="true" signature="1443:1511" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="1521:1698" ph="/// Verifies validity of all contents of the DataMessage. ... " />
-            <marker date="1521609635526" expanded="true" signature="1739:1994" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="1802:1959" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="1875:1945" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="2004:2262" ph="/// Will be used by the DataReceival controller after a DataMessage is checked not to be valid. ... " />
-            <marker date="1521609635526" expanded="true" signature="2309:3329" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="2427:2841" ph="{...}" />
-            <marker date="1521609635526" expanded="true" signature="2672:2827" ph="/* TODO: Non unix time equivalent here ... */" />
-            <marker date="1521609635526" expanded="true" signature="3193:3289" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1122,22 +743,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="55" column="12" lean-forward="false" selection-start-line="55" selection-start-column="12" selection-end-line="55" selection-end-column="12" />
-          <folding>
-            <marker date="1521608401210" expanded="false" signature="6:96" ph="..." />
-            <marker date="1521608401210" expanded="true" signature="270:4162" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="277:407" ph="/// An object which represents information extracted for each second of real-time monitoring. ... " />
-            <marker date="1521608401210" expanded="true" signature="441:4160" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="456:646" ph="/* The following attributes are defined of passing a DateTime object to the API. This should be simpler for API c ... */" />
-            <marker date="1521608401210" expanded="true" signature="1746:2094" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="2104:2307" ph="/// Checks the validity of the attributes of the PerSecondStat object. ... " />
-            <marker date="1521608401210" expanded="true" signature="2347:4154" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="2504:4116" ph="Verify Date and Time" />
-            <marker date="1521608401210" expanded="true" signature="2987:3102" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="3198:3313" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="3330:3756" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="3459:3590" ph="{...}" />
-            <marker date="1521608401210" expanded="true" signature="3611:3742" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1145,17 +750,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
           <caret line="41" column="12" lean-forward="false" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
-          <folding>
-            <marker date="1521608717242" expanded="false" signature="6:301" ph="..." />
-            <marker date="1521608717242" expanded="true" signature="331:2484" ph="{...}" />
-            <marker date="1521608717242" expanded="true" signature="338:467" ph="/// Controller to receive data storage requests from a Capture system (Jetson TX2 or other). ... " />
-            <marker date="1521608717242" expanded="true" signature="578:2482" ph="{...}" />
-            <marker date="1521608717242" expanded="true" signature="593:973" ph="/// API service that allows a capture system to store statistics into the database by providing a DataMessage Obj ... " />
-            <marker date="1521608717242" expanded="true" signature="1103:2476" ph="{...}" />
-            <marker date="1521608717242" expanded="true" signature="1126:1348" ph="/* DO NOT DELETE ... */" />
-            <marker date="1521608717242" expanded="true" signature="1424:1735" ph="{...}" />
-            <marker date="1521608717242" expanded="true" signature="2206:2265" ph="{...}" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1163,113 +757,51 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="196">
           <caret line="84" column="22" lean-forward="false" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="168" column="0" lean-forward="false" selection-start-line="168" selection-start-column="0" selection-end-line="168" selection-end-column="0" />
+        <state relative-caret-position="7800">
+          <caret line="325" column="0" lean-forward="false" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
           <folding>
-            <marker date="1521610659899" expanded="false" signature="6:328" ph="..." />
-            <marker date="1521610659899" expanded="true" signature="454:15732" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="494:15730" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="509:1366" ph="Database Context" />
-            <marker date="1521610659899" expanded="true" signature="710:784" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="794:976" ph="/* Quick hack because I can't figure out dependency injection right now ... */" />
-            <marker date="1521610659899" expanded="true" signature="1014:1155" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="1269:1347" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="1563:2385" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="1711:2342" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="1934:2327" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="1994:2309" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="2104:2285" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="2630:3373" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="2774:3322" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="2994:3307" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="3054:3289" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="3165:3265" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="3383:3898" ph="/// Queries all PerSecondStats objects in the StatisticsDatabase, groups them in a single DataMessage which will  ... " />
-            <marker date="1521610659899" expanded="true" signature="3981:5915" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="4149:5384" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="4711:5369" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="4771:5351" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="4894:5327" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="5616:5792" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="5925:6624" ph="/// Stores every individual PerSecondStat object from a DataMessage (received from Capture System) into the Stati ... " />
-            <marker date="1521610659899" expanded="true" signature="6694:8676" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="7001:7085" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="7282:8641" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="7411:8627" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="7877:7961" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="7986:8401" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="8441:8609" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="8687:8824" ph="///  ... " />
-            <marker date="1521610659899" expanded="true" signature="8928:9453" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="8951:9345" ph="/* AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse(); ... */" />
-            <marker date="1521610659899" expanded="true" signature="9387:9416" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="9463:9735" ph="/// Service to obtain the statistics for a specified single second. ... " />
-            <marker date="1521610659899" expanded="true" signature="9818:11386" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="9986:11016" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="10344:11002" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="10404:10984" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="10527:10960" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="11470:12672" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="11596:12628" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="11910:12613" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="12013:12595" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="12128:12572" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="12739:13800" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="12851:13763" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="13120:13748" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="13177:13730" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="13278:13707" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="13883:15001" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="14027:14960" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="14307:14945" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="14367:14927" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="14474:14903" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="15087:15724" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="15156:15688" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="15465:15673" ph="{...}" />
-            <marker date="1521610659899" expanded="true" signature="15574:15655" ph="{...}" />
+            <marker date="1521638827382" expanded="true" signature="15724:15730" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="20" column="59" lean-forward="false" selection-start-line="20" selection-start-column="59" selection-end-line="20" selection-end-column="59" />
+        <state relative-caret-position="192">
+          <caret line="8" column="40" lean-forward="false" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
           <folding>
-            <marker date="1521610914927" expanded="true" signature="213:1917" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="240:680" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="273:669" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="317:654" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="360:639" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="685:1910" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="762:1899" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="816:1620" ph="@..." />
-            <marker date="1521610914927" expanded="true" signature="870:1413" ph="{...}" />
-            <marker date="1521610914927" expanded="true" signature="909:1062" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="1083:1242" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="1263:1395" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="1434:1606" ph="{...}" />
-            <marker date="1521610914927" expanded="true" signature="1473:1588" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="1633:1884" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="1946:3349" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="1973:3289" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="2019:2132" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="2141:3050" ph="@..." />
-            <marker date="1521610914927" expanded="true" signature="2253:2447" ph="{...}" />
-            <marker date="1521610914927" expanded="true" signature="2284:2425" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="2464:3040" ph="{...}" />
-            <marker date="1521610914927" expanded="true" signature="2544:2780" ph="{...}" />
-            <marker date="1521610914927" expanded="true" signature="2583:2751" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="2801:3026" ph="{...}" />
-            <marker date="1521610914927" expanded="true" signature="2840:3008" ph="&lt;div.../&gt;" />
-            <marker date="1521610914927" expanded="true" signature="3294:3342" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="213:1917" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="240:680" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="273:669" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="317:654" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="360:639" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="685:1910" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="762:1899" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="816:1620" ph="@..." />
+            <marker date="1521638827385" expanded="true" signature="870:1413" ph="{...}" />
+            <marker date="1521638827385" expanded="true" signature="909:1062" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="1083:1242" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="1263:1395" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="1434:1606" ph="{...}" />
+            <marker date="1521638827385" expanded="true" signature="1473:1588" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="1633:1884" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="1946:3349" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="1973:3289" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="2019:2132" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="2141:3050" ph="@..." />
+            <marker date="1521638827385" expanded="true" signature="2253:2447" ph="{...}" />
+            <marker date="1521638827385" expanded="true" signature="2284:2425" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="2464:3040" ph="{...}" />
+            <marker date="1521638827385" expanded="true" signature="2544:2780" ph="{...}" />
+            <marker date="1521638827385" expanded="true" signature="2583:2751" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="2801:3026" ph="{...}" />
+            <marker date="1521638827385" expanded="true" signature="2840:3008" ph="&lt;div.../&gt;" />
+            <marker date="1521638827385" expanded="true" signature="3294:3342" ph="&lt;div.../&gt;" />
           </folding>
         </state>
       </provider>

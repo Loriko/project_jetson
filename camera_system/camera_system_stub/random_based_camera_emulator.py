@@ -7,7 +7,7 @@ from camera_system_facade import http_service
 
 
 CAMERA_INFO_LOCATION = "camera_information.json"
-DELAY_BETWEEN_MEASUREMENTS_IN_SECONDS = 5
+DELAY_BETWEEN_MEASUREMENTS_IN_SECONDS = 2
 
 
 def emulate_camera(camera_number):
@@ -32,12 +32,12 @@ def get_camera_id(camera_number):
 def serve_made_up_stats_to_server(camera_id, token):
     print "Now sending people count information from camera with id: %s" % camera_id
     today_datetime = datetime.datetime.now()
-    starting_per_second_stat = PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, 0, False)
-    send_one_per_second_stat(camera_id, token, starting_per_second_stat)
+    generated_random_per_second_stat = PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, 0, False)
+    send_one_per_second_stat(camera_id, token, generated_random_per_second_stat)
     while True:
         time.sleep(DELAY_BETWEEN_MEASUREMENTS_IN_SECONDS)
-        generated_per_second_stat = generate_random_per_second_stat(camera_id, starting_per_second_stat)
-        send_one_per_second_stat(camera_id, token, generated_per_second_stat)
+        generated_random_per_second_stat = generate_random_per_second_stat(camera_id, generated_random_per_second_stat)
+        send_one_per_second_stat(camera_id, token, generated_random_per_second_stat)
 
 
 def send_one_per_second_stat(camera_id, token, per_second_stat):
