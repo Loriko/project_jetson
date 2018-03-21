@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Camera` (
   `User_idUser` INT UNSIGNED NOT NULL,
   `cameraName` VARCHAR(45) NULL,
   `Address_idAddress` INT NOT NULL,
-  PRIMARY KEY (`idCamera`, `User_idUser`, `Address_idAddress`),
+  PRIMARY KEY (`idCamera`),
   INDEX `fk_Camera_User_idx` (`User_idUser` ASC),
   INDEX `fk_Camera_Address1_idx` (`Address_idAddress` ASC),
   CONSTRAINT `fk_Camera_User`
@@ -69,11 +69,11 @@ CREATE TABLE IF NOT EXISTS `mydb`.`perSecondStat` (
   `dateTime` DATETIME NOT NULL,
   `hasSavedImage` TINYINT(1) DEFAULT 0,
   `numDetectedObjects` INT NOT NULL DEFAULT 0,
-  PRIMARY KEY (`idStat`, `Camera_idCamera`, `Camera_User_idUser`),
+  PRIMARY KEY (`idStat`),
   UNIQUE INDEX `idStat_UNIQUE` (`idStat` ASC),
   CONSTRAINT `fk_perSecondStat_Camera1`
-    FOREIGN KEY (`Camera_idCamera` , `Camera_User_idUser`)
-    REFERENCES `mydb`.`Camera` (`idCamera` , `User_idUser`)
+    FOREIGN KEY (`Camera_idCamera`)
+    REFERENCES `mydb`.`Camera` (`idCamera`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -93,14 +93,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `mydb`.`perSecondStat_has_perHourStat` (
   `perSecondStat_idStat` INT UNSIGNED NOT NULL,
-  `perSecondStat_Camera_idCamera` INT UNSIGNED NOT NULL,
   `perHourStat_idHourStat` INT NOT NULL,
-  PRIMARY KEY (`perSecondStat_idStat`, `perSecondStat_Camera_idCamera`, `perHourStat_idHourStat`),
+  PRIMARY KEY (`perSecondStat_idStat`, `perHourStat_idHourStat`),
   INDEX `fk_perSecondStat_has_perHourStat_perHourStat1_idx` (`perHourStat_idHourStat` ASC),
-  INDEX `fk_perSecondStat_has_perHourStat_perSecondStat1_idx` (`perSecondStat_idStat` ASC, `perSecondStat_Camera_idCamera` ASC, `perSecondStat_Camera_User_idUser` ASC),
+  INDEX `fk_perSecondStat_has_perHourStat_perSecondStat1_idx` (`perSecondStat_idStat` ASC, `perSecondStat_Camera_User_idUser` ASC),
   CONSTRAINT `fk_perSecondStat_has_perHourStat_perSecondStat1`
-    FOREIGN KEY (`perSecondStat_idStat` , `perSecondStat_Camera_idCamera`)
-    REFERENCES `mydb`.`perSecondStat` (`idStat` , `Camera_idCamera`)
+    FOREIGN KEY (`perSecondStat_idStat`)
+    REFERENCES `mydb`.`perSecondStat` (`idStat`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_perSecondStat_has_perHourStat_perHourStat1`
