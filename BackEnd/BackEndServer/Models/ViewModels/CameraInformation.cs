@@ -1,6 +1,4 @@
 ﻿using System;
-using BackEndServer.Models.DBModels;
-
 namespace BackEndServer.Models.ViewModels
 {
     public class CameraInformation
@@ -21,7 +19,5 @@ namespace BackEndServer.Models.ViewModels
             this.CameraRoomName = cameraRoomName;
             this.CameraName = cameraName;
         }
-
-        public CameraInformation(DatabaseCamera dbCamera) : this(dbCamera.CameraId, dbCamera.MonitoredArea, dbCamera.CameraName) {}
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.PlaceholderServices;
@@ -16,11 +15,6 @@ namespace BackEndServer.Controllers.FrontEndControllers
         // GET: /<controller>/
         public IActionResult GraphDashboard()
         {
-            if (HttpContext.Session.GetString("currentUsername") == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-            
             GraphStatistics graphStatistics = new PlaceholderGraphStatisticsService().getMaxStatistics(1);
             return View(graphStatistics);
         }

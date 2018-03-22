@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using BackEndServer.Services;
 
 namespace BackEndServer
 {
@@ -22,11 +21,7 @@ namespace BackEndServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddSessionStateTempDataProvider();
-            //Add session support
-            services.AddSession();
-            // Allow the use of the MySQL Database as a service in this project.
-            services.Add(new ServiceDescriptor(typeof(DatabaseQueryService), new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"))));
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +37,7 @@ namespace BackEndServer
             }
 
             app.UseStaticFiles();
-            app.UseSession();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

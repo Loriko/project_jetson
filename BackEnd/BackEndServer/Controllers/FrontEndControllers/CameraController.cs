@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.PlaceholderServices;
 using BackEndServer.Models.ViewModels;
-using BackEndServer.Services;
-using Microsoft.AspNetCore.Http;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,45 +13,23 @@ namespace BackEndServer.Controllers.FrontEndControllers
 {
     public class CameraController : Controller
     {
-        private static readonly AbstractCameraService CameraService = new CameraService();
+        private static AbstractCameraService cameraService = new PlaceholderCameraService();
        
         // GET: /<controller>/
         public IActionResult CameraSelectionForLocation(int locationId)
         {
-            if (HttpContext.Session.GetString("currentUsername") == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-            
-            CameraInformationList camerasAtLocationModel = CameraService.getCamerasAtLocation(locationId);
+            CameraInformationList camerasAtLocationModel = cameraService.getCamerasAtLocation(locationId);
             return View(camerasAtLocationModel);
         }
 
         public IActionResult CameraInformation(int cameraId)
         {
-            if (HttpContext.Session.GetString("currentUsername") == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-            
-            CameraStatistics cameraStatisticsModel = CameraService.getCameraStatisticsForNowById(cameraId);
-            if (cameraStatisticsModel != null)
-            {
-                return View(cameraStatisticsModel);    
-            }
-            else
-            {
-                return View("NoCamera");
-            }
+            CameraStatistics cameraStatisticsModel = cameraService.getCameraStatisticsForNowById(cameraId);
+            return View(cameraStatisticsModel);
         }
-        
+
         public IActionResult CameraSelected(int cameraId)
         {
-            if (HttpContext.Session.GetString("currentUsername") == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-            
             return RedirectToAction("GraphDashboard", "Graph", new { cameraId });
         }
     }

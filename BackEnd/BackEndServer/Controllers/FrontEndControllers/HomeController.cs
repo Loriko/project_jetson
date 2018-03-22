@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Models;
 using BackEndServer.Models.ViewModels;
-using BackEndServer.Services;
-using Microsoft.AspNetCore.Http;
+using BackEndServer.Services.PlaceholderServices;
 
 namespace BackEndServer.Controllers.FrontEndControllers
 {
@@ -19,20 +18,13 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return View(authenticationModel);
         }
 
-        public IActionResult SignOut()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction("SignIn");
-        }
-        
         [HttpPost]
         public IActionResult SignIn(AuthenticationInformation authenticationModel){
-            Boolean areCredentialsValid = new AuthenticationService().ValidateCredentials(authenticationModel.Username, authenticationModel.Password);
+            Boolean areCredentialsValid = new PlaceholderAuthenticationService().validateCredentials(authenticationModel.Username, authenticationModel.Password);
             if(!areCredentialsValid){
                 return View(authenticationModel);    
             }
             else {
-                HttpContext.Session.SetString("currentUsername", authenticationModel.Username);
                 return RedirectToAction("LocationSelection", "Location");
             }
         }
