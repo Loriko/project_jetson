@@ -4,7 +4,7 @@ namespace BackEndServer.Services.PlaceholderServices
 {
     public class PlaceholderAuthenticationService : AbstractAuthenticationService
     {
-        public bool validateCredentials(string username, string password)
+        public bool ValidateCredentials(string username, string password)
         {
             if (username == "johndoe" && password == "Hunter12")
             {

@@ -1,4 +1,6 @@
 ﻿using System;
+using BackEndServer.Models.DBModels;
+
 namespace BackEndServer.Models.ViewModels
 {
     public class LocationInformation
@@ -11,8 +13,7 @@ namespace BackEndServer.Models.ViewModels
             this.LocationId = locationId;
             this.LocationName = locationName;
         }
-        public LocationInformation()
-        {
-        }
+        // Adapter for LocationInformation constructor out of a DatabaseAddress object
+        public LocationInformation(DatabaseAddress databaseAddress) : this(databaseAddress.idAddress, databaseAddress.location){}
     }
 }

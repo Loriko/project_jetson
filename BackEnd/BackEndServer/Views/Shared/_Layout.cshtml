@@ -26,20 +26,17 @@
     </head>
     <body>
         <ul id="profileDropDown" class="dropdown-content">
-            <li><a href="#!">My Account</a></li>
-            <li><a href="#!">Sign Out</a></li>
+@*            <li><a href="#!">My Account</a></li>*@
+            <li><a asp-controller="Home" asp-action="SignOut" >Sign Out</a></li>
         </ul>
         <nav>
             <div class="nav-wrapper teal">
-                <a href="#" class="brand-logo center">
+                <a asp-controller="Location" asp-action="LocationSelection" class="brand-logo center">
                     Project Jetson <i class="material-icons right medium">videocam</i>
                 </a>
                 <ul class="left hide-on-med-and-down">
                     <li>
-                        <a asp-area="" asp-controller="Home" asp-action="SignIn" class="nav-link">Home</a>
-                    </li>
-                    <li>
-                        <a asp-area="" asp-controller="Location" asp-action="LocationSelection" class="nav-link">Locations</a>
+                        <a asp-controller="Location" asp-action="LocationSelection" class="nav-link">Home</a>
                     </li>
                 </ul>
 
@@ -48,41 +45,40 @@
                 </ul>
             </div>
         </nav>
-        <div class="container body-content">
+        <main class="container body-content">
             @RenderBody()
-        </div>
+        </main>
 
         <footer class="page-footer teal darken-1">
-            <!--<div class="container">
-          <div class="row">
-            <div class="col l6 s12">
-              <h5 class="white-text">Footer Content</h5>
-              <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+          <!--<div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+              </div>
             </div>
-            <div class="col l4 offset-l2 s12">
-              <h5 class="white-text">Links</h5>
-              <ul>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
-              </ul>
+          </div>-->
+          <div class="footer-copyright">
+            <div class="container">
+            © 2018 Project Jetson
             </div>
           </div>
-        </div>-->
-            <div class="footer-copyright">
-                <div class="container">
-                    © 2018 Project Jetson
-                </div>
-            </div>
         </footer>
-
+        
         <environment include="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>
             <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
             <script src="~/js/site.js" asp-append-version="true"></script>
             <script src="~/lib/materialize/js/materialize.js"></script>
-
             <script>
                 $(document).ready(function () {
                     $(".dropdown-button").dropdown();
@@ -105,6 +101,12 @@
             </script>
             <script src="~/js/site.min.js" asp-append-version="true"></script>
             <script src="~/lib/materialize/js/materialize.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $(".dropdown-button").dropdown();
+                    $('select').material_select();
+                });
+            </script>
         </environment>
 
         @RenderSection("Scripts", required: false)

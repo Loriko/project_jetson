@@ -1,17 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
-
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.10-rc" />
+    <PackageReference Include="MySql.Web" Version="8.0.10-rc" />
   </ItemGroup>
-
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
   </ItemGroup>
-
   <ItemGroup>
     <Compile Remove="Controllers\HomeController.cs" />
     <Compile Remove="Models\ViewModels\Startup.cs" />
@@ -20,5 +18,12 @@
     <Folder Include="Models\ViewModels\" />
     <Folder Include="Views\Camera\" />
     <Folder Include="wwwroot\images\camera_images\" />
+    <Folder Include="Controllers\APIControllers\" />
+    <Folder Include="Models\DBModels\" />
+    <Folder Include="Models\LogicalModels\" />
+    <Folder Include="Services\HelperServices\" />
+    <Folder Include="Classes\" />
+    <Folder Include="Classes\DataRequestClasses\" />
+    <Folder Include="Classes\DataResponseClasses\" />
   </ItemGroup>
 </Project>
