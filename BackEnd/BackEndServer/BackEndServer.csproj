@@ -4,8 +4,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
-    <PackageReference Include="MySql.Data" Version="8.0.10-rc" />
+    <PackageReference Include="MySql.Data" Version="6.10.6" />
     <PackageReference Include="MySql.Web" Version="8.0.10-rc" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />

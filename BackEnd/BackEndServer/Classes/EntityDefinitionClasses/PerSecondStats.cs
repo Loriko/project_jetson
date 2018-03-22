@@ -80,7 +80,7 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         public override bool Equals(object obj)
         {
             PerSecondStats other = obj as PerSecondStats;
-            return (other.UnixTime == this.UnixTime && this.CameraId != other.CameraId);
+            return (other.UnixTime == this.UnixTime && this.CameraId == other.CameraId);
         }
     }
 }
