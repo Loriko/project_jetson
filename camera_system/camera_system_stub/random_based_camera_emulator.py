@@ -32,7 +32,7 @@ def get_camera_id(camera_number):
 def serve_made_up_stats_to_server(camera_id, token):
     print "Now sending people count information from camera with id: %s" % camera_id
     today_datetime = datetime.datetime.now()
-    generated_random_per_second_stat = PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, 0, False)
+    generated_random_per_second_stat = PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, 5, False)
     send_one_per_second_stat(camera_id, token, generated_random_per_second_stat)
     while True:
         time.sleep(DELAY_BETWEEN_MEASUREMENTS_IN_SECONDS)
@@ -48,7 +48,7 @@ def send_one_per_second_stat(camera_id, token, per_second_stat):
 # We do this by adding or substracting a random but reasonable amount from the previous people_count
 def generate_random_per_second_stat(camera_id, previous_per_second_stat):
     previous_people_count = previous_per_second_stat.num_tracked_people
-    people_count_variation = random.choice((-4, -3, -2, -1, -1, -1, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 4,))
+    people_count_variation = random.choice((-4, -3, -2, -2, -2, -1, -1, -1, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 4,))
     new_people_count = previous_people_count + people_count_variation
     if new_people_count < 0:
         new_people_count = 0

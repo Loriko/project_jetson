@@ -20,8 +20,8 @@ def send_per_second_stat(camera_id, token, per_second_stats):
     }
     json_encoded_data = json.dumps(json_data)
     try:
-        req = urllib2.Request(url=url, data=json_encoded_data , headers=headers)
+        req = urllib2.Request(url=url, data=json_encoded_data, headers=headers)
         response = urllib2.urlopen(req)
-        print response.read()
+        print "Server response to sending stats for camera %s:" % camera_id + response.read()
     except:
         print "send_per_second_stat with camera_id: %s failed" % camera_id
