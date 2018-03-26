@@ -6,10 +6,10 @@ using BackEndServer.Services.HelperServices;
 namespace BackEndServer.Classes.EntityDefinitionClasses
 {
     /// <summary>
-    /// Object which acts as a container for one or more PerSecondStats objects.
+    /// Object which acts as a container for one or more PerSecondStat objects.
     /// Used to communicate with the Web Server and with the Capture System.
-    /// Can carry PerSecondStats objects for an interval of time (ex: 5 seconds) and from multiple cameras (ex: 3) 
-    /// which produce one PerSecondStats object each per second of run time.
+    /// Can carry PerSecondStat objects for an interval of time (ex: 5 seconds) and from multiple cameras (ex: 3) 
+    /// which produce one PerSecondStat object each per second of run time.
     /// </summary>
     public class OldDataMessage
     {
@@ -18,21 +18,21 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
 
         // Constructor which is also the Json deserialising constructor.
         [JsonConstructor]
-        public OldDataMessage(OldPerSecondStat[] PerSecondStats)
+        public OldDataMessage(OldPerSecondStat[] PerSecondStat)
         {
-            this.RealTimeStats = PerSecondStats;
+            this.RealTimeStats = PerSecondStat;
         }
 
         // Constructor required by certain specific Web API methods/controllers.
-        public OldDataMessage(int NumPerSecondStats)
+        public OldDataMessage(int NumPerSecondStat)
         {
-            this.RealTimeStats = new OldPerSecondStat[NumPerSecondStats];
+            this.RealTimeStats = new OldPerSecondStat[NumPerSecondStat];
         }
 
         /// <summary>
-        /// Returns the number of PerSecondStats objects stored within the DataMessage. A.k.a the size of the RealTimeStats attribute array.
+        /// Returns the number of PerSecondStat objects stored within the DataMessage. A.k.a the size of the RealTimeStats attribute array.
         /// </summary>
-        /// <returns>Number of PerSecondStats objects within</returns>
+        /// <returns>Number of PerSecondStat objects within</returns>
         public int getLength()
         {
             return (this.RealTimeStats.Length);

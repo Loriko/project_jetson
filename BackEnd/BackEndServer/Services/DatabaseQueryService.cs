@@ -10,6 +10,8 @@ using BackEndServer.Services.HelperServices;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
+// Bulk insert: INSERT INTO tbl_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
+
 namespace BackEndServer.Services
 {
     public class DatabaseQueryService
@@ -37,6 +39,50 @@ namespace BackEndServer.Services
             return new MySqlConnection(ConnectionString);
         }
         #endregion
+
+        public bool storePerSecondStat(List<PerSecondStat> distinctStats)
+        {
+            string bulkInsertCommand = "insert into perSecondStat (dateTime,Camera_idCamera,numDetectedObjects,hasSavedImage) values ";
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+
+                PerSecondStat lastStat = distinctStats.Last();
+
+                // Build Bulk Insert Command
+                foreach (PerSecondStat stat in distinctStats)
+                {
+                    string camId = stat.CameraId.ToString();
+                    string numPeople = stat.NumTrackedPeople.ToString();
+                    string hasImage = "0";
+
+                    if (stat.HasSavedImage)
+                    {
+                        hasImage = "1";
+                    }
+
+                    bulkInsertCommand += $"(\"{stat.DateTime}\",{camId},{numPeople},{hasImage})";
+
+                    if (stat != lastStat)
+                    {
+                        bulkInsertCommand += ",";
+                    }
+                }
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(bulkInsertCommand, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    // Write to Log
+                    return false; // This is probably not going to be executed...
+                }
+            }
+            return true;
+        }
 
         //Right now, username isn't used, but it will be as soon as the tables necessary for camera permissions are added
         public List<DatabaseAddress> GetLocationsForUser(string username)
@@ -67,7 +113,7 @@ namespace BackEndServer.Services
         
         /* The following methods are to be used by the Web API controllers. */
 
-        // Return DatabasePerSecondStats, not PerSecondStats, this is faster to implement for a simple test.
+        // Return DatabasePerSecondStat, not PerSecondStat, this is faster to implement for a simple test.
         public List<TestObject> testDatabase()
         {
             List<TestObject> perSecondStatsList = new List<TestObject>();
@@ -94,13 +140,13 @@ namespace BackEndServer.Services
         }
 
         /// <summary>
-        /// Queries all PerSecondStats objects in the StatisticsDatabase, groups them in a single DataMessage which will be serialized by the to JSON by the controller and returned to Front-End Clients.
+        /// Queries all PerSecondStat objects in the StatisticsDatabase, groups them in a single DataMessage which will be serialized by the to JSON by the controller and returned to Front-End Clients.
         /// </summary>
         /// <param name="verifiedTimeInterval">Verification of the TimeInterval must be performed by the controller before calling this method.</param>
-        /// <returns>All requested PerSecondStats within the specified interval, grouped in a DataMessage object.</returns>
+        /// <returns>All requested PerSecondStat within the specified interval, grouped in a DataMessage object.</returns>
         public DataMessage getStatsFromInterval(TimeInterval verifiedTimeInterval)
         {
-            List<DatabasePerSecondStats> perSecondStatsList = new List<DatabasePerSecondStats>();
+            List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -117,7 +163,7 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        perSecondStatsList.Add(new DatabasePerSecondStats()
+                        perSecondStatsList.Add(new DatabasePerSecondStat()
                         {
                             UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["dateTime"])).toUnixTime(),
                             CameraID = Convert.ToInt32(reader["Camera_idCamera"]),
@@ -131,11 +177,11 @@ namespace BackEndServer.Services
 
             int numQueryResults = perSecondStatsList.Count;
             int i = 0;
-            PerSecondStats[] temp = new PerSecondStats[numQueryResults];
+            PerSecondStat[] temp = new PerSecondStat[numQueryResults];
 
-            foreach (DatabasePerSecondStats second in perSecondStatsList)
+            foreach (DatabasePerSecondStat second in perSecondStatsList)
             {
-                temp[i] = new PerSecondStats(second.CameraID, second.UnixTime, second.NumTrackedPeople, second.HasSavedImage);
+                temp[i] = new PerSecondStat(second.CameraID, second.UnixTime, second.NumTrackedPeople, second.HasSavedImage);
                 i++;
             }
 
@@ -143,63 +189,6 @@ namespace BackEndServer.Services
 
             return (responseDataMessage);
         }
-
-        /// <summary>
-        /// Stores every individual PerSecondStat object from a DataMessage (received from Capture System) into the StatisticsDatabase.
-        /// IMPORTANT: Last version used unix timestamps. Francis changed this to use the old persecondstat because of time constraints
-        /// TODO: REFACTOR THIS ASAP. RIGHT NOW A QUERY IS STARTED FOR EACH PER SECOND STAT INSTEAD OF JUST INSERTING ALL OF THEM IN THE SAME QUERY 
-        /// </summary>
-        /// <param name="dataMessage"></param>
-        /// <returns>True if persist operations were successful. False if something is wrong. Returns a boolean to inform controller of what response code to return to the HTTP client.</returns>
-        public bool storeStatsFromMessage(OldDataMessage dataMessage)
-        {
-            if (dataMessage.RealTimeStats == null || dataMessage.getLength() < 1)
-                return (false);
-
-            int initialLength = dataMessage.getLength();
-            List<OldPerSecondStat> temp = new List<OldPerSecondStat>();
-
-            for (int y = 0; y < initialLength; y++)
-            {
-                temp.Add(dataMessage.RealTimeStats[y]);
-            }
-
-            // Remove any possible duplicates.
-            List<OldPerSecondStat> distinctListOfSecondStats = temp.Distinct().ToList();
-
-            using (MySqlConnection conn = GetConnection())
-            {
-                conn.Open();
-                foreach (OldPerSecondStat perSecondStat in distinctListOfSecondStats)
-                {
-                    string mySqlDateTime = new DateTime(perSecondStat.Year, perSecondStat.Month, perSecondStat.Day, perSecondStat.Hour, perSecondStat.Minute, perSecondStat.Second).toMySqlDateTime();
-                    string camId = perSecondStat.CameraId.ToString();
-                    string numPeople = perSecondStat.NumTrackedPeople.ToString();
-                    string hasImage = "0";
-
-                    if (perSecondStat.HasSavedImage)
-                    {
-                        hasImage = "1";
-                    }
-
-                    try
-                    {
-                        string insertCommand = "insert into perSecondStat (dateTime,Camera_idCamera,numDetectedObjects,hasSavedImage) ";
-                        insertCommand += $"values (\"{mySqlDateTime}\",{camId},{numPeople},{hasImage})";
-                        MySqlCommand cmd = new MySqlCommand(insertCommand, conn);
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        // write to log
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
 
         /// <summary>
         /// 
@@ -226,10 +215,10 @@ namespace BackEndServer.Services
         /// Service to obtain the statistics for a specified single second.
         /// </summary>
         /// <param name="singleSecondTime"></param>
-        /// <returns>Null if nothing was found in the database. A PerSecondStats object if found.</returns>
-        public PerSecondStats getSpecificSecond(SingleSecondTime singleSecondTime)
+        /// <returns>Null if nothing was found in the database. A PerSecondStat object if found.</returns>
+        public PerSecondStat getSpecificSecond(SingleSecondTime singleSecondTime)
         {
-            List<DatabasePerSecondStats> perSecondStatsList = new List<DatabasePerSecondStats>();
+            List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -242,7 +231,7 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        perSecondStatsList.Add(new DatabasePerSecondStats()
+                        perSecondStatsList.Add(new DatabasePerSecondStat()
                         {
                             UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["dateTime"])).toUnixTime(),
                             CameraID = Convert.ToInt32(reader["Camera_idCamera"]),
@@ -253,12 +242,12 @@ namespace BackEndServer.Services
                 }
             }
 
-            DatabasePerSecondStats temp = perSecondStatsList.ElementAt(0);
-            PerSecondStats result = null;
+            DatabasePerSecondStat temp = perSecondStatsList.ElementAt(0);
+            PerSecondStat result = null;
             
             // If a result was found by the query.
             if (temp != null)
-                result = new PerSecondStats(temp.CameraID, temp.UnixTime, temp.NumTrackedPeople, temp.HasSavedImage);
+                result = new PerSecondStat(temp.CameraID, temp.UnixTime, temp.NumTrackedPeople, temp.HasSavedImage);
 
             return (result);
         }

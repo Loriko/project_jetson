@@ -23,7 +23,6 @@
     <Folder Include="Models\DBModels\" />
     <Folder Include="Models\LogicalModels\" />
     <Folder Include="Services\HelperServices\" />
-    <Folder Include="Classes\" />
     <Folder Include="Classes\DataRequestClasses\" />
     <Folder Include="Classes\DataResponseClasses\" />
   </ItemGroup>

@@ -8,7 +8,7 @@ using BackEndServer.Services;
 
 namespace BackEndServer.Models.DBModels
 {
-    public class DatabasePerSecondStats
+    public class DatabasePerSecondStat
     {
         // Database version of this object is the same as the defined object, but with a database context.
         private DatabaseQueryService _databaseQueryService;

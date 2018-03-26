@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
         /// <param name="timeInterval">A TimeInterval object specifying the start and end times in unix time (seconds).</param>
         /// <returns>HTTP Response. May have an empty body, a reponse object or JSON-serialized Data Message containing query results.</returns>
         [HttpPost]
-        public IActionResult GetPerSecondStatsFromTimeInterval ([FromBody] TimeInterval timeInterval)
+        public IActionResult GetPerSecondStatFromTimeInterval ([FromBody] TimeInterval timeInterval)
         {
             // Validate provided TimeInterval received from Web Server.
             if (timeInterval.isValidTimeInterval() == false)
@@ -88,7 +88,7 @@ namespace WebAPI.Controllers
         /// <summary>
         /// To request statistics for a single second, call GET and provide a SingleSecondTime object (Json-serialized).
         /// This method does not need its own Request class or Response class, as it can simple take a single SingleSecondTime
-        /// object and return a single PerSecondStats object.
+        /// object and return a single PerSecondStat object.
         /// </summary>
         /// <param name="singleSecondTime"></param>
         /// <returns></returns>
@@ -102,7 +102,7 @@ namespace WebAPI.Controllers
             DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(DatabaseQueryService)) as DatabaseQueryService;
 
             // Obtain AveragesOfDayResponse using special method of the database context class.
-            PerSecondStats responseData = context.getSpecificSecond(singleSecondTime);
+            PerSecondStat responseData = context.getSpecificSecond(singleSecondTime);
 
             if (responseData == null)
                 return (NoContent());
