@@ -2,12 +2,14 @@
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
+using BackEndServer.Services.HelperServices;
 
 namespace BackEndServer.Services
 {
     public class CameraService : AbstractCameraService
     {
         private readonly DatabaseQueryService _dbQueryService = new DatabaseQueryService();
+
         public CameraInformationList getCamerasAtLocation(int locationId)
         {
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocation(locationId);
@@ -39,7 +41,7 @@ namespace BackEndServer.Services
                 };
                 if (mostRecentStat != null)
                 {
-                    cameraStatistics.LastUpdatedTime = mostRecentStat.DateTime;
+                    cameraStatistics.LastUpdatedTime = mostRecentStat.DateTime.toDateTime();
                     cameraStatistics.MostRecentPeopleCount = mostRecentStat.NumDetectedObjects;
                 }
                 return cameraStatistics;

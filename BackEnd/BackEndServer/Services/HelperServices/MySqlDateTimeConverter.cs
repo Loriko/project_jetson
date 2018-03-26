@@ -9,6 +9,12 @@ namespace BackEndServer.Services.HelperServices
 
     public static class MySqlDateTimeConverter
     {
+        public static bool CheckIfSQLFormat(this string dateTimeString)
+        {
+            // TO IMPLEMENT
+            throw new NotImplementedException();
+        }
+
         public static string toMySqlDateTime(this DateTime time)
         {
             string year = time.Year.ToString();
