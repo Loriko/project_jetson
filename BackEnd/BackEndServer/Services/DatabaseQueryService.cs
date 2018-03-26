@@ -40,9 +40,10 @@ namespace BackEndServer.Services
         }
         #endregion
 
-        public bool storePerSecondStat(List<PerSecondStat> distinctStats)
+        // Untested -- Mohamed R.
+        public bool storePerSecondStats(List<PerSecondStat> distinctStats)
         {
-            string bulkInsertCommand = "insert into perSecondStat (dateTime,Camera_idCamera,numDetectedObjects,hasSavedImage) values ";
+            string bulkInsertCommand = "INSERT INTO perSecondStat (dateTime,Camera_idCamera,numDetectedObjects,hasSavedImage) VALUES ";
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -111,8 +112,6 @@ namespace BackEndServer.Services
             return locationList;
         }
         
-        /* The following methods are to be used by the Web API controllers. */
-
         // Return DatabasePerSecondStat, not PerSecondStat, this is faster to implement for a simple test.
         public List<TestObject> testDatabase()
         {
@@ -139,22 +138,15 @@ namespace BackEndServer.Services
             return (perSecondStatsList);
         }
 
-        /// <summary>
-        /// Queries all PerSecondStat objects in the StatisticsDatabase, groups them in a single DataMessage which will be serialized by the to JSON by the controller and returned to Front-End Clients.
-        /// </summary>
-        /// <param name="verifiedTimeInterval">Verification of the TimeInterval must be performed by the controller before calling this method.</param>
-        /// <returns>All requested PerSecondStat within the specified interval, grouped in a DataMessage object.</returns>
-        public DataMessage getStatsFromInterval(TimeInterval verifiedTimeInterval)
+        // Untested -- Mohamed R.
+        public List<DatabasePerSecondStat> getStatsFromInterval(TimeInterval verifiedTimeInterval)
         {
             List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
 
             using (MySqlConnection conn = GetConnection())
             {
-                string lowerBoundMySqlTime = verifiedTimeInterval.StartUnixTime.toDateTime().toMySqlDateTime();
-                string upperBoundMySqlTime = verifiedTimeInterval.EndUnixTime.toDateTime().toMySqlDateTime();
-
-                string query = "select * from perSecondStat where dateTime >= " + lowerBoundMySqlTime;
-                query += " and dateTime <= " + upperBoundMySqlTime;
+                string query = "SELECT * FROM perSecondStat WHERE dateTime >= " + verifiedTimeInterval.StartDateTime;
+                query += " AND dateTime <= " + verifiedTimeInterval.EndDateTime;
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -165,91 +157,16 @@ namespace BackEndServer.Services
                     {
                         perSecondStatsList.Add(new DatabasePerSecondStat()
                         {
-                            UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["dateTime"])).toUnixTime(),
-                            CameraID = Convert.ToInt32(reader["Camera_idCamera"]),
-                            NumTrackedPeople = Convert.ToInt32(reader["numDetectedObjects"]),
-                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader["hasSavedImage"]))
-                        });
-                    }
-                }
-
-            }
-
-            int numQueryResults = perSecondStatsList.Count;
-            int i = 0;
-            PerSecondStat[] temp = new PerSecondStat[numQueryResults];
-
-            foreach (DatabasePerSecondStat second in perSecondStatsList)
-            {
-                temp[i] = new PerSecondStat(second.CameraID, second.UnixTime, second.NumTrackedPeople, second.HasSavedImage);
-                i++;
-            }
-
-            DataMessage responseDataMessage = new DataMessage(temp);
-
-            return (responseDataMessage);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="averagesOfDayRequest"></param>
-        /// <returns></returns>
-        public AveragesOfDayResponse getHourlyAveragesForDay(AveragesOfDayRequest averagesOfDayRequest)
-        {
-            //AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse();
-
-            // Query the 24 Hourly Averages in the database.
-
-            // If result does not contain 24 rows, then recalculate all of them and store the averages in the database, at the same time place them in the return object. 
-            // If it does, put them in the averagesOfDayResponse object and return.
-
-            for (int z = 0; z < 24; z++)
-            {
-
-            }
-            return (null);
-        }
-
-        /// <summary>
-        /// Service to obtain the statistics for a specified single second.
-        /// </summary>
-        /// <param name="singleSecondTime"></param>
-        /// <returns>Null if nothing was found in the database. A PerSecondStat object if found.</returns>
-        public PerSecondStat getSpecificSecond(SingleSecondTime singleSecondTime)
-        {
-            List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
-
-            using (MySqlConnection conn = GetConnection())
-            {
-                string timeToObtain = singleSecondTime.UnixTime.toDateTime().toMySqlDateTime();
-                string query = "select * from perSecondStat where dateTime = " + timeToObtain;
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        perSecondStatsList.Add(new DatabasePerSecondStat()
-                        {
-                            UnixTime = MySqlDateTimeConverter.toDateTime(Convert.ToString(reader["dateTime"])).toUnixTime(),
-                            CameraID = Convert.ToInt32(reader["Camera_idCamera"]),
-                            NumTrackedPeople = Convert.ToInt32(reader["numDetectedObjects"]),
+                            DateTime = Convert.ToString(reader["dateTime"]),
+                            CameraId = Convert.ToInt32(reader["Camera_idCamera"]),
+                            NumDetectedObjects = Convert.ToInt32(reader["numDetectedObjects"]),
                             HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader["hasSavedImage"]))
                         });
                     }
                 }
             }
 
-            DatabasePerSecondStat temp = perSecondStatsList.ElementAt(0);
-            PerSecondStat result = null;
-            
-            // If a result was found by the query.
-            if (temp != null)
-                result = new PerSecondStat(temp.CameraID, temp.UnixTime, temp.NumTrackedPeople, temp.HasSavedImage);
-
-            return (result);
+            return perSecondStatsList;
         }
 
         public DatabasePerSecondStat GetLatestPerSecondStatForCamera(int cameraId)
@@ -272,7 +189,7 @@ namespace BackEndServer.Services
                         {
                             CameraId = Convert.ToInt32(reader["Camera_idCamera"]),
                             HasSavedImage = Convert.ToBoolean(reader["hasSavedImage"]),
-                            DateTime = Convert.ToDateTime(reader["dateTime"]),
+                            DateTime = Convert.ToString(reader["dateTime"]),
                             NumDetectedObjects = Convert.ToInt32(reader["numDetectedObjects"]),
                             StatId = Convert.ToInt32(reader["idStat"])
                         };
@@ -363,5 +280,26 @@ namespace BackEndServer.Services
             }
             return false;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="averagesOfDayRequest"></param>
+        /// <returns></returns>
+        /*public AveragesOfDayResponse getHourlyAveragesForDay(AveragesOfDayRequest averagesOfDayRequest)
+        {
+            //AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse();
+
+            // Query the 24 Hourly Averages in the database.
+
+            // If result does not contain 24 rows, then recalculate all of them and store the averages in the database, at the same time place them in the return object. 
+            // If it does, put them in the averagesOfDayResponse object and return.
+
+            for (int z = 0; z < 24; z++)
+            {
+
+            }
+            return (null);
+        }*/
     }
 }

@@ -5,6 +5,7 @@ using BackEndServer.Services.AbstractServices;
 using BackEndServer.Classes.ErrorResponseClasses;
 using System.Linq;
 using BackEndServer.Services.HelperServices;
+using BackEndServer.Models.DBModels;
 
 namespace BackEndServer.Services
 {
@@ -80,19 +81,61 @@ namespace BackEndServer.Services
             }
         }
 
-        public bool storeStatsFromDataMessage(DataMessage message)
+        public bool storeStatsFromDataMessage(DataMessage verifiedMessage)
         {
             List<PerSecondStat> temp = new List<PerSecondStat>();
 
-            for (int y = 0; y < message.GetLength(); y++)
+            for (int y = 0; y < verifiedMessage.GetLength(); y++)
             {
-                temp.Add(message.RealTimeStats[y]);
+                temp.Add(verifiedMessage.RealTimeStats[y]);
             }
 
             // Remove any possible duplicates.
             List<PerSecondStat> distinctStats = temp.Distinct().ToList();
 
-            return this._dbQueryService.storePerSecondStat(distinctStats);
+            return this._dbQueryService.storePerSecondStats(distinctStats);
+        }
+
+        public bool checkTimeIntervalValidity(TimeInterval timeInterval)
+        {
+            if (timeInterval.StartDateTime.CheckIfSQLFormat() == false || timeInterval.EndDateTime.CheckIfSQLFormat() == false)
+            {
+                return false;
+            }
+
+            DateTime start = timeInterval.StartDateTime.toDateTime();
+            DateTime end = timeInterval.EndDateTime.toDateTime();
+
+            if (DateTimeTools.validateDateTime(start) == false || DateTimeTools.validateDateTime(end) == false)
+            {
+                return false;
+            }
+
+            // The start time must be before the end time or the start time must be identical to the end time.
+            if (DateTime.Compare(start, end) > 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public DataMessage retrievePerSecondStatsBetweenInterval(TimeInterval verifiedTimeInterval)
+        {
+            List<DatabasePerSecondStat> queryResults = _dbQueryService.getStatsFromInterval(verifiedTimeInterval);
+
+            PerSecondStat[] stats = new PerSecondStat[queryResults.Count()];
+
+            int x = 0;
+
+            foreach (DatabasePerSecondStat second in queryResults)
+            {
+                PerSecondStat temp = new PerSecondStat(second.DateTime, second.CameraId, second.NumDetectedObjects, second.HasSavedImage);
+                stats[x] = temp;
+                x++;
+            }
+
+            return new DataMessage(stats);
         }
     }
 }

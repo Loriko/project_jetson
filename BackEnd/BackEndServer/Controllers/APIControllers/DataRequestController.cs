@@ -10,6 +10,7 @@ using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services;
+using BackEndServer.Models.ViewModels;
 
 namespace WebAPI.Controllers
 {
@@ -19,39 +20,69 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")] // "api/datarequest"
     public class DataRequestController : Controller
     {
-        // Authentication will be considered later in development.
-
-        
-        /// <summary>
-        /// Returns all statistics between a given Date/Time interval.
-        /// Can be called constantly for real-time graph and for on-demand requests.
-        /// </summary>
-        /// <param name="timeInterval">A TimeInterval object specifying the start and end times in unix time (seconds).</param>
-        /// <returns>HTTP Response. May have an empty body, a reponse object or JSON-serialized Data Message containing query results.</returns>
         [HttpPost]
-        public IActionResult GetPerSecondStatFromTimeInterval ([FromBody] TimeInterval timeInterval)
+        public IActionResult GetPerSecondStatsFromTimeInterval ([FromBody] TimeInterval unverifiedTimeInterval)
         {
-            // Validate provided TimeInterval received from Web Server.
-            if (timeInterval.isValidTimeInterval() == false)
-                return BadRequest( new JsonResult(new InvalidTimeIntervalResponseBody()) );
+            DataMessageService dataMessageService = new DataMessageService();
+
+            if (dataMessageService.checkTimeIntervalValidity(unverifiedTimeInterval) == false)
+            {
+                return BadRequest(new JsonResult(new InvalidTimeIntervalResponseBody()));
+            }
+
+            DataMessage responseBody = dataMessageService.retrievePerSecondStatsBetweenInterval(unverifiedTimeInterval);
+
+            if (responseBody.IsEmpty())
+            {
+                return (NoContent());
+            }
+            
+            return Ok(new JsonResult(responseBody));
+        }
+
+        [HttpGet("mostrecentstat/{CameraId}", Name = "GetMostRecentPerSecondStatForCamera")] // "api/datarequest/mostrecentstat/4"
+        public IActionResult GetMostRecentPerSecondStatForCameraId(int CameraId)
+        {
+            CameraService camService = new CameraService();
+
+            CameraStatistics stat = camService.getCameraStatisticsForNowById(CameraId);
+
+            if (stat == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(new JsonResult(stat));
+        }
+
+        [HttpGet("location/{LocationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/location/18"
+        public IActionResult GetCamerasFromLocationId(int LocationId)
+        {
+            // Testing Code:
+            // return (Ok(new JsonResult(LocationId)));
+
+            if (LocationId < 0)
+            {
+                return (BadRequest(new JsonResult(new InvalidLocationIdResponseBody())));
+            }
 
             // Obtain database context.
-            DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(BackEndServer.Services.DatabaseQueryService)) as DatabaseQueryService;
-            
-            // Obtain DataMessage using special method of the database context class.
-            DataMessage responseMessage = context.getStatsFromInterval(timeInterval);
+            DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(DatabaseQueryService)) as DatabaseQueryService;
 
-            if (responseMessage == null)
+            List<DatabaseCamera> camerasForRequestedLocation = context.GetCamerasForLocation(LocationId);
+
+            // TODO: use list of EntityDefinitionClasses.Camera instead
+
+            if (camerasForRequestedLocation == null)
             {
                 return (NoContent());
             }
-            else if (responseMessage.getLength() < 1)
+            else if (camerasForRequestedLocation.Count == 0)
             {
                 return (NoContent());
             }
-            
-            // Return HTTP OK along with the JSON-serialized DataMessage object containing all requested query results. 
-            return Ok(new JsonResult(responseMessage));
+
+            return (Ok(new JsonResult(camerasForRequestedLocation)));
         }
 
         /// <summary>
@@ -59,7 +90,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="averagesOfDayRequest"></param>
         /// <returns></returns>
-        [HttpPost]
+        /*[HttpPost]
         public IActionResult GetHourlyAveragesForDayFromRequest ([FromBody] AveragesOfDayRequest averagesOfDayRequest)
         {
             // Validate the date which the hourly averages are being requested from Web Server.
@@ -83,63 +114,7 @@ namespace WebAPI.Controllers
 
             // Return HTTP OK and JSON-serialized Response object.
             return Ok(new JsonResult(responseData));
-        }
-
-        /// <summary>
-        /// To request statistics for a single second, call GET and provide a SingleSecondTime object (Json-serialized).
-        /// This method does not need its own Request class or Response class, as it can simple take a single SingleSecondTime
-        /// object and return a single PerSecondStat object.
-        /// </summary>
-        /// <param name="singleSecondTime"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult GetPerSecondStatFromSingleSecondTime ([FromBody] SingleSecondTime singleSecondTime)
-        {
-            if (singleSecondTime.isValidSingleSecondTime() == false)
-                return (BadRequest(new JsonResult(new InvalidSingleSecondTimeResponseBody())));
-
-            // Obtain database context.
-            DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(DatabaseQueryService)) as DatabaseQueryService;
-
-            // Obtain AveragesOfDayResponse using special method of the database context class.
-            PerSecondStat responseData = context.getSpecificSecond(singleSecondTime);
-
-            if (responseData == null)
-                return (NoContent());
-
-            // Return HTTP OK and JSON-serialized Response object.
-            return Ok(new JsonResult(responseData));
-        }
-
-        [HttpGet("location/{LocationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/location/18"
-        public IActionResult GetCamerasFromLocationId (int LocationId)
-        {
-            // Testing Code:
-            // return (Ok(new JsonResult(LocationId)));
-
-            if (LocationId < 0)
-            {
-                return (BadRequest(new JsonResult(new InvalidLocationIdResponseBody())));
-            }
-
-            // Obtain database context.
-            DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(DatabaseQueryService)) as DatabaseQueryService;
-
-            List<DatabaseCamera> camerasForRequestedLocation = context.GetCamerasForLocation(LocationId);
-
-            // TODO: use list of EntityDefinitionClasses.Camera instead
-            
-            if (camerasForRequestedLocation == null)
-            {
-                return (NoContent());
-            }
-            else if (camerasForRequestedLocation.Count == 0)
-            {
-                return (NoContent());
-            }
-
-            return (Ok(new JsonResult(camerasForRequestedLocation)));
-        }
+        }*/
 
         /*
         /// <summary>

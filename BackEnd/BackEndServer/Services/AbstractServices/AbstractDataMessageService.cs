@@ -9,5 +9,7 @@ namespace BackEndServer.Services.AbstractServices
         bool checkDataMessageValidity(DataMessage message);
         InvalidDataMessageResponseBody createInvalidDataMessageResponseBody(DataMessage message);
         bool storeStatsFromDataMessage(DataMessage message);
+        bool checkTimeIntervalValidity(TimeInterval timeInterval);
+        DataMessage retrievePerSecondStatsBetweenInterval(TimeInterval timeInterval);
     }
 }

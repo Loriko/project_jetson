@@ -2,6 +2,7 @@
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
+using BackEndServer.Services.HelperServices;
 
 namespace BackEndServer.Services
 {
@@ -40,7 +41,7 @@ namespace BackEndServer.Services
                 };
                 if (mostRecentStat != null)
                 {
-                    cameraStatistics.LastUpdatedTime = mostRecentStat.DateTime;
+                    cameraStatistics.LastUpdatedTime = mostRecentStat.DateTime.toDateTime();
                     cameraStatistics.MostRecentPeopleCount = mostRecentStat.NumDetectedObjects;
                 }
                 return cameraStatistics;
