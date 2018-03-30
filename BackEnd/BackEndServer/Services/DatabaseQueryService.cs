@@ -154,7 +154,7 @@ namespace BackEndServer.Services
         public bool storeStatsFromMessage(OldDataMessage dataMessage)
         {
             if (dataMessage.RealTimeStats == null || dataMessage.getLength() < 1)
-                return (false);
+                return false;
 
             int initialLength = dataMessage.getLength();
             List<OldPerSecondStat> temp = new List<OldPerSecondStat>();

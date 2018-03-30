@@ -14,14 +14,14 @@ namespace BackEndServer.Controllers.FrontEndControllers
     public class GraphController : Controller
     {
         // GET: /<controller>/
-        public IActionResult GraphDashboard()
+        public IActionResult GraphDashboard(int cameraId)
         {
             if (HttpContext.Session.GetString("currentUsername") == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
             
-            GraphStatistics graphStatistics = new PlaceholderGraphStatisticsService().getMaxStatistics(1);
+            GraphStatistics graphStatistics = new PlaceholderGraphStatisticsService().getMaxStatistics(cameraId);
             return View(graphStatistics);
         }
     }

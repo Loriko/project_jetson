@@ -6,7 +6,18 @@
         <div class="col s10 offset-s1">
             <div class="card camera-card">
             <div class="card-image">
-                <img class="camera-card-image" src="~/images/camera_images/camera_image_@(Model.CameraInformation.CameraId).png">
+                
+                @{
+                    if (Model.CameraInformation.CameraId <= 4)
+                    {
+                        <img class="camera-card-image" src="~/images/camera_images/camera_image_@(Model.CameraInformation.CameraId).png" alt="@Model.CameraInformation.CameraRoomName">
+                    }
+                    else
+                    {
+                        <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraRoomName">
+                    }
+                }
+                
                 <span class="camera-card-title card-title">@Model.CameraInformation.CameraRoomName</span>
             </div>
         </div>

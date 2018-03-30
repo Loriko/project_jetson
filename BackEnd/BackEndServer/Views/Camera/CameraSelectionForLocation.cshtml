@@ -14,7 +14,7 @@
                 <div class="card-image clickable">
                     <a href="CameraInformation?cameraId=@camera.CameraId">
                         @{
-                            if (@camera.CameraId <= 4)
+                            if (camera.CameraId <= 4)
                             {
                                 <img class="camera-card-image" src="~/images/camera_images/camera_image_@(camera.CameraId).png" alt="@camera.CameraRoomName">
                             }

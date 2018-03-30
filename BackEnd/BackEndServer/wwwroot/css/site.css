@@ -10,7 +10,6 @@
 }
 .brand-logo i {
     font-size: 40px !important;
-
 }
 body {
     display: flex;
@@ -91,4 +90,7 @@ main {
 }
 .unavailable-message {
     color: gray;
+}
+.no-right-margin {
+    margin-right: 0 !important;
 }

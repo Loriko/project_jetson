@@ -30,9 +30,9 @@ namespace WebAPI.Controllers
             
             if (receivedMessage.isValidDataMessage() == false)
             {
-                string[] invalidAttributes = receivedMessage.getInvalidAttributes();
+                string[] invalidAttributes = receivedMessage.GetInvalidAttributes();
                 InvalidDataMessageResponseBody invalidResponseBody = new InvalidDataMessageResponseBody(invalidAttributes);
-                return (BadRequest(new JsonResult(invalidResponseBody)));
+                return BadRequest(new JsonResult(invalidResponseBody));
             }
 
             // Obtain database context.
@@ -43,13 +43,13 @@ namespace WebAPI.Controllers
 
             if (wasPersistSuccesful)
             {
-                return (Ok());
+                return Ok("Received datamessage with " + receivedMessage.getLength() + "per second stats.");
             }
 
             // Else, database persist problem.
             FailedPersistResponseBody persistBody = new FailedPersistResponseBody();
 
-            return (StatusCode(500, new JsonResult(persistBody)));
+            return StatusCode(500, new JsonResult(persistBody));
         }
     }
 }

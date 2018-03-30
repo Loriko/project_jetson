@@ -58,7 +58,7 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         /// Will be used by the DataReceival controller after a DataMessage is checked not to be valid.
         /// </summary>
         /// <returns>An array of strings indicating the name of the attributes which were detected invalid.</returns>
-        public string[] getInvalidAttributes()
+        public string[] GetInvalidAttributes()
         {
             List<string> temp = new List<string>();
 
