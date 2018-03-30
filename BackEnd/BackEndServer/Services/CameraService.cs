@@ -18,7 +18,8 @@ namespace BackEndServer.Services
 
         public CameraInformation getCameraInformationById(int cameraId)
         {
-            throw new System.NotImplementedException();
+            DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
+            return new CameraInformation(camera);
         }
 
         public CameraStatistics getCameraStatisticsForNowById(int cameraId)

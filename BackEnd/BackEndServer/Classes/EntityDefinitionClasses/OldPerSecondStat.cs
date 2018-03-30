@@ -36,15 +36,15 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         // Constructor with a flag of false by default for HasSavedImage.
         public OldPerSecondStat (int cameraId, int year, int month, int day, int hour, int minute, int second, int numTrackedPeople, bool hasSavedImage = false)
         {
-            this.CameraId = cameraId;
-            this.Year = year;
-            this.Month = month;
-            this.Day = day;
-            this.Hour = hour;
-            this.Minute = minute;
-            this.Second = second;
-            this.NumTrackedPeople = numTrackedPeople;
-            this.HasSavedImage = hasSavedImage;
+            CameraId = cameraId;
+            Year = year;
+            Month = month;
+            Day = day;
+            Hour = hour;
+            Minute = minute;
+            Second = second;
+            NumTrackedPeople = numTrackedPeople;
+            HasSavedImage = hasSavedImage;
         }
 
         /// <summary>
@@ -54,62 +54,76 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         public bool IsValidSecondStat()
         {
             if (CameraId < 0)
-                return (false);
+                return false;
 
             if (NumTrackedPeople < 0)
-                return (false);
+                return false;
 
             #region Verify Date and Time
 
             // Start Year
-            if (this.Year < 1900 || this.Year > 9999)
-                return (false);
+            if (Year < 1900 || Year > 9999)
+                return false;
 
             //Start Month
-            if (this.Month < 1 || this.Month > 12)
-                return (false);
+            if (Month < 1 || Month > 12)
+                return false;
 
             // Validate StartDay based on the month and leap year (for February).
-            if (this.Month == 1 || this.Month == 3 || this.Month == 5 || this.Month == 7 || this.Month == 8 || this.Month == 10 || this.Month == 12)
+            if (Month == 1 || Month == 3 || Month == 5 || Month == 7 || Month == 8 || Month == 10 || Month == 12)
             {
-                if (this.Day < 1 || this.Day > 31)
-                    return (false);
+                if (Day < 1 || Day > 31)
+                {
+                    return false;    
+                }
             }
-            else if (this.Month == 4 || this.Month == 6 || this.Month == 9 || this.Month == 11)
+            else if (Month == 4 || Month == 6 || Month == 9 || Month == 11)
             {
-                if (this.Day < 1 || this.Day > 30)
-                    return (false);
+                if (Day < 1 || Day > 30)
+                {
+                    return false;    
+                }
             }
             else
             {
                 // Only occurs when: this.StartMonth == 2
-                if (DateTime.IsLeapYear((int)this.Year))
+                if (DateTime.IsLeapYear(Year))
                 {
-                    if (this.Day < 1 || this.Day > 29)
-                        return (false);
+                    if (Day < 1 || Day > 29)
+                    {
+                        return false;    
+                    }
                 }
                 else
                 {
-                    if (this.Day < 1 || this.Day > 28)
-                        return (false);
+                    if (Day < 1 || Day > 28)
+                    {
+                        return false;    
+                    }
                 }
             }
 
             // Start Hour
-            if (this.Hour < 1 || this.Hour > 23)
-                return (false);
+            if (Hour < 0 || Hour > 23)
+            {
+                return false;    
+            }
 
             // Start Minute
-            if (this.Minute < 0 || this.Minute > 59)
-                return (false);
+            if (Minute < 0 || Minute > 59)
+            {
+                return false;    
+            }
 
             // Start Second
-            if (this.Second < 0 || this.Second > 59)
-                return (false);
+            if (Second < 0 || Second > 59)
+            {
+                return false;    
+            }
 
             #endregion
 
-            return (true);
+            return true;
         }
     }
 }

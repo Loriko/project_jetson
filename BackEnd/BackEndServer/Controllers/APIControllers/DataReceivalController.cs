@@ -29,9 +29,9 @@ namespace WebAPI.Controllers
             }
             else if (dataMessageService.storeStatsFromDataMessage(receivedMessage) == true)
             {
-                return (Ok());
+                return Ok("Received datamessage with " + receivedMessage.getLength() + "per second stats.");
             }
-
+            
             return StatusCode(500, new JsonResult(new FailedPersistResponseBody()));
         }
     }

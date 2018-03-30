@@ -1,6 +1,6 @@
 ﻿@model BackEndServer.Models.ViewModels.GraphStatistics
 
-<h2>Chart</h2>
+<h1 class="page-title center-align">Statistics and Trends</h1>
 
 <script type="text/javascript">
     google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -78,18 +78,18 @@
     </div>
     <div class="input-field col s2">
         <select>
-            <option value="" disabled selected>Choose Year</option>
+            <option value="" disabled >Choose Year</option>
             <option value="2016">2016</option>
             <option value="2017">2017</option>
-            <option value="2018">2018</option>
+            <option selected value="2018">2018</option>
         </select>
         <label>Select Year</label>
     </div>
     <div class="input-field col s3">
         <select>
-            <option value="" disabled selected>Measured Values</option>
+            <option value="" disabled>Measured Values</option>
             <option value="1">Avg number of People</option>
-            <option value="2">Max Number of People</option>
+            <option selected="" value="2">Max Number of People</option>
             <option value="3">Min Number of People</option>
         </select>
         <label>Select Value to Measure</label>
@@ -106,8 +106,8 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <h4 class="card-title">Camera 1</h4>
-                <p>Front Door</p>
+                <h4 class="card-title">@Model.CameraInformation.CameraName</h4>
+                <p>@Model.CameraInformation.CameraRoomName</p>
                 <div id="curve_chart"></div>
             </div>
         </div>
