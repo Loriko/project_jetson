@@ -11,7 +11,7 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
     {
         // Ignoring minutes and seconds. Returned in responses. Is in a format easily supported by JavaScript.
         public long UnixTime { get; set; }
-        // Statistic: Average of all the PerSecondStats of ALL CAMERAS for a single hour.
+        // Statistic: Average of all the PerSecondStat of ALL CAMERAS for a single hour.
         public double HourlyAverage { get; set; }
 
         public PerHourStats(long UnixTime, double HourlyAverage)

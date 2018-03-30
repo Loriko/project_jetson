@@ -3,6 +3,7 @@ namespace BackEndServer.Models.ViewModels
 {
     public class CameraStatistics
     {
+        // We should probably change this to a MySQL string DateTime.
         public DateTime? LastUpdatedTime { get; set; }
         public int MostRecentPeopleCount { get; set; }
         public bool DayTimeOfTheWeekAverageCountAvailable { get; set; }

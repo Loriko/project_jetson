@@ -26,7 +26,6 @@
     <Folder Include="Controllers\APIControllers\" />
     <Folder Include="Models\DBModels\" />
     <Folder Include="Services\HelperServices\" />
-    <Folder Include="Classes\" />
     <Folder Include="Classes\DataRequestClasses\" />
     <Folder Include="Classes\DataResponseClasses\" />
   </ItemGroup>
