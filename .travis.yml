@@ -1,4 +1,5 @@
+before_script: cd BackEnd
 language: csharp
-solution: project_jetson/BackEnd/BackEnd.sln 
+solution: BackEnd.sln 
 mono: none
 dotnet: 1.1.5
