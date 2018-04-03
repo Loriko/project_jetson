@@ -1,5 +1,8 @@
-before_script: cd BackEnd
+before_install: cd $TRAVIS_BUILD_DIR/BackEnd
 language: csharp
 solution: BackEnd.sln 
 mono: none
-dotnet: 1.1.5
+dotnet: 2.1.103
+script:
+  - dotnet restore
+
