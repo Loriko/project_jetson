@@ -4,5 +4,5 @@ solution: BackEnd.sln
 mono: none
 dotnet: 2.1.103
 script:
-  - dotnet restore
+  - dotnet build
 
