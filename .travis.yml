@@ -5,4 +5,5 @@ mono: none
 dotnet: 2.1.103
 script:
   - dotnet build
+  - dotnet test
 
