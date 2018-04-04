@@ -6,6 +6,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.2" />
+    <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="MySql.Data" Version="6.10.6" />
     <PackageReference Include="MySql.Web" Version="8.0.10-rc" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
@@ -28,5 +29,8 @@
     <Folder Include="Services\HelperServices\" />
     <Folder Include="Classes\DataRequestClasses\" />
     <Folder Include="Classes\DataResponseClasses\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
 </Project>

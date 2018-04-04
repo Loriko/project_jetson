@@ -8,7 +8,17 @@ namespace BackEndServer.Services
 {
     public class CameraService : AbstractCameraService
     {
-        private readonly DatabaseQueryService _dbQueryService = new DatabaseQueryService();
+        private readonly IDatabaseQueryService _dbQueryService;
+
+        public CameraService()
+        {
+            _dbQueryService = new DatabaseQueryService();
+        }
+
+        public CameraService(IDatabaseQueryService dbQueryService)
+        {
+            _dbQueryService = dbQueryService;
+        }
 
         public CameraInformationList getCamerasAtLocation(int locationId)
         {

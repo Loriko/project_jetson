@@ -7,6 +7,7 @@ using BackEndServer.Classes.DataRequestClasses;
 using BackEndServer.Classes.DataResponseClasses;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services.HelperServices;
+using BackEndServer.Services.AbstractServices;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
@@ -14,7 +15,7 @@ using BackEndServer.Services.HelperServices;
 
 namespace BackEndServer.Services
 {
-    public class DatabaseQueryService
+    public class DatabaseQueryService : IDatabaseQueryService
     {
         #region Database Context
         // Connection String Attribute
