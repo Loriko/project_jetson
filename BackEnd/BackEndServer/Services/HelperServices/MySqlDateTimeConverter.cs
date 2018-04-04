@@ -17,20 +17,12 @@ namespace BackEndServer.Services.HelperServices
 
         public static string toMySqlDateTime(this DateTime time)
         {
-            string year = time.Year.ToString();
-            string month = time.Month.ToString();
-            string day = time.Day.ToString();
-            string hour = time.Hour.ToString();
-            string minute = time.Minute.ToString();
-            string second = time.Second.ToString();
-
-            string result = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
-            return (result);
+            return time.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
         public static DateTime toDateTime(this string mySqlStringDate)
         {
-            DateTime result = DateTime.ParseExact(mySqlStringDate, "yyyy-MM-dd HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture);
+            DateTime result = DateTime.Parse(mySqlStringDate);
             return (result);
         }
     }
