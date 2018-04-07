@@ -1,6 +1,7 @@
 ﻿using System;
 using BackEndServer.Models.ViewModels;
 using System.Collections.Generic;
+using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
 
 namespace BackEndServer.Services.PlaceholderServices
@@ -14,13 +15,19 @@ namespace BackEndServer.Services.PlaceholderServices
                 camerasAtLocation.Add(new CameraInformation(2, "West Waiting Room"));
                 camerasAtLocation.Add(new CameraInformation(3, "Written Test Room"));
                 camerasAtLocation.Add(new CameraInformation(4, "Entrance"));
-                CameraInformationList camerasAtLocationModel = new CameraInformationList();
-                camerasAtLocationModel.CameraList = camerasAtLocation;
+                CameraInformationList camerasAtLocationModel =
+                    new CameraInformationList {CameraList = camerasAtLocation};
                 return camerasAtLocationModel;
             }
             else {
                 return null;
             }
+        }
+
+        public List<DatabaseCamera> getDatabaseCamerasAtLocation(int locationId)
+        {
+            throw new NotImplementedException(
+                "This is a temporary method that shouldn't exist in the first place, so no placeholder was created.");
         }
 
         public CameraInformation getCameraInformationById(int cameraId){

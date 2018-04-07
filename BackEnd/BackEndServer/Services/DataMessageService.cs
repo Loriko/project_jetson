@@ -11,7 +11,12 @@ namespace BackEndServer.Services
 {
     public class DataMessageService : AbstractDataMessageService
     {
-        private readonly DatabaseQueryService _dbQueryService = new DatabaseQueryService();
+        private readonly DatabaseQueryService _dbQueryService;
+
+        public DataMessageService(DatabaseQueryService dbQueryService)
+        {
+            this._dbQueryService = dbQueryService;
+        }
 
         public bool checkDataMessageValidity(DataMessage message)
         {

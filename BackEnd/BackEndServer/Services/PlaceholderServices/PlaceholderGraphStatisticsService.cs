@@ -11,10 +11,16 @@ namespace BackEndServer.Services.PlaceholderServices
 {
     public class PlaceholderGraphStatisticsService : AbstractGraphStatisticService
     {
-        private static readonly AbstractCameraService CameraService = new CameraService();
+        private readonly AbstractCameraService _cameraService;
+
+        public PlaceholderGraphStatisticsService(AbstractCameraService cameraService)
+        {
+            this._cameraService = cameraService;
+        }
+        
         public GraphStatistics getMaxStatistics(int cameraId)
         {
-            GraphStatistics graphStatistics = new GraphStatistics(CameraService.getCameraInformationById(cameraId));
+            GraphStatistics graphStatistics = new GraphStatistics(_cameraService.getCameraInformationById(cameraId));
 
             List<string[]> maxStats = new List<string[]>();
             Random rnd = new Random();

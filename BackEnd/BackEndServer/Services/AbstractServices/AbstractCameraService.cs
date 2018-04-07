@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BackEndServer.Models.DBModels;
 using BackEndServer.Models.ViewModels;
 
 namespace BackEndServer.Services.AbstractServices
@@ -9,5 +10,7 @@ namespace BackEndServer.Services.AbstractServices
         CameraInformationList getCamerasAtLocation(int locationId);
         CameraInformation getCameraInformationById(int cameraId);
         CameraStatistics getCameraStatisticsForNowById(int cameraId);
+        // Temporary, needs to be changed to using the APIModel equivalent of the DatabaseCamera object
+        List<DatabaseCamera> getDatabaseCamerasAtLocation(int locationId);
     }
 }

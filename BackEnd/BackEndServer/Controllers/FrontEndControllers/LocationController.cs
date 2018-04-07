@@ -5,6 +5,7 @@ using System.Configuration;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services;
+using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using Microsoft.AspNetCore.Http;
 
@@ -12,6 +13,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
 {
     public class LocationController : Controller
     {
+        
+        private AbstractLocationService _locationService;
+        private AbstractLocationService LocationService => _locationService ?? (_locationService =
+                                                               HttpContext.RequestServices.GetService(typeof(AbstractLocationService)) as
+                                                                   AbstractLocationService);
+
         // GET
         public IActionResult LocationSelection()
         {
@@ -20,8 +27,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            
-            LocationInformationList locationListModel = new LocationService().getAvailableLocationsForUser("johndoe");
+            LocationInformationList locationListModel = LocationService.getAvailableLocationsForUser("johndoe");
             return View(locationListModel);
         }
 

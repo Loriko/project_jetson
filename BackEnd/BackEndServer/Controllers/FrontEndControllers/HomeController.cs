@@ -7,12 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Models;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services;
+using BackEndServer.Services.AbstractServices;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BackEndServer.Controllers.FrontEndControllers
 {
     public class HomeController : Controller
     {
+        private AbstractAuthenticationService _authenticationService;
+        private AbstractAuthenticationService AuthenticationService => _authenticationService ?? (_authenticationService =
+                                                                           HttpContext.RequestServices.GetService(typeof(AbstractAuthenticationService)) as
+                                                                               AbstractAuthenticationService);
+
         public IActionResult SignIn()
         {
             AuthenticationInformation authenticationModel = new AuthenticationInformation();
@@ -27,7 +34,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         
         [HttpPost]
         public IActionResult SignIn(AuthenticationInformation authenticationModel){
-            Boolean areCredentialsValid = new AuthenticationService().ValidateCredentials(authenticationModel.Username, authenticationModel.Password);
+            Boolean areCredentialsValid = AuthenticationService.ValidateCredentials(authenticationModel.Username, authenticationModel.Password);
             if(!areCredentialsValid){
                 return View(authenticationModel);    
             }

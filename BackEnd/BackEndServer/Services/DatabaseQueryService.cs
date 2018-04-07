@@ -25,13 +25,6 @@ namespace BackEndServer.Services
         {
             this.ConnectionString = connectionString;
         }
-
-        // Quick hack because I can't figure out dependency injection right now
-        // TODO: Remove this constructor and figure out how this service is to be injected into other services
-        public DatabaseQueryService()
-        {
-            this.ConnectionString = "server=localhost;port=3306;database=mydb;user=root;password=password;SslMode=none";
-        }
         
         // Method to return a MySQL Database connection.
         private MySqlConnection GetConnection()

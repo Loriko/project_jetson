@@ -4,7 +4,13 @@ namespace BackEndServer.Services
 {
     public class AuthenticationService : AbstractAuthenticationService
     {
-        private readonly DatabaseQueryService _dbQueryService = new DatabaseQueryService();
+        private readonly DatabaseQueryService _dbQueryService;
+
+        public AuthenticationService(DatabaseQueryService dbQueryService)
+        {
+            this._dbQueryService = dbQueryService;
+        }
+
         public bool ValidateCredentials(string username, string password)
         {
             return _dbQueryService.IsPasswordValidForUser(username, password);
