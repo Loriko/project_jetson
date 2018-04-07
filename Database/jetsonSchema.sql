@@ -7,19 +7,26 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `mydb` ;
 
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `jetson` DEFAULT CHARACTER SET utf8 ;
+USE `jetson` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`address`
+-- Table `mydb`.`location`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`address` (
+DROP TABLE IF EXISTS `mydb`.`location` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`location` (
   `id` INT(11) NOT NULL,
-  `locationName` VARCHAR(45) NOT NULL,
+  `location_name` VARCHAR(45) NOT NULL,
+  `address_line` VARCHAR(200) NULL,
+  `city` VARCHAR(45) NULL,
+  `state` VARCHAR(45) NULL,
+  `zip` VARCHAR(45) NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -28,15 +35,17 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `mydb`.`camera`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`camera` (
+DROP TABLE IF EXISTS `mydb`.`camera` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `id` INT(10) UNSIGNED NOT NULL,
-  `cameraName` VARCHAR(45) NULL DEFAULT NULL,
-  `Address_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`, `Address_id`),
-  INDEX `fk_Camera_Address1_idx` (`Address_id` ASC),
-  CONSTRAINT `fk_Camera_Address1`
-    FOREIGN KEY (`Address_id`)
-    REFERENCES `mydb`.`address` (`id`)
+  `camera_name` VARCHAR(45) NULL DEFAULT NULL,
+  `location_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`, `location_id`),
+  INDEX `fk_camera_address_idx` (`location_id` ASC),
+  CONSTRAINT `fk_camera_Address`
+    FOREIGN KEY (`location_id`)
+    REFERENCES `jetson`.`location` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -46,9 +55,14 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `mydb`.`perhourstat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`perhourstat` (
+DROP TABLE IF EXISTS `mydb`.`perhourstat` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`perhourstat` (
   `id` INT(11) NOT NULL,
-  `perhourstat` VARCHAR(45) NULL,
+  `num_detected_object` INT NULL,
+  `max_object` INT NULL,
+  `min_object` INT NULL,
+  `avg_object` INT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -57,18 +71,20 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `mydb`.`persecondstat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`persecondstat` (
+DROP TABLE IF EXISTS `mydb`.`persecondstat` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`persecondstat` (
   `id` INT(10) UNSIGNED NOT NULL,
-  `Camera_id` INT(10) UNSIGNED NOT NULL,
-  `numDetectedObject` INT(11) NOT NULL DEFAULT '0',
-  `dateTime` DATETIME NOT NULL,
-  `hasSavedImage` TINYINT NULL DEFAULT 0,
-  PRIMARY KEY (`id`, `Camera_id`),
+  `camera_id` INT(10) UNSIGNED NOT NULL,
+  `num_detected_object` INT(11) NOT NULL DEFAULT '0',
+  `date_time` DATETIME NOT NULL,
+  `has_saved_image` TINYINT NULL DEFAULT 0,
+  PRIMARY KEY (`id`, `camera_id`),
   UNIQUE INDEX `idStat_UNIQUE` (`id` ASC),
-  INDEX `fk_perSecondStat_Camera1` (`Camera_id` ASC),
-  CONSTRAINT `fk_perSecondStat_Camera1`
-    FOREIGN KEY (`Camera_id`)
-    REFERENCES `mydb`.`camera` (`id`)
+  INDEX `fk_persecondstat_camera` (`camera_id` ASC),
+  CONSTRAINT `fk_persecondstat_camera`
+    FOREIGN KEY (`camera_id`)
+    REFERENCES `jetson`.`camera` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -78,21 +94,22 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `mydb`.`persecondstat_has_perhourstat`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`persecondstat_has_perhourstat` (
-  `perSecondStat_id` INT(10) UNSIGNED NOT NULL,
-  `perSecondStat_Camera_id` INT(10) UNSIGNED NOT NULL,
-  `perHourStat_id` INT(11) NOT NULL,
-  PRIMARY KEY (`perSecondStat_id`, `perSecondStat_Camera_id`, `perHourStat_id`),
-  INDEX `fk_perSecondStat_has_perHourStat_perHourStat1_idx` (`perHourStat_id` ASC),
-  INDEX `fk_perSecondStat_has_perHourStat_perSecondStat1_idx` (`perSecondStat_id` ASC, `perSecondStat_Camera_id` ASC),
-  CONSTRAINT `fk_perSecondStat_has_perHourStat_perHourStat1`
-    FOREIGN KEY (`perHourStat_id`)
-    REFERENCES `mydb`.`perhourstat` (`id`)
+DROP TABLE IF EXISTS `mydb`.`persecondstat_has_perhourstat` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`persecondstat_has_perhourstat` (
+  `per_second_stat_id` INT(10) UNSIGNED NOT NULL,
+  `per_hour_stat_id` INT(11) NOT NULL,
+  PRIMARY KEY (`per_second_stat_id`, `per_hour_stat_id`),
+  INDEX `fk_persecondstat_has_perhourstat_perhourstat_idx` (`per_hour_stat_id` ASC),
+  INDEX `fk_persecondstat_has_perhourstat_persecondstat_idx` (`per_second_stat_id` ASC),
+  CONSTRAINT `fk_persecondstat_has_perhourstat_perhourstat`
+    FOREIGN KEY (`per_hour_stat_id`)
+    REFERENCES `jetson`.`perhourstat` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_perSecondStat_has_perHourStat_perSecondStat1`
-    FOREIGN KEY (`perSecondStat_id` , `perSecondStat_Camera_id`)
-    REFERENCES `mydb`.`persecondstat` (`id` , `Camera_id`)
+  CONSTRAINT `fk_persecondstat_has_perhourstat_persecondstat`
+    FOREIGN KEY (`per_second_stat_id`)
+    REFERENCES `jetson`.`persecondstat` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -102,10 +119,13 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `mydb`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user` (
+DROP TABLE IF EXISTS `mydb`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `id` INT(10) UNSIGNED NOT NULL,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
+  `api_key` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 ENGINE = InnoDB
@@ -115,20 +135,22 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `mydb`.`user_came_association`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`user_came_association` (
+DROP TABLE IF EXISTS `mydb`.`user_came_association` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`user_came_association` (
   `camera_id` INT(10) UNSIGNED NOT NULL,
   `user_id` INT(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`camera_id`, `user_id`),
-  INDEX `fk_camera_has_user_user1_idx` (`user_id` ASC),
-  INDEX `fk_camera_has_user_camera1_idx` (`camera_id` ASC),
-  CONSTRAINT `fk_camera_has_user_camera1`
+  INDEX `fk_camera_has_user_user_idx` (`user_id` ASC),
+  INDEX `fk_camera_has_user_camera_idx` (`camera_id` ASC),
+  CONSTRAINT `fk_camera_has_user_camera`
     FOREIGN KEY (`camera_id`)
-    REFERENCES `mydb`.`camera` (`id`)
+    REFERENCES `jetson`.`camera` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_camera_has_user_user1`
+  CONSTRAINT `fk_camera_has_user_user`
     FOREIGN KEY (`user_id`)
-    REFERENCES `mydb`.`user` (`id`)
+    REFERENCES `jetson`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
