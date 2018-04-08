@@ -20,8 +20,8 @@ def emulate_camera(camera_number):
     serve_made_up_stats_to_server(camera_id, token)
 
 
-def get_camera_id(camera_number):
-    with open(CAMERA_INFO_LOCATION, "rb") as camera_info_file:
+def get_camera_id(camera_number, camera_info_location=CAMERA_INFO_LOCATION):
+    with open(camera_info_location, "rb") as camera_info_file:
         json_data = json.load(camera_info_file)
         if camera_number < len(json_data):
             return json_data[camera_number]["id"]
@@ -41,7 +41,7 @@ def serve_made_up_stats_to_server(camera_id, token):
 
 
 def send_one_per_second_stat(camera_id, token, per_second_stat):
-    http_service.send_per_second_stat(camera_id, token, [per_second_stat.to_json(), ])
+    http_service.send_per_second_stats(camera_id, token, [per_second_stat.to_json(), ])
 
 
 # We take the previous per_second_stat and use it to calculate the next one.
@@ -63,8 +63,8 @@ def authenticate_camera(camera_id, camera_number):
     return get_preset_camera_token(camera_number)
 
 
-def get_preset_camera_token(camera_number):
-    with open(CAMERA_INFO_LOCATION, "rb") as camera_info_file:
+def get_preset_camera_token(camera_number, camera_info_location=CAMERA_INFO_LOCATION):
+    with open(camera_info_location, "rb") as camera_info_file:
         json_data = json.load(camera_info_file)
         if camera_number < len(json_data):
             return json_data[camera_number]["token"]
