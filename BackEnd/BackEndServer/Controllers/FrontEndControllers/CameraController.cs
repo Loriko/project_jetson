@@ -15,8 +15,11 @@ namespace BackEndServer.Controllers.FrontEndControllers
 {
     public class CameraController : Controller
     {
-        private static readonly AbstractCameraService CameraService = new CameraService();
-       
+        private AbstractCameraService _cameraService;
+        private AbstractCameraService CameraService => _cameraService ?? (_cameraService =
+                                                           HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
+                                                               AbstractCameraService);
+
         // GET: /<controller>/
         public IActionResult CameraSelectionForLocation(int locationId)
         {
@@ -24,7 +27,6 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            
             CameraInformationList camerasAtLocationModel = CameraService.getCamerasAtLocation(locationId);
             return View(camerasAtLocationModel);
         }
@@ -35,8 +37,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            
             CameraStatistics cameraStatisticsModel = CameraService.getCameraStatisticsForNowById(cameraId);
+            
             if (cameraStatisticsModel != null)
             {
                 return View(cameraStatisticsModel);    

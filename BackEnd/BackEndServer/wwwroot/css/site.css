@@ -94,3 +94,13 @@ main {
 .no-right-margin {
     margin-right: 0 !important;
 }
+.borderless-card{
+    margin: 0;
+}
+.smaller-padding-card-content{
+    padding: 12px !important;
+}
+.graph-title {
+    font-size: 16px;
+    margin-top: 5px !important;
+}

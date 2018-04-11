@@ -11,6 +11,7 @@ using BackEndServer.Models.DBModels;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services;
 using BackEndServer.Models.ViewModels;
+using BackEndServer.Services.AbstractServices;
 
 namespace WebAPI.Controllers
 {
@@ -20,17 +21,25 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")] // "api/datarequest"
     public class DataRequestController : Controller
     {
+        private AbstractCameraService _cameraService;
+        private AbstractCameraService CameraService => _cameraService ?? (_cameraService =
+                                                           HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
+                                                               AbstractCameraService);
+
+        private AbstractDataMessageService _dataMessageService;
+        private AbstractDataMessageService DataMessageService => _dataMessageService ?? (_dataMessageService =
+                                                                     HttpContext.RequestServices.GetService(typeof(AbstractDataMessageService)) as
+                                                                         AbstractDataMessageService);
+        
         [HttpPost]
         public IActionResult GetPerSecondStatsFromTimeInterval ([FromBody] TimeInterval unverifiedTimeInterval)
         {
-            DataMessageService dataMessageService = new DataMessageService();
-
-            if (dataMessageService.checkTimeIntervalValidity(unverifiedTimeInterval) == false)
+            if (DataMessageService.checkTimeIntervalValidity(unverifiedTimeInterval) == false)
             {
                 return BadRequest(new JsonResult(new InvalidTimeIntervalResponseBody()));
             }
 
-            DataMessage responseBody = dataMessageService.retrievePerSecondStatsBetweenInterval(unverifiedTimeInterval);
+            DataMessage responseBody = DataMessageService.retrievePerSecondStatsBetweenInterval(unverifiedTimeInterval);
 
             if (responseBody.IsEmpty())
             {
@@ -40,12 +49,10 @@ namespace WebAPI.Controllers
             return Ok(new JsonResult(responseBody));
         }
 
-        [HttpGet("mostrecentstat/{CameraId}", Name = "GetMostRecentPerSecondStatForCamera")] // "api/datarequest/mostrecentstat/4"
-        public IActionResult GetMostRecentPerSecondStatForCameraId(int CameraId)
+        [HttpGet("mostrecentstat/{cameraId}", Name = "GetMostRecentPerSecondStatForCamera")] // "api/datarequest/mostrecentstat/4"
+        public IActionResult GetMostRecentPerSecondStatForCameraId(int cameraId)
         {
-            CameraService camService = new CameraService();
-
-            CameraStatistics stat = camService.getCameraStatisticsForNowById(CameraId);
+            CameraStatistics stat = CameraService.getCameraStatisticsForNowById(cameraId);
 
             if (stat == null)
             {
@@ -55,21 +62,18 @@ namespace WebAPI.Controllers
             return Ok(new JsonResult(stat));
         }
 
-        [HttpGet("location/{LocationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/location/18"
-        public IActionResult GetCamerasFromLocationId(int LocationId)
+        [HttpGet("location/{locationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/location/18"
+        public IActionResult GetCamerasFromLocationId(int locationId)
         {
             // Testing Code:
-            // return (Ok(new JsonResult(LocationId)));
+            // return (Ok(new JsonResult(locationId)));
 
-            if (LocationId < 0)
+            if (locationId < 0)
             {
                 return (BadRequest(new JsonResult(new InvalidLocationIdResponseBody())));
             }
 
-            // Obtain database context.
-            DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(DatabaseQueryService)) as DatabaseQueryService;
-
-            List<DatabaseCamera> camerasForRequestedLocation = context.GetCamerasForLocation(LocationId);
+            List<DatabaseCamera> camerasForRequestedLocation = CameraService.getDatabaseCamerasAtLocation(locationId);
 
             // TODO: use list of EntityDefinitionClasses.Camera instead
 

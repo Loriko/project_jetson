@@ -11,7 +11,12 @@ namespace BackEndServer.Services
 {
     public class DataMessageService : AbstractDataMessageService
     {
-        private readonly DatabaseQueryService _dbQueryService = new DatabaseQueryService();
+        private readonly DatabaseQueryService _dbQueryService;
+
+        public DataMessageService(DatabaseQueryService dbQueryService)
+        {
+            this._dbQueryService = dbQueryService;
+        }
 
         public bool checkDataMessageValidity(DataMessage message)
         {
@@ -130,7 +135,7 @@ namespace BackEndServer.Services
 
             foreach (DatabasePerSecondStat second in queryResults)
             {
-                PerSecondStat temp = new PerSecondStat(second.DateTime, second.CameraId, second.NumDetectedObjects, second.HasSavedImage);
+                PerSecondStat temp = new PerSecondStat(second.DateTime.ToString("yyyy-MM-dd HH:mm:ss"), second.CameraId, second.NumDetectedObjects, second.HasSavedImage);
                 stats[x] = temp;
                 x++;
             }

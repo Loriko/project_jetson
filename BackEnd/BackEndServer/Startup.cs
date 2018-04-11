@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackEndServer.Classes.EntityDefinitionClasses;
+using BackEndServer.Models.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BackEndServer.Services;
+using BackEndServer.Services.AbstractServices;
+using BackEndServer.Services.PlaceholderServices;
 
 namespace BackEndServer
 {
@@ -26,7 +30,22 @@ namespace BackEndServer
             //Add session support
             services.AddSession();
             // Allow the use of the MySQL Database as a service in this project.
-            services.Add(new ServiceDescriptor(typeof(DatabaseQueryService), new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"))));
+            // Uses connection string from the project configuration
+            // Passing it as a service ensures everything in the project will use this query service and use this connection string
+            DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
+            
+            // Other services are constructed using the database query service, meaning they all use the same connection string
+            AbstractGraphStatisticService graphStatisticService = new GraphStatisticService(dbQueryService);
+            AbstractCameraService cameraService = new CameraService(dbQueryService, graphStatisticService);
+            AbstractAuthenticationService authenticationService = new AuthenticationService(dbQueryService);
+            AbstractDataMessageService dataMessageService = new DataMessageService(dbQueryService);
+            AbstractLocationService locationService = new LocationService(dbQueryService);
+
+            services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
+            services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));
+            services.Add(new ServiceDescriptor(typeof(AbstractDataMessageService), dataMessageService));
+            services.Add(new ServiceDescriptor(typeof(AbstractLocationService), locationService));
+            services.Add(new ServiceDescriptor(typeof(AbstractGraphStatisticService), graphStatisticService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

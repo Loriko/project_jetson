@@ -7,8 +7,9 @@ using System.Collections;
 
 namespace BackEndServer.Services.AbstractServices
 {
-    interface AbstractGraphStatisticService
+    public interface AbstractGraphStatisticService
     {
-        GraphStatistics getMaxStatistics(int cameraId);
+        GraphStatistics GetYearlyGraphStatistics(int cameraId);
+        GraphStatistics GetLast30MinutesStatistics(int cameraId);
     }
 }

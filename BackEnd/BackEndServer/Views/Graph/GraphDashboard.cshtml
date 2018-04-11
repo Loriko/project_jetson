@@ -1,4 +1,4 @@
-﻿@model BackEndServer.Models.ViewModels.GraphStatistics
+﻿@model BackEndServer.Models.ViewModels.CameraInformation
 
 <h1 class="page-title center-align">Statistics and Trends</h1>
 
@@ -7,7 +7,7 @@
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
         // Define the chart to be drawn.
-        var array = @Html.Raw(Json.Serialize(Model.Stats));
+        var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
         for (i = 1; i < array.length; i++) {
             array[i][1] = parseInt(array[i][1]);
 
@@ -106,8 +106,8 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <h4 class="card-title">@Model.CameraInformation.CameraName</h4>
-                <p>@Model.CameraInformation.CameraRoomName</p>
+                <h4 class="card-title">@Model.CameraName</h4>
+                <p>@Model.CameraRoomName</p>
                 <div id="curve_chart"></div>
             </div>
         </div>

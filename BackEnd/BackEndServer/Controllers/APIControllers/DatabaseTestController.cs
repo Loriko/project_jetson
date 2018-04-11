@@ -19,12 +19,13 @@ namespace WebAPI.Controllers
         public IActionResult Get()
         {
             // Ensure the Default Connection String matches your SQL Local Server. Look at appsettings.json
-            DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(DatabaseQueryService)) as DatabaseQueryService;
-
-            // Database Query to get all per second stats objects.
-            List<TestObject> perSecondStatsList = context.testDatabase();
-
-            return (new JsonResult(perSecondStatsList));
+            // TODO: Either remove this class or implement testDatabase method inside the proper service.
+            // Code below is wrong according to our new architecture. Database service cannot be referenced from controller
+//            DatabaseQueryService context = HttpContext.RequestServices.GetService(typeof(DatabaseQueryService)) as DatabaseQueryService;
+//
+//            // Database Query to get all per second stats objects.
+//            List<TestObject> perSecondStatsList = context.testDatabase();
+            return new JsonResult(true);
         }
     }
 }
