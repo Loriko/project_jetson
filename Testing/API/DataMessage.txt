@@ -1,1 +1,0 @@
-{"RealTimeStats":[{"UnixTime":1521080558,"CameraId":5,"NumTrackedPeople":18,"HasSavedImage":true},{"UnixTime":152108058,"CameraId":5,"NumTrackedPeople":18,"HasSavedImage":true}]}

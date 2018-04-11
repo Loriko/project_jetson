@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEndServer.Classes.EntityDefinitionClasses;
+using BackEndServer.Services.HelperServices;
+using Newtonsoft.Json;
 
 namespace BackEndServer.Classes.DataRequestClasses
 {
@@ -11,21 +13,21 @@ namespace BackEndServer.Classes.DataRequestClasses
     /// </summary>
     public class AveragesOfDayRequest
     {
-        public SingleSecondTime SingleSecondTime;
+        public string DateTime;
 
-        // Constructor, only added in order to enable proper deserialization. Web API does not create this request object.
-        public AveragesOfDayRequest(SingleSecondTime SingleSecondTime)
+        [JsonConstructor]
+        public AveragesOfDayRequest(string dateTime)
         {
-            this.SingleSecondTime = SingleSecondTime;
+            this.DateTime = dateTime;
         }
 
         /// <summary>
         /// Method to validate a AveragesOfDayRequest object by checking if the requested day is valid.
         /// </summary>
         /// <returns>Returns TRUE if the date is valid, returns FALSE if date is not valid.</returns>
-        public bool isValidRequest()
+        public bool IsValidRequest()
         {
-            return (this.SingleSecondTime.isValidSingleSecondTime());
+            return (DateTimeTools.validateDateTimeString(this.DateTime));
         }
     }
 }
