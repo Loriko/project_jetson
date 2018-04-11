@@ -19,7 +19,13 @@ namespace BackEndServer.Controllers.FrontEndControllers
         private AbstractGraphStatisticService GraphStatisticService => _graphStatisticService ?? (_graphStatisticService =
                                                                            HttpContext.RequestServices.GetService(typeof(AbstractGraphStatisticService)) as
                                                                                AbstractGraphStatisticService);
+        
+        private AbstractCameraService _cameraService;
+        private AbstractCameraService CameraService => _cameraService ?? (_cameraService =
+                                                                           HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
+                                                                               AbstractCameraService);
 
+        
         // GET: /<controller>/
         public IActionResult GraphDashboard(int cameraId)
         {
@@ -27,8 +33,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            GraphStatistics graphStatistics = GraphStatisticService.getMaxStatistics(cameraId);
-            return View(graphStatistics);
+            CameraInformation cameraInfoWithStatistics = CameraService.GetCameraInformationWithYearlyData(cameraId);
+            return View(cameraInfoWithStatistics);
         }
     }
 }

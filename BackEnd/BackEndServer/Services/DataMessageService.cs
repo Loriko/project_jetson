@@ -135,7 +135,7 @@ namespace BackEndServer.Services
 
             foreach (DatabasePerSecondStat second in queryResults)
             {
-                PerSecondStat temp = new PerSecondStat(second.DateTime, second.CameraId, second.NumDetectedObjects, second.HasSavedImage);
+                PerSecondStat temp = new PerSecondStat(second.DateTime.ToString("yyyy-MM-dd HH:mm:ss"), second.CameraId, second.NumDetectedObjects, second.HasSavedImage);
                 stats[x] = temp;
                 x++;
             }

@@ -1,53 +1,100 @@
 ﻿@model BackEndServer.Models.ViewModels.CameraStatistics
 
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart', 'line'] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        // Define the chart to be drawn.
+        @{
+            if (Model.GraphStatistics != null)
+            {
+            <text>    
+                var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
+                for (i = 1; i < array.length; i++) {
+                    array[i][1] = parseInt(array[i][1]);
+                }
+
+                var data = new google.visualization.arrayToDataTable(array);
+
+                var options = {
+                    legend: { position: 'bottom' }
+
+                }
+
+                // Instantiate and draw the chart.
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                chart.draw(data, options);
+            </text>
+            }
+        }
+    }
+</script>
+
 <h1 class="page-title center-align">Here is the most recent information concerning the data captured by:<br><b>@Model.CameraInformation.CameraName</b></h1>
 <div class="row flex">
-    <div class="col s12 m6">
+    <div class="col s12 m6 center-align main-statistics valign-wrapper">
         <div class="col s10 offset-s1">
             <div class="card camera-card">
-            <div class="card-image">
-                
-                @{
-                    if (Model.CameraInformation.CameraId <= 4)
-                    {
-                        <img class="camera-card-image" src="~/images/camera_images/camera_image_@(Model.CameraInformation.CameraId).png" alt="@Model.CameraInformation.CameraRoomName">
+                <div class="card-image">
+                    
+                    @{
+                        if (Model.CameraInformation.CameraId <= 4)
+                        {
+                            <img class="camera-card-image" src="~/images/camera_images/camera_image_@(Model.CameraInformation.CameraId).png" alt="@Model.CameraInformation.CameraRoomName">
+                        }
+                        else
+                        {
+                            <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraRoomName">
+                        }
                     }
-                    else
-                    {
-                        <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraRoomName">
-                    }
-                }
-                
-                <span class="camera-card-title card-title">@Model.CameraInformation.CameraRoomName</span>
+                    
+                    <span class="camera-card-title card-title">@Model.CameraInformation.CameraRoomName</span>
+                </div>
             </div>
-        </div>
         </div>
     </div>
     <div class="col s12 m6 center-align main-statistics valign-wrapper">
-        <div class="valign-wrapper-subcontainer">
+        <div class="col s10 offset-s1">
             @{
-                if (@Model.LastUpdatedTime != null)
+                if (Model.GraphStatistics == null)
                 {
-                    <div class="last-updated-time">
-                        Page last updated on: @DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt")
-                    </div>
-                    <div class="last-updated-time">
-                        Recorded on: @Model.LastUpdatedTime.Value.ToString("yyyy/MM/dd hh:mm:ss tt")
-                    </div>
                     <div class="people-count">
-                        Number of people spotted: @Model.MostRecentPeopleCount
+                        No activity recorded by the camera in the last 30 minutes
                     </div>
                 }
                 else
                 {
-                    <div class="people-count">
-                        Nothing captured by the camera so far
-                    </div>
+                    <div class="card borderless-card">
+                        <div class="card-content smaller-padding-card-content">
+                            <p class="graph-title">Activity in the last 30 minutes</p>
+                            <div id="curve_chart"></div>
+                        </div>
+                    </div>       
                 }
             }
-            <div>
-                <a asp-controller="Camera" asp-action="CameraInformation" asp-route-cameraId="@Model.CameraInformation.CameraId" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">refresh</i></a>
-            </div>
+            @*            @{*@
+            @*                if (@Model.LastUpdatedTime != null)*@
+            @*                {*@
+            @*                    <div class="last-updated-time">*@
+            @*                        Page last updated on: @DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss tt")*@
+            @*                    </div>*@
+            @*                    <div class="last-updated-time">*@
+            @*                        Recorded on: @Model.LastUpdatedTime.Value.ToString("yyyy/MM/dd hh:mm:ss tt")*@
+            @*                    </div>*@
+            @*                    <div class="people-count">*@
+            @*                        Number of people spotted: @Model.MostRecentPeopleCount*@
+            @*                    </div>*@
+            @*                }*@
+            @*                else*@
+            @*                {*@
+            @*                    <div class="people-count">*@
+            @*                        Nothing captured by the camera so far*@
+            @*                    </div>*@
+            @*                }*@
+            @*            }*@
+            @*            <div>*@
+            @*                <a asp-controller="Camera" asp-action="CameraInformation" asp-route-cameraId="@Model.CameraInformation.CameraId" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons">refresh</i></a>*@
+            @*            </div>*@
         </div>
     </div>
 </div>

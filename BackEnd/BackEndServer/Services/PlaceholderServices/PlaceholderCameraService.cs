@@ -30,6 +30,11 @@ namespace BackEndServer.Services.PlaceholderServices
                 "This is a temporary method that shouldn't exist in the first place, so no placeholder was created.");
         }
 
+        public CameraInformation GetCameraInformationWithYearlyData(int cameraId)
+        {
+            throw new NotImplementedException();
+        }
+
         public CameraInformation getCameraInformationById(int cameraId){
             if (cameraId == 1)
             {

@@ -13,9 +13,10 @@ using BackEndServer.Services.HelperServices;
 // Bulk insert: INSERT INTO tbl_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9);
 
 namespace BackEndServer.Services
-{
+{   
+    
     public class DatabaseQueryService
-    {
+    {   
         #region Database Context
         // Connection String Attribute
         public string ConnectionString { get; set; }
@@ -150,7 +151,7 @@ namespace BackEndServer.Services
                     {
                         perSecondStatsList.Add(new DatabasePerSecondStat()
                         {
-                            DateTime = Convert.ToString(reader["dateTime"]),
+                            DateTime = Convert.ToDateTime(reader["dateTime"]),
                             CameraId = Convert.ToInt32(reader["Camera_idCamera"]),
                             NumDetectedObjects = Convert.ToInt32(reader["numDetectedObjects"]),
                             HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader["hasSavedImage"]))
@@ -182,7 +183,7 @@ namespace BackEndServer.Services
                         {
                             CameraId = Convert.ToInt32(reader["Camera_idCamera"]),
                             HasSavedImage = Convert.ToBoolean(reader["hasSavedImage"]),
-                            DateTime = Convert.ToString(reader["dateTime"]),
+                            DateTime = Convert.ToDateTime(reader["dateTime"]),
                             NumDetectedObjects = Convert.ToInt32(reader["numDetectedObjects"]),
                             StatId = Convert.ToInt32(reader["idStat"])
                         };
@@ -221,6 +222,36 @@ namespace BackEndServer.Services
 
             }
             return camera;
+        }
+        
+        public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
+        {
+            List<DatabasePerSecondStat> perSecondStats = new List<DatabasePerSecondStat>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * from {DatabasePerSecondStat.TABLE_NAME} WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStats.Add(new DatabasePerSecondStat()
+                        {
+                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.STAT_ID_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
+                            DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            NumDetectedObjects =  Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
+                            HasSavedImage = Convert.ToBoolean(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])
+                        });
+                    }
+                }
+
+            }
+            return perSecondStats;
         }
         
         public List<DatabaseCamera> GetCamerasForLocation(int locationId)

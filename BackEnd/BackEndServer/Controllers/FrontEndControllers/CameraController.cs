@@ -38,6 +38,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("SignIn", "Home");
             }
             CameraStatistics cameraStatisticsModel = CameraService.getCameraStatisticsForNowById(cameraId);
+            
             if (cameraStatisticsModel != null)
             {
                 return View(cameraStatisticsModel);    

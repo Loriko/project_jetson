@@ -12,5 +12,6 @@ namespace BackEndServer.Services.AbstractServices
         CameraStatistics getCameraStatisticsForNowById(int cameraId);
         // Temporary, needs to be changed to using the APIModel equivalent of the DatabaseCamera object
         List<DatabaseCamera> getDatabaseCamerasAtLocation(int locationId);
+        CameraInformation GetCameraInformationWithYearlyData(int cameraId);
     }
 }

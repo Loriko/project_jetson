@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BackEndServer.Classes.EntityDefinitionClasses;
+using BackEndServer.Models.ViewModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,15 +35,12 @@ namespace BackEndServer
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
             
             // Other services are constructed using the database query service, meaning they all use the same connection string
-            AbstractCameraService cameraService = new CameraService(dbQueryService);
+            AbstractGraphStatisticService graphStatisticService = new GraphStatisticService(dbQueryService);
+            AbstractCameraService cameraService = new CameraService(dbQueryService, graphStatisticService);
             AbstractAuthenticationService authenticationService = new AuthenticationService(dbQueryService);
             AbstractDataMessageService dataMessageService = new DataMessageService(dbQueryService);
             AbstractLocationService locationService = new LocationService(dbQueryService);
-            // Service not yet implemented and we are using a placeholder right now
-            // When service is actually implemented, change PlaceholderGraphStatisticsService to GraphStatisticsService
-            // Nothing else would need to be changed if things are done correctly
-            AbstractGraphStatisticService graphStatisticService = new PlaceholderGraphStatisticsService(cameraService);
-            
+
             services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
             services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));
             services.Add(new ServiceDescriptor(typeof(AbstractDataMessageService), dataMessageService));

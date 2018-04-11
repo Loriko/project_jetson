@@ -8,6 +8,7 @@ namespace BackEndServer.Models.ViewModels
         public int CameraId { get; set; }
         public string CameraRoomName { get; set; }
         public string CameraName { get; set; }
+        public GraphStatistics GraphStatistics { get; set; }
 
         public CameraInformation(int cameraId, string cameraRoomName){
             this.CameraId = cameraId;
