@@ -23,12 +23,6 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
             this.RealTimeStats = perSecondStats;
         }
 
-        // Constructor required by certain specific Web API methods/controllers.
-        public DataMessage(int numPerSecondStat)
-        {
-            this.RealTimeStats = new PerSecondStat[numPerSecondStat];
-        }
-
         /// <summary>
         /// Returns the number of PerSecondStat objects stored within the DataMessage. A.K.A. the size of the RealTimeStats attribute array.
         /// </summary>

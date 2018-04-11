@@ -11,13 +11,16 @@ namespace BackEndServer.Services
 {
     public class DataMessageService : AbstractDataMessageService
     {
+        // Attribute
         private readonly DatabaseQueryService _dbQueryService;
 
+        // Constructor
         public DataMessageService(DatabaseQueryService dbQueryService)
         {
             this._dbQueryService = dbQueryService;
         }
 
+        // Validates a received DataMessage object's contents (all PerSecondStat objects contained).
         public bool checkDataMessageValidity(DataMessage message)
         {
             if (message.IsEmpty())
@@ -36,6 +39,7 @@ namespace BackEndServer.Services
             return true;
         }
 
+        // Creates an error response body custom to the characteristics of the received DataMessage object.
         public InvalidDataMessageResponseBody createInvalidDataMessageResponseBody(DataMessage message)
         {
             if (message.IsEmpty())
@@ -86,6 +90,7 @@ namespace BackEndServer.Services
             }
         }
 
+        // Once a DataMessage is verified, this method allows persisting all contents (PerSecondStat objects) into the database.
         public bool storeStatsFromDataMessage(DataMessage verifiedMessage)
         {
             List<PerSecondStat> temp = new List<PerSecondStat>();
@@ -101,6 +106,7 @@ namespace BackEndServer.Services
             return this._dbQueryService.storePerSecondStats(distinctStats);
         }
 
+        // Before processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval, this method is used to validate the received TimeInterval.
         public bool checkTimeIntervalValidity(TimeInterval timeInterval)
         {
             if (timeInterval.StartDateTime.CheckIfSQLFormat() == false || timeInterval.EndDateTime.CheckIfSQLFormat() == false)
@@ -125,6 +131,7 @@ namespace BackEndServer.Services
             return true;
         }
 
+        // Used for processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval.
         public DataMessage retrievePerSecondStatsBetweenInterval(TimeInterval verifiedTimeInterval)
         {
             List<DatabasePerSecondStat> queryResults = _dbQueryService.getStatsFromInterval(verifiedTimeInterval);
