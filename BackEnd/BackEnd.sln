@@ -4,8 +4,6 @@ VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackEndServer", "BackEndServer\BackEndServer.csproj", "{4ADDAF68-AFC8-40CB-B8CF-77F68BBEE474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API Json Generator", "ConsoleApp1\API Json Generator.csproj", "{58066667-5F2C-4FCB-A88A-9AE74DEAD8A6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,10 +14,6 @@ Global
 		{4ADDAF68-AFC8-40CB-B8CF-77F68BBEE474}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4ADDAF68-AFC8-40CB-B8CF-77F68BBEE474}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4ADDAF68-AFC8-40CB-B8CF-77F68BBEE474}.Release|Any CPU.Build.0 = Release|Any CPU
-		{58066667-5F2C-4FCB-A88A-9AE74DEAD8A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58066667-5F2C-4FCB-A88A-9AE74DEAD8A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58066667-5F2C-4FCB-A88A-9AE74DEAD8A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58066667-5F2C-4FCB-A88A-9AE74DEAD8A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
