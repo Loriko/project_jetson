@@ -1,0 +1,165 @@
+{
+	"info": {
+		"name": "API_DataReceival_Tests",
+		"_postman_id": "0ab6b35c-212b-72ba-2353-23f80fcee98c",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API_DataReceival_Test1",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraId\":0,\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraId\":1,\"NumTrackedPeople\":3,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraId\":2,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraId\":0,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraId\":1,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraId\":2,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraId\":0,\"NumTrackedPeople\":15,\"HasSavedImage\":true},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraId\":1,\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraId\":2,\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":15,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":1,\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":2,\"NumTrackedPeople\":8,\"HasSavedImage\":true}]}"
+				},
+				"url": {
+					"raw": "http://localhost:55556/api/datareceival/persist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55556",
+					"path": [
+						"api",
+						"datareceival",
+						"persist"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API_DataReceival_Test2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-8-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:49\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:50\",\"CameraId\":0,\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:51\",\"CameraId\":0,\"NumTrackedPeople\":2,\"HasSavedImage\":false}]}"
+				},
+				"url": {
+					"raw": "http://localhost:55556/api/datareceival/persist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55556",
+					"path": [
+						"api",
+						"datareceival",
+						"persist"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API_DataReceival_Test3",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":-1,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false}]}"
+				},
+				"url": {
+					"raw": "http://localhost:55556/api/datareceival/persist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55556",
+					"path": [
+						"api",
+						"datareceival",
+						"persist"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API_DataReceival_Test4",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":-1,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false}]}"
+				},
+				"url": {
+					"raw": "http://localhost:55556/api/datareceival/persist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55556",
+					"path": [
+						"api",
+						"datareceival",
+						"persist"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "API_DataReceival_Test5",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"20000-08-30 10:23:48\",\"CameraId\":-1,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":-8,\"HasSavedImage\":false},{\"DateTime\":\"2000/08/30 10:23:48\",\"CameraId\":1,\"NumTrackedPeople\":5,\"HasSavedImage\":false}]}"
+				},
+				"url": {
+					"raw": "http://localhost:55556/api/datareceival/persist",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55556",
+					"path": [
+						"api",
+						"datareceival",
+						"persist"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

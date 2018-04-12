@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using BackEndServer.Services.HelperServices;
-using Newtonsoft.Json;
 
-namespace BackEndServer.Classes.EntityDefinitionClasses
+namespace ConsoleApp1
 {
     /// <summary>
     /// Object which acts as a container for one or more PerSecondStat objects.
@@ -17,7 +15,6 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         public PerSecondStat[] RealTimeStats { get; set; }
 
         // Constructor which is also the Json deserialising constructor.
-        [JsonConstructor]
         public DataMessage(PerSecondStat[] perSecondStats)
         {
             this.RealTimeStats = perSecondStats;

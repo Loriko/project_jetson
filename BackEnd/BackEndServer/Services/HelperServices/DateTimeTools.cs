@@ -67,6 +67,23 @@ namespace BackEndServer.Services.HelperServices
             return (true);
         }
 
+        public static bool validateDateTimeString(this string dateTimeString)
+        {
+            if (MySqlDateTimeConverter.CheckIfSQLFormat(dateTimeString) == false)
+            {
+                return false;
+            }
+
+            DateTime toValidate = MySqlDateTimeConverter.toDateTime(dateTimeString);
+
+            if (validateDateTime(toValidate) == false)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         /// <summary>
         /// Returns the first second of the specified day of the date. Used for queries.
         /// Creates a new datetime object by removing all seconds, minutes and hours.
