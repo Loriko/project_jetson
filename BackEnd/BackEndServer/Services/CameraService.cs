@@ -9,10 +9,10 @@ namespace BackEndServer.Services
 {
     public class CameraService : AbstractCameraService
     {
-        private readonly DatabaseQueryService _dbQueryService;
+        private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
 
-        public CameraService(DatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService)
+        public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService)
         {
             _dbQueryService = dbQueryService;
             _graphStatisticsService = graphStatisticService;
