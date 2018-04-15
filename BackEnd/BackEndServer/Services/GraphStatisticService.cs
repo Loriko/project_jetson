@@ -9,9 +9,9 @@ namespace BackEndServer.Services
 {
     public class GraphStatisticService : AbstractGraphStatisticService
     {
-        private readonly DatabaseQueryService _databaseQueryService;
+        private readonly IDatabaseQueryService _databaseQueryService;
 
-        public GraphStatisticService(DatabaseQueryService databaseQueryService)
+        public GraphStatisticService(IDatabaseQueryService databaseQueryService)
         {
             _databaseQueryService = databaseQueryService;
         }

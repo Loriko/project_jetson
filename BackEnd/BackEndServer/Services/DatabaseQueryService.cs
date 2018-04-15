@@ -15,7 +15,7 @@ using BackEndServer.Services.HelperServices;
 namespace BackEndServer.Services
 {   
     
-    public class DatabaseQueryService
+    public class DatabaseQueryService : IDatabaseQueryService
     {   
         #region Database Context
         // Connection String Attribute
