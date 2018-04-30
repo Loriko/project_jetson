@@ -17,7 +17,7 @@ namespace BackEndServer.Services
         
         public LocationInformationList getAvailableLocationsForUser(string username)
         {
-            List<DatabaseAddress> dbAddressList = _dbQueryService.GetLocationsForUser(username);
+            List<DatabaseLocation> dbAddressList = _dbQueryService.GetLocationsForUser(username);
             return new LocationInformationList(dbAddressList);
         }
     }

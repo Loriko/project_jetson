@@ -11,7 +11,7 @@ namespace BackEndServer.Services
         DatabaseCamera GetCameraById(int cameraId);
         List<DatabaseCamera> GetCamerasForLocation(int locationId);
         DatabasePerSecondStat GetLatestPerSecondStatForCamera(int cameraId);
-        List<DatabaseAddress> GetLocationsForUser(string username);
+        List<DatabaseLocation> GetLocationsForUser(string username);
         List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId);
         List<DatabasePerSecondStat> getStatsFromInterval(TimeInterval verifiedTimeInterval);
         bool IsPasswordValidForUser(string username, string password);

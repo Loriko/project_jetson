@@ -80,9 +80,9 @@ namespace BackEndServer.Services
         }
 
         //Right now, username isn't used, but it will be as soon as the tables necessary for camera permissions are added
-        public List<DatabaseAddress> GetLocationsForUser(string username)
+        public List<DatabaseLocation> GetLocationsForUser(string username)
         {
-            List<DatabaseAddress> locationList = new List<DatabaseAddress>();
+            List<DatabaseLocation> locationList = new List<DatabaseLocation>();
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -94,10 +94,10 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        locationList.Add(new DatabaseAddress()
+                        locationList.Add(new DatabaseLocation()
                         {
-                            idAddress = Convert.ToInt32(reader["idAddress"]),
-                            location = Convert.ToString(reader["location"])
+                            LocationId = Convert.ToInt32(reader["idAddress"]),
+                            LocationName = Convert.ToString(reader["location"])
                         });
                     }
                 }
@@ -214,7 +214,7 @@ namespace BackEndServer.Services
                             CameraId = Convert.ToInt32(reader["idCamera"]),
                             CameraName = Convert.ToString(reader["cameraName"]),
                             LocationId = Convert.ToInt32(reader["Address_idAddress"]),
-                            UserID = Convert.ToInt32(reader["User_idUser"]),
+                            UserId = Convert.ToInt32(reader["User_idUser"]),
                             MonitoredArea = Convert.ToString(reader["roomName"])
                         };
                     }
@@ -241,7 +241,7 @@ namespace BackEndServer.Services
                     {
                         perSecondStats.Add(new DatabasePerSecondStat()
                         {
-                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.STAT_ID_LABEL]),
+                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.SECOND_STAT_ID_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
                             NumDetectedObjects =  Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
@@ -274,7 +274,7 @@ namespace BackEndServer.Services
                             CameraId = Convert.ToInt32(reader["idCamera"]),
                             CameraName = Convert.ToString(reader["cameraName"]),
                             LocationId = Convert.ToInt32(reader["Address_idAddress"]),
-                            UserID = Convert.ToInt32(reader["User_idUser"]),
+                            UserId = Convert.ToInt32(reader["User_idUser"]),
                             MonitoredArea = Convert.ToString(reader["roomName"])
                         });
                     }

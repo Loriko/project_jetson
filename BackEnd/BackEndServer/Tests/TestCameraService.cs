@@ -21,7 +21,7 @@ namespace BackEndServer.Tests
                 CameraId = 1,
                 CameraName = "cameraName",
                 LocationId = 1,
-                UserID = 1,
+                UserId = 1,
                 MonitoredArea = "Room"
             };
             DatabasePerSecondStat testStat = new DatabasePerSecondStat()

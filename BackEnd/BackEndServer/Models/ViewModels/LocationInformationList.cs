@@ -14,7 +14,7 @@ namespace BackEndServer.Models.ViewModels
             LocationList = new List<LocationInformation>();
         }
 
-        public LocationInformationList(List<DatabaseAddress> dbAddressList)
+        public LocationInformationList(List<DatabaseLocation> dbAddressList)
         {
             LocationList = new List<LocationInformation>();
             foreach (var databaseAddress in dbAddressList)

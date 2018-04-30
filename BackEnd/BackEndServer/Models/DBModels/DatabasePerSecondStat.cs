@@ -4,13 +4,16 @@ namespace BackEndServer.Models.DBModels
 {
     public class DatabasePerSecondStat
     {
-        public static readonly string TABLE_NAME = "perSecondStat";
-        public static readonly string STAT_ID_LABEL = "idStat";
-        public static readonly string CAMERA_ID_LABEL = "Camera_idCamera";
-        public static readonly string DATE_TIME_LABEL = "dateTime";
-        public static readonly string HAS_SAVED_IMAGE_LABEL = "hasSavedImage";
-        public static readonly string NUM_DETECTED_OBJECTS_LABEL = "numDetectedObjects";
+        // Table Name
+        public static readonly string TABLE_NAME = "persecondstat";
+        // Attributes of PerSecondStat table.
+        public static readonly string SECOND_STAT_ID_LABEL = "id";
+        public static readonly string CAMERA_ID_LABEL = "camera_id";
+        public static readonly string DATE_TIME_LABEL = "date_time";
+        public static readonly string HAS_SAVED_IMAGE_LABEL = "has_saved_image";
+        public static readonly string NUM_DETECTED_OBJECTS_LABEL = "num_detected_object";
         
+        // Database Model Class Attributes
         public int StatId { get; set; }
         public DateTime DateTime { get; set; }
         public bool HasSavedImage { get; set; }
