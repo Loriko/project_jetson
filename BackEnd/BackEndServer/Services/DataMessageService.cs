@@ -103,7 +103,7 @@ namespace BackEndServer.Services
             // Remove any possible duplicates.
             List<PerSecondStat> distinctStats = temp.Distinct().ToList();
 
-            return this._dbQueryService.storePerSecondStats(distinctStats);
+            return this._dbQueryService.PersistPerSecondStats(distinctStats);
         }
 
         // Before processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval, this method is used to validate the received TimeInterval.
@@ -134,7 +134,7 @@ namespace BackEndServer.Services
         // Used for processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval.
         public DataMessage retrievePerSecondStatsBetweenInterval(TimeInterval verifiedTimeInterval)
         {
-            List<DatabasePerSecondStat> queryResults = _dbQueryService.getStatsFromInterval(verifiedTimeInterval);
+            List<DatabasePerSecondStat> queryResults = _dbQueryService.GetStatsFromInterval(verifiedTimeInterval);
 
             PerSecondStat[] stats = new PerSecondStat[queryResults.Count()];
 

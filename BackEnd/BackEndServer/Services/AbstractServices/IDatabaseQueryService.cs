@@ -13,9 +13,8 @@ namespace BackEndServer.Services
         DatabasePerSecondStat GetLatestPerSecondStatForCamera(int cameraId);
         List<DatabaseLocation> GetLocationsForUser(string username);
         List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId);
-        List<DatabasePerSecondStat> getStatsFromInterval(TimeInterval verifiedTimeInterval);
+        List<DatabasePerSecondStat> GetStatsFromInterval(TimeInterval verifiedTimeInterval);
         bool IsPasswordValidForUser(string username, string password);
-        bool storePerSecondStats(List<PerSecondStat> distinctStats);
-        List<TestObject> testDatabase();
+        bool PersistPerSecondStats(List<PerSecondStat> distinctStats);
     }
 }
