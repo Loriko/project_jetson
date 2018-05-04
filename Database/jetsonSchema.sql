@@ -41,6 +41,12 @@ CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `id` INT(10) UNSIGNED NOT NULL,
   `camera_name` VARCHAR(45) NULL DEFAULT NULL,
   `location_id` INT(11) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `monitored_area` VARCHAR(45) NOT NULL,
+  `brand` VARCHAR(45) NULL,
+  `model` VARCHAR(45) NULL,
+  `resolution_width` UNSIGNED INT(4) NULL,
+  `resolution_height` UNSIGNED INT(4) NULL,
   PRIMARY KEY (`id`, `location_id`),
   INDEX `fk_camera_address_idx` (`location_id` ASC),
   CONSTRAINT `fk_camera_Address`
@@ -59,10 +65,11 @@ DROP TABLE IF EXISTS `mydb`.`perhourstat` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`perhourstat` (
   `id` INT(11) NOT NULL,
-  `num_detected_object` INT NULL,
-  `max_object` INT NULL,
-  `min_object` INT NULL,
-  `avg_object` INT NULL,
+  `date_day` DATE NOT NULL,
+  `date_hour` INT(2) UNSIGNED NOT NULL,
+  `max_detected_object` UNSIGNED INT NULL,
+  `min_detected_object` UNSIGNED INT NULL,
+  `avg_detected_object` UNSIGNED FLOAT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;

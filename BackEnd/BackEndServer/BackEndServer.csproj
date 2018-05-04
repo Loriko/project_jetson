@@ -25,7 +25,6 @@
     <Folder Include="Views\Camera\" />
     <Folder Include="wwwroot\images\camera_images\" />
     <Folder Include="Controllers\APIControllers\" />
-    <Folder Include="Models\DBModels\" />
     <Folder Include="Services\HelperServices\" />
     <Folder Include="Classes\DataRequestClasses\" />
     <Folder Include="Classes\DataResponseClasses\" />

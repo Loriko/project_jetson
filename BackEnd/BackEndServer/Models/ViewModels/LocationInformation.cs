@@ -14,6 +14,6 @@ namespace BackEndServer.Models.ViewModels
             this.LocationName = locationName;
         }
         // Adapter for LocationInformation constructor out of a DatabaseAddress object
-        public LocationInformation(DatabaseAddress databaseAddress) : this(databaseAddress.idAddress, databaseAddress.location){}
+        public LocationInformation(DatabaseLocation databaseAddress) : this(databaseAddress.LocationId, databaseAddress.LocationName){}
     }
 }

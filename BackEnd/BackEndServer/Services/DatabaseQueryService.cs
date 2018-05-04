@@ -34,10 +34,11 @@ namespace BackEndServer.Services
         }
         #endregion
 
-        // Untested -- Mohamed R.
-        public bool storePerSecondStats(List<PerSecondStat> distinctStats)
+        public bool PersistPerSecondStats(List<PerSecondStat> distinctStats)
         {
-            string bulkInsertCommand = "INSERT INTO perSecondStat (dateTime,Camera_idCamera,numDetectedObjects,hasSavedImage) VALUES ";
+            string bulkInsertCommand = $"INSERT INTO {DatabasePerSecondStat.TABLE_NAME} "
+                + $"({DatabasePerSecondStat.CAMERA_ID_LABEL},{DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL}, "
+                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL}) VALUES ";
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -45,11 +46,11 @@ namespace BackEndServer.Services
 
                 PerSecondStat lastStat = distinctStats.Last();
 
-                // Build Bulk Insert Command
+                // Build Remaining Bulk Insert Command
                 foreach (PerSecondStat stat in distinctStats)
                 {
-                    string camId = stat.CameraId.ToString();
-                    string numPeople = stat.NumTrackedPeople.ToString();
+                    string cameraId = stat.CameraId.ToString();
+                    string numDetectedObjects = stat.NumTrackedPeople.ToString();
                     string hasImage = "0";
 
                     if (stat.HasSavedImage)
@@ -57,7 +58,7 @@ namespace BackEndServer.Services
                         hasImage = "1";
                     }
 
-                    bulkInsertCommand += $"(\"{stat.DateTime}\",{camId},{numPeople},{hasImage})";
+                    bulkInsertCommand += $"({cameraId},{numDetectedObjects},'{stat.DateTime}',{hasImage})";
 
                     if (stat != lastStat)
                     {
@@ -79,14 +80,15 @@ namespace BackEndServer.Services
             return true;
         }
 
-        //Right now, username isn't used, but it will be as soon as the tables necessary for camera permissions are added
-        public List<DatabaseAddress> GetLocationsForUser(string username)
+        // FRANCIS TO CHECK LATER 
+        // Right now, username isn't used, but it will be as soon as the tables necessary for camera permissions are added.
+        public List<DatabaseLocation> GetLocationsForUser(string username)
         {
-            List<DatabaseAddress> locationList = new List<DatabaseAddress>();
+            List<DatabaseLocation> locationList = new List<DatabaseLocation>();
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = "select * from address";
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME}";
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -94,53 +96,30 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        locationList.Add(new DatabaseAddress()
+                        locationList.Add(new DatabaseLocation()
                         {
-                            idAddress = Convert.ToInt32(reader["idAddress"]),
-                            location = Convert.ToString(reader["location"])
+                            LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
+                            AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
+                            City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
+                            State = Convert.ToString(reader[DatabaseLocation.STATE_LABEL]),
+                            Zip = Convert.ToString(reader[DatabaseLocation.ZIP_LABEL])
                         });
                     }
                 }
-
             }
             return locationList;
         }
-        
-        // Return DatabasePerSecondStat, not PerSecondStat, this is faster to implement for a simple test.
-        public List<TestObject> testDatabase()
-        {
-            List<TestObject> perSecondStatsList = new List<TestObject>();
 
-            using (MySqlConnection conn = GetConnection())
-            {
-                string query = "select * from test";
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                using (var reader = cmd.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        perSecondStatsList.Add(new TestObject()
-                        {
-                            CameraID = Convert.ToInt32(reader["idtest"])
-                        });
-                    }
-                }
-
-            }
-            return (perSecondStatsList);
-        }
-
-        // Untested -- Mohamed R.
-        public List<DatabasePerSecondStat> getStatsFromInterval(TimeInterval verifiedTimeInterval)
+        public List<DatabasePerSecondStat> GetStatsFromInterval(TimeInterval verifiedTimeInterval)
         {
             List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = "SELECT * FROM perSecondStat WHERE dateTime >= " + verifiedTimeInterval.StartDateTime;
-                query += " AND dateTime <= " + verifiedTimeInterval.EndDateTime;
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} "
+                    + $"WHERE {DatabasePerSecondStat.DATE_TIME_LABEL} >= '{verifiedTimeInterval.StartDateTime}' "
+                    + $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= '{verifiedTimeInterval.EndDateTime}'";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -151,15 +130,15 @@ namespace BackEndServer.Services
                     {
                         perSecondStatsList.Add(new DatabasePerSecondStat()
                         {
-                            DateTime = Convert.ToDateTime(reader["dateTime"]),
-                            CameraId = Convert.ToInt32(reader["Camera_idCamera"]),
-                            NumDetectedObjects = Convert.ToInt32(reader["numDetectedObjects"]),
-                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader["hasSavedImage"]))
+                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.SECOND_STAT_ID_LABEL]),
+                            DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
+                            NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL]))
                         });
                     }
                 }
             }
-
             return perSecondStatsList;
         }
 
@@ -169,7 +148,9 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * from perSecondStat WHERE Camera_idCamera = {cameraId} ORDER BY dateTime DESC LIMIT 1;";
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} "
+                    + $"WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId} "
+                    + $"ORDER BY {DatabasePerSecondStat.DATE_TIME_LABEL} DESC LIMIT 1";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -181,56 +162,61 @@ namespace BackEndServer.Services
                     {
                         perSecondStat = new DatabasePerSecondStat()
                         {
-                            CameraId = Convert.ToInt32(reader["Camera_idCamera"]),
-                            HasSavedImage = Convert.ToBoolean(reader["hasSavedImage"]),
-                            DateTime = Convert.ToDateTime(reader["dateTime"]),
-                            NumDetectedObjects = Convert.ToInt32(reader["numDetectedObjects"]),
-                            StatId = Convert.ToInt32(reader["idStat"])
+                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.SECOND_STAT_ID_LABEL]),
+                            DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
+                            NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL]))
                         };
                     }
                 }
-
             }
             return perSecondStat;
         }
-        
+
         public DatabaseCamera GetCameraById(int cameraId)
         {
             DatabaseCamera camera = null;
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * from camera WHERE idCamera = {cameraId};";
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_ID_LABEL} = {cameraId}";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
+                    // Expecting one result.
                     if (reader.Read())
                     {
                         camera = new DatabaseCamera()
                         {
-                            CameraId = Convert.ToInt32(reader["idCamera"]),
-                            CameraName = Convert.ToString(reader["cameraName"]),
-                            LocationId = Convert.ToInt32(reader["Address_idAddress"]),
-                            UserID = Convert.ToInt32(reader["User_idUser"]),
-                            MonitoredArea = Convert.ToString(reader["roomName"])
+                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
+                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
+                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
+                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
+                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
+                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL]),
+                            ResolutionWidth = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_WIDTH_LABEL]),
+                            ResolutionHeight = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_HEIGHT_LABEL])
                         };
                     }
                 }
-
             }
+
             return camera;
         }
         
+        // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {
             List<DatabasePerSecondStat> perSecondStats = new List<DatabasePerSecondStat>();
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * from {DatabasePerSecondStat.TABLE_NAME} WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId};";
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId}";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -241,7 +227,7 @@ namespace BackEndServer.Services
                     {
                         perSecondStats.Add(new DatabasePerSecondStat()
                         {
-                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.STAT_ID_LABEL]),
+                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.SECOND_STAT_ID_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
                             NumDetectedObjects =  Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
@@ -249,7 +235,6 @@ namespace BackEndServer.Services
                         });
                     }
                 }
-
             }
             return perSecondStats;
         }
@@ -260,7 +245,7 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * from camera WHERE Address_idAddress = {locationId};";
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.LOCATION_ID_LABEL} = {locationId}";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -271,15 +256,18 @@ namespace BackEndServer.Services
                     {
                         cameraList.Add(new DatabaseCamera()
                         {
-                            CameraId = Convert.ToInt32(reader["idCamera"]),
-                            CameraName = Convert.ToString(reader["cameraName"]),
-                            LocationId = Convert.ToInt32(reader["Address_idAddress"]),
-                            UserID = Convert.ToInt32(reader["User_idUser"]),
-                            MonitoredArea = Convert.ToString(reader["roomName"])
+                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
+                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
+                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
+                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
+                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
+                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL]),
+                            ResolutionWidth = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_WIDTH_LABEL]),
+                            ResolutionHeight = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_HEIGHT_LABEL])
                         });
                     }
                 }
-
             }
             return cameraList;
         }
@@ -288,7 +276,7 @@ namespace BackEndServer.Services
         {
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * from User WHERE username = \"{username}\" AND password = \"{password}\" LIMIT 1;";
+                string query = $"SELECT * FROM User WHERE username = '{username}' AND password = '{password}' LIMIT 1";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -300,30 +288,8 @@ namespace BackEndServer.Services
                         return true;
                     }
                 }
-
             }
             return false;
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="averagesOfDayRequest"></param>
-        /// <returns></returns>
-        /*public AveragesOfDayResponse getHourlyAveragesForDay(AveragesOfDayRequest averagesOfDayRequest)
-        {
-            //AveragesOfDayResponse averagesOfDayResponse = new AveragesOfDayResponse();
-
-            // Query the 24 Hourly Averages in the database.
-
-            // If result does not contain 24 rows, then recalculate all of them and store the averages in the database, at the same time place them in the return object. 
-            // If it does, put them in the averagesOfDayResponse object and return.
-
-            for (int z = 0; z < 24; z++)
-            {
-
-            }
-            return (null);
-        }*/
     }
 }
