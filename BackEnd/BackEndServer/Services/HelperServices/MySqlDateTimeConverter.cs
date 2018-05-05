@@ -24,8 +24,15 @@ namespace BackEndServer.Services.HelperServices
 
         public static DateTime ToDateTime(this string mySqlStringDate)
         {
-            DateTime result = DateTime.Parse(mySqlStringDate);
-            return (result);
+            DateTime dateValue;
+            bool success = DateTime.TryParse(mySqlStringDate, out dateValue);
+
+            if (!success)
+            {
+                throw new FormatException("Invalid SQL DateTime Format When Parsing.");
+            }
+
+            return (dateValue);
         }
     }
 }

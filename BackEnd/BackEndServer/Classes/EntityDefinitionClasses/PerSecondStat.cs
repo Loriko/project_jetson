@@ -46,7 +46,7 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
 
             DateTime toValidate = MySqlDateTimeConverter.ToDateTime(this.DateTime);
 
-            return DateTimeTools.validateDateTime(toValidate);
+            return DateTimeTools.ValidateDateTime(toValidate);
         }
         
         /// <summary>

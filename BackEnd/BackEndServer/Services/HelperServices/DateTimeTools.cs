@@ -9,7 +9,7 @@ namespace BackEndServer.Services.HelperServices
         /// </summary>
         /// <param name="time">DateTime object to validate.</param>
         /// <returns>True or false indicating validity of DateTime object.</returns>
-        public static bool validateDateTime(this DateTime time)
+        public static bool ValidateDateTime(this DateTime time)
         {
             int Year = time.Year;
             int Month = time.Month;
@@ -67,7 +67,7 @@ namespace BackEndServer.Services.HelperServices
             return (true);
         }
 
-        public static bool validateDateTimeString(this string dateTimeString)
+        public static bool ValidateDateTimeString(this string dateTimeString)
         {
             if (MySqlDateTimeConverter.CheckIfSQLFormat(dateTimeString) == false)
             {
@@ -76,7 +76,7 @@ namespace BackEndServer.Services.HelperServices
 
             DateTime toValidate = MySqlDateTimeConverter.ToDateTime(dateTimeString);
 
-            if (validateDateTime(toValidate) == false)
+            if (ValidateDateTime(toValidate) == false)
             {
                 return false;
             }
@@ -90,7 +90,7 @@ namespace BackEndServer.Services.HelperServices
         /// </summary>
         /// <param name="time">A DateTime object.</param>
         /// <returns>DateTime object of the first second of a certain specified date.</returns>
-        public static DateTime getDayBeginning(this DateTime time)
+        public static DateTime GetDayBeginning(this DateTime time)
         {
             DateTime dayStart = new DateTime(time.Year, time.Month, time.Day, 0, 0, 0);
             return (dayStart);
@@ -102,7 +102,7 @@ namespace BackEndServer.Services.HelperServices
         /// </summary>
         /// <param name="time">A DateTime object.</param>
         /// <returns>DateTime object of the last second of a certain specified date.</returns>
-        public static DateTime getDayEnd(this DateTime time)
+        public static DateTime GetDayEnd(this DateTime time)
         {
             DateTime dayEnd = new DateTime(time.Year, time.Month, time.Day, 23, 59, 59);
             return (dayEnd);
