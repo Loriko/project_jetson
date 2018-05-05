@@ -66,7 +66,7 @@ namespace BackEndServer.Services
                     {
                         temp.Add("DateTime");
                     }
-                    else if (message.RealTimeStats[c].DateTime.toDateTime().validateDateTime() == false)
+                    else if (message.RealTimeStats[c].DateTime.ToDateTime().validateDateTime() == false)
                     {
                         temp.Add("DateTime");
                     }
@@ -114,8 +114,8 @@ namespace BackEndServer.Services
                 return false;
             }
 
-            DateTime start = timeInterval.StartDateTime.toDateTime();
-            DateTime end = timeInterval.EndDateTime.toDateTime();
+            DateTime start = timeInterval.StartDateTime.ToDateTime();
+            DateTime end = timeInterval.EndDateTime.ToDateTime();
 
             if (DateTimeTools.validateDateTime(start) == false || DateTimeTools.validateDateTime(end) == false)
             {

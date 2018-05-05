@@ -74,7 +74,7 @@ namespace BackEndServer.Services.HelperServices
                 return false;
             }
 
-            DateTime toValidate = MySqlDateTimeConverter.toDateTime(dateTimeString);
+            DateTime toValidate = MySqlDateTimeConverter.ToDateTime(dateTimeString);
 
             if (validateDateTime(toValidate) == false)
             {
