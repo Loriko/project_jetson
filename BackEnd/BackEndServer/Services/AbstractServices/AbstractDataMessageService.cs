@@ -6,10 +6,10 @@ namespace BackEndServer.Services.AbstractServices
 {
     public interface AbstractDataMessageService
     {
-        bool checkDataMessageValidity(DataMessage message);
-        InvalidDataMessageResponseBody createInvalidDataMessageResponseBody(DataMessage message);
-        bool storeStatsFromDataMessage(DataMessage message);
-        bool checkTimeIntervalValidity(TimeInterval timeInterval);
-        DataMessage retrievePerSecondStatsBetweenInterval(TimeInterval timeInterval);
+        bool CheckDataMessageValidity(DataMessage message);
+        InvalidDataMessageResponseBody CreateInvalidDataMessageResponseBody(DataMessage message);
+        bool StoreStatsFromDataMessage(DataMessage message);
+        bool CheckTimeIntervalValidity(TimeInterval timeInterval);
+        DataMessage RetrievePerSecondStatsBetweenInterval(TimeInterval timeInterval);
     }
 }

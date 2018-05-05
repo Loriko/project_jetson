@@ -27,7 +27,7 @@ namespace BackEndServer.Classes.DataRequestClasses
         /// <returns>Returns TRUE if the date is valid, returns FALSE if date is not valid.</returns>
         public bool IsValidRequest()
         {
-            return (DateTimeTools.validateDateTimeString(this.DateTime));
+            return (DateTimeTools.ValidateDateTimeString(this.DateTime));
         }
     }
 }
