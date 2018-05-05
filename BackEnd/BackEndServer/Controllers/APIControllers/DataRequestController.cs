@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Classes.DataRequestClasses;
 using BackEndServer.Classes.DataResponseClasses;
 using BackEndServer.Classes.ErrorResponseClasses;
-using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Classes.EntityDefinitionClasses;
-using BackEndServer.Services;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
 
@@ -21,6 +18,7 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")] // "api/datarequest"
     public class DataRequestController : Controller
     {
+        #region Services
         private AbstractCameraService _cameraService;
         private AbstractCameraService CameraService => _cameraService ?? (_cameraService =
                                                            HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
@@ -30,16 +28,17 @@ namespace WebAPI.Controllers
         private AbstractDataMessageService DataMessageService => _dataMessageService ?? (_dataMessageService =
                                                                      HttpContext.RequestServices.GetService(typeof(AbstractDataMessageService)) as
                                                                          AbstractDataMessageService);
-        
+        #endregion
+
         [HttpPost]
         public IActionResult GetPerSecondStatsFromTimeInterval ([FromBody] TimeInterval unverifiedTimeInterval)
         {
-            if (DataMessageService.checkTimeIntervalValidity(unverifiedTimeInterval) == false)
+            if (DataMessageService.CheckTimeIntervalValidity(unverifiedTimeInterval) == false)
             {
                 return BadRequest(new JsonResult(new InvalidTimeIntervalResponseBody()));
             }
 
-            DataMessage responseBody = DataMessageService.retrievePerSecondStatsBetweenInterval(unverifiedTimeInterval);
+            DataMessage responseBody = DataMessageService.RetrievePerSecondStatsBetweenInterval(unverifiedTimeInterval);
 
             if (responseBody.IsEmpty())
             {

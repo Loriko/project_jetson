@@ -21,7 +21,7 @@ namespace BackEndServer.Services
         }
 
         // Validates a received DataMessage object's contents (all PerSecondStat objects contained).
-        public bool checkDataMessageValidity(DataMessage message)
+        public bool CheckDataMessageValidity(DataMessage message)
         {
             if (message.IsEmpty())
             {
@@ -40,7 +40,7 @@ namespace BackEndServer.Services
         }
 
         // Creates an error response body custom to the characteristics of the received DataMessage object.
-        public InvalidDataMessageResponseBody createInvalidDataMessageResponseBody(DataMessage message)
+        public InvalidDataMessageResponseBody CreateInvalidDataMessageResponseBody(DataMessage message)
         {
             if (message.IsEmpty())
             {
@@ -91,7 +91,7 @@ namespace BackEndServer.Services
         }
 
         // Once a DataMessage is verified, this method allows persisting all contents (PerSecondStat objects) into the database.
-        public bool storeStatsFromDataMessage(DataMessage verifiedMessage)
+        public bool StoreStatsFromDataMessage(DataMessage verifiedMessage)
         {
             List<PerSecondStat> temp = new List<PerSecondStat>();
 
@@ -107,7 +107,7 @@ namespace BackEndServer.Services
         }
 
         // Before processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval, this method is used to validate the received TimeInterval.
-        public bool checkTimeIntervalValidity(TimeInterval timeInterval)
+        public bool CheckTimeIntervalValidity(TimeInterval timeInterval)
         {
             if (timeInterval.StartDateTime.CheckIfSQLFormat() == false || timeInterval.EndDateTime.CheckIfSQLFormat() == false)
             {
@@ -132,7 +132,7 @@ namespace BackEndServer.Services
         }
 
         // Used for processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval.
-        public DataMessage retrievePerSecondStatsBetweenInterval(TimeInterval verifiedTimeInterval)
+        public DataMessage RetrievePerSecondStatsBetweenInterval(TimeInterval verifiedTimeInterval)
         {
             List<DatabasePerSecondStat> queryResults = _dbQueryService.GetStatsFromInterval(verifiedTimeInterval);
 

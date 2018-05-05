@@ -13,12 +13,13 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")] // "api/datareceival"
     public class DataReceivalController : ControllerBase
     {
+        #region Services
         private AbstractDataMessageService _dataMessageService;
         private AbstractDataMessageService DataMessageService => _dataMessageService ?? (_dataMessageService =
                                                                HttpContext.RequestServices.GetService(typeof(AbstractDataMessageService)) as
                                                                          AbstractDataMessageService);
-        
-        
+        #endregion
+
         /// <summary>
         /// API service that allows a capture system to store statistics into the database by providing a DataMessage Object.
         /// </summary>
@@ -28,11 +29,11 @@ namespace WebAPI.Controllers
         [Route("persist")] // "api/datareceival/persist"
         public IActionResult Persist([FromBody] DataMessage receivedMessage)
         {
-            if (DataMessageService.checkDataMessageValidity(receivedMessage) == false)
+            if (DataMessageService.CheckDataMessageValidity(receivedMessage) == false)
             {
-                return BadRequest(new JsonResult(DataMessageService.createInvalidDataMessageResponseBody(receivedMessage)));
+                return BadRequest(new JsonResult(DataMessageService.CreateInvalidDataMessageResponseBody(receivedMessage)));
             }
-            else if (DataMessageService.storeStatsFromDataMessage(receivedMessage) == true)
+            else if (DataMessageService.StoreStatsFromDataMessage(receivedMessage) == true)
             {
                 return Ok("Received datamessage with " + receivedMessage.GetLength() + "per second stats.");
             }
