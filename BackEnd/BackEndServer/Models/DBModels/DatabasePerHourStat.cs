@@ -5,7 +5,7 @@ namespace BackEndServer.Models.DBModels
     public class DatabasePerHourStat
     {
         // Table Name
-        public static readonly string TABLE_NAME = "perhourstat";
+        public static readonly string TABLE_NAME = "per_hour_stat";
         // Attributes of PerHourStat table.
         public static readonly string HOUR_STAT_ID_LABEL = "id";
         public static readonly string DATE_DAY_LABEL = "date_day";

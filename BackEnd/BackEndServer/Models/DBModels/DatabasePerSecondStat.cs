@@ -5,7 +5,7 @@ namespace BackEndServer.Models.DBModels
     public class DatabasePerSecondStat
     {
         // Table Name
-        public static readonly string TABLE_NAME = "persecondstat";
+        public static readonly string TABLE_NAME = "per_second_stat";
         // Attributes of PerSecondStat table.
         public static readonly string SECOND_STAT_ID_LABEL = "id";
         public static readonly string CAMERA_ID_LABEL = "camera_id";
