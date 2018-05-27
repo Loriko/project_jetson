@@ -78,5 +78,15 @@ namespace BackEndServer.Services.PlaceholderServices
                 return null;
             }
         }
+
+        public bool SaveNewCamera(CameraDetails cameraDetails)
+        {
+            return true;
+        }
+
+        public CameraRegistrationDetails GetNewCameraRegistrationDetails(string username)
+        {
+            throw new NotImplementedException("GetNewCameraRegistrationDetails placeholder not implemented!");
+        }
     }
 }

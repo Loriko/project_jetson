@@ -11,11 +11,13 @@ namespace BackEndServer.Services
     {
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
-
-        public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService)
+        private readonly AbstractLocationService _locationService;
+        
+        public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService, AbstractLocationService locationService)
         {
             _dbQueryService = dbQueryService;
             _graphStatisticsService = graphStatisticService;
+            _locationService = locationService;
         }
 
         public List<DatabaseCamera> getDatabaseCamerasAtLocation(int locationId)
@@ -77,6 +79,27 @@ namespace BackEndServer.Services
             GraphStatistics graphStatistics = new PlaceholderGraphStatisticsService().GetYearlyGraphStatistics(cameraId);
             cameraInformation.GraphStatistics = graphStatistics;
             return cameraInformation;
+        }
+
+        public bool SaveNewCamera(CameraDetails cameraDetails)
+        {
+            DatabaseCamera camera = new DatabaseCamera(cameraDetails);
+            return _dbQueryService.PersistNewCamera(camera);
+        }
+
+        public CameraRegistrationDetails GetNewCameraRegistrationDetails(string username)
+        {
+            return new CameraRegistrationDetails()
+            {
+                locations = _locationService.getAvailableLocationsForUser(username),
+                CameraDetails = new CameraDetails(),
+                resolutions = GetExistingCameraResolutions()
+            };
+        }
+
+        public List<string> GetExistingCameraResolutions()
+        {
+            return _dbQueryService.GetExistingCameraResolutions();
         }
     }
 }

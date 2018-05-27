@@ -13,5 +13,7 @@ namespace BackEndServer.Services.AbstractServices
         // Temporary, needs to be changed to using the APIModel equivalent of the DatabaseCamera object
         List<DatabaseCamera> getDatabaseCamerasAtLocation(int locationId);
         CameraInformation GetCameraInformationWithYearlyData(int cameraId);
+        bool SaveNewCamera(CameraDetails cameraDetails);
+        CameraRegistrationDetails GetNewCameraRegistrationDetails(string username);
     }
 }

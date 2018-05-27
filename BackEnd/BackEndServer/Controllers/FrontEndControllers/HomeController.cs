@@ -40,6 +40,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             else {
                 HttpContext.Session.SetString("currentUsername", authenticationModel.Username);
+                HttpContext.Session.SetInt32("currentUserId", AuthenticationService.GetUserId(authenticationModel.Username).Value);
                 return RedirectToAction("LocationSelection", "Location");
             }
         }

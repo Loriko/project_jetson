@@ -19,5 +19,21 @@ namespace BackEndServer.Services.PlaceholderServices
                 return false;
             }
         }
+
+        public int? GetUserId(string username)
+        {
+            if (username == "johndoe")
+            {
+                return 1;
+            }
+            else if (username == "bobDylan321")
+            {
+                return 2;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace BackEndServer.Services
         List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId);
         List<DatabasePerSecondStat> GetStatsFromInterval(TimeInterval verifiedTimeInterval);
         bool IsPasswordValidForUser(string username, string password);
-        bool PersistPerSecondStats(List<PerSecondStat> distinctStats);
+        bool PersistNewPerSecondStats(List<PerSecondStat> distinctStats);
+        bool PersistNewCamera(DatabaseCamera camera);
+        List<string> GetExistingCameraResolutions();
     }
 }

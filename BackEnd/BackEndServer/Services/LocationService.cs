@@ -7,9 +7,9 @@ namespace BackEndServer.Services
 {
     public class LocationService : AbstractLocationService
     {
-        private readonly DatabaseQueryService _dbQueryService;
+        private readonly IDatabaseQueryService _dbQueryService;
 
-        public LocationService(DatabaseQueryService dbQueryService)
+        public LocationService(IDatabaseQueryService dbQueryService)
         {
             this._dbQueryService = dbQueryService;
         }

@@ -103,7 +103,7 @@ namespace BackEndServer.Services
             // Remove any possible duplicates.
             List<PerSecondStat> distinctStats = temp.Distinct().ToList();
 
-            return this._dbQueryService.PersistPerSecondStats(distinctStats);
+            return _dbQueryService.PersistNewPerSecondStats(distinctStats);
         }
 
         // Before processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval, this method is used to validate the received TimeInterval.

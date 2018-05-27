@@ -28,5 +28,6 @@
     <Folder Include="Services\HelperServices\" />
     <Folder Include="Classes\DataRequestClasses\" />
     <Folder Include="Classes\DataResponseClasses\" />
+    <Folder Include="wwwroot\lib\materialize\fonts" />
   </ItemGroup>
 </Project>

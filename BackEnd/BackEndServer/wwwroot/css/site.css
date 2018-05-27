@@ -104,3 +104,9 @@ main {
     font-size: 16px;
     margin-top: 5px !important;
 }
+.input-field label.checkbox-label {
+    pointer-events: auto !important;
+}
+/*.select-row {*/
+    /*margin-bottom: 0;*/
+/*}*/

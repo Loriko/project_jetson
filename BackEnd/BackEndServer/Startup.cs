@@ -36,10 +36,10 @@ namespace BackEndServer
             
             // Other services are constructed using the database query service, meaning they all use the same connection string
             AbstractGraphStatisticService graphStatisticService = new GraphStatisticService(dbQueryService);
-            AbstractCameraService cameraService = new CameraService(dbQueryService, graphStatisticService);
+            AbstractLocationService locationService = new LocationService(dbQueryService);
+            AbstractCameraService cameraService = new CameraService(dbQueryService, graphStatisticService, locationService);
             AbstractAuthenticationService authenticationService = new AuthenticationService(dbQueryService);
             AbstractDataMessageService dataMessageService = new DataMessageService(dbQueryService);
-            AbstractLocationService locationService = new LocationService(dbQueryService);
 
             services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
             services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));

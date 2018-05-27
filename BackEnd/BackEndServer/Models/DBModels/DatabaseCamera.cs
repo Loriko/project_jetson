@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BackEndServer.Models.ViewModels;
+using Castle.Core.Internal;
 
 namespace BackEndServer.Models.DBModels
 {
@@ -14,8 +15,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string MONITORED_AREA_LABEL = "monitored_area";
         public static readonly string BRAND_LABEL = "brand";
         public static readonly string MODEL_LABEL = "model";
-        public static readonly string RESOLUTION_WIDTH_LABEL = "resolution_width";
-        public static readonly string RESOLUTION_HEIGHT_LABEL = "resolution_height";
+        public static readonly string RESOLUTION_LABEL = "resolution";
 
         // Database Model Class Attributes
         public int CameraId { get; set; }
@@ -25,7 +25,22 @@ namespace BackEndServer.Models.DBModels
         public string MonitoredArea { get; set; }
         public string Brand { get; set; }
         public string Model { get; set; }
-        public int ResolutionWidth { get; set; }
-        public int ResolutionHeight { get; set; }
+        public string Resolution { get; set; }
+
+        public DatabaseCamera()
+        {
+        }
+
+        public DatabaseCamera(CameraDetails cameraDetails)
+        {
+            CameraId = cameraDetails.CameraId;
+            CameraName = cameraDetails.CameraName;
+            LocationId = cameraDetails.LocationId;
+            UserId = cameraDetails.UserId;
+            MonitoredArea = cameraDetails.MonitoredArea;
+            Brand = cameraDetails.Brand;
+            Model = cameraDetails.Model;
+            Resolution = !cameraDetails.CustomResolution.IsNullOrEmpty() ? cameraDetails.CustomResolution : cameraDetails.Resolution;
+        }
     }
 }

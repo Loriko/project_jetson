@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using BackEndServer.Models.DBModels;
@@ -34,7 +35,7 @@ namespace BackEndServer.Services
         }
         #endregion
 
-        public bool PersistPerSecondStats(List<PerSecondStat> distinctStats)
+        public bool PersistNewPerSecondStats(List<PerSecondStat> distinctStats)
         {
             string bulkInsertCommand = $"INSERT INTO {DatabasePerSecondStat.TABLE_NAME} "
                 + $"({DatabasePerSecondStat.CAMERA_ID_LABEL},{DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL}, "
@@ -198,10 +199,12 @@ namespace BackEndServer.Services
                             UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
                             MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
                             Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
-                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL]),
-                            ResolutionWidth = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_WIDTH_LABEL]),
-                            ResolutionHeight = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_HEIGHT_LABEL])
+                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
                         };
+                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
+                        {
+                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
+                        }
                     }
                 }
             }
@@ -254,7 +257,7 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        cameraList.Add(new DatabaseCamera()
+                        DatabaseCamera camera = new DatabaseCamera()
                         {
                             CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
                             CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
@@ -262,10 +265,13 @@ namespace BackEndServer.Services
                             UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
                             MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
                             Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
-                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL]),
-                            ResolutionWidth = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_WIDTH_LABEL]),
-                            ResolutionHeight = Convert.ToInt32(reader[DatabaseCamera.RESOLUTION_HEIGHT_LABEL])
-                        });
+                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
+                        };
+                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
+                        {
+                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
+                        }
+                        cameraList.Add(camera);
                     }
                 }
             }
@@ -290,6 +296,86 @@ namespace BackEndServer.Services
                 }
             }
             return false;
+        }
+
+        public int? GetUserIdByUsername(string username)
+        {
+            int? idToReturn = null;
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT id FROM User WHERE username = '{username}';";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    List<int?> ids = new List<int?>();
+                    while (reader.Read())
+                    {
+                        ids.Add(Convert.ToInt32(reader["id"]));
+                    }
+
+                    if (ids.Count == 1)
+                    {
+                        idToReturn = ids[0];
+                    }
+                    else
+                    {
+                        throw new InvalidDataException("Two users with the same id found in the database!");
+                    }
+                }
+            }
+            return idToReturn;
+        }
+
+        public bool PersistNewCamera(DatabaseCamera camera)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = "INSERT INTO camera(" +
+                               "camera_name, location_id, user_id, monitored_area, brand, model, resolution" +
+                               ") VALUES " +
+                               $"('{camera.CameraName}',{camera.LocationId},{camera.UserId}," +
+                               $"'{camera.MonitoredArea}',{formatNullableString(camera.Brand)}," +
+                               $"{formatNullableString(camera.Model)},{formatNullableString(camera.Resolution)});";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<string> GetExistingCameraResolutions()
+        {
+            List<string> resolutionsInDB = new List<string>();
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT resolution FROM Camera WHERE resolution IS NOT NULL GROUP BY resolution ORDER BY COUNT(*) DESC;";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        resolutionsInDB.Add(Convert.ToString(reader["resolution"]));
+                    }
+                }
+            }
+            return resolutionsInDB;
+        }
+
+        private string formatNullableString(string nullableString)
+        {
+            return nullableString != null ? $"'{nullableString}'" : "NULL";
         }
     }
 }

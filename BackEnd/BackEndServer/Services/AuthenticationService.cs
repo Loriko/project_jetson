@@ -15,5 +15,10 @@ namespace BackEndServer.Services
         {
             return _dbQueryService.IsPasswordValidForUser(username, password);
         }
+        
+        public int? GetUserId(string username)
+        {
+            return _dbQueryService.GetUserIdByUsername(username);
+        }
     }
 }

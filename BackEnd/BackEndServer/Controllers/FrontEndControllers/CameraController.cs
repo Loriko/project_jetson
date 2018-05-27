@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +9,8 @@ using BackEndServer.Services.PlaceholderServices;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.TestPlatform.Common;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -57,6 +60,41 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             
             return RedirectToAction("GraphDashboard", "Graph", new { cameraId });
+        }
+        
+        public IActionResult BeginCameraRegistration()
+        {
+            if (HttpContext.Session.GetString("currentUsername") == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            CameraRegistrationDetails registrationDetails =
+                CameraService.GetNewCameraRegistrationDetails(HttpContext.Session.GetString("currentUsername"));
+            
+            return View("CameraRegistration", registrationDetails);
+        }
+
+        [HttpPost]
+        public IActionResult SaveCamera(CameraDetails cameraDetails)
+        {
+            if (HttpContext.Session.GetString("currentUsername") == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId != null)
+            {
+                cameraDetails.UserId = currentUsedId.Value;
+                CameraService.SaveNewCamera(cameraDetails);
+            }
+            else
+            {
+                throw new InvalidOperationException("Can't get current user's id!");
+            }
+
+            return View("CameraRegistration", CameraService.GetNewCameraRegistrationDetails(HttpContext.Session.GetString("currentUsername")));
         }
     }
 }

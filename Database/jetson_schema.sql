@@ -34,8 +34,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `monitored_area` VARCHAR(45) NOT NULL,
   `brand` VARCHAR(45) NULL,
   `model` VARCHAR(45) NULL,
-  `resolution_width` INT(4) UNSIGNED NULL,
-  `resolution_height` INT(4) UNSIGNED NULL,
+  `resolution` VARCHAR(45) UNSIGNED NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_camera_address_idx` (`location_id` ASC),
   CONSTRAINT `fk_camera_Address`

@@ -42,7 +42,7 @@ namespace BackEndServer.Tests
             mockDBService.Setup(x => x.GetLatestPerSecondStatForCamera(It.IsAny<int>())).Returns(testStat);
             mockDBService.Setup(x => x.GetPerSecondStatsForCamera(1)).Returns(listOfStats);
 
-            CameraService cameraService = new CameraService(mockDBService.Object,new GraphStatisticService(mockDBService.Object));
+            CameraService cameraService = new CameraService(mockDBService.Object,new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object));
             Assert.That(cameraService.getCameraStatisticsForNowById(1).MostRecentPeopleCount, Is.EqualTo(23));
 
         }
