@@ -88,6 +88,14 @@ namespace WebAPI_UnitTests.HelperServicesTests
         }
 
         [Test]
+        public void ToMySqlDateStringTest()
+        {
+            DateTime dateTime = new DateTime(2000, 08, 31, 10, 55, 24);
+            string mySqlDateString = "2000-08-31";
+            Assert.AreEqual(mySqlDateString, MySqlDateTimeConverter.ToMySqlDateString(dateTime));
+        }
+
+        [Test]
         public void ToDateTimeTest()
         {
             DateTime expected = new DateTime(1901,08,30,10,59,20);

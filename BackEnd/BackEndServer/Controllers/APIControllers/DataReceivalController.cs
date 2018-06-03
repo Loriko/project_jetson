@@ -1,8 +1,7 @@
-﻿using System;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Classes.ErrorResponseClasses;
-using Microsoft.AspNetCore.Mvc;
-using BackEndServer.Services;
 using BackEndServer.Services.AbstractServices;
 
 namespace WebAPI.Controllers
@@ -18,6 +17,10 @@ namespace WebAPI.Controllers
         private AbstractDataMessageService DataMessageService => _dataMessageService ?? (_dataMessageService =
                                                                HttpContext.RequestServices.GetService(typeof(AbstractDataMessageService)) as
                                                                          AbstractDataMessageService);
+        private AbstractHourlyStatsService _hourlyStatsService;
+        private AbstractHourlyStatsService HourlyStatsService => _hourlyStatsService ?? (_hourlyStatsService =
+                                                               HttpContext.RequestServices.GetService(typeof(AbstractHourlyStatsService)) as
+                                                                         AbstractHourlyStatsService);
         #endregion
 
         /// <summary>
@@ -35,9 +38,14 @@ namespace WebAPI.Controllers
             }
             else if (DataMessageService.StoreStatsFromDataMessage(receivedMessage) == true)
             {
+                // Asynchronously check hourly stats are ready for calculation and perform if needed.
+                Task hourlyStatsCheck = Task.Factory.StartNew(
+                    () => _hourlyStatsService.AutoCalculateHourlyStats(receivedMessage));
+                
+                // Return HTTP OK, without waiting on asynchronous Task.
                 return Ok("Received datamessage with " + receivedMessage.GetLength() + "per second stats.");
             }
-            
+
             return StatusCode(500, new JsonResult(new FailedPersistResponseBody()));
         }
     }

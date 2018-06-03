@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace BackEndServer.Services.HelperServices
 {
@@ -20,6 +17,11 @@ namespace BackEndServer.Services.HelperServices
         public static string ToMySqlDateTimeString(this DateTime time)
         {
             return time.ToString("yyyy-MM-dd HH:mm:ss"); 
+        }
+
+        public static string ToMySqlDateString(this DateTime time)
+        {
+            return time.ToString("yyyy-MM-dd");
         }
 
         public static DateTime ToDateTime(this string mySqlStringDate)

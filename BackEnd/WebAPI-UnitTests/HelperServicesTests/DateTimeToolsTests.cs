@@ -62,11 +62,27 @@ namespace WebAPI_UnitTests.HelperServicesTests
         [Test]
         public void ValidateDateTimeToFail()
         {
-            DateTime test = new DateTime(1899, 1, 1, 1, 1, 1);
+            DateTime test = new DateTime(1899, 12, 31, 23, 59, 59);
             Assert.IsFalse(DateTimeTools.ValidateDateTime(test));
         }
 
         // All other scenarios are covered by .Net with thrown exceptions on DateTime Constructor.
         // https://msdn.microsoft.com/en-us/library/272ba130(v=vs.110).aspx
+
+        [Test]
+        public void GetHourBeginningTest()
+        {
+            DateTime expected = new DateTime(2005, 6, 3, 10, 0, 0);
+            DateTime test = new DateTime(2005, 6, 3, 10, 45, 36);
+            Assert.AreEqual(expected, DateTimeTools.GetHourBeginning(test));
+        }
+
+        [Test]
+        public void GetHourEndTest()
+        {
+            DateTime expected = new DateTime(2005, 6, 3, 10, 59, 59);
+            DateTime test = new DateTime(2005, 6, 3, 10, 45, 36);
+            Assert.AreEqual(expected, DateTimeTools.GetHourEnd(test));
+        }
     }
 }
