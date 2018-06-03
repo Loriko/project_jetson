@@ -15,7 +15,8 @@ namespace BackEndServer.Models.DBModels
         public static readonly string AVG_DETECTED_OBJECT_LABEL = "avg_detected_object";
 
         // Database Model Class Attributes
-        public DateTime DateTime { get; set; }
+        public DateTime Day { get; set; }
+        public int Hour { get; set; }
         public double AverageDetectedObjects { get; set; }
         public int MaximumDetectedObjects { get; set; }
         public int MinimumDetectedObjects { get; set; }

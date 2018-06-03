@@ -5,9 +5,9 @@ using System.Linq;
 using MySql.Data.MySqlClient;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Classes.EntityDefinitionClasses;
+using BackEndServer.Services.HelperServices;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
-
 // Bulk insert: "INSERT INTO tbl_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9)"
 
 namespace BackEndServer.Services
@@ -33,35 +33,38 @@ namespace BackEndServer.Services
 
         public bool PersistNewPerSecondStats(List<PerSecondStat> distinctStats)
         {
+            // Define the bulk insert query without any values to insert.
             string bulkInsertCommand = $"INSERT INTO {DatabasePerSecondStat.TABLE_NAME} "
                 + $"({DatabasePerSecondStat.CAMERA_ID_LABEL},{DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL}, "
                 + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL}) VALUES ";
 
+            // Append the values one by one to the bulk insert query.
+            PerSecondStat lastStat = distinctStats.Last();
+
+            foreach (PerSecondStat stat in distinctStats)
+            {
+                string cameraId = stat.CameraId.ToString();
+                string numDetectedObjects = stat.NumTrackedPeople.ToString();
+                string hasImage = "0";
+
+                if (stat.HasSavedImage)
+                {
+                    hasImage = "1";
+                }
+
+                bulkInsertCommand += $"({cameraId},{numDetectedObjects},'{stat.DateTime}',{hasImage})";
+
+                if (stat != lastStat)
+                {
+                    bulkInsertCommand += ",";
+                }
+            }
+
+            // Open connection and execute bulk insert command.
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
 
-                PerSecondStat lastStat = distinctStats.Last();
-
-                // Build Remaining Bulk Insert Command
-                foreach (PerSecondStat stat in distinctStats)
-                {
-                    string cameraId = stat.CameraId.ToString();
-                    string numDetectedObjects = stat.NumTrackedPeople.ToString();
-                    string hasImage = "0";
-
-                    if (stat.HasSavedImage)
-                    {
-                        hasImage = "1";
-                    }
-
-                    bulkInsertCommand += $"({cameraId},{numDetectedObjects},'{stat.DateTime}',{hasImage})";
-
-                    if (stat != lastStat)
-                    {
-                        bulkInsertCommand += ",";
-                    }
-                }
                 try
                 {
                     MySqlCommand cmd = new MySqlCommand(bulkInsertCommand, conn);
@@ -79,14 +82,56 @@ namespace BackEndServer.Services
 
         public bool PersistNewPerHourStats(List<DatabasePerHourStat> perHourStats)
         {
-            throw new NotImplementedException();
+            // Define the bulk insert query without any values to insert.
+            string bulkInsertCommand = $"INSERT INTO {DatabasePerHourStat.TABLE_NAME} "
+                + $"({DatabasePerHourStat.DATE_DAY_LABEL},{DatabasePerHourStat.DATE_HOUR_LABEL},{DatabasePerHourStat.MAX_DETECTED_OBJECT_LABEL},"
+                + $"{DatabasePerHourStat.MIN_DETECTED_OBJECT_LABEL},{DatabasePerHourStat.AVG_DETECTED_OBJECT_LABEL}) VALUES ";
 
+            // Append the values one by one to the bulk insert query.
+            DatabasePerHourStat lastHourStat = perHourStats.Last();
+
+            foreach (DatabasePerHourStat hourStat in perHourStats)
+            {
+                string dateDay = MySqlDateTimeConverter.ToMySqlDateString(hourStat.Day);
+                string dateHour = hourStat.Hour.ToString();
+                string hourMax = hourStat.MaximumDetectedObjects.ToString();
+                string hourMin = hourStat.MinimumDetectedObjects.ToString();
+                string hourAverage = hourStat.AverageDetectedObjects.ToString();
+
+                bulkInsertCommand += $"('{dateDay}',{dateHour},{hourMax},{hourMin},{hourAverage})";
+
+                if (hourStat != lastHourStat)
+                {
+                    bulkInsertCommand += ",";
+                }
+            }
+
+            // Open connection and execute bulk insert command.
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(bulkInsertCommand, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    // Write to Log
+                    return false; // This is probably not going to be executed...
+                }
+            }
             return true;
         }
 
         public List<DatabasePerSecondStat> GetAllSecondsForHour(DateTime dateTime)
         {
-            throw new NotImplementedException();
+            string startDateTime = dateTime.GetHourBeginning().ToMySqlDateTimeString();
+            string endDateTime = dateTime.GetHourEnd().ToMySqlDateTimeString();
+            TimeInterval interval = new TimeInterval(startDateTime, endDateTime);
+            return GetStatsFromInterval(interval);
         }
 
         // FRANCIS TO CHECK LATER 

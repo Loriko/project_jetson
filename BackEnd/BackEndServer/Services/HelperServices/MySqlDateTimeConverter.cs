@@ -19,6 +19,11 @@ namespace BackEndServer.Services.HelperServices
             return time.ToString("yyyy-MM-dd HH:mm:ss"); 
         }
 
+        public static string ToMySqlDateString(this DateTime time)
+        {
+            return time.ToString("yyyy-MM-dd");
+        }
+
         public static DateTime ToDateTime(this string mySqlStringDate)
         {
             DateTime dateValue;

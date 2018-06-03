@@ -6,7 +6,7 @@ namespace BackEndServer.Services.HelperServices
 
     public static class MySqlDateTimeTools
     {
-        // Checks if the provided MySQL DateTime represents the last second of an hour.
+        // Checks if the provided MySQL DateTime represents the last second of an hour. Does not verify datetime validity.
         public static bool IsLastSecondOfHour(this string dateTimeString)
         {
             Regex regex = new Regex(@"^\d{4}-\d{2}-\d{2} \d{2}:59:59$");

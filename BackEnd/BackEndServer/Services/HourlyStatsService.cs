@@ -40,7 +40,12 @@ namespace BackEndServer.Services
                 return;
             }
 
-            _dbQueryService.PersistNewPerHourStats(perHourStats);
+            bool successfulPersist = _dbQueryService.PersistNewPerHourStats(perHourStats);
+
+            if (successfulPersist == false)
+            {
+                // Write error to LOG
+            }
         }
 
         public List<DatabasePerHourStat> CalculateHourlyAverages(List<DateTime> hoursToCalulate)
@@ -85,7 +90,8 @@ namespace BackEndServer.Services
 
                 hourStat = new DatabasePerHourStat
                 {
-                    DateTime = hour,
+                    Day = DateTimeTools.GetHourBeginning(hour),
+                    Hour = hour.Hour,
                     AverageDetectedObjects = (tempSum / tempAllSecondsInHour.Count),
                     MaximumDetectedObjects = maxPeopleInHour,
                     MinimumDetectedObjects = minPeopleInHour
