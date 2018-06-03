@@ -107,5 +107,11 @@ namespace BackEndServer.Services.HelperServices
             DateTime dayEnd = new DateTime(time.Year, time.Month, time.Day, 23, 59, 59);
             return (dayEnd);
         }
+
+        public static DateTime GetHourBeginning(this DateTime time)
+        {
+            DateTime hourStart = new DateTime(time.Year, time.Month, time.Day, time.Hour, 0, 0);
+            return hourStart;
+        }
     }
 }

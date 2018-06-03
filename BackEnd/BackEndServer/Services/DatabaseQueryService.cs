@@ -4,10 +4,7 @@ using System.IO;
 using System.Linq;
 using MySql.Data.MySqlClient;
 using BackEndServer.Models.DBModels;
-using BackEndServer.Classes.DataRequestClasses;
-using BackEndServer.Classes.DataResponseClasses;
 using BackEndServer.Classes.EntityDefinitionClasses;
-using BackEndServer.Services.HelperServices;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
@@ -15,7 +12,6 @@ using BackEndServer.Services.HelperServices;
 
 namespace BackEndServer.Services
 {   
-    
     public class DatabaseQueryService : IDatabaseQueryService
     {   
         #region Database Context
@@ -79,6 +75,18 @@ namespace BackEndServer.Services
                 }
             }
             return true;
+        }
+
+        public bool PersistNewPerHourStats(List<DatabasePerHourStat> perHourStats)
+        {
+            throw new NotImplementedException();
+
+            return true;
+        }
+
+        public List<DatabasePerSecondStat> GetAllSecondsForHour(DateTime dateTime)
+        {
+            throw new NotImplementedException();
         }
 
         // FRANCIS TO CHECK LATER 
