@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BackEndServer.Models.ViewModels;
-using System.Collections;
+﻿using BackEndServer.Models.ViewModels;
 
 namespace BackEndServer.Services.AbstractServices
 {

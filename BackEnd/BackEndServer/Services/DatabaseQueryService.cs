@@ -184,7 +184,7 @@ namespace BackEndServer.Services
                     {
                         perSecondStatsList.Add(new DatabasePerSecondStat()
                         {
-                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.SECOND_STAT_ID_LABEL]),
+                            PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
@@ -216,7 +216,7 @@ namespace BackEndServer.Services
                     {
                         perSecondStat = new DatabasePerSecondStat()
                         {
-                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.SECOND_STAT_ID_LABEL]),
+                            PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
@@ -283,7 +283,7 @@ namespace BackEndServer.Services
                     {
                         perSecondStats.Add(new DatabasePerSecondStat()
                         {
-                            StatId = Convert.ToInt32(reader[DatabasePerSecondStat.SECOND_STAT_ID_LABEL]),
+                            PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
                             NumDetectedObjects =  Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
@@ -349,6 +349,11 @@ namespace BackEndServer.Services
                 }
             }
             return false;
+        }
+
+        public bool IsAPIKeyValid(string api_key)
+        {
+            throw new NotImplementedException();
         }
 
         public int? GetUserIdByUsername(string username)

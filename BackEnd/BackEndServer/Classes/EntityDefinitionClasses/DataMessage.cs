@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BackEndServer.Services.HelperServices;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace BackEndServer.Classes.EntityDefinitionClasses
 {
@@ -14,12 +11,14 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
     public class DataMessage
     {
         // Attribute(s)
+        public string API_Key { get; set; }
         public PerSecondStat[] RealTimeStats { get; set; }
 
-        // Constructor which is also the Json deserialising constructor.
+        // Constructor which is also the JSON deserialising constructor.
         [JsonConstructor]
-        public DataMessage(PerSecondStat[] perSecondStats)
+        public DataMessage(string api_key, PerSecondStat[] perSecondStats)
         {
+            this.API_Key = api_key;
             this.RealTimeStats = perSecondStats;
         }
 

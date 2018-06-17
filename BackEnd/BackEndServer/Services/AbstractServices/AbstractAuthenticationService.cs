@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BackEndServer.Services.AbstractServices
+﻿namespace BackEndServer.Services.AbstractServices
 {
     public interface AbstractAuthenticationService
     {
