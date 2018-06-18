@@ -7,13 +7,20 @@
         // Attributes of API Key table.
         public static readonly string API_KEY_ID_LABEL = "id";
         public static readonly string API_KEY = "key";
-        public static readonly string API_KEY_SALT = "key_salt";
-        public static readonly string API_KEY_ISACTIVE_LABEL = "key_is_active";
+        public static readonly string API_KEY_SALT = "salt";
+        public static readonly string API_KEY_ISACTIVE_LABEL = "is_active";
+        
+        // Values for API Key activity status
+        public enum API_Key_Status
+        {
+            INACTIVE = 0,
+            ACTIVE = 1
+        }
 
         // Database Model Class Attributes
-        public int APIKeyId { get; set; }
-        public string APIKey { get; set; }
-        public string APIKeySalt { get; set; }
-        public bool IsActive { get; set; }
+        public int API_KeyId { get; set; }
+        public string API_Key { get; set; }
+        public string API_KeySalt { get; set; }
+        public int IsActive { get; set; }
     }
 }

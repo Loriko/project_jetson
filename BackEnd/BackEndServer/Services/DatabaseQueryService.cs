@@ -6,6 +6,7 @@ using MySql.Data.MySqlClient;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services.HelperServices;
+using BackEndServer.Models.APIModels;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 // Bulk insert: "INSERT INTO tbl_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9)"
@@ -351,11 +352,6 @@ namespace BackEndServer.Services
             return false;
         }
 
-        public bool IsAPIKeyValid(string api_key)
-        {
-            throw new NotImplementedException();
-        }
-
         public int? GetUserIdByUsername(string username)
         {
             int? idToReturn = null;
@@ -435,5 +431,33 @@ namespace BackEndServer.Services
         {
             return nullableString != null ? $"'{nullableString}'" : "NULL";
         }
+
+        #region API Key Related
+
+        // Performs a SELECT to query the specified API Key in the database.
+        public DatabaseAPIKey GetAPIKey(string unsalted_unhashed_api_key)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Performs a SELECT to query all API Keys in the database.
+        public List<DatabaseAPIKey> GetAllAPIKeys()
+        {
+            throw new NotImplementedException();
+        }
+
+        // Performs an INSERT to persist a newly create API Key (salted and hashed key value and its Salt value).
+        public bool PersistAPIKey(APIKey api_key)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Performs an UPDATE to set the specified API key in the database to inactive. 
+        public bool DeactivateAPIKey(DatabaseAPIKey api_key)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

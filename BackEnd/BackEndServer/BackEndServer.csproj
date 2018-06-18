@@ -21,7 +21,6 @@
     <Compile Remove="Models\ViewModels\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\APIModels\" />
     <Folder Include="Models\ViewModels\" />
     <Folder Include="Views\Camera\" />
     <Folder Include="wwwroot\images\camera_images\" />
