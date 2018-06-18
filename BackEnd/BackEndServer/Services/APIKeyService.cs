@@ -4,6 +4,7 @@ using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.APIModels;
+using System.Collections.Generic;
 
 namespace BackEndServer.Services
 {
@@ -75,7 +76,11 @@ namespace BackEndServer.Services
             {
                 new_APIKey = GenerateRandomAPIKey();
 
-                if (VerifyAPIKey(new_APIKey) == false)
+                int databaseCheckResult = VerifyAPIKey(new_APIKey);
+
+                // Criteria for the new key is satisfied only with a -1. 
+                // We do not want to reuse a deactivated key (result = -2) or an exisiting active key (result >= 0).
+                if (databaseCheckResult == -1)
                 {
                     unusedAPIKeyGenerated = true;
                     break;
@@ -103,15 +108,16 @@ namespace BackEndServer.Services
         // Attempts to first verify that the key exists in the database and then sets the API key to inactive. 
         public bool UnregisterAPIKey(string unsalted_unhashed_api_key)
         {
+            int api_key_id = VerifyAPIKey(unsalted_unhashed_api_key);
+
             // Check if the API key is in the database and is active. If not, return false.
-            if (VerifyAPIKey(unsalted_unhashed_api_key) == false)
+            if (api_key_id < 0)
             {
                 return false;
             }
 
             // The API key is active, so attempt to deactivate it.
-            DatabaseAPIKey db_api_key = _dbQueryService.GetAPIKey(unsalted_unhashed_api_key);
-            bool deactivateSuccess = _dbQueryService.DeactivateAPIKey(db_api_key);
+            bool deactivateSuccess = _dbQueryService.DeactivateAPIKey(api_key_id);
 
             if (deactivateSuccess == false)
             {
@@ -122,28 +128,44 @@ namespace BackEndServer.Services
             return true;
         }
 
-        // Verifies the specified API Key against the database and returns false if it does not exist or is set to Inactive.
-        public bool VerifyAPIKey(string unsalted_unhashed_api_key)
+        // Verifies the specified API Key against the database. Returns the API key's ID in the database if found and is active, if not returns -1.
+        public int VerifyAPIKey(string unsalted_unhashed_api_key)
         {
-            DatabaseAPIKey db_api_key = _dbQueryService.GetAPIKey(unsalted_unhashed_api_key);
+            List<DatabaseAPIKey> db_all_api_keys = _dbQueryService.GetAllAPIKeys();
 
-            if (db_api_key == null)
+            if (db_all_api_keys == null)
             {
-                // API key was not found.
-                return false;
-            }
-            else if (db_api_key.IsActive == (int)DatabaseAPIKey.API_Key_Status.INACTIVE)
-            {
-                // API key is deactivated.
-                return false;
-            }
-            else if (String.IsNullOrWhiteSpace(db_api_key.API_Key))
-            {
-                // LOG ERROR HERE, the database contained an empty string as one of the api keys. Specify ID.
-                return false;
+                return -1;
             }
 
-            return true;
+            foreach(DatabaseAPIKey db_api_key in db_all_api_keys)
+            {
+                string salted_hashed_api_key_to_check = HashAndSaltAPIKey(unsalted_unhashed_api_key, db_api_key.API_KeySalt);
+
+                // Compare the values.
+                if (salted_hashed_api_key_to_check == db_api_key.API_Key)
+                {
+                    // If they are identical, then the API key was found in the database.
+                    if (db_api_key.IsActive == (int)DatabaseAPIKey.API_Key_Status.INACTIVE)
+                    {
+                        // API key is deactivated. Returns a -2.
+                        return -2;
+                    }
+                    else if (String.IsNullOrWhiteSpace(db_api_key.API_Key))
+                    {
+                        // LOG ERROR HERE, the database contained an empty string as one of the api keys. Specify ID.
+                        return -3;
+                    }
+                    else
+                    {
+                        // API key was found and is Active.
+                        return db_api_key.API_KeyId;
+                    }
+                }
+            }
+
+            // If API key was not found, return a -1.
+            return -1;
         }
 
         #endregion

@@ -435,8 +435,9 @@ namespace BackEndServer.Services
         #region API Key Related
 
         // Performs a SELECT to query the specified API Key in the database.
-        public DatabaseAPIKey GetAPIKey(string unsalted_unhashed_api_key)
+        public DatabaseAPIKey GetAPIKeyFromId(int api_key_id)
         {
+            // Not currently neede, might delete later.
             throw new NotImplementedException();
         }
 
@@ -453,7 +454,7 @@ namespace BackEndServer.Services
         }
 
         // Performs an UPDATE to set the specified API key in the database to inactive. 
-        public bool DeactivateAPIKey(DatabaseAPIKey api_key)
+        public bool DeactivateAPIKey(int api_key_id)
         {
             throw new NotImplementedException();
         }
