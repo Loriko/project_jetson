@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BackEndServer.Classes.EntityDefinitionClasses;
-using BackEndServer.Services.HelperServices;
+﻿using BackEndServer.Services.HelperServices;
 using Newtonsoft.Json;
 
 namespace BackEndServer.Classes.DataRequestClasses
@@ -13,12 +8,15 @@ namespace BackEndServer.Classes.DataRequestClasses
     /// </summary>
     public class AveragesOfDayRequest
     {
-        public string DateTime;
+        // Attribute(s)
+        public string API_Key { get; set; }
+        public string Date;
 
         [JsonConstructor]
-        public AveragesOfDayRequest(string dateTime)
+        public AveragesOfDayRequest(string api_key, string date)
         {
-            this.DateTime = dateTime;
+            this.API_Key = api_key;
+            this.Date = date + " 01:00:00";
         }
 
         /// <summary>
@@ -27,7 +25,7 @@ namespace BackEndServer.Classes.DataRequestClasses
         /// <returns>Returns TRUE if the date is valid, returns FALSE if date is not valid.</returns>
         public bool IsValidRequest()
         {
-            return (DateTimeTools.ValidateDateTimeString(this.DateTime));
+            return (DateTimeTools.ValidateDateTimeString(this.Date));
         }
     }
 }

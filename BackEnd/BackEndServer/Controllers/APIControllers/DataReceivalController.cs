@@ -21,17 +21,28 @@ namespace WebAPI.Controllers
         private AbstractHourlyStatsService HourlyStatsService => _hourlyStatsService ?? (_hourlyStatsService =
                                                                HttpContext.RequestServices.GetService(typeof(AbstractHourlyStatsService)) as
                                                                          AbstractHourlyStatsService);
+        private AbstractAPIKeyService _apiKeyService;
+        private AbstractAPIKeyService APIKeyService => _apiKeyService ?? (_apiKeyService =
+                                                               HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
+                                                                         AbstractAPIKeyService);
         #endregion
 
         /// <summary>
         /// API service that allows a capture system to store statistics into the database by providing a DataMessage Object.
         /// </summary>
         /// <param name="receivedMessage">DataMessage object received from a capture system. May contain PerSecondStat from multiple cameras.</param>
-        /// <returns>HTTP Response (400, 200 or 500) with or without response object in body.</returns>
+        /// <returns>HTTP Response (401, 400, 200 or 500) with or without response object in body.</returns>
         [HttpPost]
         [Route("persist")] // "api/datareceival/persist"
         public IActionResult Persist([FromBody] DataMessage receivedMessage)
         {
+            // Verify device's API Key.
+            if (_apiKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
+            {
+                // If API Key does not exist or is deactivated.
+                return Unauthorized();
+            }
+
             if (DataMessageService.CheckDataMessageValidity(receivedMessage) == false)
             {
                 return BadRequest(new JsonResult(DataMessageService.CreateInvalidDataMessageResponseBody(receivedMessage)));

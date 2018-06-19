@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Classes.DataRequestClasses;
@@ -23,35 +22,52 @@ namespace WebAPI.Controllers
         private AbstractCameraService CameraService => _cameraService ?? (_cameraService =
                                                            HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
                                                                AbstractCameraService);
-
         private AbstractDataMessageService _dataMessageService;
         private AbstractDataMessageService DataMessageService => _dataMessageService ?? (_dataMessageService =
                                                                      HttpContext.RequestServices.GetService(typeof(AbstractDataMessageService)) as
                                                                          AbstractDataMessageService);
+        private AbstractAPIKeyService _apiKeyService;
+        private AbstractAPIKeyService APIKeyService => _apiKeyService ?? (_apiKeyService =
+                                                               HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
+                                                                         AbstractAPIKeyService);
         #endregion
 
         [HttpPost]
-        public IActionResult GetPerSecondStatsFromTimeInterval ([FromBody] TimeInterval unverifiedTimeInterval)
+        public IActionResult GetPerSecondStatsFromTimeInterval([FromBody] PerSecondStatsFromTimeIntervalRequest unverifiedTimeIntervalRequest)
         {
-            if (DataMessageService.CheckTimeIntervalValidity(unverifiedTimeInterval) == false)
+            // Verify device's API Key.
+            if (_apiKeyService.VerifyAPIKey(unverifiedTimeIntervalRequest.API_Key) < 0)
+            {
+                // If API Key does not exist or is deactivated.
+                return Unauthorized();
+            }
+
+            if (DataMessageService.CheckTimeIntervalValidity(unverifiedTimeIntervalRequest.TimeInterval) == false)
             {
                 return BadRequest(new JsonResult(new InvalidTimeIntervalResponseBody()));
             }
 
-            DataMessage responseBody = DataMessageService.RetrievePerSecondStatsBetweenInterval(unverifiedTimeInterval);
+            DataMessage responseBody = DataMessageService.RetrievePerSecondStatsBetweenInterval(unverifiedTimeIntervalRequest.TimeInterval);
 
             if (responseBody.IsEmpty())
             {
                 return (NoContent());
             }
-            
+
             return Ok(new JsonResult(responseBody));
         }
 
-        [HttpGet("mostrecentstat/{cameraId}", Name = "GetMostRecentPerSecondStatForCamera")] // "api/datarequest/mostrecentstat/4"
-        public IActionResult GetMostRecentPerSecondStatForCameraId(int cameraId)
+        [HttpPost]
+        public IActionResult GetMostRecentPerSecondStatForCamera([FromBody] MostRecentPerSecondStatForCameraRequest mostRecentStatRequest)
         {
-            CameraStatistics stat = CameraService.getCameraStatisticsForNowById(cameraId);
+            // Verify device's API Key.
+            if (_apiKeyService.VerifyAPIKey(mostRecentStatRequest.API_Key) < 0)
+            {
+                // If API Key does not exist or is deactivated.
+                return Unauthorized();
+            }
+
+            CameraStatistics stat = CameraService.getCameraStatisticsForNowById(mostRecentStatRequest.CameraId);
 
             if (stat == null)
             {
@@ -61,18 +77,22 @@ namespace WebAPI.Controllers
             return Ok(new JsonResult(stat));
         }
 
-        [HttpGet("location/{locationId}", Name = "GetCamerasFromLocation")] // "api/datarequest/location/18"
-        public IActionResult GetCamerasFromLocationId(int locationId)
+        [HttpPost]
+        public IActionResult GetCameraListForLocation([FromBody] CameraListForLocationRequest cameraListRequest)
         {
-            // Testing Code:
-            // return (Ok(new JsonResult(locationId)));
+            // Verify device's API Key.
+            if (_apiKeyService.VerifyAPIKey(cameraListRequest.API_Key) < 0)
+            {
+                // If API Key does not exist or is deactivated.
+                return Unauthorized();
+            }
 
-            if (locationId < 0)
+            if (cameraListRequest.LocationId < 0)
             {
                 return (BadRequest(new JsonResult(new InvalidLocationIdResponseBody())));
             }
 
-            List<DatabaseCamera> camerasForRequestedLocation = CameraService.getDatabaseCamerasAtLocation(locationId);
+            List<DatabaseCamera> camerasForRequestedLocation = CameraService.getDatabaseCamerasAtLocation(cameraListRequest.LocationId);
 
             // TODO: use list of EntityDefinitionClasses.Camera instead
 
