@@ -6,8 +6,8 @@
         public static readonly string TABLE_NAME = "api_key";
         // Attributes of API Key table.
         public static readonly string API_KEY_ID_LABEL = "id";
-        public static readonly string API_KEY = "key";
-        public static readonly string API_KEY_SALT = "salt";
+        public static readonly string API_KEY_LABEL = "key";
+        public static readonly string API_KEY_SALT_LABEL = "salt";
         public static readonly string API_KEY_ISACTIVE_LABEL = "is_active";
         
         // Values for API Key activity status

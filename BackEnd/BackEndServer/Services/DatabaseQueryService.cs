@@ -437,28 +437,131 @@ namespace BackEndServer.Services
         // Performs a SELECT to query the specified API Key in the database.
         public DatabaseAPIKey GetAPIKeyFromId(int api_key_id)
         {
-            // Not currently neede, might delete later.
-            throw new NotImplementedException();
+            DatabaseAPIKey api_key = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseAPIKey.TABLE_NAME} "
+                    + $"WHERE {DatabaseAPIKey.API_KEY_ID_LABEL} = {api_key_id} LIMIT 1";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting only one row
+                    if (reader.Read())
+                    {
+                        api_key = new DatabaseAPIKey()
+                        {
+                            API_KeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
+                            API_Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
+                            API_KeySalt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
+                            IsActive = Convert.ToInt16(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL])
+                        };
+                    }
+                }
+            }
+            return api_key;
         }
 
         // Performs a SELECT to query all API Keys in the database.
         public List<DatabaseAPIKey> GetAllAPIKeys()
         {
-            throw new NotImplementedException();
+            List<DatabaseAPIKey> api_keys_list = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseAPIKey.TABLE_NAME}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        api_keys_list.Add(new DatabaseAPIKey()
+                        {
+                            API_KeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
+                            API_Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
+                            API_KeySalt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
+                            IsActive = Convert.ToInt16(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL])
+                        });
+                    }
+                }
+            }
+            return api_keys_list;
         }
 
-        // Performs an INSERT to persist a newly create API Key (salted and hashed key value and its Salt value).
+        // Performs an INSERT to persist a newly created API Key (salted and hashed key and its Salt value).
         public bool PersistAPIKey(APIKey api_key)
         {
-            throw new NotImplementedException();
+            // Define the insert command with the values to insert.
+            string insertCommand = $"INSERT INTO {DatabaseAPIKey.TABLE_NAME} "
+                + $"({DatabaseAPIKey.API_KEY_LABEL},{DatabaseAPIKey.API_KEY_SALT_LABEL},{DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}) VALUES "
+                + $"({api_key.API_Key},{api_key.API_KeySalt},{api_key.IsActive})";
+
+            // Open connection and execute the insert command.
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(insertCommand, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    // Write to Log
+                    return false; // This is probably not going to be executed...
+                }
+            }
+            return true;
         }
 
         // Performs an UPDATE to set the specified API key in the database to inactive. 
         public bool DeactivateAPIKey(int api_key_id)
         {
-            throw new NotImplementedException();
-        }
+            DatabaseAPIKey api_key = GetAPIKeyFromId(api_key_id);
+            
+            if (api_key == null)
+            {
+                // Key was not found in database.
+                return false;
+            }
+            else if (api_key.IsActive == (int)DatabaseAPIKey.API_Key_Status.INACTIVE)
+            {
+                // Key is already Inactive (Deactivated).
+                return false;
+            }
 
+            // Define the update command with the values to insert.
+            string updateCommand = $"UPDATE {DatabaseAPIKey.TABLE_NAME} "
+                + $"SET {DatabaseAPIKey.API_KEY_ISACTIVE_LABEL} = {(int)DatabaseAPIKey.API_Key_Status.INACTIVE} "
+                + $"WHERE {DatabaseAPIKey.API_KEY_ID_LABEL} = {api_key_id}";
+
+            // Open connection and execute the update command.
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(updateCommand, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    // Write to Log
+                    return false; // This is probably not going to be executed...
+                }
+            }
+            return true;
+        }
         #endregion
     }
 }
