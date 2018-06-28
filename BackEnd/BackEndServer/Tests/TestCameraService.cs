@@ -30,7 +30,7 @@ namespace BackEndServer.Tests
                 HasSavedImage = false,
                 DateTime = new DateTime(2018, 4, 3, 10, 0, 0),
                 NumDetectedObjects = 23,
-                StatId = 2
+                PerSecondStatId = 2
             };
             List<DatabasePerSecondStat> listOfStats = new List<DatabasePerSecondStat>();
             listOfStats.Add(testStat);

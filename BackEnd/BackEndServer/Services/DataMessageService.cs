@@ -147,7 +147,7 @@ namespace BackEndServer.Services
                 x++;
             }
 
-            return new DataMessage(stats);
+            return new DataMessage("SYSTEM_RESPONSE", stats);
         }
     }
 }

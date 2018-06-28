@@ -67,9 +67,9 @@ DROP TABLE IF EXISTS `jetson`.`per_second_stat` ;
 CREATE TABLE IF NOT EXISTS `jetson`.`per_second_stat` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `camera_id` INT(10) UNSIGNED NOT NULL,
-  `num_detected_object` INT(11) NOT NULL DEFAULT '0',
+  `num_detected_object` INT(11) NOT NULL DEFAULT 0,
   `date_time` DATETIME NOT NULL,
-  `has_saved_image` TINYINT NOT NULL DEFAULT 0,
+  `has_saved_image` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idStat_UNIQUE` (`id` ASC),
   INDEX `fk_per_second_stat_camera` (`camera_id` ASC),
@@ -138,4 +138,17 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user_camera_association` (
     REFERENCES `jetson`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Table `jetson`.`api_key`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jetson`.`api_key` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`api_key` (
+  `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `key` VARCHAR(128) NOT NULL,
+  `salt` VARCHAR(48) NOT NULL,
+  `is_active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`))
 DEFAULT CHARACTER SET = utf8;

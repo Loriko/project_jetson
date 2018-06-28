@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace BackEndServer.Models.DBModels
+﻿namespace BackEndServer.Models.DBModels
 {
     public class DatabaseLocation
     {
