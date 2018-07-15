@@ -32,6 +32,8 @@ namespace BackEndServer.Services
         }
         #endregion
 
+        #region Data Receival Controller (API)
+
         public bool PersistNewPerSecondStats(List<PerSecondStat> distinctStats)
         {
             // Define the bulk insert query without any values to insert.
@@ -81,11 +83,15 @@ namespace BackEndServer.Services
             return true;
         }
 
+        #endregion
+
+        #region Hourly Stats Service (API)
+
         public bool PersistNewPerHourStats(List<DatabasePerHourStat> perHourStats)
         {
             // Define the bulk insert query without any values to insert.
             string bulkInsertCommand = $"INSERT INTO {DatabasePerHourStat.TABLE_NAME} "
-                + $"({DatabasePerHourStat.DATE_DAY_LABEL},{DatabasePerHourStat.DATE_HOUR_LABEL},{DatabasePerHourStat.MAX_DETECTED_OBJECT_LABEL},"
+                + $"({DatabasePerHourStat.CAMERA_ID_LABEL},{DatabasePerHourStat.DATE_DAY_LABEL},{DatabasePerHourStat.DATE_HOUR_LABEL},{DatabasePerHourStat.MAX_DETECTED_OBJECT_LABEL},"
                 + $"{DatabasePerHourStat.MIN_DETECTED_OBJECT_LABEL},{DatabasePerHourStat.AVG_DETECTED_OBJECT_LABEL}) VALUES ";
 
             // Append the values one by one to the bulk insert query.
@@ -93,13 +99,14 @@ namespace BackEndServer.Services
 
             foreach (DatabasePerHourStat hourStat in perHourStats)
             {
+                string cameraId = hourStat.CameraId.ToString();
                 string dateDay = MySqlDateTimeConverter.ToMySqlDateString(hourStat.Day);
                 string dateHour = hourStat.Hour.ToString();
                 string hourMax = hourStat.MaximumDetectedObjects.ToString();
                 string hourMin = hourStat.MinimumDetectedObjects.ToString();
                 string hourAverage = hourStat.AverageDetectedObjects.ToString();
 
-                bulkInsertCommand += $"('{dateDay}',{dateHour},{hourMax},{hourMin},{hourAverage})";
+                bulkInsertCommand += $"({cameraId},'{dateDay}',{dateHour},{hourMax},{hourMin},{hourAverage})";
 
                 if (hourStat != lastHourStat)
                 {
@@ -127,13 +134,42 @@ namespace BackEndServer.Services
             return true;
         }
 
-        public List<DatabasePerSecondStat> GetAllSecondsForHour(DateTime dateTime)
+        public List<DatabasePerSecondStat> GetAllSecondsForHourForCamera(DateTime dateTime, int cameraId)
         {
             string startDateTime = dateTime.GetHourBeginning().ToMySqlDateTimeString();
             string endDateTime = dateTime.GetHourEnd().ToMySqlDateTimeString();
-            TimeInterval interval = new TimeInterval(startDateTime, endDateTime);
-            return GetStatsFromInterval(interval);
+
+            List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} "
+                    + $"WHERE {DatabasePerSecondStat.DATE_TIME_LABEL} >= '{startDateTime}' "
+                    + $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= '{endDateTime}' "
+                    + $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStatsList.Add(new DatabasePerSecondStat()
+                        {
+                            PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
+                            DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
+                            NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL]))
+                        });
+                    }
+                }
+            }
+            return perSecondStatsList;
         }
+
+        #endregion
 
         // FRANCIS TO CHECK LATER 
         // Right now, username isn't used, but it will be as soon as the tables necessary for camera permissions are added.
@@ -432,7 +468,7 @@ namespace BackEndServer.Services
             return nullableString != null ? $"'{nullableString}'" : "NULL";
         }
 
-        #region API Key Related
+        #region API Key Service (API)
 
         // Performs a SELECT to query the specified API Key in the database.
         public DatabaseAPIKey GetAPIKeyFromId(int api_key_id)

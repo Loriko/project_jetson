@@ -8,6 +8,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string TABLE_NAME = "per_hour_stat";
         // Attributes of PerHourStat table.
         public static readonly string PER_HOUR_STAT_ID_LABEL = "id";
+        public static readonly string CAMERA_ID_LABEL = "camera_id";
         public static readonly string DATE_DAY_LABEL = "date_day";
         public static readonly string DATE_HOUR_LABEL = "date_hour";
         public static readonly string MAX_DETECTED_OBJECT_LABEL = "max_detected_object";
@@ -16,6 +17,7 @@ namespace BackEndServer.Models.DBModels
 
         // Database Model Class Attributes
         public int PerHourStatId { get; set; }
+        public int CameraId { get; set; }
         public DateTime Day { get; set; }
         public int Hour { get; set; }
         public double AverageDetectedObjects { get; set; }

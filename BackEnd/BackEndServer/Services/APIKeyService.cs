@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Models.DBModels;
@@ -19,38 +18,28 @@ namespace BackEndServer.Services
             this._dbQueryService = dbQueryService;
         }
 
-        #region Private Methods
+        // Constructor for unit testing purposes.
+        public APIKeyService()
+        {
+            this._dbQueryService = null;
+        }
+
+        #region Methods For APIKeyService
 
         // Returns a string representing a randomly generated, unhashed and unsalted API Key.
-        private string GenerateRandomAPIKey()
+        public string GenerateRandomAPIKey()
         {
-            Random random = new Random();
-            int randomNumberOfBytes = random.Next(24,32);
-            byte[] key_in_bytes = new byte[randomNumberOfBytes];
-
-            using (RNGCryptoServiceProvider randomNumberGenerator = new RNGCryptoServiceProvider())
-            {
-                randomNumberGenerator.GetBytes(key_in_bytes);
-                return Convert.ToBase64String(key_in_bytes);
-            }
+            return StringGenerator.GenerateRandomString(24, 48);
         }
 
         // Returns a string representing a randomly generated Salt for an API Key.
-        private string GenerateRandomSalt()
+        public string GenerateRandomSalt()
         {
-            Random random = new Random();
-            int randomNumberOfBytes = random.Next(8,16);
-            byte[] salt_in_bytes = new byte[randomNumberOfBytes];
-
-            using (RNGCryptoServiceProvider randomNumberGenerator = new RNGCryptoServiceProvider())
-            {
-                randomNumberGenerator.GetBytes(salt_in_bytes);
-                return Convert.ToBase64String(salt_in_bytes);
-            }
+            return StringGenerator.GenerateRandomString(12, 24);
         }
 
         // Returns a string representing the input API Key, but in a salted (using input salt) and hashed form.
-        private string HashAndSaltAPIKey(string unsalted_unhashed_api_key, string salt)
+        public string HashAndSaltAPIKey(string unsalted_unhashed_api_key, string salt)
         {
             // Salted API Key = First five character of Salt + Key + Remaining Characters of Salt
             string salted_api_key = salt.Substring(0,5) + unsalted_unhashed_api_key + salt.Substring(5);
@@ -61,7 +50,7 @@ namespace BackEndServer.Services
 
         #endregion
 
-        #region Public Methods For Controllers
+        #region Methods For Controllers
 
         // Creates a new API Key in the database and returns the plain text version for display to the user.
         public string RegisterNewAPIKey()
