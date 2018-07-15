@@ -12,7 +12,7 @@ USE `jetson` ;
 DROP TABLE IF EXISTS `jetson`.`location` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`location` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
   `location_name` VARCHAR(45) NOT NULL,
   `address_line` VARCHAR(200) NULL,
   `city` VARCHAR(45) NULL,
@@ -27,14 +27,14 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `jetson`.`camera` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
   `camera_name` VARCHAR(45) NULL DEFAULT NULL,
-  `location_id` INT(11) NOT NULL,
-  `user_id` INT(11) NOT NULL,
+  `location_id` INT(16) UNSIGNED NOT NULL,
+  `user_id` INT(16) UNSIGNED NOT NULL,
   `monitored_area` VARCHAR(45) NOT NULL,
   `brand` VARCHAR(45) NULL,
   `model` VARCHAR(45) NULL,
-  `resolution` VARCHAR(45) UNSIGNED NULL,
+  `resolution` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_camera_address_idx` (`location_id` ASC),
   CONSTRAINT `fk_camera_Address`
@@ -50,11 +50,12 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `jetson`.`per_hour_stat` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`per_hour_stat` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `camera_id` INT(16) UNSIGNED NOT NULL,
   `date_day` DATE NOT NULL,
   `date_hour` INT(2) UNSIGNED NOT NULL,
-  `max_detected_object` INT UNSIGNED NULL,
-  `min_detected_object` INT UNSIGNED NULL,
+  `max_detected_object` INT(16) UNSIGNED NULL,
+  `min_detected_object` INT(16) UNSIGNED NULL,
   `avg_detected_object` FLOAT UNSIGNED NULL,
   PRIMARY KEY (`id`))
 DEFAULT CHARACTER SET = utf8;
@@ -65,11 +66,11 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `jetson`.`per_second_stat` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`per_second_stat` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `camera_id` INT(10) UNSIGNED NOT NULL,
-  `num_detected_object` INT(11) NOT NULL DEFAULT 0,
+  `id` INT(32) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `camera_id` INT(16) UNSIGNED NOT NULL,
+  `num_detected_object` INT(16) UNSIGNED NOT NULL,
   `date_time` DATETIME NOT NULL,
-  `has_saved_image` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `has_saved_image` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idStat_UNIQUE` (`id` ASC),
   INDEX `fk_per_second_stat_camera` (`camera_id` ASC),
@@ -86,8 +87,8 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `jetson`.`per_second_stat_per_hour_stat_association` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`per_second_stat_per_hour_stat_association` (
-  `per_second_stat_id` INT(10) UNSIGNED NOT NULL,
-  `per_hour_stat_id` INT(11) NOT NULL,
+  `per_second_stat_id` INT(32) UNSIGNED NOT NULL,
+  `per_hour_stat_id` INT(16) UNSIGNED NOT NULL,
   PRIMARY KEY (`per_second_stat_id`, `per_hour_stat_id`),
   INDEX `fk_per_second_stat_per_hour_stat_association_per_hour_stat_idx` (`per_hour_stat_id` ASC),
   INDEX `fk_per_second_stat_per_hour_stat_association_per_second_stat_idx` (`per_second_stat_id` ASC),
@@ -109,10 +110,9 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `jetson`.`user` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`user` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` INT(16) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `api_key` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 DEFAULT CHARACTER SET = utf8;
@@ -123,8 +123,8 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `jetson`.`user_camera_association` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`user_camera_association` (
-  `camera_id` INT(10) UNSIGNED NOT NULL,
-  `user_id` INT(10) UNSIGNED NOT NULL,
+  `camera_id` INT(16) UNSIGNED NOT NULL,
+  `user_id` INT(16) UNSIGNED NOT NULL,
   PRIMARY KEY (`camera_id`, `user_id`),
   INDEX `fk_camera_has_user_user_idx` (`user_id` ASC),
   INDEX `fk_camera_has_user_camera_idx` (`camera_id` ASC),
