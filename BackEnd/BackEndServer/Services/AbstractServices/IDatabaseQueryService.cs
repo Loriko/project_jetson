@@ -24,7 +24,7 @@ namespace BackEndServer.Services
         DatabasePerSecondStat GetLatestPerSecondStatForCamera(int cameraId);
         List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId);
         List<DatabasePerSecondStat> GetStatsFromInterval(TimeInterval verifiedTimeInterval);
-        List<DatabasePerSecondStat> GetAllSecondsForHour(DateTime dateTime);
+        List<DatabasePerSecondStat> GetAllSecondsForHourForCamera(DateTime dateTime, int cameraId);
         // For Location:
         List<DatabaseLocation> GetLocationsForUser(string username);
         // For User:

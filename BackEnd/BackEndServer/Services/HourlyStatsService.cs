@@ -26,61 +26,73 @@ namespace BackEndServer.Services
 
         public void AutoCalculateHourlyStats(DataMessage dataMessage)
         {
-            List<DateTime> hoursToCalculateAverages = this.CheckIfCalculationsRequired(dataMessage);
+            // Obtain a list of all the unique Cameras sending data through the DataMessage. 
+            List<int> cameraIdsToProcess = dataMessage.RealTimeStats
+                                           .Select(x => x.CameraId).Distinct()
+                                           .ToList<int>();
 
-            if (hoursToCalculateAverages.Count == 0)
+            foreach(int cameraId in cameraIdsToProcess)
             {
-                // There are no hours ready for calculation of hourly averages (min, max, average).
-                return;
-            }
+                // Obtain all of the camera's PerSecondStats within the DataMessage.
+                List<PerSecondStat> cameraStats = dataMessage.RealTimeStats
+                                                  .Where(x => x.CameraId == cameraId)
+                                                  .ToList<PerSecondStat>();
 
-            List<DatabasePerHourStat> perHourStats = CalculateHourlyAverages(hoursToCalculateAverages);
+                List<DateTime> hoursToCalculateStats = this.GetHoursToBeCalculated(cameraStats);
 
-            if (perHourStats == null)
-            {
-                // Log error here and exit.
-                return;
-            }
-            else if (perHourStats.Count == 0)
-            {
-                // Log error here and exit.
-                return;
-            }
+                if (hoursToCalculateStats != null)
+                {
+                    if (hoursToCalculateStats.Count == 0)
+                    {
+                        // There are no hours ready for calculation of hourly averages (min, max, average).
+                        return;
+                    }
 
-            bool successfulPersist = _dbQueryService.PersistNewPerHourStats(perHourStats);
+                    // Calculate statistics and create the PerHourStats objects that will be stored in the database.
+                    List<DatabasePerHourStat> perHourStats = CalculateHourlyAverages(hoursToCalculateStats, cameraId);
 
-            if (successfulPersist == false)
-            {
-                // Write error to LOG
+                    if (perHourStats == null)
+                    {
+                        // LOG error here and exit.
+                        return;
+                    }
+                    else if (perHourStats.Count == 0)
+                    {
+                        // LOG error here and exit.
+                        return;
+                    }
+
+                    bool successfulPersist = _dbQueryService.PersistNewPerHourStats(perHourStats);
+
+                    if (successfulPersist == false)
+                    {
+                        // Write error to LOG
+                    }
+                }
             }
         }
 
-        public List<DatabasePerHourStat> CalculateHourlyAverages(List<DateTime> hoursToCalulate)
+        public List<DatabasePerHourStat> CalculateHourlyAverages(List<DateTime> hoursToCalulate, int cameraId)
         {
             List<DatabasePerHourStat> perHourStats = new List<DatabasePerHourStat>();
 
-            DatabasePerHourStat hourStat = null;
-            List<DatabasePerSecondStat> tempAllSecondsInHour = null;
-            int minPeopleInHour = -1;
-            int maxPeopleInHour = -1;
-            int tempSum = 0;
-
             foreach(DateTime hour in hoursToCalulate)
             {
-                tempAllSecondsInHour = _dbQueryService.GetAllSecondsForHour(hour);
+                List<DatabasePerSecondStat>  tempAllSecondsInHourForCamera = _dbQueryService.GetAllSecondsForHourForCamera(hour, cameraId);
 
-                if (tempAllSecondsInHour.Count != 3600)
+                if (tempAllSecondsInHourForCamera.Count != 3600)
                 {
-                    // Write to log that this hour is missing PerSecondStats.
+                    // Write to LOG that this hour is missing PerSecondStats.
                     return null; 
                 }
 
-                minPeopleInHour = tempAllSecondsInHour.First().NumDetectedObjects;
-                maxPeopleInHour = tempAllSecondsInHour.First().NumDetectedObjects;
-                tempSum = 0;
+                DatabasePerHourStat hourStat = null;
+                int minPeopleInHour = tempAllSecondsInHourForCamera.First().NumDetectedObjects;
+                int maxPeopleInHour = tempAllSecondsInHourForCamera.First().NumDetectedObjects;
+                int tempSum = 0;
 
                 // Calculate average, min and max. Create DatabasePerHourStat.
-                foreach (DatabasePerSecondStat second in tempAllSecondsInHour)
+                foreach (DatabasePerSecondStat second in tempAllSecondsInHourForCamera)
                 {
                     tempSum += second.NumDetectedObjects;
 
@@ -97,9 +109,10 @@ namespace BackEndServer.Services
 
                 hourStat = new DatabasePerHourStat
                 {
+                    CameraId = cameraId,
                     Day = DateTimeTools.GetHourBeginning(hour),
                     Hour = hour.Hour,
-                    AverageDetectedObjects = (tempSum / tempAllSecondsInHour.Count),
+                    AverageDetectedObjects = (tempSum / tempAllSecondsInHourForCamera.Count),
                     MaximumDetectedObjects = maxPeopleInHour,
                     MinimumDetectedObjects = minPeopleInHour
                 };
@@ -110,11 +123,11 @@ namespace BackEndServer.Services
             return perHourStats;
         }
 
-        public List<DateTime> CheckIfCalculationsRequired(DataMessage dataMessage)
+        public List<DateTime> GetHoursToBeCalculated(List<PerSecondStat> uniqueCameraStats)
         {
             List<DateTime> hoursToCalculateAverages = new List<DateTime>();
 
-            foreach(PerSecondStat second in dataMessage.RealTimeStats)
+            foreach (PerSecondStat second in uniqueCameraStats)
             {
                 // Create this function in the Helper Sevices DateTimeTools class.
                 // Regular Expression that checks if the PerSecondStat is the last second of that hour.
