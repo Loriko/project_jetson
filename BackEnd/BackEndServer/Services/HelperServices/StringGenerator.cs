@@ -2,6 +2,8 @@
 using System.Security.Cryptography;
 using System.Text;
 
+// Class only has one function which is unit tested in the APIKeyServiceTests class.
+
 namespace BackEndServer.Services.HelperServices
 {
     public class StringGenerator
@@ -15,7 +17,6 @@ namespace BackEndServer.Services.HelperServices
             // Generate a random number between minimum and maximum size limits.
             Random random = new Random();
             int size = random.Next(minSize, maxSize + 1);
-
 
             byte[] data = new byte[1];
             using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())

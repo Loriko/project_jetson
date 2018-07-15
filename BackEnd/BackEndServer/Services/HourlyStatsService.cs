@@ -12,9 +12,16 @@ namespace BackEndServer.Services
     {
         private readonly IDatabaseQueryService _dbQueryService;
 
+        // Constructor
         public HourlyStatsService(IDatabaseQueryService dbQueryService)
         {
             _dbQueryService = dbQueryService;
+        }
+
+        // Constructor for unit testing purposes.
+        public HourlyStatsService()
+        {
+            this._dbQueryService = null;
         }
 
         public void AutoCalculateHourlyStats(DataMessage dataMessage)
