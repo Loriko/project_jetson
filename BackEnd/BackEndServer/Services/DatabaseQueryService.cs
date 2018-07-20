@@ -16,6 +16,7 @@ namespace BackEndServer.Services
     public class DatabaseQueryService : IDatabaseQueryService
     {   
         #region Database Context
+
         // Connection String Attribute
         public string ConnectionString { get; set; }
 
@@ -30,6 +31,7 @@ namespace BackEndServer.Services
         {
             return new MySqlConnection(ConnectionString);
         }
+
         #endregion
 
         #region Data Receival Controller (API)
@@ -91,7 +93,7 @@ namespace BackEndServer.Services
         {
             // Define the bulk insert query without any values to insert.
             string bulkInsertCommand = $"INSERT INTO {DatabasePerHourStat.TABLE_NAME} "
-                + $"({DatabasePerHourStat.CAMERA_ID_LABEL},{DatabasePerHourStat.DATE_DAY_LABEL},{DatabasePerHourStat.DATE_HOUR_LABEL},{DatabasePerHourStat.MAX_DETECTED_OBJECT_LABEL},"
+                + $"({DatabasePerHourStat.DATE_DAY_LABEL},{DatabasePerHourStat.DATE_HOUR_LABEL},{DatabasePerHourStat.MAX_DETECTED_OBJECT_LABEL},"
                 + $"{DatabasePerHourStat.MIN_DETECTED_OBJECT_LABEL},{DatabasePerHourStat.AVG_DETECTED_OBJECT_LABEL}) VALUES ";
 
             // Append the values one by one to the bulk insert query.
@@ -99,14 +101,13 @@ namespace BackEndServer.Services
 
             foreach (DatabasePerHourStat hourStat in perHourStats)
             {
-                string cameraId = hourStat.CameraId.ToString();
                 string dateDay = MySqlDateTimeConverter.ToMySqlDateString(hourStat.Day);
                 string dateHour = hourStat.Hour.ToString();
                 string hourMax = hourStat.MaximumDetectedObjects.ToString();
                 string hourMin = hourStat.MinimumDetectedObjects.ToString();
                 string hourAverage = hourStat.AverageDetectedObjects.ToString();
 
-                bulkInsertCommand += $"({cameraId},'{dateDay}',{dateHour},{hourMax},{hourMin},{hourAverage})";
+                bulkInsertCommand += $"('{dateDay}',{dateHour},{hourMax},{hourMin},{hourAverage})";
 
                 if (hourStat != lastHourStat)
                 {
@@ -161,12 +162,80 @@ namespace BackEndServer.Services
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
-                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL]))
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])),
+                            // Null by default, this is what will be updated later by the HourlyStatsService.
+                            PerHourStatId = -1
                         });
                     }
                 }
             }
             return perSecondStatsList;
+        }
+
+        public DatabasePerHourStat GetPerHourStatFromHour(DateTime hour)
+        {
+            DatabasePerHourStat perHourStat = null;
+
+            string mySqlDateString = hour.ToMySqlDateString();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabasePerHourStat.TABLE_NAME} "
+                    + $"WHERE {DatabasePerHourStat.DATE_DAY_LABEL} = '{mySqlDateString}' " +
+                    $"AND {DatabasePerHourStat.DATE_HOUR_LABEL} = {hour.Hour} LIMIT 1";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        perHourStat = new DatabasePerHourStat()
+                        {
+                            PerHourStatId = Convert.ToInt32(reader[DatabasePerHourStat.PER_HOUR_STAT_ID_LABEL]),
+                            Day = MySqlDateTimeConverter.ToDateTime(Convert.ToString(reader[DatabasePerHourStat.DATE_DAY_LABEL])),
+                            Hour = Convert.ToInt32(reader[DatabasePerHourStat.DATE_HOUR_LABEL]),
+                            AverageDetectedObjects = Convert.ToDouble(reader[DatabasePerHourStat.AVG_DETECTED_OBJECT_LABEL]),
+                            MaximumDetectedObjects = Convert.ToInt32(reader[DatabasePerHourStat.MAX_DETECTED_OBJECT_LABEL]),
+                            MinimumDetectedObjects = Convert.ToInt32(reader[DatabasePerHourStat.MIN_DETECTED_OBJECT_LABEL])
+                        };
+                    }
+                }
+            }
+            return perHourStat;
+        }
+
+        public bool UpdatePerSecondStatsWithPerHourStatId(DateTime hour, int perHourStatId)
+        {
+            string startDateTime = hour.GetHourBeginning().ToMySqlDateTimeString();
+            string endDateTime = hour.GetHourEnd().ToMySqlDateTimeString();
+
+            // Define the update command with the values to update.
+            string updateCommand = $"UPDATE {DatabasePerSecondStat.TABLE_NAME} "
+                + $"SET {DatabasePerSecondStat.PER_HOUR_STAT_ID_LABEL} = {perHourStatId} "
+                + $"WHERE {DatabasePerSecondStat.DATE_TIME_LABEL} >= '{startDateTime}' "
+                + $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= '{endDateTime}'";
+
+            // Open connection and execute the update command.
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand(updateCommand, conn);
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    // Write to LOG
+                    return false; // This is probably not going to be executed...
+                }
+            }
+            return true;
         }
 
         #endregion
@@ -574,7 +643,7 @@ namespace BackEndServer.Services
                 return false;
             }
 
-            // Define the update command with the values to insert.
+            // Define the update command with the values to update.
             string updateCommand = $"UPDATE {DatabaseAPIKey.TABLE_NAME} "
                 + $"SET {DatabaseAPIKey.API_KEY_ISACTIVE_LABEL} = {(int)DatabaseAPIKey.API_Key_Status.INACTIVE} "
                 + $"WHERE {DatabaseAPIKey.API_KEY_ID_LABEL} = {api_key_id}";

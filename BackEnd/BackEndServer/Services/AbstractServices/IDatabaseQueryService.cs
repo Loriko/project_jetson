@@ -14,6 +14,9 @@ namespace BackEndServer.Services
         bool PersistNewPerHourStats(List<DatabasePerHourStat> perHourStats);
         bool PersistNewCamera(DatabaseCamera camera);
 
+        // UPDATE methods:
+        bool UpdatePerSecondStatsWithPerHourStatId(DateTime hour, int perHourStatId);
+
         // QUERY methods:
 
         // For Camera:
@@ -25,6 +28,8 @@ namespace BackEndServer.Services
         List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId);
         List<DatabasePerSecondStat> GetStatsFromInterval(TimeInterval verifiedTimeInterval);
         List<DatabasePerSecondStat> GetAllSecondsForHourForCamera(DateTime dateTime, int cameraId);
+        // For PerHourStat:
+        DatabasePerHourStat GetPerHourStatFromHour(DateTime hour);
         // For Location:
         List<DatabaseLocation> GetLocationsForUser(string username);
         // For User:

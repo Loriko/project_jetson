@@ -17,7 +17,6 @@ namespace BackEndServer.Models.DBModels
 
         // Database Model Class Attributes
         public int PerHourStatId { get; set; }
-        public int CameraId { get; set; }
         public DateTime Day { get; set; }
         public int Hour { get; set; }
         public double AverageDetectedObjects { get; set; }
