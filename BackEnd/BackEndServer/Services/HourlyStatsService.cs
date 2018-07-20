@@ -68,6 +68,26 @@ namespace BackEndServer.Services
                     {
                         // Write error to LOG
                     }
+
+                    // Update all used PerSecondStat's PerHourStatId column with the correct PerHourStatId.
+                    foreach(DateTime hour in hoursToCalculateStats)
+                    {
+                        DatabasePerHourStat perHourStat = _dbQueryService.GetPerHourStatFromHour(hour);
+
+                        if (perHourStat == null)
+                        {
+                            // LOG error here.
+                        }
+                        else
+                        {
+                            bool updateSuccess = _dbQueryService.UpdatePerSecondStatsWithPerHourStatId(hour, perHourStat.PerHourStatId);
+
+                            if (updateSuccess == false)
+                            {
+                                // LOG error here.
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -109,7 +129,6 @@ namespace BackEndServer.Services
 
                 hourStat = new DatabasePerHourStat
                 {
-                    CameraId = cameraId,
                     Day = DateTimeTools.GetHourBeginning(hour),
                     Hour = hour.Hour,
                     AverageDetectedObjects = (tempSum / tempAllSecondsInHourForCamera.Count),
