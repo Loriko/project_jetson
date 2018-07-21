@@ -30,6 +30,8 @@ namespace WebAPI_UnitTests.ServicesTests
         [Test]
         public void CheckIfCalculationsRequiredTest()
         {
+            Assert.Fail();
+            /*
             DateTime dt_1 = new DateTime(1999, 8, 30, 4, 25, 0);
             DateTime dt_2 = new DateTime(1999, 8, 30, 4, 59, 0);
             DateTime dt_3 = new DateTime(1999, 8, 30, 4, 59, 59);
@@ -37,9 +39,9 @@ namespace WebAPI_UnitTests.ServicesTests
             PerSecondStat[] perSecondStats = new PerSecondStat[12];
 
 
-            perSecondStats[0] = new PerSecondStat();
+            //perSecondStats[0] = new PerSecondStat();
 
-            DataMessage input = new DataMessage("TESTING", perSecondStats);
+            DataMessage input = new DataMessage("TESTING", perSecondStats);*/
         }
 
 

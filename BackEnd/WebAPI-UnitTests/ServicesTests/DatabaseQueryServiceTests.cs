@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WebAPI-UnitTests.ServicesTests
+namespace WebAPI_UnitTests.ServicesTests
 {
     class DatabaseQueryServiceTests
     {
