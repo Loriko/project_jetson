@@ -97,6 +97,17 @@ namespace BackEndServer.Services
             };
         }
 
+        public CameraInformationList getAllCamerasForUser(int userId)
+        {
+            List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasAvailableToUser(userId);
+            return new CameraInformationList(dbCameras);
+        }
+
+        public List<CameraInformation> getAllCamerasForUser(string username)
+        {
+            throw new System.NotImplementedException("getAllCamerasForUser(string username) is not implemented");
+        }
+
         public List<string> GetExistingCameraResolutions()
         {
             return _dbQueryService.GetExistingCameraResolutions();

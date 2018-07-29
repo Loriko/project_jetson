@@ -5,10 +5,12 @@ using System.Linq;
 using MySql.Data.MySqlClient;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Classes.EntityDefinitionClasses;
+using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.APIModels;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
+
 // Bulk insert: "INSERT INTO tbl_name (a,b,c) VALUES(1,2,3),(4,5,6),(7,8,9)"
 
 namespace BackEndServer.Services
@@ -668,5 +670,163 @@ namespace BackEndServer.Services
             return true;
         }
         #endregion
+        
+        public List<DatabaseCamera> GetCamerasAvailableToUser(int userId)
+        {
+            List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               "FROM camera " +
+                               "WHERE camera.id IN ( " +
+                               "SELECT user_camera_association.camera_id " +
+                               "FROM user_camera_association " +
+                               $"WHERE user_camera_association.user_id = {userId} " +
+                               $") OR camera.user_id = {userId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseCamera camera = new DatabaseCamera()
+                        {
+                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
+                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
+                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
+                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
+                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
+                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
+                        };
+                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
+                        {
+                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
+                        }
+                        cameraList.Add(camera);
+                    }
+                }
+            }
+            return cameraList;
+        }
+
+        //TODO fix query to use labels
+        public bool PersistNewAlert(DatabaseAlert alert)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = "INSERT INTO alert(" +
+                               "alert_name, camera_id, user_id, contact_method, trigger_operator, trigger_number, always_active, start_time, end_time" +
+                               ") VALUES " +
+                               $"('{alert.AlertName}',{alert.CameraId}," +
+                               $"{alert.UserId},'{alert.ContactMethod}','{alert.TriggerOperator}'," +
+                               $"{alert.TriggerNumber},{(alert.AlwaysActive ? 1 : 0)}," +
+                               $"{formatNullableString(alert.StartTime)}, {formatNullableString(alert.EndTime)});";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<DatabaseAlert> GetAlertsForUser(int userId)
+        {
+            List<DatabaseAlert> alertList = new List<DatabaseAlert>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               $"FROM {DatabaseAlert.TABLE_NAME} " +
+                               $"WHERE {DatabaseAlert.USER_ID_LABEL} = {userId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseAlert alert = new DatabaseAlert()
+                        {
+                            AlertId = Convert.ToInt32(reader[DatabaseAlert.ALERT_ID_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabaseAlert.CAMERA_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseAlert.USER_ID_LABEL]),
+                            AlertName = Convert.ToString(reader[DatabaseAlert.ALERT_NAME_LABEL]),
+                            ContactMethod = Convert.ToString(reader[DatabaseAlert.CONTACT_METHOD_LABEL]),
+                            TriggerOperator = Convert.ToString(reader[DatabaseAlert.TRIGGER_OPERATOR_LABEL]),
+                            TriggerNumber = Convert.ToInt32(reader[DatabaseAlert.TRIGGER_NUMBER_LABEL]),
+                            AlwaysActive = Convert.ToBoolean(reader[DatabaseAlert.ALWAYS_ACTIVE_LABEL])
+                        };
+                        if (reader[DatabaseAlert.START_TIME_LABEL] != DBNull.Value)
+                        {
+                            alert.StartTime = Convert.ToString(reader[DatabaseAlert.START_TIME_LABEL]);
+                        }
+                        if (reader[DatabaseAlert.END_TIME_LABEL] != DBNull.Value)
+                        {
+                            alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
+                        }
+                        alertList.Add(alert);
+                    }
+                }
+            }
+            return alertList;
+        }
+        
+        public bool DeleteAlert(int alertId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabaseAlert.TABLE_NAME} " +
+                               $"WHERE {DatabaseAlert.ALERT_ID_LABEL} = {alertId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool PersistExistingAlert(DatabaseAlert alert)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = "UPDATE alert SET " +
+                               $"alert_name = {formatNullableString(alert.AlertName)}," +
+                               $"camera_id = {alert.CameraId}," +
+                               $"contact_method = {formatNullableString(alert.ContactMethod)}," +
+                               $"trigger_operator = {formatNullableString(alert.TriggerOperator)}," +
+                               $"trigger_number = {alert.TriggerNumber}," +
+                               $"always_active = {alert.AlwaysActive}," +
+                               $"start_time = {formatNullableString(alert.StartTime)}," +
+                               $"end_time = {formatNullableString(alert.EndTime)} " +
+                               $"WHERE id = {alert.AlertId};";
+                Console.WriteLine("\n" + query + "\n");
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

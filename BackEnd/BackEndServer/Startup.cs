@@ -40,12 +40,14 @@ namespace BackEndServer
             AbstractCameraService cameraService = new CameraService(dbQueryService, graphStatisticService, locationService);
             AbstractAuthenticationService authenticationService = new AuthenticationService(dbQueryService);
             AbstractDataMessageService dataMessageService = new DataMessageService(dbQueryService);
-
+            AbstractAlertService alertService = new AlertService(dbQueryService, cameraService);
+            
             services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
             services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));
             services.Add(new ServiceDescriptor(typeof(AbstractDataMessageService), dataMessageService));
             services.Add(new ServiceDescriptor(typeof(AbstractLocationService), locationService));
             services.Add(new ServiceDescriptor(typeof(AbstractGraphStatisticService), graphStatisticService));
+            services.Add(new ServiceDescriptor(typeof(AbstractAlertService), alertService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

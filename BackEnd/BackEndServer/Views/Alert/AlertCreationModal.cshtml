@@ -1,0 +1,154 @@
+﻿@model BackEndServer.Models.ViewModels.CameraInformationList
+
+<!-- Modal Structure -->
+<div id="alert-creation-modal" class="modal modal-fixed-footer">
+    <form class="col s12" method="post" asp-controller="Alert" asp-action="SaveAlert">
+        <div class="modal-content">
+            <h1 id="create-title" class="page-title left-align">Set up an alert</h1>
+            <h1 id="edit-title" class="page-title left-align hide">Modify an alert</h1>
+            <input type="hidden" id="alert_id" name="AlertId">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="alert_name" name="AlertName" type="text" class="validate" required>
+                    <label for="alert_name">Alert Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    @*TODO: Fix how the select displays by updating to the newest version of materialize *@
+                    <select id="camera_id" name="CameraId">
+                        <option value="" disabled selected>Please select the location where the camera is installed</option>
+                        @{
+                            foreach (var cameraInformation in Model.CameraList)
+                            {
+                                <option value="@cameraInformation.CameraId">@cameraInformation.CameraName</option>
+                            }
+                        }
+                    </select>
+                    <label for="camera_id">Associated Camera</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="contact_method" name="ContactMethod">
+                        <option value="" disabled selected>Please select the way you wish to be contacted when the alert is triggered</option>
+                        @{
+                            foreach (var contactMethod in Enum.GetValues(typeof(BackEndServer.Models.Enums.ContactMethod)))
+                            {
+                                <option value="@((int) contactMethod)">@contactMethod.ToString()</option>
+                            }
+                        }
+                    </select>
+                    <label for="contact_method">Contact Method</label>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="input-field col s12">
+                    <div id="trigger-details-container">
+                        <span>This alert will be triggered when</span>
+                        <input type="hidden" id="operator_value" name="TriggerOperator">
+                        <!-- Dropdown Trigger -->
+                        &nbsp;<a class="dropdown-button btn" href="#" id="operator_button" data-activates="operator_dropdown"></a>
+                        <!-- Dropdown Structure -->
+                        <ul id="operator_dropdown" class="dropdown-content">
+                            <li><a value="@BackEndServer.Models.Enums.TriggerOperator.More" href="#!">@BackEndServer.Models.Enums.TriggerOperator.More</a></li>
+                            <li><a value="@BackEndServer.Models.Enums.TriggerOperator.Less" href="#!">@BackEndServer.Models.Enums.TriggerOperator.Less</a></li>
+                        </ul>&nbsp;
+                        <span>than</span>
+                        &nbsp;
+                        <div class="input-field inline">
+                            <input id="trigger_number" name="TriggerNumber" type="number" class="small-input validate">
+                        </div>&nbsp;
+                        <span>people are spotted:</span>
+                    </div>
+                    <p class="no-top-margin">
+                        <input name="AlwaysActive" type="radio" id="all-time-radio" value="true" checked="checked"/>
+                        <label class="radio-label" for="all-time-radio">At all times</label>
+                    </p>
+                    <p>
+                        <input name="AlwaysActive" type="radio" id="specific-time-radio" value="false"/>
+                        <label class="radio-label" for="specific-time-radio">Between specific times</label>
+                    </p>
+                    <label class="fake-label">Trigger details</label>
+                </div>
+            </div>
+            <div id="time_row" class="row">
+                <div class="input-field col s12">
+                    <label for="start_time">From</label>
+                    <input name="StartTime" id="start_time" type="text" class="timepicker">
+                </div>
+                <div class="input-field col s12">
+                    <label for="end_time">To</label>
+                    <input name="EndTime" id="end_time" type="text" class="timepicker">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("input[name='AlwaysActive']").on("change",
+        function() {
+            if ($("input[name='AlwaysActive']:checked").val() === "true") {
+                $("#time_row").addClass("hide");
+            } else if ($("input[name='AlwaysActive']:checked").val() === "false") {
+                $("#time_row").removeClass("hide");
+            }
+        }
+    ).change();
+    //Kinda (very) hacky, but is the cost we have to pay to use the materialize dropdown look 
+    function selectTriggerOperator(operator) {
+        $("#operator_value").val(operator);
+        $("#operator_button").text(operator);
+    }
+    $("#operator_dropdown a").on("click",
+        function() {
+            selectTriggerOperator($(this).attr("value"));
+        }
+    );
+    $("#operator_dropdown a").first().click();
+    
+    function setToCreateMode() {
+        $("#edit-title").addClass("hide");
+        $("#create-title").removeClass("hide");
+
+        var modal = $("#alert-creation-modal");
+        modal.find("form").trigger("reset");
+        modal.find("#operator_dropdown a").first().click();
+        modal.find("input[name='AlwaysActive']").change();
+        modal.find("input[name='AlertId']").val("");
+        modal.find("label[for='alert_name']").removeClass("active");
+        modal.find("label[for='start_time']").removeClass("active");
+        modal.find("label[for='end_time']").removeClass("active");
+        modal.find("select[name='CameraId']").material_select();
+        modal.find("select[name='ContactMethod']").material_select();
+    }
+    
+    function setToEditMode(alert) {
+        $("#create-title").addClass("hide");
+        $("#edit-title").removeClass("hide");
+        var modal = $("#alert-creation-modal");
+        modal.find("input[name='AlertId']").val(alert.alertId);
+        modal.find("input[name='AlertName']").val(alert.alertName);
+        modal.find("label[for='alert_name']").addClass("active");
+        modal.find("select[name='CameraId']").val(alert.cameraId);
+        modal.find("select[name='CameraId']").material_select();
+        modal.find("select[name='ContactMethod']").val(alert.contactMethod);
+        modal.find("select[name='ContactMethod']").material_select();
+        selectTriggerOperator(alert.triggerOperator);
+        modal.find("input[name='TriggerNumber']").val(alert.triggerNumber);
+        modal.find("input[name='AlwaysActive'][value='" + alert.alwaysActive + "']").prop("checked", true);
+        modal.find("input[name='AlwaysActive']").change();
+        modal.find("input[name='StartTime']").val(alert.startTime);
+        modal.find("label[for='start_time']").addClass("active");
+        modal.find("input[name='EndTime']").val(alert.endTime);
+        modal.find("label[for='end_time']").addClass("active");
+    }
+</script>

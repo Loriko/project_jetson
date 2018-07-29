@@ -50,6 +50,9 @@
                 </ul>
 
                 <ul class="right hide-on-med-and-down">
+                    <li>
+                        <a asp-controller="Alert" asp-action="Index" class="nav-link">My Alerts</a>
+                    </li>
                     <li><a class="dropdown-button" href="#" data-activates="profileDropDown">Profile<i class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>
             </div>
@@ -91,6 +94,11 @@
                 $(document).ready(function () {
                     $(".dropdown-button").dropdown();
                     $('select').material_select();
+                    $('.modal').modal();
+                    $('.timepicker').pickatime({
+                        default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+                        twelvehour: true // Use AM/PM or 24-hour format
+                    });
                 });
             </script>
         </environment>
@@ -109,12 +117,14 @@
             $(document).ready(function () {
                 $(".dropdown-button").dropdown();
                 $('select').material_select();
-            });
-            $(document).ready(function() {
                 $('.modal').modal();
+                $('.timepicker').pickatime({
+                    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+                    twelvehour: true // Use AM/PM or 24-hour format
+                });
             });
         </script>
     
-    @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", false)
     </body>
 </html>
