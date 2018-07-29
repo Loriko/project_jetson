@@ -828,5 +828,29 @@ namespace BackEndServer.Services
             }
             return false;
         }
+
+        public bool PersistNewLocation(DatabaseLocation dbLocation)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"INSERT INTO {DatabaseLocation.TABLE_NAME}(" +
+                               $"{DatabaseLocation.LOCATION_NAME_LABEL}, {DatabaseLocation.ADDRESS_LINE_LABEL}, " +
+                               $"{DatabaseLocation.CITY_LABEL}, {DatabaseLocation.STATE_LABEL}, {DatabaseLocation.ZIP_LABEL}" +
+                               ") VALUES " +
+                               $"('{dbLocation.LocationName}',{formatNullableString(dbLocation.AddressLine)}," +
+                               $"{formatNullableString(dbLocation.City)},{formatNullableString(dbLocation.State)}," +
+                               $"{formatNullableString(dbLocation.Zip)});";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

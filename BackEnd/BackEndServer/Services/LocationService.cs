@@ -11,7 +11,7 @@ namespace BackEndServer.Services
 
         public LocationService(IDatabaseQueryService dbQueryService)
         {
-            this._dbQueryService = dbQueryService;
+            _dbQueryService = dbQueryService;
         }
 
         
@@ -19,6 +19,12 @@ namespace BackEndServer.Services
         {
             List<DatabaseLocation> dbAddressList = _dbQueryService.GetLocationsForUser(username);
             return new LocationInformationList(dbAddressList);
+        }
+
+        public bool SaveLocation(LocationDetails locationDetails)
+        {
+            DatabaseLocation dbLocation = new DatabaseLocation(locationDetails);
+            return _dbQueryService.PersistNewLocation(dbLocation);
         }
     }
 }

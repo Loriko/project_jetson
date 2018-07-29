@@ -40,5 +40,6 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseAlert> GetAlertsForUser(int userId);
         bool DeleteAlert(int alertId);
         bool PersistExistingAlert(DatabaseAlert alert);
+        bool PersistNewLocation(DatabaseLocation dbLocation);
     }
 }
