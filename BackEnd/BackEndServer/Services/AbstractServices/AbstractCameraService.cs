@@ -14,5 +14,7 @@ namespace BackEndServer.Services.AbstractServices
         CameraInformation GetCameraInformationWithYearlyData(int cameraId);
         bool SaveNewCamera(CameraDetails cameraDetails);
         CameraRegistrationDetails GetNewCameraRegistrationDetails(string username);
+        CameraInformationList getAllCamerasForUser(int userId);
+        List<CameraInformation> getAllCamerasForUser(string username);
     }
 }

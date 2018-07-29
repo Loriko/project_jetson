@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
+  `api_key` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 DEFAULT CHARACTER SET = utf8;
@@ -129,4 +130,36 @@ CREATE TABLE IF NOT EXISTS `jetson`.`api_key` (
   `salt` VARCHAR(24) NOT NULL,
   `is_active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`))
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Table `jetson`.`alert`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jetson`.`alert` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`alert` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `alert_name` VARCHAR(100) NOT NULL,
+  `camera_id` INT(5) UNSIGNED NOT NULL,
+  `user_id` INT(5) UNSIGNED NOT NULL,
+  `contact_method` VARCHAR(30) NOT NULL,
+  `trigger_operator` VARCHAR(30) NOT NULL,
+  `trigger_number` INT(15) UNSIGNED NOT NULL,
+  `always_active` TINYINT NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_alert_has_camera`
+    FOREIGN KEY (`camera_id`)
+    REFERENCES `jetson`.`camera` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_fk_alert_has_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `jetson`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_alert_has_contact_method`
+    FOREIGN KEY (`contact_method_id`)
+    REFERENCES `jetson`.`contact_method` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 DEFAULT CHARACTER SET = utf8;

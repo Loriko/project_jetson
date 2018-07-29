@@ -1,10 +1,8 @@
-﻿@using BackEndServer.Controllers.FrontEndControllers
-@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
+﻿@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
 
 <h1 class="page-title center-align">Please enter your camera's details</h1>
 
-@* ReSharper disable once Mvc.PartialViewNotResolved *@
-@Html.Partial("../Location/LocationCreationModal.cshtml")
+@Html.Partial("../Location/LocationCreationModal")
 
 <div class="row">
     <form class="col s12" method="post" asp-controller="Camera" asp-action="SaveCamera">
@@ -26,10 +24,9 @@
         </div>
         
         <div class="row">
-            @*        Camera Location Picker*@
             <div class="input-field col s9">
                 <select id="location_id" name="LocationId">
-                    <option value="" disabled selected>Select the location where the camera is installed</option>
+                    <option value="" disabled selected>Please select the location where the camera is installed</option>
                     @{
                         foreach (var locationInformation in Model.locations.LocationList)
                         {

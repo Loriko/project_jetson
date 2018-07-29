@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Models.DBModels;
 
-namespace BackEndServer.Services
+namespace BackEndServer.Services.AbstractServices
 {
     public interface IDatabaseQueryService
     {
+        //TODO check if I can delete this
         string ConnectionString { get; set; }
 
         // PERSIST methods:
@@ -34,5 +35,10 @@ namespace BackEndServer.Services
         List<DatabaseLocation> GetLocationsForUser(string username);
         // For User:
         bool IsPasswordValidForUser(string username, string password);
+        List<DatabaseCamera> GetCamerasAvailableToUser(int userId);
+        bool PersistNewAlert(DatabaseAlert alert);
+        List<DatabaseAlert> GetAlertsForUser(int userId);
+        bool DeleteAlert(int alertId);
+        bool PersistExistingAlert(DatabaseAlert alert);
     }
 }

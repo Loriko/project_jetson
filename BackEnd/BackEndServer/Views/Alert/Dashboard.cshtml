@@ -1,0 +1,94 @@
+﻿@using BackEndServer.Models.Enums
+@using BackEndServer.Models.ViewModels
+@model AlertDashboardInformation
+@Html.Partial("../Alert/AlertCreationModal", Model.Availablecameras)
+
+<h1 class="page-title center-align">Your Alerts</h1>
+@{
+    if (Model.ExistingAlertsByCameraId.Any(x => x.Value.Count > 0))
+    {
+        <ul class="collection">
+            @foreach (var cameraId in Model.ExistingAlertsByCameraId.Keys)
+            {
+                if (Model.ExistingAlertsByCameraId[cameraId].Count > 0)
+                {
+                    CameraInformation camera = Model.Availablecameras.CameraList.Find(x => x.CameraId == cameraId);
+                    
+                    <ul class="collapsible collapsible-collection-container" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header">@camera.CameraName</div>
+                            <div class="collapsible-body collection collapsible-collection">
+                                @foreach (var alert in Model.ExistingAlertsByCameraId[cameraId])
+                                {
+                                    <span class="collection-item avatar short">
+                                        <input type="hidden" name="AlertId" value="@alert.AlertId">
+                                        <input type="hidden" name="AlertName" value="@alert.AlertName">
+                                        <input type="hidden" name="CameraId" value="@alert.CameraId">
+                                        <input type="hidden" name="ContactMethod" value="@((int) alert.ContactMethod)">
+                                        <input type="hidden" name="TriggerOperator" value="@Enum.GetName(typeof(TriggerOperator), alert.TriggerOperator)">
+                                        <input type="hidden" name="TriggerNumber" value="@alert.TriggerNumber">
+                                        <input type="hidden" name="AlwaysActive" value="@alert.AlwaysActive.ToString().ToLower()">
+                                        <input type="hidden" name="StartTime" value="@alert.StartTimeAsString()">
+                                        <input type="hidden" name="EndTime" value="@alert.EndTimeAsString()">
+                                        @if (alert.ContactMethod == ContactMethod.Email)
+                                        {
+                                            <i class="material-icons circle light-green">email</i>
+                                        }
+                                        else if (alert.ContactMethod == ContactMethod.Notification)
+                                        {
+                                            <i class="material-icons circle light-green">announcement</i>
+                                        }
+                                        else
+                                        {
+                                            <i class="material-icons circle light-green">error</i>
+                                        }
+                                        <span class="title">@alert.AlertName</span>
+                                        <p>@alert.TriggerString()
+                                        </p>
+                                        <span class="secondary-content">
+                                            <a href="@Url.Action("DeleteAlert", "Alert", new {alertId = alert.AlertId})"><i class="material-icons">remove_circle</i></a>
+                                            <a href="#!" onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
+                                        </span>
+                                    </span>
+                                }
+                            </div>
+                        </li>
+                    </ul>
+                }
+            }
+        </ul>
+    }
+    else
+    {
+        <div class="unavailable-message">
+            It seems you don't have any alert so far. Clicking the red floating button will allow you to set up an alert. 
+        </div>
+    }
+}
+
+<div class="row">
+    <div class="right-align" style="margin-right: 11px;">
+        <a id="create_alert_btn" class="btn-floating btn-large red modal-trigger" href="#alert-creation-modal">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+</div>
+
+<script>
+    function showAlertEditModal(cameraDiv) {
+        var alert = {
+            alertId: cameraDiv.children["AlertId"].value,
+            alertName: cameraDiv.children["AlertName"].value,
+            cameraId: cameraDiv.children["CameraId"].value,
+            contactMethod: cameraDiv.children["ContactMethod"].value,
+            triggerOperator: cameraDiv.children["TriggerOperator"].value,
+            triggerNumber: cameraDiv.children["TriggerNumber"].value,
+            alwaysActive: cameraDiv.children["AlwaysActive"].value,
+            startTime: cameraDiv.children["StartTime"].value,
+            endTime: cameraDiv.children["EndTime"].value
+        };
+        window.setToEditMode(alert);
+        $('#alert-creation-modal').modal("open");
+    }
+    $("#create_alert_btn").on("click", window.setToCreateMode);
+</script>

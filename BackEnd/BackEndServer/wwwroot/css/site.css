@@ -104,9 +104,51 @@ main {
     font-size: 16px;
     margin-top: 5px !important;
 }
-.input-field label.checkbox-label {
+.input-field label.checkbox-label, 
+.input-field label.radio-label {
     pointer-events: auto !important;
 }
 /*.select-row {*/
     /*margin-bottom: 0;*/
 /*}*/
+.collapsible-collection .collection-item {
+    display: block;
+}
+.collapsible-collection .collection-item:hover {
+    background: rgba(143, 246, 0, 0.24);
+}
+
+.collapsible-collection-container {
+    margin: 0 !important;
+}
+.collection-item.avatar.short {
+    min-height: 0;
+    padding-right: 52px;
+}
+
+.lightweight-title {
+    font-size: 1.1em;
+    color: #9e9e9e;
+}
+.fake-label {
+    top: -26px !important;
+    font-size: 0.8rem !important;
+}
+.small-input {
+    width: 100px !important;
+}
+#trigger-details-container {
+    line-height: 0 !important;
+    margin-bottom: 10px;
+}
+.no-top-margin {
+    margin-top: 0 !important;
+}
+.no-bottom-margin {
+    margin-bottom: 0 !important;
+}
+#alert-creation-modal {
+    top: 5% !important;
+    max-height: 90% !important;
+    height: 90% !important;
+}
