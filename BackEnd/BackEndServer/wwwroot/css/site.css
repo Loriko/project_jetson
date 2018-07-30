@@ -1,6 +1,12 @@
 ﻿.welcome-message {
     font-size: 2em;
 }
+.error-title {
+    font-size: 2em;
+}
+.error-description {
+    font-size: 1.1em;
+}
 .page-title {
     font-size: 1.7em;
 }
