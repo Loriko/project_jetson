@@ -1,4 +1,6 @@
-﻿namespace BackEndServer.Models.DBModels
+﻿using BackEndServer.Models.ViewModels;
+
+namespace BackEndServer.Models.DBModels
 {
     public class DatabaseLocation
     {
@@ -19,5 +21,19 @@
         public string City { get; set; }
         public string State { get; set; }
         public string Zip { get; set; }
+
+        public DatabaseLocation()
+        {
+        }
+
+        public DatabaseLocation(LocationDetails locationDetails)
+        {
+            LocationId = locationDetails.LocationId;
+            LocationName = locationDetails.LocationName;
+            AddressLine = locationDetails.AddressLine;
+            City = locationDetails.City;
+            State = locationDetails.State;
+            Zip = locationDetails.Zip;
+        }
     }
 }

@@ -40,5 +40,21 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
             return RedirectToAction("CameraSelectionForLocation", "Camera", new {locationId});
         }
+        
+        [HttpPost]
+        public IActionResult SaveLocation(LocationDetails locationDetails)
+        {
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId != null)
+            {
+                LocationService.SaveLocation(locationDetails);
+            }
+            else
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            return RedirectToAction("BeginCameraRegistration", "Camera");
+        }
     }
 }
