@@ -33,7 +33,7 @@ namespace BackEndServer.Services
 
         public List<AlertDetails> GetAllAlertsForUser(int userId)
         {
-            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAlertsForUser(userId);
+            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAllAlerts(userId);
             List<AlertDetails> alertList = new List<AlertDetails>();
             foreach (var dbAlert in dbAlerts)
             {
@@ -45,7 +45,7 @@ namespace BackEndServer.Services
 
         public SortedDictionary<int, List<AlertDetails>> GetAllAlertsByCameraIdForUser(int userId)
         {
-            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAlertsForUser(userId);
+            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAllAlerts(userId);
             
             SortedDictionary<int, List<AlertDetails>> alertMap = new SortedDictionary<int, List<AlertDetails>>();
             foreach (var dbAlert in dbAlerts)

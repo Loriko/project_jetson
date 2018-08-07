@@ -8,6 +8,9 @@ using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.APIModels;
+using System.ComponentModel;
+using BackEndServer.Models.Enums;
+using static BackEndServer.Models.Enums.TriggerOperatorExtension;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
 
@@ -738,16 +741,24 @@ namespace BackEndServer.Services
             return false;
         }
 
-        public List<DatabaseAlert> GetAlertsForUser(int userId)
+        public List<DatabaseAlert> GetAllAlerts(int userId = 0)
         {
             List<DatabaseAlert> alertList = new List<DatabaseAlert>();
 
             using (MySqlConnection conn = GetConnection())
             {
                 string query = "SELECT * " +
-                               $"FROM {DatabaseAlert.TABLE_NAME} " +
-                               $"WHERE {DatabaseAlert.USER_ID_LABEL} = {userId};";
-                
+                               $"FROM {DatabaseAlert.TABLE_NAME}";
+
+                if (userId != 0)
+                {
+                    query += $" WHERE {DatabaseAlert.USER_ID_LABEL} = {userId};";
+                }
+                else
+                {
+                    query += ";";
+                }
+
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -851,6 +862,52 @@ namespace BackEndServer.Services
                 }
             }
             return false;
+        }
+
+        public List<DatabasePerSecondStat> GetPerSecondStatsTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime)
+        {
+            List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
+            TriggerOperator triggerOperator = (TriggerOperator)Enum.Parse(typeof(TriggerOperator), alert.TriggerOperator, true);
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} " + 
+                               $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
+                               $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber}" +
+                               $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > {lastUpdatedTime}";
+
+                if (!alert.AlwaysActive)
+                {
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= {alert.StartTime}" +
+                             $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= {alert.EndTime};";
+                }
+                else
+                {
+                    query += ";";
+                }
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStatsList.Add(new DatabasePerSecondStat()
+                        {
+                            PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
+                            DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
+                            NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])),
+                            // Null by default, this is what will be updated later by the HourlyStatsService.
+                            PerHourStatId = -1
+                        });
+                    }
+                }
+            }
+            return perSecondStatsList;
         }
     }
 }

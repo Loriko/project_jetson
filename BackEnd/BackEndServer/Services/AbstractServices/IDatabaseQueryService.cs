@@ -37,9 +37,10 @@ namespace BackEndServer.Services.AbstractServices
         bool IsPasswordValidForUser(string username, string password);
         List<DatabaseCamera> GetCamerasAvailableToUser(int userId);
         bool PersistNewAlert(DatabaseAlert alert);
-        List<DatabaseAlert> GetAlertsForUser(int userId);
+        List<DatabaseAlert> GetAllAlerts(int userId = 0);
         bool DeleteAlert(int alertId);
         bool PersistExistingAlert(DatabaseAlert alert);
         bool PersistNewLocation(DatabaseLocation dbLocation);
+        List<DatabasePerSecondStat> GetPerSecondStatsTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime);
     }
 }

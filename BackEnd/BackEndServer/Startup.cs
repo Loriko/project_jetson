@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Models.ViewModels;
@@ -33,6 +34,13 @@ namespace BackEndServer
             // Uses connection string from the project configuration
             // Passing it as a service ensures everything in the project will use this query service and use this connection string
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
+            
+            Thread alertMonitoringThread = new Thread(delegate()
+            {
+                AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService);
+                alertMonitoringService.StartMonitoring();
+            });
+            alertMonitoringThread.Start();
             
             // Other services are constructed using the database query service, meaning they all use the same connection string
             AbstractGraphStatisticService graphStatisticService = new GraphStatisticService(dbQueryService);
