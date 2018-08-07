@@ -32,11 +32,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return RedirectToAction("SignIn");
         }
         
+        public IActionResult Error()
+        {
+            return View("Error", "Error");
+        }
+        
         [HttpPost]
-        public IActionResult SignIn(AuthenticationInformation authenticationModel){
+        public IActionResult SignIn(AuthenticationInformation authenticationModel)
+        {
+            throw new Exception("bob");
             Boolean areCredentialsValid = AuthenticationService.ValidateCredentials(authenticationModel.Username, authenticationModel.Password);
             if(!areCredentialsValid){
-                return View(authenticationModel);    
+                return View(authenticationModel);
             }
             else {
                 HttpContext.Session.SetString("currentUsername", authenticationModel.Username);
