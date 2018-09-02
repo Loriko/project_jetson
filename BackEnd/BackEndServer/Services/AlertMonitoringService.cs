@@ -23,9 +23,11 @@ namespace BackEndServer.Services
             DateTime lastCheckup = DateTime.MinValue;
             while (true)
             {
+                
                 //First get all alerts
                 List<DatabaseAlert> alerts = _databaseQueryService.GetAllAlerts();
-
+                Console.WriteLine("Monitoring task retrieved the following alerts for checkup:" + alerts);
+                
                 foreach (var alert in alerts)
                 {
                     //check if any persecondstat has a count higher than threshold since last checkup
@@ -45,8 +47,10 @@ namespace BackEndServer.Services
                 
                 //Check all alerts after last checkup date
                 lastCheckup = DateTime.Now;
-                Thread.Sleep(300000);
+                Thread.Sleep(30000);
             }
         }
+        
+        
     }
 }

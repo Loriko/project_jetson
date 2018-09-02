@@ -1,7 +1,7 @@
 ﻿@using BackEndServer.Models.Enums
 @using BackEndServer.Models.ViewModels
 @model AlertDashboardInformation
-@Html.Partial("../Alert/AlertCreationModal", Model.Availablecameras)
+@{ Html.RenderPartial("../Alert/AlertCreationModal", Model.Availablecameras); }
 
 <h1 class="page-title center-align">Your Alerts</h1>
 @{

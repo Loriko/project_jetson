@@ -873,20 +873,20 @@ namespace BackEndServer.Services
             {
                 string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} " + 
                                $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
-                               $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber}" +
+                               $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > {lastUpdatedTime}";
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > '{lastUpdatedTime}'";
 
                 if (!alert.AlwaysActive)
                 {
-                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= {alert.StartTime}" +
-                             $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= {alert.EndTime};";
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= '{alert.StartTime}'" +
+                             $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= '{alert.EndTime}';";
                 }
                 else
                 {
                     query += ";";
                 }
-                
+                Console.WriteLine(query);
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 

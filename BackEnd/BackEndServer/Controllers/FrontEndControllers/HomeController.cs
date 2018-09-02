@@ -41,7 +41,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public IActionResult SignIn(AuthenticationInformation authenticationModel)
         {
             Boolean areCredentialsValid = AuthenticationService.ValidateCredentials(authenticationModel.Username, authenticationModel.Password);
-            if(!areCredentialsValid){
+            if (!areCredentialsValid) {
                 return View(authenticationModel);
             }
             else {
