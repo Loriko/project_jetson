@@ -162,3 +162,7 @@ main {
 #notification-list li > a > i {
     margin-right: 12px;
 }
+
+.property-name {
+    font-style: italic;
+}

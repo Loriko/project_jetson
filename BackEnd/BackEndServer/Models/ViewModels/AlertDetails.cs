@@ -27,6 +27,7 @@ namespace BackEndServer.Models.ViewModels
         }
 
         public DateTime EndTime { get; set; }
+        public CameraDetails Camera { get; set; }
 
         public string EndTimeAsString()
         {

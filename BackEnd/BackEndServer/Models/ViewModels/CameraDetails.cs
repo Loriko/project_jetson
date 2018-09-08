@@ -14,7 +14,8 @@ namespace BackEndServer.Models.ViewModels
         public string Model { get; set; }
         public string Resolution { get; set; }
         public string CustomResolution { get; set; }
-        
+        public LocationDetails Location { get; set; }
+
         public CameraDetails()
         {
             //TODO maybe set UserId to current's user id

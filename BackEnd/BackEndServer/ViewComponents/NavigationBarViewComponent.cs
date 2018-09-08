@@ -1,4 +1,6 @@
-﻿using BackEndServer.Services.AbstractServices;
+﻿using BackEndServer.Models.ViewModels;
+using BackEndServer.Services.AbstractServices;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndServer.ViewComponents
@@ -12,7 +14,13 @@ namespace BackEndServer.ViewComponents
         
         public IViewComponentResult Invoke()
         {
-            return View();
+            NavigationBarDetails navigationBarDetails = new NavigationBarDetails();
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId != null)
+            {
+                navigationBarDetails.NotificationList = NotificationService.GetNotificationsForUser(currentUsedId.Value);
+            }
+            return View("NavigationBar", navigationBarDetails);
         }
     }
 }

@@ -136,8 +136,8 @@ DROP TABLE IF EXISTS `jetson`.`notification` ;
 CREATE TABLE IF NOT EXISTS `jetson`.`notification` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `alert_id` INT(5) UNSIGNED NOT NULL,
-  `trigger_time` TIME NOT NULL,
-  `acknowledged` TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  `trigger_datetime` DATETIME NOT NULL,
+  `acknowledged` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_notification_has_alert`
     FOREIGN KEY (`alert_id`)
@@ -160,10 +160,13 @@ CREATE TABLE IF NOT EXISTS `jetson`.`alert` (
   `user_id` INT(5) UNSIGNED NOT NULL,
   `contact_method` VARCHAR(30) NOT NULL,
   `trigger_operator` VARCHAR(30) NOT NULL,
-  `trigger_number` INT(15) UNSIGNED NOT NULL,
-  `always_active` TINYINT NOT NULL DEFAULT 1,
+  `trigger_number` INT(5) UNSIGNED NOT NULL,
+  `always_active` TINYINT NOT NULL,
   `start_time` TIME NULL,
   `end_time` TIME NULL,
+  `trigger_count` INT(5) NOT NULL DEFAULT 0,
+  `disabled_until` DATETIME NULL,
+  `snoozed_until` DATETIME NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_alert_has_camera`
     FOREIGN KEY (`camera_id`)

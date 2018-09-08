@@ -19,7 +19,9 @@ using static BackEndServer.Models.Enums.TriggerOperatorExtension;
 namespace BackEndServer.Services
 {   
     public class DatabaseQueryService : IDatabaseQueryService
-    {   
+    {
+        private IDatabaseQueryService _databaseQueryServiceImplementation;
+
         #region Database Context
 
         // Connection String Attribute
@@ -908,6 +910,211 @@ namespace BackEndServer.Services
                 }
             }
             return perSecondStatsList;
+        }
+
+        public List<DatabaseNotification> GetNotificationsForUser(int userId)
+        {
+            List<DatabaseNotification> notificationList = new List<DatabaseNotification>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               $"FROM {DatabaseNotification.TABLE_NAME} " +
+                               $"WHERE {DatabaseNotification.ALERT_ID_LABEL} IN ( " +
+                               "SELECT alert.id " +
+                               "FROM alert " +
+                               $"WHERE alert.user_id = {userId});";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseNotification notification = new DatabaseNotification
+                        {
+                            NotificationId = Convert.ToInt32(reader[DatabaseNotification.NOTIFICATION_ID_LABEL]),
+                            AlertId = Convert.ToInt32(reader[DatabaseNotification.ALERT_ID_LABEL]),
+                            Acknowledged = Convert.ToBoolean(reader[DatabaseNotification.ACKNOWLEDGED_LABEL]),
+                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL])
+                        };
+                        notificationList.Add(notification);
+                    }
+                }
+            }
+            return notificationList;
+        }
+
+        public List<DatabaseAlert> GetAlertsById(List<int> alertIds)
+        {
+            List<DatabaseAlert> alertList = new List<DatabaseAlert>();
+
+            if (alertIds.Count > 0)
+            {
+                using (MySqlConnection conn = GetConnection())
+                {
+                    string query = "SELECT * " +
+                                   $"FROM {DatabaseAlert.TABLE_NAME} " +
+                                   $"WHERE {DatabaseAlert.ALERT_ID_LABEL} IN " +
+                                   $"({string.Join(",", alertIds)});";
+                    
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+    
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            DatabaseAlert alert = new DatabaseAlert()
+                            {
+                                AlertId = Convert.ToInt32(reader[DatabaseAlert.ALERT_ID_LABEL]),
+                                CameraId = Convert.ToInt32(reader[DatabaseAlert.CAMERA_ID_LABEL]),
+                                UserId = Convert.ToInt32(reader[DatabaseAlert.USER_ID_LABEL]),
+                                AlertName = Convert.ToString(reader[DatabaseAlert.ALERT_NAME_LABEL]),
+                                ContactMethod = Convert.ToString(reader[DatabaseAlert.CONTACT_METHOD_LABEL]),
+                                TriggerOperator = Convert.ToString(reader[DatabaseAlert.TRIGGER_OPERATOR_LABEL]),
+                                TriggerNumber = Convert.ToInt32(reader[DatabaseAlert.TRIGGER_NUMBER_LABEL]),
+                                AlwaysActive = Convert.ToBoolean(reader[DatabaseAlert.ALWAYS_ACTIVE_LABEL])
+                            };
+                            if (reader[DatabaseAlert.START_TIME_LABEL] != DBNull.Value)
+                            {
+                                alert.StartTime = Convert.ToString(reader[DatabaseAlert.START_TIME_LABEL]);
+                            }
+                            if (reader[DatabaseAlert.END_TIME_LABEL] != DBNull.Value)
+                            {
+                                alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
+                            }
+                            alertList.Add(alert);
+                        }
+                    }
+                }
+            }
+            return alertList;
+        }
+
+        public DatabaseNotification GetNotificationById(int notificationId)
+        {
+            DatabaseNotification notification = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseNotification.TABLE_NAME} WHERE {DatabaseNotification.NOTIFICATION_ID_LABEL} = {notificationId}";
+                
+                Console.WriteLine($"query is \n {query}");
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        notification = new DatabaseNotification
+                        {
+                            NotificationId = Convert.ToInt32(reader[DatabaseNotification.NOTIFICATION_ID_LABEL]),
+                            AlertId = Convert.ToInt32(reader[DatabaseNotification.ALERT_ID_LABEL]),
+                            Acknowledged = Convert.ToBoolean(reader[DatabaseNotification.ACKNOWLEDGED_LABEL]),
+                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return notification;
+        }
+
+        public bool AcknowledgeNotification(int notificationId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"UPDATE {DatabaseNotification.TABLE_NAME} " +
+                               $"SET {DatabaseNotification.ACKNOWLEDGED_LABEL}=1 " +
+                               $"WHERE {DatabaseNotification.NOTIFICATION_ID_LABEL} = {notificationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public DatabaseAlert GetAlertById(int alertId)
+        {
+            DatabaseAlert alert = null;
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               $"FROM {DatabaseAlert.TABLE_NAME} " +
+                               $"WHERE {DatabaseAlert.ALERT_ID_LABEL} = {alertId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        alert = new DatabaseAlert
+                        {
+                            AlertId = Convert.ToInt32(reader[DatabaseAlert.ALERT_ID_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabaseAlert.CAMERA_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseAlert.USER_ID_LABEL]),
+                            AlertName = Convert.ToString(reader[DatabaseAlert.ALERT_NAME_LABEL]),
+                            ContactMethod = Convert.ToString(reader[DatabaseAlert.CONTACT_METHOD_LABEL]),
+                            TriggerOperator = Convert.ToString(reader[DatabaseAlert.TRIGGER_OPERATOR_LABEL]),
+                            TriggerNumber = Convert.ToInt32(reader[DatabaseAlert.TRIGGER_NUMBER_LABEL]),
+                            AlwaysActive = Convert.ToBoolean(reader[DatabaseAlert.ALWAYS_ACTIVE_LABEL])
+                        };
+                        if (reader[DatabaseAlert.START_TIME_LABEL] != DBNull.Value)
+                        {
+                            alert.StartTime = Convert.ToString(reader[DatabaseAlert.START_TIME_LABEL]);
+                        }
+                        if (reader[DatabaseAlert.END_TIME_LABEL] != DBNull.Value)
+                        {
+                            alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
+                        }
+                    }
+                }
+            }
+            return alert;
+        }
+
+        public DatabaseLocation GetLocationById(int locationId)
+        {
+            DatabaseLocation location = new DatabaseLocation();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.LOCATION_ID_LABEL} = {locationId}";
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        location = new DatabaseLocation
+                        {
+                            LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
+                            AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
+                            City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
+                            State = Convert.ToString(reader[DatabaseLocation.STATE_LABEL]),
+                            Zip = Convert.ToString(reader[DatabaseLocation.ZIP_LABEL])
+                        };
+                    }
+                }
+            }
+            return location;
         }
     }
 }
