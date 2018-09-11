@@ -34,14 +34,18 @@ namespace BackEndServer
             // Uses connection string from the project configuration
             // Passing it as a service ensures everything in the project will use this query service and use this connection string
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
-            
-            Thread alertMonitoringThread = new Thread(delegate()
+
+            bool alertMonitoringEnabled = false;
+            if (alertMonitoringEnabled)
             {
-                AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService);
-                alertMonitoringService.StartMonitoring();
-            });
-            alertMonitoringThread.Start();
-            
+                Thread alertMonitoringThread = new Thread(delegate()
+                {
+                    AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService);
+                    alertMonitoringService.StartMonitoring();
+                });
+                alertMonitoringThread.Start();
+            }
+
             // Other services are constructed using the database query service, meaning they all use the same connection string
             AbstractGraphStatisticService graphStatisticService = new GraphStatisticService(dbQueryService);
             AbstractLocationService locationService = new LocationService(dbQueryService);

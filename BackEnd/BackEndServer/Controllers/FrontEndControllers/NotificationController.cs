@@ -37,16 +37,6 @@ namespace BackEndServer.Controllers.FrontEndControllers
             NotificationDetails notificationDetails = NotificationService.GetNotificationDetailsById(notificationId);
             
             return View("NotificationInformation", notificationDetails);
-//            CameraStatistics cameraStatisticsModel = CameraService.getCameraStatisticsForNowById(cameraId);
-
-//            if (cameraStatisticsModel != null)
-//            {
-//                return View(cameraStatisticsModel);    
-//            }
-//            else
-//            {
-//                return View("NoCamera");
-//            }
         }
     }
 }

@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `location_id` INT(5) UNSIGNED NOT NULL,
   `user_id` INT(5) UNSIGNED NOT NULL,
   `monitored_area` VARCHAR(45) NOT NULL,
-  `brand` VARCHAR(45) NULL DEFAULT NULL,
+  `brand` VARCHAR(45) NULL DEFAULT NULL, --TODO: Check if NULL DEFAULT NULL makes sense or just really stupid
   `model` VARCHAR(45) NULL DEFAULT NULL,
   `resolution` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -164,7 +164,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`alert` (
   `always_active` TINYINT NOT NULL,
   `start_time` TIME NULL,
   `end_time` TIME NULL,
-  `trigger_count` INT(5) NOT NULL DEFAULT 0,
+--   `trigger_count` INT(5) NOT NULL DEFAULT 0,
   `disabled_until` DATETIME NULL,
   `snoozed_until` DATETIME NULL,
   PRIMARY KEY (`id`),

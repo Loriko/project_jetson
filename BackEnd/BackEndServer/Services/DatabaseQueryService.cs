@@ -543,6 +543,11 @@ namespace BackEndServer.Services
         {
             return nullableString != null ? $"'{nullableString}'" : "NULL";
         }
+        
+        private string formatNullableDate(DateTime? nullableDateTime)
+        {
+            return nullableDateTime != null ? $"'{nullableDateTime.Value.ToMySqlDateTimeString()}'" : "NULL";
+        }
 
         #region API Key Service (API)
 
@@ -718,18 +723,21 @@ namespace BackEndServer.Services
             return cameraList;
         }
 
-        //TODO fix query to use labels
         public bool PersistNewAlert(DatabaseAlert alert)
         {
             using (MySqlConnection conn = GetConnection())
             {   
-                string query = "INSERT INTO alert(" +
-                               "alert_name, camera_id, user_id, contact_method, trigger_operator, trigger_number, always_active, start_time, end_time" +
+                string query = $"INSERT INTO {DatabaseAlert.TABLE_NAME}(" +
+                               $"{DatabaseAlert.ALERT_NAME_LABEL}, {DatabaseAlert.CAMERA_ID_LABEL}, {DatabaseAlert.USER_ID_LABEL}, " +
+                               $"{DatabaseAlert.CONTACT_METHOD_LABEL}, {DatabaseAlert.TRIGGER_OPERATOR_LABEL}, {DatabaseAlert.TRIGGER_NUMBER_LABEL}, " +
+                               $"{DatabaseAlert.ALWAYS_ACTIVE_LABEL}, {DatabaseAlert.START_TIME_LABEL}, {DatabaseAlert.END_TIME_LABEL}, " +
+                               $"{DatabaseAlert.SNOOZED_UNTIL_LABEL}, {DatabaseAlert.DISABLED_UNTIL_LABEL}" +
                                ") VALUES " +
                                $"('{alert.AlertName}',{alert.CameraId}," +
                                $"{alert.UserId},'{alert.ContactMethod}','{alert.TriggerOperator}'," +
                                $"{alert.TriggerNumber},{(alert.AlwaysActive ? 1 : 0)}," +
-                               $"{formatNullableString(alert.StartTime)}, {formatNullableString(alert.EndTime)});";
+                               $"{formatNullableString(alert.StartTime)}, {formatNullableString(alert.EndTime)}, " +
+                               $"{formatNullableDate(alert.SnoozedUntil)}, {formatNullableDate(alert.DisabledUntil)});";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -768,7 +776,7 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        DatabaseAlert alert = new DatabaseAlert()
+                        DatabaseAlert alert = new DatabaseAlert
                         {
                             AlertId = Convert.ToInt32(reader[DatabaseAlert.ALERT_ID_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabaseAlert.CAMERA_ID_LABEL]),
@@ -786,6 +794,14 @@ namespace BackEndServer.Services
                         if (reader[DatabaseAlert.END_TIME_LABEL] != DBNull.Value)
                         {
                             alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
+                        }
+                        if (reader[DatabaseAlert.DISABLED_UNTIL_LABEL] != DBNull.Value)
+                        {
+                            alert.DisabledUntil = Convert.ToDateTime(reader[DatabaseAlert.DISABLED_UNTIL_LABEL]);
+                        }
+                        if (reader[DatabaseAlert.SNOOZED_UNTIL_LABEL] != DBNull.Value)
+                        {
+                            alert.SnoozedUntil = Convert.ToDateTime(reader[DatabaseAlert.SNOOZED_UNTIL_LABEL]);
                         }
                         alertList.Add(alert);
                     }
@@ -819,17 +835,19 @@ namespace BackEndServer.Services
             {   
                 //We use formatNullableString for non nullable strings so that
                 //we don't accidently insert an empty string and instead cause an SQL exception
-                string query = "UPDATE alert SET " +
-                               $"alert_name = {formatNullableString(alert.AlertName)}," +
-                               $"camera_id = {alert.CameraId}," +
-                               $"contact_method = {formatNullableString(alert.ContactMethod)}," +
-                               $"trigger_operator = {formatNullableString(alert.TriggerOperator)}," +
-                               $"trigger_number = {alert.TriggerNumber}," +
-                               $"always_active = {alert.AlwaysActive}," +
-                               $"start_time = {formatNullableString(alert.StartTime)}," +
-                               $"end_time = {formatNullableString(alert.EndTime)} " +
-                               $"WHERE id = {alert.AlertId};";
-                Console.WriteLine("\n" + query + "\n");
+                string query = $"UPDATE {DatabaseAlert.TABLE_NAME} SET " +
+                               $"{DatabaseAlert.ALERT_NAME_LABEL} = {formatNullableString(alert.AlertName)}," +
+                               $"{DatabaseAlert.CAMERA_ID_LABEL} = {alert.CameraId}," +
+                               $"{DatabaseAlert.CONTACT_METHOD_LABEL} = {formatNullableString(alert.ContactMethod)}," +
+                               $"{DatabaseAlert.TRIGGER_OPERATOR_LABEL} = {formatNullableString(alert.TriggerOperator)}," +
+                               $"{DatabaseAlert.TRIGGER_NUMBER_LABEL} = {alert.TriggerNumber}," +
+                               $"{DatabaseAlert.ALWAYS_ACTIVE_LABEL} = {alert.AlwaysActive}," +
+                               $"{DatabaseAlert.START_TIME_LABEL} = {formatNullableString(alert.StartTime)}," +
+                               $"{DatabaseAlert.END_TIME_LABEL} = {formatNullableString(alert.EndTime)}," +
+                               $"{DatabaseAlert.DISABLED_UNTIL_LABEL} = {formatNullableDate(alert.DisabledUntil)}," +
+                               $"{DatabaseAlert.SNOOZED_UNTIL_LABEL} = {formatNullableDate(alert.SnoozedUntil)} " +
+                               $"WHERE {DatabaseAlert.ALERT_ID_LABEL} = {alert.AlertId};";
+                
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -866,9 +884,9 @@ namespace BackEndServer.Services
             return false;
         }
 
-        public List<DatabasePerSecondStat> GetPerSecondStatsTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime)
+        public DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime)
         {
-            List<DatabasePerSecondStat> perSecondStatsList = new List<DatabasePerSecondStat>();
+            DatabasePerSecondStat perSecondStat = null;
             TriggerOperator triggerOperator = (TriggerOperator)Enum.Parse(typeof(TriggerOperator), alert.TriggerOperator, true);
             
             using (MySqlConnection conn = GetConnection())
@@ -877,26 +895,30 @@ namespace BackEndServer.Services
                                $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > '{lastUpdatedTime}'";
-
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s')";
+                
+                if (alert.SnoozedUntil != null)
+                {
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{alert.SnoozedUntil.Value}', '%m/%d/%Y %H:%i:%s')";
+                }
+                if (alert.DisabledUntil != null)
+                {
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{alert.DisabledUntil.Value}', '%m/%d/%Y %H:%i:%s')";
+                }
                 if (!alert.AlwaysActive)
                 {
-                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= '{alert.StartTime}'" +
-                             $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= '{alert.EndTime}';";
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= CAST('{alert.StartTime}' as TIME)" +
+                             $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= CAST('{alert.EndTime}' as TIME)";
                 }
-                else
-                {
-                    query += ";";
-                }
-                Console.WriteLine(query);
+                query += $" ORDER BY {DatabasePerSecondStat.DATE_TIME_LABEL} ASC LIMIT 1;";
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
-                    while (reader.Read())
+                    if (reader.Read())
                     {
-                        perSecondStatsList.Add(new DatabasePerSecondStat()
+                        perSecondStat = new DatabasePerSecondStat
                         {
                             PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
@@ -905,11 +927,11 @@ namespace BackEndServer.Services
                             HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])),
                             // Null by default, this is what will be updated later by the HourlyStatsService.
                             PerHourStatId = -1
-                        });
+                        };
                     }
                 }
             }
-            return perSecondStatsList;
+            return perSecondStat;
         }
 
         public List<DatabaseNotification> GetNotificationsForUser(int userId)
@@ -966,7 +988,7 @@ namespace BackEndServer.Services
                     {
                         while (reader.Read())
                         {
-                            DatabaseAlert alert = new DatabaseAlert()
+                            DatabaseAlert alert = new DatabaseAlert
                             {
                                 AlertId = Convert.ToInt32(reader[DatabaseAlert.ALERT_ID_LABEL]),
                                 CameraId = Convert.ToInt32(reader[DatabaseAlert.CAMERA_ID_LABEL]),
@@ -985,6 +1007,14 @@ namespace BackEndServer.Services
                             {
                                 alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
                             }
+                            if (reader[DatabaseAlert.DISABLED_UNTIL_LABEL] != DBNull.Value)
+                            {
+                                alert.DisabledUntil = Convert.ToDateTime(reader[DatabaseAlert.DISABLED_UNTIL_LABEL]);
+                            }
+                            if (reader[DatabaseAlert.SNOOZED_UNTIL_LABEL] != DBNull.Value)
+                            {
+                                alert.SnoozedUntil = Convert.ToDateTime(reader[DatabaseAlert.SNOOZED_UNTIL_LABEL]);
+                            }
                             alertList.Add(alert);
                         }
                     }
@@ -1000,8 +1030,6 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT * FROM {DatabaseNotification.TABLE_NAME} WHERE {DatabaseNotification.NOTIFICATION_ID_LABEL} = {notificationId}";
-                
-                Console.WriteLine($"query is \n {query}");
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1081,6 +1109,14 @@ namespace BackEndServer.Services
                         {
                             alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
                         }
+                        if (reader[DatabaseAlert.DISABLED_UNTIL_LABEL] != DBNull.Value)
+                        {
+                            alert.DisabledUntil = Convert.ToDateTime(reader[DatabaseAlert.DISABLED_UNTIL_LABEL]);
+                        }
+                        if (reader[DatabaseAlert.SNOOZED_UNTIL_LABEL] != DBNull.Value)
+                        {
+                            alert.SnoozedUntil = Convert.ToDateTime(reader[DatabaseAlert.SNOOZED_UNTIL_LABEL]);
+                        }
                     }
                 }
             }
@@ -1115,6 +1151,27 @@ namespace BackEndServer.Services
                 }
             }
             return location;
+        }
+
+        public bool PersistNewNotification(DatabaseNotification dbNotification)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"INSERT INTO {DatabaseNotification.TABLE_NAME}(" +
+                               $"{DatabaseNotification.ALERT_ID_LABEL}, {DatabaseNotification.TRIGGER_DATETIME_LABEL}, " +
+                               $"{DatabaseNotification.ACKNOWLEDGED_LABEL}" +
+                               ") VALUES " +
+                               $"({dbNotification.AlertId},'{dbNotification.TriggerDateTime.ToMySqlDateTimeString()}',{dbNotification.Acknowledged});";
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

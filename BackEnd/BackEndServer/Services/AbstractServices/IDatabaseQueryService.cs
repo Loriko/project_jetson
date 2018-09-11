@@ -41,12 +41,13 @@ namespace BackEndServer.Services.AbstractServices
         bool DeleteAlert(int alertId);
         bool PersistExistingAlert(DatabaseAlert alert);
         bool PersistNewLocation(DatabaseLocation dbLocation);
-        List<DatabasePerSecondStat> GetPerSecondStatsTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime);
+        DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime);
         List<DatabaseNotification> GetNotificationsForUser(int userId);
         List<DatabaseAlert> GetAlertsById(List<int> alertIds);
         DatabaseNotification GetNotificationById(int notificationId);
         bool AcknowledgeNotification(int notificationId);
         DatabaseAlert GetAlertById(int alertId);
         DatabaseLocation GetLocationById(int locationId);
+        bool PersistNewNotification(DatabaseNotification dbNotification);
     }
 }

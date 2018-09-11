@@ -1,4 +1,7 @@
-﻿@model BackEndServer.Models.ViewModels.NotificationDetails
+﻿@using BackEndServer.Models.ViewModels
+@model NotificationDetails
+
+@Html.Partial("../Alert/AlertDisablingModal", new AlertDisablingInformation {AlertId = Model.AlertId})
 
 <h1 class="page-title center-align">Here are the details concerning the selected notification</h1>
 <div class="row">
@@ -26,6 +29,7 @@
                     </tr>
                     </tbody>
                 </table>
+                <a href="#alert-disabling-modal" id="disable-alert-button" class="waves-effect waves-light btn modal-trigger"><i class="material-icons right">notifications_off</i>Disable triggered alert</a>
             </div>
         </div>
     </div>

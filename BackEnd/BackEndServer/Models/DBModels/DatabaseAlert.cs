@@ -19,6 +19,8 @@ namespace BackEndServer.Models.DBModels
         public static readonly string ALWAYS_ACTIVE_LABEL = "always_active";
         public static readonly string START_TIME_LABEL = "start_time";
         public static readonly string END_TIME_LABEL = "end_time";
+        public static readonly string DISABLED_UNTIL_LABEL = "disabled_until";
+        public static readonly string SNOOZED_UNTIL_LABEL = "snoozed_until";
         
         public int AlertId { get; set; }
         public string AlertName { get; set; }
@@ -30,7 +32,9 @@ namespace BackEndServer.Models.DBModels
         public bool AlwaysActive { get; set; }
         public string StartTime { get; set; }
         public string EndTime { get; set; }
-
+        public DateTime? DisabledUntil { get; set; }
+        public DateTime? SnoozedUntil { get; set; }
+        
         public DatabaseAlert()
         {
         }
@@ -47,6 +51,14 @@ namespace BackEndServer.Models.DBModels
             AlwaysActive = cameraDetails.AlwaysActive;
             StartTime = cameraDetails.StartTime.ToString("HH:mm");
             EndTime = cameraDetails.EndTime.ToString("HH:mm");
+            if (cameraDetails.DisabledUntil != null)
+            {
+                DisabledUntil = cameraDetails.DisabledUntil;
+            }
+            if (cameraDetails.SnoozedUntil != null)
+            {
+                SnoozedUntil = cameraDetails.SnoozedUntil;
+            }
         }
     }
 }

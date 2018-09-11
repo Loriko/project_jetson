@@ -1,7 +1,6 @@
 ﻿@model BackEndServer.Models.ViewModels.NavigationBarDetails
 
 <ul id="profileDropDown" class="dropdown-content">
-@*            <li><a href="#!">My Account</a></li>*@
     <li><a asp-controller="Home" asp-action="SignOut" >Sign Out</a></li>
 </ul>
 <nav>
@@ -30,9 +29,11 @@
                 </a>
                 <!-- Dropdown Structure -->
                 <ul id='notification-list' class='dropdown-content'>
-                    @foreach (var notification in Model.NotificationList)
+                    @*TODO: Add a date added property and sort by that instead*@
+                    @foreach (var notification in Model.NotificationList.OrderByDescending(notification => notification.TriggerDateTime))
                     {
-                        <li><a asp-controller="Notification" asp-action="NotificationSelected" asp-route-notificationId="@(notification.NotificationId)">
+                        <li>
+                            <a asp-controller="Notification" asp-action="NotificationSelected" asp-route-notificationId="@(notification.NotificationId)">
                                 @if (notification.Acknowledged)
                                 {
                                     <i class="material-icons">notifications_none</i>
@@ -41,11 +42,12 @@
                                 {
                                     <i class="material-icons">notifications_active</i>
                                 }
-                            '@(notification.Alert.AlertName)' alert triggered at @(notification.TriggerDateTime.ToShortDateString())
-                        </a></li>
+                                '@(notification.Alert.AlertName)' alert triggered at @(notification.TriggerDateTime.ToShortDateString())
+                            </a></li>
                     }
                     @* <li class="divider"></li> *@
                     @* <li><a href="#!">Notification Center</a></li> *@
+                    @* TODO: Add a notification center, but only if the client finds it necessary *@
                 </ul>
             </li>
             <li>

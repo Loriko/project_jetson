@@ -72,6 +72,12 @@
             default: 'now', // Set default time: 'now', '1:30AM', '16:30'
             twelvehour: true // Use AM/PM or 24-hour format
         });
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 10, // Creates a dropdown of 15 years to control year,
+            closeOnSelect: true, // Close upon selecting a date,
+            container: 'body' // ex. 'body' will append picker to body
+        });
     });
 </script>
 
