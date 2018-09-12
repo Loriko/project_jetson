@@ -1,103 +1,86 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>@ViewData["Title"] - BackEndServer</title>
-        <environment include="Development">
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <link rel="stylesheet" href="~/lib/materialize/css/materialize.css"/>
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <link rel="stylesheet" href="~/css/site.css"/>
-        </environment>
-        <environment exclude="Development">
-            <script src="~/lib/jquery/dist/jquery.min.js"></script>
-            <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"/>
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-        </environment>
-        <!-- This script needs to be loaded asap, otherwise graphs won't work, which is why it is in the head -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    </head>
-    <body>
-        <ul id="profileDropDown" class="dropdown-content">
-@*            <li><a href="#!">My Account</a></li>*@
-            <li><a asp-controller="Home" asp-action="SignOut" >Sign Out</a></li>
-        </ul>
-        <nav>
-            <div class="nav-wrapper teal">
-                <a asp-controller="Location" asp-action="LocationSelection" class="brand-logo center">
-                    Project Jetson <i class="material-icons right medium no-right-margin">videocam</i>
-                </a>
-                <ul class="left hide-on-med-and-down">
-                    <li>
-                        <a asp-controller="Location" asp-action="LocationSelection" class="nav-link">Home</a>
-                    </li>
-                    <li>
-                        <a asp-controller="Camera" asp-action="BeginCameraRegistration" class="nav-link">Register a Camera</a>
-                    </li>
-                </ul>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BackEndServer</title>
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <link rel="stylesheet" href="~/lib/materialize/css/materialize.css"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/site.css"/>
+    </environment>
+    <environment exclude="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"/>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    </environment>
+    <!-- This script needs to be loaded asap, otherwise graphs won't work, which is why it is in the head -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
 
-                <ul class="right hide-on-med-and-down">
-                    <li>
-                        <a asp-controller="Alert" asp-action="Index" class="nav-link">My Alerts</a>
-                    </li>
-                    <li><a class="dropdown-button" href="#" data-activates="profileDropDown">Profile<i class="material-icons right">arrow_drop_down</i></a></li>
-                </ul>
-            </div>
-        </nav>
-        <main class="container body-content">
-            @RenderBody()
-        </main>
+@await Component.InvokeAsync("NavigationBar")
 
-        <footer class="page-footer teal darken-1">
-          <!--<div class="container">
-            <div class="row">
-              <div class="col l6 s12">
+<main class="container body-content">
+    @RenderBody()
+</main>
+
+<footer class="page-footer teal darken-1">
+    <!--<div class="container">
+        <div class="row">
+            <div class="col l6 s12">
                 <h5 class="white-text">Footer Content</h5>
                 <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-              </div>
-              <div class="col l4 offset-l2 s12">
+            </div>
+            <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Links</h5>
                 <ul>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
-                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                    <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
                 </ul>
-              </div>
             </div>
-          </div>-->
-          <div class="footer-copyright">
-            <div class="container">
+        </div>
+    </div>-->
+    <div class="footer-copyright">
+        <div class="container">
             © 2018 Project Jetson
-            </div>
-          </div>
-        </footer>
-        
-        <environment include="Development">
-            <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="~/lib/materialize/js/materialize.js"></script>
-        </environment>
-        <environment exclude="Development">
-            <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="~/lib/materialize/js/materialize.min.js"></script>
-        </environment>
+        </div>
+    </div>
+</footer>
 
-        <script>
-            $(document).ready(function () {
-                $(".dropdown-button").dropdown();
-                $('select').material_select();
-                $('.modal').modal();
-                $('.timepicker').pickatime({
-                    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-                    twelvehour: true // Use AM/PM or 24-hour format
-                });
-            });
-        </script>
-    
-    @RenderSection("Scripts", false)
-    </body>
+<environment include="Development">
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/materialize/js/materialize.js"></script>
+</environment>
+<environment exclude="Development">
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/materialize/js/materialize.min.js"></script>
+</environment>
+
+<script>
+    $(document).ready(function() {
+        $(".dropdown-button").dropdown();
+        $('select').material_select();
+        $('.modal').modal();
+        $('.timepicker').pickatime({
+            default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+            twelvehour: true // Use AM/PM or 24-hour format
+        });
+        $('.datepicker').pickadate({
+            selectMonths: true, // Creates a dropdown to control month
+            selectYears: 10, // Creates a dropdown of 15 years to control year,
+            closeOnSelect: true, // Close upon selecting a date,
+            container: 'body' // ex. 'body' will append picker to body
+        });
+    });
+</script>
+
+@RenderSection("Scripts", false)
+</body>
 </html>

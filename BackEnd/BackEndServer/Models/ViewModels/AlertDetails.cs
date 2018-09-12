@@ -27,6 +27,9 @@ namespace BackEndServer.Models.ViewModels
         }
 
         public DateTime EndTime { get; set; }
+        public CameraDetails Camera { get; set; }
+        public DateTime? DisabledUntil { get; set; }
+        public DateTime? SnoozedUntil { get; set; }
 
         public string EndTimeAsString()
         {
@@ -54,14 +57,6 @@ namespace BackEndServer.Models.ViewModels
             AlertName = dbAlert.AlertName;
             CameraId = dbAlert.CameraId;
             UserId = dbAlert.UserId;
-//            if (dbAlert.ContactMethod != null)
-//            {
-//                ContactMethod = dbAlert.ContactMethod.Value;
-//            }
-//            else
-//            {
-//                throw new InvalidOperationException("Passed in DatabaseAlert argument has a null dbAlert");
-//            }
             ContactMethod = (ContactMethod) Enum.Parse(typeof(ContactMethod), dbAlert.ContactMethod);
             TriggerOperator = (TriggerOperator) Enum.Parse(typeof(TriggerOperator), dbAlert.TriggerOperator);
             TriggerNumber = dbAlert.TriggerNumber;
@@ -74,6 +69,14 @@ namespace BackEndServer.Models.ViewModels
             if (!dbAlert.EndTime.IsNullOrEmpty())
             {
                 EndTime = DateTime.Parse(dbAlert.EndTime);
+            }
+            if (dbAlert.DisabledUntil != null)
+            {
+                DisabledUntil = dbAlert.DisabledUntil.Value;
+            }
+            if (dbAlert.SnoozedUntil != null)
+            {
+                SnoozedUntil = dbAlert.SnoozedUntil.Value;
             }
         }
     }

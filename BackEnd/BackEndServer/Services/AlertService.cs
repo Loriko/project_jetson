@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.ViewModels;
@@ -33,7 +35,7 @@ namespace BackEndServer.Services
 
         public List<AlertDetails> GetAllAlertsForUser(int userId)
         {
-            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAlertsForUser(userId);
+            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAllAlerts(userId);
             List<AlertDetails> alertList = new List<AlertDetails>();
             foreach (var dbAlert in dbAlerts)
             {
@@ -45,7 +47,7 @@ namespace BackEndServer.Services
 
         public SortedDictionary<int, List<AlertDetails>> GetAllAlertsByCameraIdForUser(int userId)
         {
-            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAlertsForUser(userId);
+            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAllAlerts(userId);
             
             SortedDictionary<int, List<AlertDetails>> alertMap = new SortedDictionary<int, List<AlertDetails>>();
             foreach (var dbAlert in dbAlerts)
@@ -64,6 +66,22 @@ namespace BackEndServer.Services
         public bool DeleteAlert(int alertId)
         {
             return _dbQueryService.DeleteAlert(alertId);
+        }
+
+        public bool DisableAlert(AlertDisablingInformation alertDisablingInformation)
+        {
+            DatabaseAlert dbAlert = _dbQueryService.GetAlertById(alertDisablingInformation.AlertId);
+            DateTime disabledUntilDateTime = DateTime.MaxValue;
+            if (!alertDisablingInformation.DisableForever && alertDisablingInformation.DisabledUntil != null)
+            {
+                disabledUntilDateTime = alertDisablingInformation.DisabledUntil.Value;
+            } else if (!alertDisablingInformation.DisableForever && alertDisablingInformation.DisabledUntil == null)
+            {
+                throw new InvalidDataException("Told to disable alert temporarily but no end date");
+            }
+
+            dbAlert.DisabledUntil = disabledUntilDateTime;
+            return _dbQueryService.PersistExistingAlert(dbAlert);
         }
     }
 }

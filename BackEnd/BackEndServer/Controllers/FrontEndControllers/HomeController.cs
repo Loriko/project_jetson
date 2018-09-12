@@ -40,9 +40,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
         [HttpPost]
         public IActionResult SignIn(AuthenticationInformation authenticationModel)
         {
-            throw new Exception("bob");
             Boolean areCredentialsValid = AuthenticationService.ValidateCredentials(authenticationModel.Username, authenticationModel.Password);
-            if(!areCredentialsValid){
+            if (!areCredentialsValid) {
                 return View(authenticationModel);
             }
             else {

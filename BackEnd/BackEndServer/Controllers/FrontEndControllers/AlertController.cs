@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
 using Microsoft.AspNetCore.Http;
@@ -59,6 +60,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             AlertService.DeleteAlert(alertId);
             return RedirectToAction("Index", "Alert");
+        }
+
+        [HttpPost]
+        public JsonResult DisableAlert(AlertDisablingInformation alertDisablingInformation)
+        {
+            return Json(AlertService.DisableAlert(alertDisablingInformation));
         }
     }
 }

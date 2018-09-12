@@ -1,7 +1,7 @@
 ﻿@using BackEndServer.Models.Enums
 @using BackEndServer.Models.ViewModels
 @model AlertDashboardInformation
-@Html.Partial("../Alert/AlertCreationModal", Model.Availablecameras)
+@{ Html.RenderPartial("../Alert/AlertCreationModal", Model.Availablecameras); }
 
 <h1 class="page-title center-align">Your Alerts</h1>
 @{
@@ -60,7 +60,7 @@
     }
     else
     {
-        <div class="unavailable-message">
+        <div class="unavailable-message center-align">
             It seems you don't have any alert so far. Clicking the red floating button will allow you to set up an alert. 
         </div>
     }

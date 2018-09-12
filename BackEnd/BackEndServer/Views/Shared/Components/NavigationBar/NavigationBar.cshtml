@@ -1,0 +1,59 @@
+﻿@model BackEndServer.Models.ViewModels.NavigationBarDetails
+
+<ul id="profileDropDown" class="dropdown-content">
+    <li><a asp-controller="Home" asp-action="SignOut" >Sign Out</a></li>
+</ul>
+<nav>
+    <div class="nav-wrapper teal">
+        <a asp-controller="Location" asp-action="LocationSelection" class="brand-logo center">
+            Project Jetson <i class="material-icons right medium no-right-margin">videocam</i>
+        </a>
+        <ul class="left hide-on-med-and-down">
+            <li>
+                <a asp-controller="Location" asp-action="LocationSelection" class="nav-link">Home</a>
+            </li>
+            <li>
+                <a asp-controller="Camera" asp-action="BeginCameraRegistration" class="nav-link">Register a Camera</a>
+            </li>
+        </ul>
+
+        <ul class="right hide-on-med-and-down">
+            <li>
+                <!-- Dropdown Trigger -->
+                <a class='dropdown-button' href='#' data-activates='notification-list'>Notifications 
+                    @if (Model.GetUnacknowledgedNotificationCount() > 0)
+                    {
+                        <span class="new badge pink">@(Model.GetUnacknowledgedNotificationCount())</span>
+                    }
+                    <i class="material-icons right">arrow_drop_down</i>
+                </a>
+                <!-- Dropdown Structure -->
+                <ul id='notification-list' class='dropdown-content'>
+                    @*TODO: Add a date added property and sort by that instead*@
+                    @foreach (var notification in Model.NotificationList.OrderByDescending(notification => notification.TriggerDateTime))
+                    {
+                        <li>
+                            <a asp-controller="Notification" asp-action="NotificationSelected" asp-route-notificationId="@(notification.NotificationId)">
+                                @if (notification.Acknowledged)
+                                {
+                                    <i class="material-icons">notifications_none</i>
+                                }
+                                else
+                                {
+                                    <i class="material-icons">notifications_active</i>
+                                }
+                                '@(notification.Alert.AlertName)' alert triggered at @(notification.TriggerDateTime.ToShortDateString())
+                            </a></li>
+                    }
+                    @* <li class="divider"></li> *@
+                    @* <li><a href="#!">Notification Center</a></li> *@
+                    @* TODO: Add a notification center, but only if the client finds it necessary *@
+                </ul>
+            </li>
+            <li>
+                <a asp-controller="Alert" asp-action="Index" class="nav-link">My Alerts</a>
+            </li>
+            <li><a class="dropdown-button" href="#" data-activates="profileDropDown">Profile<i class="material-icons right">arrow_drop_down</i></a></li>
+        </ul>
+    </div>
+</nav>

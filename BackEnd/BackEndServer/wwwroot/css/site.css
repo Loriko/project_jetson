@@ -7,9 +7,6 @@
 .error-description {
     font-size: 1.1em;
 }
-.page-title {
-    font-size: 1.7em;
-}
 .body-content {
     margin-top: 20px;
     margin-bottom: 20px;
@@ -56,6 +53,7 @@ main {
 }
 .page-title {
     margin-bottom: 40px;
+    font-size: 1.7em;
 }
 .last-updated-time {
     /*margin-bottom: 15px;*/
@@ -157,4 +155,24 @@ main {
     top: 5% !important;
     max-height: 90% !important;
     height: 90% !important;
+}
+
+#notification-list li > a > i {
+    margin-right: 12px;
+}
+
+.property-name {
+    font-style: italic;
+}
+
+#disable-alert-button {
+    width: 100%;
+}
+
+.small-modal {
+    width: 35%;
+}
+
+.disabled-forever-row {
+    margin-bottom: 35px;
 }

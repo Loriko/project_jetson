@@ -1,0 +1,71 @@
+﻿@model BackEndServer.Models.ViewModels.AlertDisablingInformation
+
+<div id="alert-disabling-modal" class="modal small-modal">
+    <form class="col s12" method="post" asp-controller="Alert" asp-action="DisableAlert" id="alert-disabling-form">
+        <div class="modal-content">
+            <h1 class="page-title left-align">Disable an Alert</h1>
+            <input type="hidden" name="AlertId" value="@Model.AlertId">
+            <div class="row disabled-forever-row">
+                <div class="input-field col s12 no-top-margin">
+                    <p class="no-top-margin">
+                        <input name="DisableForever" type="radio" id="forever-radio" value="true" checked="checked"/>
+                        <label class="radio-label" for="forever-radio">Disable until further notice</label>
+                    </p>
+                    <p>
+                        <input name="DisableForever" type="radio" id="until-date-radio" value="false"/>
+                        <label class="radio-label" for="until-date-radio">Disable until a specific date</label>
+                    </p>
+                </div>
+            </div>
+            <div id="date_row" class="row">
+                <div class="input-field col s12">
+                    <label for="disabled_until">Disabled until</label>
+                    <input name="DisabledUntil" id="disabled_until" type="text" class="datepicker">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn waves-effect waves-light" type="submit" name="action">Disable
+                <i class="material-icons right">notifications_off</i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    $("input[name='DisableForever']").on("change",
+        function() {
+            if ($("input[name='DisableForever']:checked").val() === "true") {
+                $("#date_row").addClass("hide");
+            } else if ($("input[name='DisableForever']:checked").val() === "false") {
+                $("#date_row").removeClass("hide");
+            }
+        }
+    ).change();
+
+    function handleAlertDisablingFormSubmission(response) {
+        if (response === true) {
+            Materialize.toast("Alert successfully disabled!", 4000);
+        } else {
+            Materialize.toast("Couldn't disable the alert.", 4000);//TODO add more details about what kind of error is stopping the disabling of the alert
+        }
+        $("#alert-disabling-modal").modal("close");
+    }
+
+    $("#alert-disabling-form").submit(function(e) {
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data) {
+                handleAlertDisablingFormSubmission(data);
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+</script>
