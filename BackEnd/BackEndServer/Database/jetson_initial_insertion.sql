@@ -7,8 +7,11 @@ VALUES (1, 'paulhawit', 'jetson');
 INSERT INTO location (id, location_name, address_line, city, state, zip)
 VALUES (1, 'DMV Rockland', '120 Rockland Drive', 'Ottawa', 'Ontario', 'K1S5L5'), (2, 'Hospital Carling', '1053 Carling Avenue', 'Ottawa', 'Ontario', 'K1Y4E9');
 
-INSERT INTO camera (id, camera_name, location_id, monitored_area, user_id)
-VALUES (1, 'East Waiting Room Camera', 1, 'East Waiting Room', 1), (2, 'West Waiting Room Camera', 1, 'West Waiting Room', 1), (3, 'Written Test Room Camera', 1, 'Written Test Room', 1), (4, 'Front Entrance Camera', 1, 'Front Entrance', 1);
+INSERT INTO camera (id, camera_name, camera_key, location_id, monitored_area, user_id)
+VALUES (1, 'East Waiting Room Camera', 'AFRJNILIJHRU', 1, 'East Waiting Room', 1), 
+	(2, 'West Waiting Room Camera', 'HGTIBNERMESD',1, 'West Waiting Room', 1), 
+	(3, 'Written Test Room Camera', 'EPOVHTRKMQZU',1, 'Written Test Room', 1), 
+    (4, 'Front Entrance Camera', 'ZKYVWKJAQQIZ',1, 'Front Entrance', 1);
 
 insert into per_second_stat (camera_id, num_detected_object, date_time, has_saved_image)
 VALUES (1, 1, '2018-04-11 14:36:38',  0),
