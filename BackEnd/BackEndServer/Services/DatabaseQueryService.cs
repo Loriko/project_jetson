@@ -884,7 +884,8 @@ namespace BackEndServer.Services
             return false;
         }
 
-        public DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime)
+        public DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert,
+            DateTime lastUpdatedTime, DateTime checkupDateTime)
         {
             DatabasePerSecondStat perSecondStat = null;
             TriggerOperator triggerOperator = (TriggerOperator)Enum.Parse(typeof(TriggerOperator), alert.TriggerOperator, true);
@@ -896,7 +897,7 @@ namespace BackEndServer.Services
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
                                $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s')" +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{DateTime.Now}', '%m/%d/%Y %H:%i:%s')"; //TODO: maybe get date right now from another parameter
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s')"; //TODO: maybe get date right now from another parameter
                 
                 if (alert.SnoozedUntil != null)
                 {
