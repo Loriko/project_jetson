@@ -520,7 +520,7 @@ namespace BackEndServer.Services
         
         private string formatNullableInt(int? nullableInt)
         {
-            return nullableInt != null ? $"'{nullableInt.Value}'" : "NULL";
+            return nullableInt != null ? $"{nullableInt.Value}" : "NULL";
         }
         
         private string formatNullableDate(DateTime? nullableDateTime)
@@ -1154,7 +1154,7 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
                                $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} " +
-                               $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = {databaseCamera.CameraKey};";
+                               $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);

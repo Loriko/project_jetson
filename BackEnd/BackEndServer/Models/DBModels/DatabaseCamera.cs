@@ -37,6 +37,7 @@ namespace BackEndServer.Models.DBModels
         {
             CameraId = cameraDetails.CameraId;
             CameraName = cameraDetails.CameraName;
+            CameraKey = cameraDetails.CameraKey;
             LocationId = cameraDetails.LocationId;
             UserId = cameraDetails.UserId;
             MonitoredArea = cameraDetails.MonitoredArea;
