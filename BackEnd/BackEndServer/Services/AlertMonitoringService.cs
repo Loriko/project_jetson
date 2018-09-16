@@ -26,12 +26,13 @@ namespace BackEndServer.Services
             DateTime lastCheckup = DateTime.MinValue;
             while (true)
             {
+                DateTime checkupDateTime = DateTime.Now;
                 //First get all alerts
                 List<DatabaseAlert> alerts = _databaseQueryService.GetAllAlerts();
                 
                 foreach (var alert in alerts)
                 {
-                    HandleAlertMonitoring(alert, lastCheckup);
+                    HandleAlertMonitoring(alert, lastCheckup, checkupDateTime);
                 }
                 
                 //Check all alerts after last checkup date
@@ -40,11 +41,11 @@ namespace BackEndServer.Services
             }
         }
 
-        private void HandleAlertMonitoring(DatabaseAlert alert, DateTime lastCheckup)
+        private void HandleAlertMonitoring(DatabaseAlert alert, DateTime lastCheckup, DateTime checkupDateTime)
         {
             //check if any persecondstat has a count higher than threshold since last checkup
             DatabasePerSecondStat earliestStatThatTriggersAlert
-                = _databaseQueryService.GetEarliestPerSecondStatTriggeringAlert(alert, lastCheckup);
+                = _databaseQueryService.GetEarliestPerSecondStatTriggeringAlert(alert, lastCheckup, checkupDateTime);
 
             if (earliestStatThatTriggersAlert != null)
             {

@@ -41,7 +41,8 @@ namespace BackEndServer.Services.AbstractServices
         bool DeleteAlert(int alertId);
         bool PersistExistingAlert(DatabaseAlert alert);
         bool PersistNewLocation(DatabaseLocation dbLocation);
-        DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime);
+        DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime,
+            DateTime checkupDateTime);
         List<DatabaseNotification> GetNotificationsForUser(int userId);
         List<DatabaseAlert> GetAlertsById(List<int> alertIds);
         DatabaseNotification GetNotificationById(int notificationId);
