@@ -6,6 +6,7 @@ namespace BackEndServer.Models.ViewModels
     public class CameraDetails
     {
         public int CameraId { get; set; }
+        public string CameraKey { get; set; }
         public string CameraName { get; set; }
         public int LocationId { get; set; }
         public int UserId { get; set; }
@@ -24,9 +25,17 @@ namespace BackEndServer.Models.ViewModels
         public CameraDetails(DatabaseCamera dbCamera)
         {
             CameraId = dbCamera.CameraId;
+            CameraKey = dbCamera.CameraKey;
             CameraName = dbCamera.CameraName;
-            LocationId = dbCamera.LocationId;
-            UserId = dbCamera.UserId;
+            if (dbCamera.LocationId != null)
+            {
+                LocationId = dbCamera.LocationId.Value;
+            }
+
+            if (dbCamera.UserId != null)
+            {
+                UserId = dbCamera.UserId.Value;
+            }
             MonitoredArea = dbCamera.MonitoredArea;
             Brand = dbCamera.Brand;
             Model = dbCamera.Model;

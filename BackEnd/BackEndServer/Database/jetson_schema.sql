@@ -29,9 +29,10 @@ DROP TABLE IF EXISTS `jetson`.`camera` ;
 CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `camera_name` VARCHAR(45) NULL DEFAULT NULL,
-  `location_id` INT(5) UNSIGNED NOT NULL,
-  `user_id` INT(5) UNSIGNED NOT NULL,
-  `monitored_area` VARCHAR(45) NOT NULL,
+  `camera_key` VARCHAR(12) NOT NULL UNIQUE,
+  `location_id` INT(5) UNSIGNED NULL DEFAULT NULL,
+  `user_id` INT(5) UNSIGNED NULL DEFAULT NULL,
+  `monitored_area` VARCHAR(45) NULL DEFAULT NULL,
   `brand` VARCHAR(45) NULL DEFAULT NULL, -- TODO: Check if NULL DEFAULT NULL makes sense or just really stupid
   `model` VARCHAR(45) NULL DEFAULT NULL,
   `resolution` VARCHAR(45) NULL DEFAULT NULL,
