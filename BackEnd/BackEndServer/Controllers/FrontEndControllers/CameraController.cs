@@ -76,7 +76,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         }
 
         [HttpPost]
-        public IActionResult SaveCamera(CameraDetails cameraDetails)
+        public IActionResult RegisterCamera(CameraDetails cameraDetails)
         {
             if (HttpContext.Session.GetString("currentUsername") == null)
             {
@@ -87,7 +87,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
             if (currentUsedId != null)
             {
                 cameraDetails.UserId = currentUsedId.Value;
-                CameraService.SaveNewCamera(cameraDetails);
+                CameraService.RegisterCamera(cameraDetails);
+//                CameraService.SaveNewCamera(cameraDetails);
             }
             else
             {
