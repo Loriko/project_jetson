@@ -59,7 +59,7 @@ main {
     /*margin-bottom: 15px;*/
 }
 .people-count {
-    font-size: 1.7em;
+    font-size: 1.2em;
     /*font-weight: bold;*/
 }
 
@@ -175,4 +175,17 @@ main {
 
 .disabled-forever-row {
     margin-bottom: 35px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.graph-card {
+    margin-bottom: 12px;
+    color: black;
+}
+
+.unavailable-message-light {
+    color: lightblue;
 }
