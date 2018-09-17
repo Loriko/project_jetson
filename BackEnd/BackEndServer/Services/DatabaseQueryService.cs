@@ -1153,7 +1153,8 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
                                $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
-                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} " +
+                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
+                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath)} " +
                                $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
