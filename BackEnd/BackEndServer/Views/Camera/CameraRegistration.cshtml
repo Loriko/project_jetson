@@ -1,29 +1,8 @@
-﻿@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
-
+@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
 <h1 class="page-title center-align">Please enter your camera's details</h1>
-
 @Html.Partial("../Location/LocationCreationModal")
-
 <div class="row">
     <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera">
-        <div class="row">
-            <div class="input-field col s9">
-                <select id="location_id" name="LocationId">
-                    <option value="" disabled selected>Please select the location where the camera is installed</option>
-                    @{
-                    foreach (var locationInformation in Model.locations.LocationList)
-                    {
-                        <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>
-                }
-                    }
-                </select>
-                <label for="location_id">Camera Location</label>
-            </div>
-            <div class="input-field col s3 right-align">
-                <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
-            </div>
-        </div>
-
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" type="text" class="validate" required>
@@ -38,6 +17,24 @@
             <div class="input-field col s12">
                 <input id="camera_key" name="CameraKey" type="text" class="validate" required>
                 <label for="camera_key">Camera Key</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s9">
+                <select id="location_id" name="LocationId">
+                    <option value="" disabled selected>Please select the location where the camera is installed</option>
+                    @{
+                        foreach (var locationInformation in Model.locations.LocationList)
+                        {
+                            <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>
+                        }
+                    }
+                </select>
+                <label for="location_id">Camera Location</label>
+            </div>
+            <div class="input-field col s3 right-align">
+                <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
             </div>
         </div>
         <div class="row">
@@ -56,10 +53,10 @@
                 <select id="camera_resolution" name="Resolution">
                     <option value="" disabled selected>Select your camera's resolution</option>
                     @{
-                    foreach (string resolution in Model.resolutions)
-                    {
-                        <option value="@resolution">@resolution</option>
-                }
+                        foreach (string resolution in Model.resolutions)
+                        {
+                            <option value="@resolution">@resolution</option>
+                        }
                     }
                 </select>
                 <label for="camera_resolution">Camera Resolution</label>
@@ -88,9 +85,7 @@
         </div>
     </form>
 </div>
-
-<script>
-    $('#resolution_checkbox').click(function () {
+<script>$('#resolution_checkbox').click(function () {
         if ($("#resolution_checkbox").is(':checked')) {
             $("#custom_resolution_row").removeClass("hide");
             $("#camera_resolution_div .select-dropdown").prop('disabled', true);
@@ -99,5 +94,4 @@
             $("#camera_custom_resolution").val("");
             $("#camera_resolution_div .select-dropdown").prop('disabled', false);
         }
-    });
-</script>
+    });</script>
