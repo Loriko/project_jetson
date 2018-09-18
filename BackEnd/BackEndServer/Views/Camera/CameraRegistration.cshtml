@@ -5,16 +5,16 @@
 @Html.Partial("../Location/LocationCreationModal")
 
 <div class="row">
-    <form class="col s12" method="post" asp-controller="Camera" asp-action="SaveCamera">
+    <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera">
         <div class="row">
             <div class="input-field col s9">
                 <select id="location_id" name="LocationId">
                     <option value="" disabled selected>Please select the location where the camera is installed</option>
                     @{
-                        foreach (var locationInformation in Model.locations.LocationList)
-                        {
-                            <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>
-                        }
+                    foreach (var locationInformation in Model.locations.LocationList)
+                    {
+                        <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>
+                }
                     }
                 </select>
                 <label for="location_id">Camera Location</label>
@@ -23,6 +23,7 @@
                 <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
             </div>
         </div>
+
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" type="text" class="validate" required>
@@ -35,11 +36,10 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="camera_id" name="CameraId" type="text" class="validate" required>
-                <label for="camera_id">Camera Id</label>
+                <input id="camera_key" name="CameraKey" type="text" class="validate" required>
+                <label for="camera_key">Camera Key</label>
             </div>
         </div>
-
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_brand" name="Brand" type="text" class="validate">
@@ -50,16 +50,16 @@
                 <label for="camera_model">Camera Model</label>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="input-field col s8" id="camera_resolution_div">
                 <select id="camera_resolution" name="Resolution">
                     <option value="" disabled selected>Select your camera's resolution</option>
                     @{
-                        foreach (string resolution in Model.resolutions)
-                        {
-                            <option value="@resolution">@resolution</option>        
-                        }
+                    foreach (string resolution in Model.resolutions)
+                    {
+                        <option value="@resolution">@resolution</option>
+                }
                     }
                 </select>
                 <label for="camera_resolution">Camera Resolution</label>
@@ -77,7 +77,7 @@
                 <label for="camera_custom_resolution">Enter your camera's resolution</label>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="s12 center-align">
                 <button class="btn waves-effect waves-light right-align" type="submit" name="action">
@@ -85,7 +85,7 @@
                     <i class="material-icons right">send</i>
                 </button>
             </div>
-        </div>  
+        </div>
     </form>
 </div>
 

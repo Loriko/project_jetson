@@ -29,10 +29,11 @@ DROP TABLE IF EXISTS `jetson`.`camera` ;
 CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `camera_name` VARCHAR(45) NULL DEFAULT NULL,
-  `location_id` INT(5) UNSIGNED NOT NULL,
-  `user_id` INT(5) UNSIGNED NOT NULL,
-  `monitored_area` VARCHAR(45) NOT NULL,
-  `brand` VARCHAR(45) NULL DEFAULT NULL, --TODO: Check if NULL DEFAULT NULL makes sense or just really stupid
+  `camera_key` VARCHAR(12) NOT NULL UNIQUE,
+  `location_id` INT(5) UNSIGNED NULL DEFAULT NULL,
+  `user_id` INT(5) UNSIGNED NULL DEFAULT NULL,
+  `monitored_area` VARCHAR(45) NULL DEFAULT NULL,
+  `brand` VARCHAR(45) NULL DEFAULT NULL, -- TODO: Check if NULL DEFAULT NULL makes sense or just really stupid
   `model` VARCHAR(45) NULL DEFAULT NULL,
   `resolution` VARCHAR(45) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -129,25 +130,6 @@ CREATE TABLE IF NOT EXISTS `jetson`.`api_key` (
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `jetson`.`api_key`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jetson`.`notification` ;
-
-CREATE TABLE IF NOT EXISTS `jetson`.`notification` (
-  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `alert_id` INT(5) UNSIGNED NOT NULL,
-  `trigger_datetime` DATETIME NOT NULL,
-  `acknowledged` TINYINT UNSIGNED NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_notification_has_alert`
-    FOREIGN KEY (`alert_id`)
-    REFERENCES `jetson`.`alert` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
 -- Table `jetson`.`alert`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `jetson`.`alert` ;
@@ -176,6 +158,24 @@ CREATE TABLE IF NOT EXISTS `jetson`.`alert` (
   CONSTRAINT `fk_fk_alert_has_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `jetson`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
+-- Table `jetson`.`notification`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jetson`.`notification` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`notification` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `alert_id` INT(5) UNSIGNED NOT NULL,
+  `trigger_datetime` DATETIME NOT NULL,
+  `acknowledged` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_notification_has_alert`
+    FOREIGN KEY (`alert_id`)
+    REFERENCES `jetson`.`alert` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 DEFAULT CHARACTER SET = utf8;
