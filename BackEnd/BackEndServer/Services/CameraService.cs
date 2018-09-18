@@ -2,7 +2,6 @@
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
-using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.PlaceholderServices;
 
 namespace BackEndServer.Services
@@ -45,14 +44,15 @@ namespace BackEndServer.Services
             GraphStatistics graphStatistics = _graphStatisticsService.GetLast30MinutesStatistics(cameraId);
             if (camera != null)
             {
-                CameraStatistics cameraStatistics = new CameraStatistics()
+                CameraStatistics cameraStatistics = new CameraStatistics
                 {
                     CameraInformation = new CameraInformation(camera),
+                    CameraDetails = new CameraDetails(camera),
                     DayTimeOfTheWeekAverageCount = 0,
                     DayTimeOfTheWeekAverageCountAvailable = false,
                     DayTimeOfTheWeekAverageCountDisplayString = null,
                     LastUpdatedTime = null,
-                    MostRecentPeopleCount = 0,
+                    MostRecentPeopleCount = null,
                     PeriodOfTheDayAverageCount = 0,
                     PeriodOfTheDayAverageCountAvailable = false,
                     PeriodOfTheDayAverageCountDisplayString = null,
@@ -63,12 +63,14 @@ namespace BackEndServer.Services
                     cameraStatistics.LastUpdatedTime = mostRecentStat.DateTime;
                     cameraStatistics.MostRecentPeopleCount = mostRecentStat.NumDetectedObjects;
                 }
+                if (camera.LocationId != null)
+                {
+                    cameraStatistics.CameraDetails.Location = new LocationDetails(_dbQueryService.GetLocationById(camera.LocationId.Value));
+                }
                 return cameraStatistics;
             }
-            else
-            {
-                return null;
-            }
+            
+            return null;
         }
 
         public CameraInformation GetCameraInformationWithYearlyData(int cameraId)
