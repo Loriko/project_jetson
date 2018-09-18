@@ -357,20 +357,7 @@ namespace BackEndServer.Services
                     // Expecting one result.
                     if (reader.Read())
                     {
-                        camera = new DatabaseCamera()
-                        {
-                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
-                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
-                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
-                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
-                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
-                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
-                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
-                        };
-                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
-                        {
-                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
-                        }
+                        camera = getDatabaseCameraFromReader(reader);
                     }
                 }
             }
@@ -423,20 +410,7 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        DatabaseCamera camera = new DatabaseCamera()
-                        {
-                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
-                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
-                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
-                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
-                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
-                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
-                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
-                        };
-                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
-                        {
-                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
-                        }
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
                         cameraList.Add(camera);
                     }
                 }
@@ -502,7 +476,7 @@ namespace BackEndServer.Services
                 string query = "INSERT INTO camera(" +
                                "camera_name, location_id, user_id, monitored_area, brand, model, resolution" +
                                ") VALUES " +
-                               $"('{camera.CameraName}',{camera.LocationId},{camera.UserId}," +
+                               $"('{camera.CameraName}',{formatNullableInt(camera.LocationId)},{formatNullableInt(camera.UserId)}," +
                                $"'{camera.MonitoredArea}',{formatNullableString(camera.Brand)}," +
                                $"{formatNullableString(camera.Model)},{formatNullableString(camera.Resolution)});";
                 
@@ -542,6 +516,11 @@ namespace BackEndServer.Services
         private string formatNullableString(string nullableString)
         {
             return nullableString != null ? $"'{nullableString}'" : "NULL";
+        }
+        
+        private string formatNullableInt(int? nullableInt)
+        {
+            return nullableInt != null ? $"{nullableInt.Value}" : "NULL";
         }
         
         private string formatNullableDate(DateTime? nullableDateTime)
@@ -740,20 +719,7 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        DatabaseCamera camera = new DatabaseCamera()
-                        {
-                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
-                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
-                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
-                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
-                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
-                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
-                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
-                        };
-                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
-                        {
-                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
-                        }
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
                         cameraList.Add(camera);
                     }
                 }
@@ -1210,6 +1176,73 @@ namespace BackEndServer.Services
                 }
             }
             return false;
+        }
+
+        public bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseCamera.TABLE_NAME} SET " +
+                               $"{DatabaseCamera.CAMERA_NAME_LABEL} = {formatNullableString(databaseCamera.CameraName)}," +
+                               $"{DatabaseCamera.RESOLUTION_LABEL} = {formatNullableString(databaseCamera.Resolution)}," +
+                               $"{DatabaseCamera.BRAND_LABEL} = {formatNullableString(databaseCamera.Brand)}," +
+                               $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
+                               $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
+                               $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
+                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} " +
+                               $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private DatabaseCamera getDatabaseCameraFromReader(MySqlDataReader reader)
+        {
+            DatabaseCamera camera = new DatabaseCamera
+            {
+                CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
+                CameraKey = Convert.ToString(reader[DatabaseCamera.CAMERA_KEY_LABEL])
+            };
+            if (reader[DatabaseCamera.CAMERA_NAME_LABEL] != DBNull.Value)
+            {
+                camera.CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]);
+            }
+            if (reader[DatabaseCamera.MODEL_LABEL] != DBNull.Value)
+            {
+                camera.Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL]);
+            }
+            if (reader[DatabaseCamera.MONITORED_AREA_LABEL] != DBNull.Value)
+            {
+                camera.MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]);
+            }
+            if (reader[DatabaseCamera.BRAND_LABEL] != DBNull.Value)
+            {
+                camera.Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]);
+            }
+            if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
+            {
+                camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
+            }
+            if (reader[DatabaseCamera.USER_ID_LABEL] != DBNull.Value)
+            {
+                camera.UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]);
+            }
+            if (reader[DatabaseCamera.LOCATION_ID_LABEL] != DBNull.Value)
+            {
+                camera.LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]);
+            }
+
+            return camera;
         }
     }
 }

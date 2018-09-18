@@ -114,6 +114,11 @@ namespace BackEndServer.Services
             throw new System.NotImplementedException("getAllCamerasForUser(string username) is not implemented");
         }
 
+        public bool RegisterCamera(CameraDetails cameraDetails)
+        {
+            return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails));
+        }
+
         public List<string> GetExistingCameraResolutions()
         {
             return _dbQueryService.GetExistingCameraResolutions();

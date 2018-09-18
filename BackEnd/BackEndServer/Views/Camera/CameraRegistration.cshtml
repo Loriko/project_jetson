@@ -5,7 +5,7 @@
 @Html.Partial("../Location/LocationCreationModal")
 
 <div class="row">
-    <form class="col s12" method="post" asp-controller="Camera" asp-action="SaveCamera">
+    <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera">
         <div class="row">
             <div class="input-field col s9">
                 <select id="location_id" name="LocationId">
@@ -35,8 +35,8 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="camera_id" name="CameraId" type="text" class="validate" required>
-                <label for="camera_id">Camera Id</label>
+                <input id="camera_key" name="CameraKey" type="text" class="validate" required>
+                <label for="camera_key">Camera Key</label>
             </div>
         </div>
 
