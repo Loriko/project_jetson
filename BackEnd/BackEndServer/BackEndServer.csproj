@@ -19,6 +19,7 @@
   <ItemGroup>
     <Compile Remove="Controllers\HomeController.cs" />
     <Compile Remove="Models\ViewModels\Startup.cs" />
+    <Compile Remove="Models\ViewModels\EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\ViewModels\" />
@@ -27,5 +28,9 @@
     <Folder Include="Controllers\APIControllers\" />
     <Folder Include="Classes\DataResponseClasses\" />
     <Folder Include="wwwroot\lib\materialize\fonts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Views\Camera\ManageCameras.cshtml" />
+    <Content Remove="Views\Camera\EmptyHTMLFile.cshtml" />
   </ItemGroup>
 </Project>

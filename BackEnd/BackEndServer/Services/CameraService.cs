@@ -97,6 +97,12 @@ namespace BackEndServer.Services
             };
         }
 
+
+        public CameraInformationList GetAllCamerasOwnedByUser(int userId) {
+            List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasOwnedByUser(userId);
+            return new CameraInformationList(dbCameras);
+        }
+
         public CameraInformationList getAllCamerasForUser(int userId)
         {
             List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasAvailableToUser(userId);
