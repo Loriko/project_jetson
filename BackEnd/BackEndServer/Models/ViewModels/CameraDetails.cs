@@ -2,6 +2,7 @@
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.Enums;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace BackEndServer.Models.ViewModels
 {
@@ -19,8 +20,9 @@ namespace BackEndServer.Models.ViewModels
         public string CustomResolution { get; set; }
         public LocationDetails Location { get; set; }
         // Supports users uploading a picture of what an installed camera is tracking (the monitored area).
-        public bool HasUploadedPicture { get; set; }
-        public int UploadedPictureFileType { get; set; }
+        public IFormFile UploadedImage { get; set; }
+        public bool HasUploadedImage { get; set; }
+        public int UploadedImageFileType { get; set; }
 
         public CameraDetails()
         {
@@ -48,15 +50,15 @@ namespace BackEndServer.Models.ViewModels
 
             if (String.IsNullOrWhiteSpace(dbCamera.ImagePath) == false)
             {
-                HasUploadedPicture = true;
+                HasUploadedImage = true;
 
                 if (dbCamera.ImagePath.Contains(DatabaseCamera.JPEG_EXTENSION))
                 {
-                    UploadedPictureFileType = (int)ImageFileType.JPEG;
+                    UploadedImageFileType = (int)ImageFileType.JPEG;
                 }
                 else if (dbCamera.ImagePath.Contains(DatabaseCamera.PNG_EXTENSION))
                 {
-                    UploadedPictureFileType = (int)ImageFileType.PNG;
+                    UploadedImageFileType = (int)ImageFileType.PNG;
                 }
             }
         }

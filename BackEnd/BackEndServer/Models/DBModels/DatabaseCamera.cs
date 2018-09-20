@@ -20,7 +20,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string RESOLUTION_LABEL = "resolution";
         public static readonly string IMAGE_PATH_LABEL = "image_path";
         // Represents the virtual path that the Images of the Camera's monitored areas will be stored.
-        public static readonly string PATH_FOR_INSTALLED_CAMERA_PICTURES = "~/storage/RegisteredCameras/";
+        public static readonly string PATH_FOR_USER_UPLOADED_IMAGES = "";
         public static readonly string JPEG_EXTENSION = ".jpg";
         public static readonly string PNG_EXTENSION = ".png";
 
@@ -52,13 +52,13 @@ namespace BackEndServer.Models.DBModels
             Model = cameraDetails.Model;
             Resolution = !cameraDetails.CustomResolution.IsNullOrEmpty() ? cameraDetails.CustomResolution : cameraDetails.Resolution;
 
-            if (cameraDetails.HasUploadedPicture && cameraDetails.UploadedPictureFileType == (int)ImageFileType.JPEG)
+            if (cameraDetails.HasUploadedImage && cameraDetails.UploadedImageFileType == (int)ImageFileType.JPEG)
             {
-                ImagePath = PATH_FOR_INSTALLED_CAMERA_PICTURES + CameraId + JPEG_EXTENSION;
+                ImagePath = PATH_FOR_USER_UPLOADED_IMAGES + CameraId + JPEG_EXTENSION;
             }
-            else if (cameraDetails.HasUploadedPicture && cameraDetails.UploadedPictureFileType == (int)ImageFileType.PNG)
+            else if (cameraDetails.HasUploadedImage && cameraDetails.UploadedImageFileType == (int)ImageFileType.PNG)
             {
-                ImagePath = PATH_FOR_INSTALLED_CAMERA_PICTURES + CameraId + PNG_EXTENSION;
+                ImagePath = PATH_FOR_USER_UPLOADED_IMAGES + CameraId + PNG_EXTENSION;
             }
         }
     }
