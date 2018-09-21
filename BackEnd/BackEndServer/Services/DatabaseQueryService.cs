@@ -538,7 +538,7 @@ namespace BackEndServer.Services
 
         private string formatNullableString(string nullableString)
         {
-            return (nullableString != null ? $"'{nullableString}'".Replace($"\\", "/") : "NULL");
+            return (nullableString != null ? $"'{nullableString}'" : "NULL");
         }
         
         private string formatNullableInt(int? nullableInt)
@@ -1177,7 +1177,8 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
                                $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
-                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath)} " +
+                               // Ensure that the file path to the image contains only forward slashes, so replace all backslashes with a forward slash.
+                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath.Replace("\\", "/"))} " +
                                $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
