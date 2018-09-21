@@ -2,20 +2,26 @@
     Modified from: https://bootsnipp.com/snippets/eNbOa
 */
 
-// Changes throughout, including renaming the HTML image element to image_preview
-
 $(document).ready(function () {
 
+    // On Load, hide the clear button. Cannot set the element to hidden by default as it can no longer be accessed once hidden.
     $('#clear_image_preview_button').hide();
 
+    // test
+    $('#browse_button').val('test');
+
+    // On Click of the Clear button:
     $('#clear_image_preview_button').click(function () {
-        // Not sure how to clear the file upload input...
-        //var input = $('#image_input');
-        //input.replaceWith(input.val('').clone(true));
+        // Clear the file input.
+        $('#image_input').val('');
+        // Clear the file name label.
+        $('#file_name').val('');
+        // Hide the image preview, no need clear the source.
         $('#image_preview').hide();
+        // Hide the clear button.
         $('#clear_image_preview_button').hide();
     });
-
+    
     $(document).on('change', '.btn-file :file', function () {
         var input = $(this),
             label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
@@ -27,8 +33,7 @@ $(document).ready(function () {
         var input = $(this).parents('.input-group').find(':text'),
             log = label;
 
-        // Added a check for label != "" because without this, pressing cancel removes the filename from the page.
-        if (input.length && label != "") {
+        if (input.length) {
             input.val(log);
         } else {
             if (log) alert(log);

@@ -81,30 +81,31 @@
 
         <!-- Optional: User can upload an image representing the area monitored by the camera. -->
         <!-- Modified from: https://bootsnipp.com/user/snippets/vl0Pd -->
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Upload Image (Optional)</label>
                     <div class="input-group">
                         <span class="input-group-btn">
-                            <span class="btn btn-default btn-file" id="browse_button">
+                            <span id="browse_button" class="btn btn-default btn-file">
                                 Browse…
-                                <input type="file" id="image_input" name="UploadedImage"
-                                       accept="image/jpeg,image/x-png">
+                                <input id="image_input" type="file" name="UploadedImage" accept="image/*" />
                             </span>
                         </span>
-                        <input type="text" class="form-control" readonly>
+                        <input id="file_name" type="text" class="form-control" readonly>
                     </div>
                     <img id='image_preview' class="center-block" />
                 </div>
             </div>
-            <!-- Added a Clear Button to allow users to remove an uploaded image. -->
-            <div class="row center-align">
-                <div class="s12">
-                    <button class="btn" type="button" id="clear_image_preview_button">
-                        Clear Image Preview
-                    </button>
-                </div>
+        </div>
+
+        <!-- Added a Clear Button to allow users to remove an uploaded image. -->
+        <div class="row center-align">
+            <div class="s12">
+                <button class="btn" type="button" id="clear_image_preview_button">
+                    Clear Image Preview
+                </button>
             </div>
         </div>
 

@@ -117,5 +117,10 @@ namespace BackEndServer.Services
         {
             return _dbQueryService.GetExistingCameraResolutions();
         }
+
+        public int GetExistingCameraId(string cameraKey)
+        {
+            return _dbQueryService.GetCameraIdFromKey(cameraKey);
+        }
     }
 }

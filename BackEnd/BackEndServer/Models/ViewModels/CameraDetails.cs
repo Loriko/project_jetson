@@ -21,8 +21,7 @@ namespace BackEndServer.Models.ViewModels
         public LocationDetails Location { get; set; }
         // Supports users uploading a picture of what an installed camera is tracking (the monitored area).
         public IFormFile UploadedImage { get; set; }
-        public bool HasUploadedImage { get; set; }
-        public int UploadedImageFileType { get; set; }
+        public string SavedImagePath { get; set; }
 
         public CameraDetails()
         {
@@ -47,20 +46,7 @@ namespace BackEndServer.Models.ViewModels
             Brand = dbCamera.Brand;
             Model = dbCamera.Model;
             Resolution = dbCamera.Resolution;
-
-            if (String.IsNullOrWhiteSpace(dbCamera.ImagePath) == false)
-            {
-                HasUploadedImage = true;
-
-                if (dbCamera.ImagePath.Contains(DatabaseCamera.JPEG_EXTENSION))
-                {
-                    UploadedImageFileType = (int)ImageFileType.JPEG;
-                }
-                else if (dbCamera.ImagePath.Contains(DatabaseCamera.PNG_EXTENSION))
-                {
-                    UploadedImageFileType = (int)ImageFileType.PNG;
-                }
-            }
+            SavedImagePath = dbCamera.ImagePath;
         }
     }
 }
