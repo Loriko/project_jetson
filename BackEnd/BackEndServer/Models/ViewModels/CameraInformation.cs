@@ -11,16 +11,16 @@ namespace BackEndServer.Models.ViewModels
         public GraphStatistics GraphStatistics { get; set; }
 
         public CameraInformation(int cameraId, string cameraRoomName){
-            this.CameraId = cameraId;
-            this.CameraRoomName = cameraRoomName;
-            this.CameraName = cameraRoomName + " Camera";
+            CameraId = cameraId;
+            CameraRoomName = cameraRoomName;
+            CameraName = cameraRoomName + " Camera";
         }
 
         public CameraInformation(int cameraId, string cameraRoomName, string cameraName)
         {
-            this.CameraId = cameraId;
-            this.CameraRoomName = cameraRoomName;
-            this.CameraName = cameraName;
+            CameraId = cameraId;
+            CameraRoomName = cameraRoomName;
+            CameraName = cameraName;
         }
 
         public CameraInformation(DatabaseCamera dbCamera) : this(dbCamera.CameraId, dbCamera.MonitoredArea, dbCamera.CameraName) {}
