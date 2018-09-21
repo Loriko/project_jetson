@@ -1,5 +1,8 @@
 ﻿using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Models.DBModels;
+using BackEndServer.Models.Enums;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace BackEndServer.Models.ViewModels
 {
@@ -16,6 +19,9 @@ namespace BackEndServer.Models.ViewModels
         public string Resolution { get; set; }
         public string CustomResolution { get; set; }
         public LocationDetails Location { get; set; }
+        // Supports users uploading a picture of what an installed camera is tracking (the monitored area).
+        public IFormFile UploadedImage { get; set; }
+        public string SavedImagePath { get; set; }
 
         public CameraDetails()
         {
@@ -40,6 +46,7 @@ namespace BackEndServer.Models.ViewModels
             Brand = dbCamera.Brand;
             Model = dbCamera.Model;
             Resolution = dbCamera.Resolution;
+            SavedImagePath = dbCamera.ImagePath;
         }
     }
 }
