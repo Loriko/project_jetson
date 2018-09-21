@@ -7,9 +7,6 @@ $(document).ready(function () {
     // On Load, hide the clear button. Cannot set the element to hidden by default as it can no longer be accessed once hidden.
     $('#clear_image_preview_button').hide();
 
-    // test
-    $('#browse_button').val('test');
-
     // On Click of the Clear button:
     $('#clear_image_preview_button').click(function () {
         // Clear the file input.

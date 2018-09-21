@@ -109,7 +109,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
                         string fileExtension = Path.GetExtension(image.FileName).ToLower();
 
                         // Obtain the Database ID of the camera.
-                        int cameraId = _cameraService.GetExistingCameraId(cameraDetails.CameraKey);
+                        int cameraId = CameraService.GetExistingCameraId(cameraDetails.CameraKey);
 
                         // Save the file to disk.
 
@@ -123,11 +123,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
                         // 3. Save IFormFile as an image file in the output path.
                         using (var fileStream = new FileStream(fullFilePath, FileMode.Create))
                         {
+                            // NOTE: If this was for the Edit page, we would have to delete the previous picture first.
                             image.CopyToAsync(fileStream);
                         }
                     }
                 }
-
+            
                 #endregion
 
                 CameraService.RegisterCamera(cameraDetails);

@@ -538,7 +538,7 @@ namespace BackEndServer.Services
 
         private string formatNullableString(string nullableString)
         {
-            return nullableString != null ? $"'{nullableString}'" : "NULL";
+            return (nullableString != null ? $"'{nullableString}'".Replace($"\\", "/") : "NULL");
         }
         
         private string formatNullableInt(int? nullableInt)

@@ -50,7 +50,7 @@ namespace BackEndServer.Services.HelperServices
                 //------------------------------------------
                 //check whether the image size exceeding the limit or not
                 //------------------------------------------ 
-                if (postedFile.Length > ImageMinimumBytes)
+                if (postedFile.Length < ImageMinimumBytes)
                 {
                     return false;
                 }
