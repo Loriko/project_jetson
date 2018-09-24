@@ -117,7 +117,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
                         DirectoryInfo outputDirectory = Directory.CreateDirectory(DatabaseCamera.PATH_FOR_USER_UPLOADED_IMAGES);
 
                         // 2. Create the full file path (output path + filename).
-                        string fullFilePath = Path.Combine(outputDirectory.FullName, (cameraId + fileExtension));
+                        string fullFilePath = Path.Combine(outputDirectory.FullName, cameraId + fileExtension);
                         cameraDetails.SavedImagePath = fullFilePath;
 
                         // 3. Save IFormFile as an image file in the output path.

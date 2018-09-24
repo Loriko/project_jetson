@@ -28,6 +28,6 @@
 }
 
 /* Added a Clear Image Preview button. Turn red upon hover. */
-#clear_image_preview_button:hover {
+#clear_image:hover {
     background: #ff0000;
 }

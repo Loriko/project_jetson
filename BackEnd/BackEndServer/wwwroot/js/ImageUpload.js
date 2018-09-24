@@ -5,10 +5,10 @@
 $(document).ready(function () {
 
     // On Load, hide the clear button. Cannot set the element to hidden by default as it can no longer be accessed once hidden.
-    $('#clear_image_preview_button').hide();
+    $('#clear_image').hide();
 
     // On Click of the Clear button:
-    $('#clear_image_preview_button').click(function () {
+    $('#clear_image').click(function () {
         // Clear the file input.
         $('#image_input').val('');
         // Clear the file name label.
@@ -16,7 +16,7 @@ $(document).ready(function () {
         // Hide the image preview, no need clear the source.
         $('#image_preview').hide();
         // Hide the clear button.
-        $('#clear_image_preview_button').hide();
+        $('#clear_image').hide();
     });
     
     $(document).on('change', '.btn-file :file', function () {
@@ -46,7 +46,7 @@ $(document).ready(function () {
                 // Added a border to the image preview.
                 $('#image_preview').css('border', '2px solid black');
                 // Show the newly added Clear Image Preview button.
-                $('#clear_image_preview_button').show();
+                $('#clear_image').show();
                 // Show the image preview as it may be hidden.
                 $('#image_preview').show();
             }

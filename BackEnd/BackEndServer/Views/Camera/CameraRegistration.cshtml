@@ -85,15 +85,14 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Upload Image (Optional)</label>
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <span id="browse_button" class="btn btn-default btn-file">
-                                Browse…
-                                <input id="image_input" type="file" name="UploadedImage" accept="image/*" />
-                            </span>
-                        </span>
-                        <input id="file_name" type="text" class="form-control" readonly>
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span id="browse_button">Browse...</span>
+                            <input id="image_input" type="file" name="UploadedImage" accept="image/*" />
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input id="file_name" class="file-path validate" type="text" placeholder="Upload an Image (Optional)">
+                        </div>
                     </div>
                     <img id='image_preview' class="center-block" />
                 </div>
@@ -103,8 +102,8 @@
         <!-- Added a Clear Button to allow users to remove an uploaded image. -->
         <div class="row center-align">
             <div class="s12">
-                <button class="btn" type="button" id="clear_image_preview_button">
-                    Clear Image Preview
+                <button class="btn" type="button" id="clear_image">
+                    Clear Image
                 </button>
             </div>
         </div>

@@ -1228,6 +1228,10 @@ namespace BackEndServer.Services
             {
                 camera.LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]);
             }
+            if (reader[DatabaseCamera.IMAGE_PATH_LABEL] != DBNull.Value)
+            {
+                camera.ImagePath = Convert.ToString(reader[DatabaseCamera.IMAGE_PATH_LABEL]);
+            }
 
             return camera;
         }
