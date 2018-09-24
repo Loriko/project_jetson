@@ -341,6 +341,29 @@ namespace BackEndServer.Services
             return perSecondStat;
         }
 
+        public int GetCameraIdFromKey(string cameraKey)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseCamera.CAMERA_ID_LABEL} FROM {DatabaseCamera.TABLE_NAME} "
+                    + $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{cameraKey}' LIMIT 1";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]);
+                    }
+                }
+            }
+
+            return -1;
+        }
+
         public DatabaseCamera GetCameraById(int cameraId)
         {
             DatabaseCamera camera = null;
@@ -515,7 +538,7 @@ namespace BackEndServer.Services
 
         private string formatNullableString(string nullableString)
         {
-            return nullableString != null ? $"'{nullableString}'" : "NULL";
+            return (nullableString != null ? $"'{nullableString}'" : "NULL");
         }
         
         private string formatNullableInt(int? nullableInt)
@@ -1153,7 +1176,9 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
                                $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
-                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} " +
+                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
+                               // Ensure that the file path to the image contains only forward slashes, so replace all backslashes with a forward slash.
+                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath.Replace("\\", "/"))} " +
                                $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
@@ -1202,6 +1227,10 @@ namespace BackEndServer.Services
             if (reader[DatabaseCamera.LOCATION_ID_LABEL] != DBNull.Value)
             {
                 camera.LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]);
+            }
+            if (reader[DatabaseCamera.IMAGE_PATH_LABEL] != DBNull.Value)
+            {
+                camera.ImagePath = Convert.ToString(reader[DatabaseCamera.IMAGE_PATH_LABEL]);
             }
 
             return camera;

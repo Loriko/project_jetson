@@ -24,6 +24,7 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseCamera GetCameraById(int cameraId);
         List<DatabaseCamera> GetCamerasForLocation(int locationId);
         List<string> GetExistingCameraResolutions();
+        int GetCameraIdFromKey(string cameraKey);
         // For PerSecondStat:
         DatabasePerSecondStat GetLatestPerSecondStatForCamera(int cameraId);
         List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId);

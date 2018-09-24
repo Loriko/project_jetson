@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `brand` VARCHAR(45) NULL DEFAULT NULL, -- TODO: Check if NULL DEFAULT NULL makes sense or just really stupid
   `model` VARCHAR(45) NULL DEFAULT NULL,
   `resolution` VARCHAR(45) NULL DEFAULT NULL,
+  `image_path` VARCHAR(100) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_camera_Address`
     FOREIGN KEY (`location_id`)
