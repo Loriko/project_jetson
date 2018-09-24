@@ -33,7 +33,7 @@ namespace BackEndServer.Services.AbstractServices
         // For PerHourStat:
         DatabasePerHourStat GetPerHourStatFromHour(DateTime hour);
         // For Location:
-        List<DatabaseLocation> GetLocationsForUser(string username);
+        List<DatabaseLocation> GetLocationsForUser(int userId);
         // For User:
         bool IsPasswordValidForUser(string username, string password);
         List<DatabaseCamera> GetCamerasAvailableToUser(int userId);
@@ -51,5 +51,6 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseLocation GetLocationById(int locationId);
         bool PersistNewNotification(DatabaseNotification dbNotification);
         bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera);
+        List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
     }
 }

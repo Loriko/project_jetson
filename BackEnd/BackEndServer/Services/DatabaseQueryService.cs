@@ -249,13 +249,25 @@ namespace BackEndServer.Services
 
         // FRANCIS TO CHECK LATER 
         // Right now, username isn't used, but it will be as soon as the tables necessary for camera permissions are added.
-        public List<DatabaseLocation> GetLocationsForUser(string username)
+        public List<DatabaseLocation> GetLocationsForUser(int userId)
         {
             List<DatabaseLocation> locationList = new List<DatabaseLocation>();
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME}";
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.LOCATION_ID_LABEL} IN (" +
+                                   $"SELECT {DatabaseCamera.LOCATION_ID_LABEL} FROM {DatabaseCamera.TABLE_NAME} " +
+                                   $"WHERE {DatabaseCamera.CAMERA_ID_LABEL} IN ( " +
+                                       "SELECT user_camera_association.camera_id " +
+                                       "FROM user_camera_association " +
+                                       $"WHERE user_camera_association.user_id = {userId} " +
+                                   $") OR {DatabaseCamera.USER_ID_LABEL} = {userId}" +
+                               ");";
+                
+                Console.WriteLine("Query:");
+                Console.WriteLine(query + "\n");
+                
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -1191,6 +1203,37 @@ namespace BackEndServer.Services
                 }
             }
             return false;
+        }
+
+        public List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId)
+        {
+            List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
+                               $"WHERE {DatabaseCamera.LOCATION_ID_LABEL} = {locationId} " +
+                               "AND (" +
+                                   $"{DatabaseCamera.CAMERA_ID_LABEL} IN ( " +
+                                       "SELECT user_camera_association.camera_id " +
+                                       "FROM user_camera_association " +
+                                       $"WHERE user_camera_association.user_id = {userId} " +
+                                   $") OR {DatabaseCamera.USER_ID_LABEL} = {userId}" +
+                               ");";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
+                        cameraList.Add(camera);
+                    }
+                }
+            }
+            return cameraList;
         }
 
         private DatabaseCamera getDatabaseCameraFromReader(MySqlDataReader reader)
