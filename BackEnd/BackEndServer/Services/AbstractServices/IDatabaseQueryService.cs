@@ -51,5 +51,6 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseLocation GetLocationById(int locationId);
         bool PersistNewNotification(DatabaseNotification dbNotification);
         bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera);
+        DatabaseUser GetUserById(int userId);
     }
 }

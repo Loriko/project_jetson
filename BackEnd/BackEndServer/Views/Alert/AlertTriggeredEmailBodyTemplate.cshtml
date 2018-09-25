@@ -1,0 +1,36 @@
+﻿@model BackEndServer.Models.ViewModels.AlertTriggeredEmailInformation
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Project Jetson - Alert Triggered Email Notice</title>
+</head>
+<body>
+<div>
+    <p>Hi @Model.Username,</p>
+    <p>An alert you set up within the Project Jetson application was triggered. Here are the details:</p>
+    <table>
+        <tbody>
+        <tr>
+            <td class="property-name">Triggered Alert Name</td>
+            <td>@Model.AlertName</td>
+        </tr>
+        <tr>
+            <td class="property-name">Associated Camera</td>
+            <td>@Model.CameraName</td>
+        </tr>
+        <tr>
+            <td class="property-name">Associated Location</td>
+            <td>@Model.LocationName</td>
+        </tr>
+        <tr>
+            <td class="property-name">Date Triggered</td>
+            <td>@Model.DateTriggered.ToShortTimeString()</td>
+        </tr>
+        </tbody>
+    </table>
+    <p>Thanks,<br>Team Jetson</p>
+</div>
+</body>
+</html>
