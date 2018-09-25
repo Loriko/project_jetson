@@ -1235,5 +1235,36 @@ namespace BackEndServer.Services
 
             return camera;
         }
+        
+        public DatabaseUser GetUserById(int userId)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USER_ID_LABEL} = {userId}";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
     }
 }

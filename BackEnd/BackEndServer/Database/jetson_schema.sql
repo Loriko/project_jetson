@@ -92,6 +92,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   `api_key` VARCHAR(45) NULL,
+  `email_address` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 DEFAULT CHARACTER SET = utf8;
@@ -138,7 +139,6 @@ DROP TABLE IF EXISTS `jetson`.`alert` ;
 CREATE TABLE IF NOT EXISTS `jetson`.`alert` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `alert_name` VARCHAR(100) NOT NULL,
-  `alert_message` VARCHAR(200),
   `camera_id` INT(5) UNSIGNED NOT NULL,
   `user_id` INT(5) UNSIGNED NOT NULL,
   `contact_method` VARCHAR(30) NOT NULL,

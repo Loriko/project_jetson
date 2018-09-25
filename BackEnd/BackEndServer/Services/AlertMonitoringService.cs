@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.Enums;
+using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
+using BackEndServer.Services.HelperServices;
 using Castle.Core.Internal;
 
 namespace BackEndServer.Services
@@ -22,7 +23,7 @@ namespace BackEndServer.Services
         
         public void StartMonitoring()
         {
-            //Will need to get the value from the database
+            //TODO: Will need to get the value from the database
             DateTime lastCheckup = DateTime.MinValue;
             while (true)
             {
@@ -60,10 +61,59 @@ namespace BackEndServer.Services
             {
                 CreateNotificationForTriggeredAlert(alert, earliestStatThatTriggersAlert);
             }
-            else if ((ContactMethod) Enum.Parse(typeof(ContactMethod), alert.ContactMethod) == ContactMethod.Notification)
+            else if ((ContactMethod) Enum.Parse(typeof(ContactMethod), alert.ContactMethod) == ContactMethod.Email)
             {
-                //TODO: Send an email
+                if (!SendAlertTriggeredEmail(alert, earliestStatThatTriggersAlert))
+                {
+                    //TODO: Handle potential email sending failure... some other day
+                }
             }
+        }
+
+        private bool SendAlertTriggeredEmail(DatabaseAlert alert, DatabasePerSecondStat earliestStatThatTriggersAlert)
+        {
+            DatabaseUser databaseUser = _databaseQueryService.GetUserById(alert.UserId);
+            if (!databaseUser.EmailAddress.IsNullOrEmpty())
+            {
+                string emailSubject = GetEmailSubject(alert, earliestStatThatTriggersAlert);
+                string emailBody = GetEmailBody(alert, earliestStatThatTriggersAlert, databaseUser);
+                return EmailService.SendEmail(databaseUser.EmailAddress, emailSubject, emailBody);
+            }
+            
+            return false;
+        }
+
+        private string GetEmailBody(DatabaseAlert alert, DatabasePerSecondStat earliestStatThatTriggersAlert, DatabaseUser user)
+        {
+            AlertTriggeredEmailInformation alertEmailInfo =
+                GetAlertTriggeredInformation(alert, earliestStatThatTriggersAlert, user);
+            string emailBody =
+                RazorEngineWrapper.RunCompile("Views/Alert", "AlertTriggeredEmailBodyTemplate.cshtml", alertEmailInfo);
+            return emailBody;
+        }
+
+        private static string GetEmailSubject(DatabaseAlert alert, DatabasePerSecondStat earliestStatThatTriggersAlert)
+        {
+            return $"Your alert '{alert.AlertName}' was triggered on {earliestStatThatTriggersAlert.DateTime.ToShortTimeString()}";
+        }
+
+        private AlertTriggeredEmailInformation GetAlertTriggeredInformation(DatabaseAlert alert, 
+            DatabasePerSecondStat earliestStatThatTriggersAlert, DatabaseUser user)
+        {
+            DatabaseCamera camera = _databaseQueryService.GetCameraById(alert.CameraId);
+            AlertTriggeredEmailInformation alertEmailInformation = new AlertTriggeredEmailInformation
+            {
+                CameraName = camera.CameraName,
+                AlertName = alert.AlertName,
+                DateTriggered = earliestStatThatTriggersAlert.DateTime,
+                Username = user.Username
+            };
+            if (camera.LocationId != null)
+            {
+                alertEmailInformation.LocationName = _databaseQueryService.GetLocationById(camera.LocationId.Value).LocationName;
+            }
+
+            return alertEmailInformation;
         }
 
         private void CreateNotificationForTriggeredAlert(DatabaseAlert alert,
