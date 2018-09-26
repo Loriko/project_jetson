@@ -1258,13 +1258,39 @@ namespace BackEndServer.Services
                             Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
-                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL])
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
                         };
                     }
                 }
             }
 
             return user;
+        }
+        
+        public bool PersistExistingUser(DatabaseUser databaseUser)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.FIRST_NAME_LABEL} = {formatNullableString(databaseUser.FirstName)}," +
+                               $"{DatabaseUser.LAST_NAME_LABEL} = {formatNullableString(databaseUser.LastName)}," +
+                               $"{DatabaseUser.EMAIL_ADDRESS_LABEL} = {formatNullableString(databaseUser.EmailAddress)} " +
+                               $"WHERE {DatabaseUser.USER_ID_LABEL} = {databaseUser.UserId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

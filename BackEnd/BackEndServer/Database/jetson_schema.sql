@@ -93,6 +93,8 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `password` VARCHAR(45) NOT NULL,
   `api_key` VARCHAR(45) NULL,
   `email_address` VARCHAR(45) NULL,
+  `first_name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 DEFAULT CHARACTER SET = utf8;
@@ -177,6 +179,6 @@ CREATE TABLE IF NOT EXISTS `jetson`.`notification` (
   CONSTRAINT `fk_notification_has_alert`
     FOREIGN KEY (`alert_id`)
     REFERENCES `jetson`.`alert` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;

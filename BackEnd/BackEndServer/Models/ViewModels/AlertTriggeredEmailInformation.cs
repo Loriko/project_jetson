@@ -4,7 +4,7 @@ namespace BackEndServer.Models.ViewModels
 {
     public class AlertTriggeredEmailInformation
     {
-        public string Username;
+        public string Name;
         public string AlertName;
         public string CameraName;
         public string LocationName;
