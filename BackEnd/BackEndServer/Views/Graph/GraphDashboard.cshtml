@@ -8,44 +8,19 @@
     function drawChart() {
         // Define the chart to be drawn.
         var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
-        for (i = 1; i < array.length; i++) {
+        for (i = 0; i < array.length; i++) {
             array[i][1] = parseInt(array[i][1]);
+            array[i][0] = new Date(parseInt(array[i][0]));
 
         }
 
-        var data = new google.visualization.arrayToDataTable(array);
+        var data = new google.visualization.DataTable();
+        data.addColumn('datetime', 'Time');
+        data.addColumn('number', 'People');
 
-//        var data2 = new google.visualization.arrayToDataTable([
-//            ["Time", 'Avg', 'Min', 'Max'],
-//            ["0:00", 90, 20, 110],
-//            ["1:00", 90, 20, 110],
-//            ["2:00", 100,50,130],
-//            ["3:00", 150,145,156],
-//            ["4:00", 132,122,145],
-//            ["5:00", 176,165,245],
-//            ["6:00", 154,122,159],
-//            ["7:00", 123,100,133],
-//            ["8:00", 90, 20, 110],
-//            ["9:00", 100, 50, 130],
-//            ["10:00", 150, 145, 156],
-//            ["11:00", 132, 122, 145],
-//            ["12:00", 176, 165, 245],
-//            ["13:00", 154, 122, 159],
-//            ["14:00", 123, 100, 133],
-//            ["15:00", 90, 20, 110],
-//            ["16:00", 90, 20, 110]
-//        ]);
-//
-//        var data3 = new google.visualization.arrayToDataTable([
-//            ['Time', 'Avg', 'Min', 'Max'],
-//            ['2:00', 1,0,3],
-//            ['3:00', 2,1,2],
-//            ['4:00', 3,2,5],
-//            ['5:00', 3,0,2],
-//            ['6:00', 3,0,2],
-//            ['7:00', 0,0,0],
-//            ['8:00', 0,0,0]
-//        ]);
+        data.addRows(array);
+
+
 
         var options = {
             legend: { position: 'bottom' }
@@ -56,17 +31,12 @@
         var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
         chart.draw(data, options);
 
-//        chart = new google.visualization.LineChart(document.getElementById('curve_chart2'));
-//        chart.draw(data2, options);
-//
-//        chart = new google.visualization.LineChart(document.getElementById('curve_chart3'));
-//        chart.draw(data3, options);
     }
 </script>
 
 
 <div class="row">
-    <div class="col s7">
+    <div class="col s5">
         <ul class="tabs">
             <li class="tab"><a class="teal-text" href="#test1">1 Day</a></li>
             <li class="tab"><a class="teal-text" href="#test2">1 Week</a></li>
@@ -77,13 +47,12 @@
         </ul>
     </div>
     <div class="input-field col s2">
-        <select>
-            <option value="" disabled >Choose Year</option>
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option selected value="2018">2018</option>
-        </select>
-        <label>Select Year</label>
+        <input type="text" class="datepicker">
+        <label>Start Date</label>
+    </div>
+    <div class="input-field col s2">
+        <input type="text" class="datepicker">
+        <label>End Date</label>
     </div>
     <div class="input-field col s3">
         <select>

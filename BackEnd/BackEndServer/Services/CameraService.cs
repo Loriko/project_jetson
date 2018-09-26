@@ -75,8 +75,8 @@ namespace BackEndServer.Services
         {
             CameraInformation cameraInformation = getCameraInformationById(cameraId);
             // Line below is what it should be... but we're using the placeholder graphStatisticService for now
-//            GraphStatistics graphStatistics = _graphStatisticsService.GetYearlyGraphStatistics(cameraId);
-            GraphStatistics graphStatistics = new PlaceholderGraphStatisticsService().GetYearlyGraphStatistics(cameraId);
+            GraphStatistics graphStatistics = _graphStatisticsService.GetYearlyGraphStatistics(cameraId);
+//            GraphStatistics graphStatistics = new PlaceholderGraphStatisticsService().GetYearlyGraphStatistics(cameraId);
             cameraInformation.GraphStatistics = graphStatistics;
             return cameraInformation;
         }

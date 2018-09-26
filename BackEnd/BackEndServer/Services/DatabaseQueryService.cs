@@ -1206,5 +1206,50 @@ namespace BackEndServer.Services
 
             return camera;
         }
+        public DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end)
+        {
+            DatabaseGraphStat stat = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT AVG({DatabaseGraphStat.NUM_DETECTED_OBJECTS_LABEL}) as avg_num," +
+                               $"MAX({ DatabaseGraphStat.NUM_DETECTED_OBJECTS_LABEL}) as max_num, " +
+                               $"MIN({ DatabaseGraphStat.NUM_DETECTED_OBJECTS_LABEL}) as min_num, " +
+                               $"{DatabaseGraphStat.CAMERA_ID_LABEL} " +
+                               $"FROM {DatabaseGraphStat.TABLE_NAME} " +
+                               //$"WHERE {DatabaseGraphStat.DATE_TIME_LABEL} between '2018-04-11 14:36:38' AND '2018-04-11 14:36:43' " +
+                               $"WHERE {DatabaseGraphStat.DATE_TIME_LABEL} between '{start.ToString("yyyy-MM-dd HH:mm:ss")}' AND '{end.ToString("yyyy-MM-dd HH:mm:ss")}' " +
+                               $"AND {DatabaseGraphStat.CAMERA_ID_LABEL} = {cameraID}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        stat = new DatabaseGraphStat
+                        {
+                            CameraID = Convert.ToString(reader[DatabaseGraphStat.CAMERA_ID_LABEL]),
+                            Start = start,
+                            End = end
+                        };
+                        if (reader["avg_num"] != DBNull.Value)
+                        {
+                            stat.AverageDetectedObjects = Convert.ToDouble(reader["avg_num"]);
+                        }
+                        if (reader["max_num"] != DBNull.Value) {
+                            stat.MaximumDetectedObjects = Convert.ToInt32(reader["max_num"]);
+                        }
+                        if (reader["min_num"] != DBNull.Value) {
+                            stat.MinimumDetectedObjects = Convert.ToInt32(reader["min_num"]);
+                        }
+                        
+                    }
+                }
+            }
+            return stat;
+        }
+        
     }
 }

@@ -6,14 +6,18 @@ using BackEndServer.Services.AbstractServices;
 using BackEndServer.Models.ViewModels;
 using System.Collections;
 using static System.Random;
+using BackEndServer.Models.DBModels;
+using BackEndServer.Models.ViewModels;
 
+//SHOULD BE DELETED AT SOME POINT.
+//Currently not being used now
 namespace BackEndServer.Services.PlaceholderServices
 {
-    public class PlaceholderGraphStatisticsService : AbstractGraphStatisticService
+    public class PlaceholderGraphStatisticsService
     {
-        
         public GraphStatistics GetYearlyGraphStatistics(int cameraId)
         {
+            
             GraphStatistics graphStatistics = new GraphStatistics();
 
             List<string[]> maxStats = new List<string[]>();
@@ -34,6 +38,7 @@ namespace BackEndServer.Services.PlaceholderServices
             graphStatistics.Stats = maxStats.ToArray();
 
             return graphStatistics;
+            
 
         }
 
