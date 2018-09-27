@@ -23,11 +23,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public IActionResult LocationSelection()
         {
             // TODO: There is a better way to do authentication, investigate and fix this in each controller
-            if (HttpContext.Session.GetString("currentUsername") == null)
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            LocationInformationList locationListModel = LocationService.getAvailableLocationsForUser("johndoe");
+            LocationInformationList locationListModel = LocationService.getAvailableLocationsForUser(currentUsedId.Value);
             return View(locationListModel);
         }
 
