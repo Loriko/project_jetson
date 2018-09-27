@@ -1,0 +1,35 @@
+﻿<div id="alert-deletion_confirmation-modal" class="modal small-modal">
+    <input type="hidden" name="ToBeDeletedAlertId">
+    <div class="modal-content">
+        <h1 class="confirmation-title page-title left-align">Are you sure you want to delete this alert?</h1>
+        <p>Deleting this alert will delete all the associated notifications.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect waves-light light-green" type="button" onclick="closeAlertDeletionModal()">Cancel</button>
+        <button class="btn waves-effect waves-light red" type="button" onclick="deleteAlert()">Delete</button>
+    </div>
+</div>
+
+<script>
+    function handleSuccess() {
+        closeAlertDeletionModal();
+        //We reload the page but only partially
+        $('#body-container').load("@Url.Action("Index", "Alert")");
+        Materialize.toast("Alert successfully deleted!", 4000);
+    }
+
+    function handleFailure() {
+        closeAlertDeletionModal();
+        Materialize.toast("Alert couldn't be deleted.", 4000);
+    }
+
+    function closeAlertDeletionModal() {
+        $("#alert-deletion_confirmation-modal").modal("close");
+    }
+
+    function deleteAlert() {
+        var alertId = $("input[name='ToBeDeletedAlertId']").val();
+        var data = { "alertId": alertId };
+        $.post("@Url.Action("DeleteAlert", "Alert")", data, handleSuccess).fail(handleFailure);
+    }
+</script>

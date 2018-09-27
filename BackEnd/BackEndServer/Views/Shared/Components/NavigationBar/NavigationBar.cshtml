@@ -1,7 +1,8 @@
 ﻿@model BackEndServer.Models.ViewModels.NavigationBarDetails
 
 <ul id="profileDropDown" class="dropdown-content">
-    <li><a asp-controller="Home" asp-action="SignOut" >Sign Out</a></li>
+    <li><a asp-controller="User" asp-action="BeginUserSettingsModification">Modify Personal Settings</a></li>
+    <li><a asp-controller="Home" asp-action="SignOut">Sign Out</a></li>
 </ul>
 <nav>
     <div class="nav-wrapper teal">
@@ -42,7 +43,7 @@
                                 {
                                     <i class="material-icons">notifications_active</i>
                                 }
-                                '@(notification.Alert.AlertName)' alert triggered at @(notification.TriggerDateTime.ToShortDateString())
+                                '@(notification.Alert.AlertName)' alert triggered on @(notification.TriggerDateTime.ToShortDateString())
                             </a></li>
                     }
                     @* <li class="divider"></li> *@
