@@ -105,15 +105,39 @@ namespace BackEndServer.Services
             {
                 CameraName = camera.CameraName,
                 AlertName = alert.AlertName,
-                DateTriggered = earliestStatThatTriggersAlert.DateTime,
-                Username = user.Username
+                DateTriggered = earliestStatThatTriggersAlert.DateTime
             };
+            
+            alertEmailInformation.Name = GetUserName(user);
+
             if (camera.LocationId != null)
             {
                 alertEmailInformation.LocationName = _databaseQueryService.GetLocationById(camera.LocationId.Value).LocationName;
             }
 
             return alertEmailInformation;
+        }
+
+        private static string GetUserName(DatabaseUser user)
+        {
+            string name;
+            if (!user.FirstName.IsNullOrEmpty())
+            {
+                name = user.FirstName;
+                if (!user.LastName.IsNullOrEmpty())
+                {
+                    name += " " + user.LastName;
+                }   
+            }
+            else if (!user.LastName.IsNullOrEmpty())
+            {
+                name = user.LastName;
+            }
+            else
+            {
+                name = user.Username;
+            }
+            return name;
         }
 
         private void CreateNotificationForTriggeredAlert(DatabaseAlert alert,

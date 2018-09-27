@@ -54,5 +54,6 @@ namespace BackEndServer.Services.AbstractServices
         RestrictUsersCameraViewAccess
         List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
         DatabaseUser GetUserById(int userId);
+        bool PersistExistingUser(DatabaseUser databaseUser);
     }
 }

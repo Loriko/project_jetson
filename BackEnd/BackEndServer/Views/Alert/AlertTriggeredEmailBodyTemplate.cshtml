@@ -1,4 +1,5 @@
-﻿@model BackEndServer.Models.ViewModels.AlertTriggeredEmailInformation
+﻿@using Castle.Core.Internal
+@model BackEndServer.Models.ViewModels.AlertTriggeredEmailInformation
 
 <!DOCTYPE html>
 
@@ -8,7 +9,7 @@
 </head>
 <body>
 <div>
-    <p>Hi @Model.Username,</p>
+    <p>Hi @Model.Name,</p>
     <p>An alert you set up within the Project Jetson application was triggered. Here are the details:</p>
     <table>
         <tbody>
