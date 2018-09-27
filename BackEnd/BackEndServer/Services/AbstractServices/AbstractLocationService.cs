@@ -4,7 +4,7 @@ namespace BackEndServer.Services.AbstractServices
 {
     public interface AbstractLocationService
     {
-        LocationInformationList getAvailableLocationsForUser(string username);
+        LocationInformationList getAvailableLocationsForUser(int userId);
         bool SaveLocation(LocationDetails locationDetails);
     }
 }

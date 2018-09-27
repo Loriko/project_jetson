@@ -19,12 +19,18 @@ namespace BackEndServer.Services
             _locationService = locationService;
         }
 
-        public List<DatabaseCamera> getDatabaseCamerasAtLocation(int locationId)
+        public List<DatabaseCamera> GetDatabaseCamerasAtLocation(int locationId)
         {
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocation(locationId);
             return dbCameraList;
         }
 
+        public CameraInformationList GetCamerasAtLocationForUser(int locationId, int userId)
+        {
+            List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocationForUser(locationId, userId);
+            return new CameraInformationList(dbCameraList);
+        }
+        
         public CameraInformationList getCamerasAtLocation(int locationId)
         {
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocation(locationId);
@@ -89,11 +95,11 @@ namespace BackEndServer.Services
             return _dbQueryService.PersistNewCamera(camera);
         }
 
-        public CameraRegistrationDetails GetNewCameraRegistrationDetails(string username)
+        public CameraRegistrationDetails GetNewCameraRegistrationDetails(int userId)
         {
             return new CameraRegistrationDetails()
             {
-                locations = _locationService.getAvailableLocationsForUser(username),
+                locations = _locationService.getAvailableLocationsForUser(userId),
                 CameraDetails = new CameraDetails(),
                 resolutions = GetExistingCameraResolutions()
             };

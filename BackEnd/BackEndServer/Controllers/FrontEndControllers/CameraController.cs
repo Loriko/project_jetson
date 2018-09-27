@@ -6,6 +6,7 @@ using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using Castle.Core.Internal;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,11 +22,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
         [HttpGet] // /<controller>/
         public IActionResult CameraSelectionForLocation(int locationId)
         {
-            if (HttpContext.Session.GetString("currentUsername") == null)
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            CameraInformationList camerasAtLocationModel = CameraService.getCamerasAtLocation(locationId);
+            
+            CameraInformationList camerasAtLocationModel = CameraService.GetCamerasAtLocationForUser(locationId, currentUsedId.Value);
+            if (camerasAtLocationModel.CameraList.IsNullOrEmpty())
+            {
+                return RedirectToAction("LocationSelection", "Location"); 
+            }
+            
             return View(camerasAtLocationModel);
         }
 
@@ -62,13 +70,14 @@ namespace BackEndServer.Controllers.FrontEndControllers
         [HttpGet]
         public IActionResult BeginCameraRegistration()
         {
-            if (HttpContext.Session.GetString("currentUsername") == null)
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
 
             CameraRegistrationDetails registrationDetails =
-                CameraService.GetNewCameraRegistrationDetails(HttpContext.Session.GetString("currentUsername"));
+                CameraService.GetNewCameraRegistrationDetails(currentUsedId.Value);
             
             return View("CameraRegistration", registrationDetails);
         }
@@ -76,11 +85,6 @@ namespace BackEndServer.Controllers.FrontEndControllers
         [HttpPost]
         public IActionResult RegisterCamera(CameraDetails cameraDetails)
         {
-            if (HttpContext.Session.GetString("currentUsername") == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
             if (currentUserId != null)
@@ -132,15 +136,13 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 #endregion
 
                 CameraService.RegisterCamera(cameraDetails);
-
-                //                CameraService.SaveNewCamera(cameraDetails);
             }
             else
             {
-                throw new InvalidOperationException("Can't get current user's id!");
+                return RedirectToAction("SignIn", "Home");
             }
 
-            return View("CameraRegistration", CameraService.GetNewCameraRegistrationDetails(HttpContext.Session.GetString("currentUsername")));
+            return View("CameraRegistration", CameraService.GetNewCameraRegistrationDetails(currentUserId.Value));
         }
     }
 }
