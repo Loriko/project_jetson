@@ -2,7 +2,7 @@
 @using BackEndServer.Models.ViewModels
 @model AlertDashboardInformation
 @{ Html.RenderPartial("../Alert/AlertCreationModal", Model.Availablecameras); }
-
+@{ Html.RenderPartial("AlertDeletionConfirmationModal"); }
 <h1 class="page-title center-align">Your Alerts</h1>
 @{
     if (Model.ExistingAlertsByCameraId.Any(x => x.Value.Count > 0))
@@ -20,7 +20,7 @@
                             <div class="collapsible-body collection collapsible-collection">
                                 @foreach (var alert in Model.ExistingAlertsByCameraId[cameraId])
                                 {
-                                    <span class="collection-item avatar short">
+                                    <span class="collection-item avatar short alert-collection-item">
                                         <input type="hidden" name="AlertId" value="@alert.AlertId">
                                         <input type="hidden" name="AlertName" value="@alert.AlertName">
                                         <input type="hidden" name="CameraId" value="@alert.CameraId">
@@ -46,7 +46,7 @@
                                         <p>@alert.TriggerString()
                                         </p>
                                         <span class="secondary-content">
-                                            <a href="@Url.Action("DeleteAlert", "Alert", new {alertId = alert.AlertId})"><i class="material-icons">remove_circle</i></a>
+                                            <a href="#!" onclick="showAlertDeletionConfirmationModal(this.parentNode.parentNode)"><i class="material-icons">remove_circle</i></a>
                                             <a href="#!" onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
                                         </span>
                                     </span>
@@ -75,6 +75,11 @@
 </div>
 
 <script>
+    function showAlertDeletionConfirmationModal(cameraDiv) {
+        $("input[name='ToBeDeletedAlertId']").val(cameraDiv.children["AlertId"].value);
+        $('#alert-deletion_confirmation-modal').modal("open");
+    }
+    
     function showAlertEditModal(cameraDiv) {
         var alert = {
             alertId: cameraDiv.children["AlertId"].value,
@@ -91,4 +96,11 @@
         $('#alert-creation-modal').modal("open");
     }
     $("#create_alert_btn").on("click", window.setToCreateMode);
+    
+    @if (Context.Request.Headers["x-requested-with"]=="XMLHttpRequest")
+    {
+        <text>
+            window.loadMaterializeEffects();
+        </text>
+    }
 </script>

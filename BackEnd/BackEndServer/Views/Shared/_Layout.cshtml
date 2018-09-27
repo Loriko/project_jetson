@@ -25,7 +25,7 @@
 
 @await Component.InvokeAsync("NavigationBar")
 
-<main class="container body-content">
+<main id="body-container" class="container body-content">
     @RenderBody()
 </main>
 
@@ -66,10 +66,11 @@
 </environment>
 
 <script>
-    $(document).ready(function() {
+    function loadMaterializeEffects() {
         $(".dropdown-button").dropdown();
         $('select').material_select();
         $('.modal').modal();
+        $('.collapsible').collapsible();
         $('.timepicker').pickatime({
             default: 'now', // Set default time: 'now', '1:30AM', '16:30'
             twelvehour: true // Use AM/PM or 24-hour format
@@ -80,6 +81,9 @@
             closeOnSelect: true, // Close upon selecting a date,
             container: 'body' // ex. 'body' will append picker to body
         });
+    }
+    $(document).ready(function() {
+        loadMaterializeEffects();
     });
 </script>
 

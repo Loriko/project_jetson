@@ -35,6 +35,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 Availablecameras = availableCameras,
                 ExistingAlertsByCameraId = existingAlertsByCameraId
             };
+            //Check if it's an ajax request for page reloading, meaning we don't want the view + layout, just the view
+            //TODO: Create a controller extension class that has a IsAjaxRequest method
+            if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
+            {
+                return PartialView("Dashboard", info);
+            }
             
             return View("Dashboard", info);
         }

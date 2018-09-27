@@ -1,0 +1,65 @@
+@model BackEndServer.Models.ViewModels.UserSettings
+
+<h1 class="page-title center-align">Please modify your personal settings as you will</h1>
+
+<div class="row">
+    <form id="user_settings_modification_form" class="col s12" method="post" asp-controller="User" asp-action="ModifyUserSettings" enctype="multipart/form-data">
+        <input type="hidden" name="UserId" value="@Model.UserId">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="first_name" name="FirstName" type="text" class="validate" value="@Model.FirstName">
+                <label for="first_name">First Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="last_name" name="LastName" type="text" class="validate" value="@Model.LastName">
+                <label for="last_name">Last Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="email_address" name="EmailAddress" type="text" class="validate" value="@Model.EmailAddress">
+                <label for="email_address">Email Address</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="row">
+            <div class="s12">
+                <button class="btn waves-effect waves-light right-align" type="submit" name="action">
+                    Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    function handleUserModificationFormSubmission(response) {
+        if (response === true) {
+            Materialize.toast("Personal settings successfully modified!", 4000);
+        } else {
+            Materialize.toast("Couldn't modify personal settings.", 4000);
+        }
+    }
+
+    $("#user_settings_modification_form").submit(function(e) {
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data) {
+                handleUserModificationFormSubmission(data);
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+</script>
