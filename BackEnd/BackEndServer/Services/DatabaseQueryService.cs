@@ -1278,6 +1278,7 @@ namespace BackEndServer.Services
         {
             DatabaseCamera camera = new DatabaseCamera
             {
+                CameraKey = Convert.ToString(reader[DatabaseCamera.CAMERA_KEY_LABEL]),
                 CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL])
             };
             if (reader[DatabaseCamera.CAMERA_NAME_LABEL] != DBNull.Value)
