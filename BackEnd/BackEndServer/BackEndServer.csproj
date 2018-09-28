@@ -20,7 +20,6 @@
   <ItemGroup>
     <Compile Remove="Controllers\HomeController.cs" />
     <Compile Remove="Models\ViewModels\Startup.cs" />
-    <Compile Remove="Models\ViewModels\EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\ViewModels\" />
