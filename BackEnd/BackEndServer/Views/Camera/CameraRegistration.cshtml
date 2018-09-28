@@ -4,6 +4,23 @@
 <div class="row">
     <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera">
         <div class="row">
+            <div class="input-field col s9">
+                <select id="location_id" name="LocationId">
+                    <option value="" disabled selected>Please select the location where the camera is installed</option>
+                    @{
+                    foreach (var locationInformation in Model.locations.LocationList)
+                    {
+                        <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>
+                    }
+                    }
+                </select>
+                <label for="location_id">Camera Location</label>
+            </div>
+            <div class="input-field col s3 right-align">
+                <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
+            </div>
+        </div>
+        <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" type="text" class="validate" required>
                 <label for="camera_name">Camera Name</label>
@@ -19,24 +36,7 @@
                 <label for="camera_key">Camera Key</label>
             </div>
         </div>
-
-        <div class="row">
-            <div class="input-field col s9">
-                <select id="location_id" name="LocationId">
-                    <option value="" disabled selected>Please select the location where the camera is installed</option>
-                    @{
-                        foreach (var locationInformation in Model.locations.LocationList)
-                        {
-                            <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>
-                        }
-                    }
-                </select>
-                <label for="location_id">Camera Location</label>
-            </div>
-            <div class="input-field col s3 right-align">
-                <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
-            </div>
-        </div>
+        
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_brand" name="Brand" type="text" class="validate">

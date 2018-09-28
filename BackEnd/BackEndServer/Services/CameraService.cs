@@ -118,7 +118,7 @@ namespace BackEndServer.Services
 
         public bool RegisterCamera(CameraDetails cameraDetails)
         {
-            return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails));
+            return _dbQueryService.PersistExistingCameraByCameraKey (new DatabaseCamera(cameraDetails));
         }
 
         public List<string> GetExistingCameraResolutions()

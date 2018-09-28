@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="" />
+    <list default="true" id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/riderModule.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/EditCameraInformationModal.cshtml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
-    <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,64 +32,98 @@
     <expand />
     <select />
   </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-413139211">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="cs" value="1" />
+          <entry key="cshtml" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="C#" value="1" />
+          <entry key="Razor" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GraphDashboard.cshtml" pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="9" column="45" lean-forward="false" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-              <folding />
+            <state relative-caret-position="135">
+              <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatabaseQueryService.cs" pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7800">
-              <caret line="325" column="0" lean-forward="false" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
+            <state relative-caret-position="4875">
+              <caret line="325" selection-start-line="325" selection-end-line="325" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
               <folding>
-                <marker date="1521638827382" expanded="true" signature="15724:15730" ph="{...}" />
+                <marker date="1537307341176" expanded="true" signature="214:609" ph="&lt;div.../&gt;" />
+                <marker date="1537307341176" expanded="true" signature="252:417" ph="&lt;div.../&gt;" />
+                <marker date="1537307341176" expanded="true" signature="422:602" ph="&lt;div.../&gt;" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CameraInformation.cshtml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="40" lean-forward="false" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+            <state relative-caret-position="223">
+              <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
               <folding>
-                <marker date="1521638827385" expanded="true" signature="213:1917" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="240:680" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="273:669" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="317:654" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="360:639" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="685:1910" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="762:1899" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="816:1620" ph="@..." />
-                <marker date="1521638827385" expanded="true" signature="870:1413" ph="{...}" />
-                <marker date="1521638827385" expanded="true" signature="909:1062" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="1083:1242" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="1263:1395" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="1434:1606" ph="{...}" />
-                <marker date="1521638827385" expanded="true" signature="1473:1588" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="1633:1884" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="1946:3349" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="1973:3289" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="2019:2132" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="2141:3050" ph="@..." />
-                <marker date="1521638827385" expanded="true" signature="2253:2447" ph="{...}" />
-                <marker date="1521638827385" expanded="true" signature="2284:2425" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="2464:3040" ph="{...}" />
-                <marker date="1521638827385" expanded="true" signature="2544:2780" ph="{...}" />
-                <marker date="1521638827385" expanded="true" signature="2583:2751" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="2801:3026" ph="{...}" />
-                <marker date="1521638827385" expanded="true" signature="2840:3008" ph="&lt;div.../&gt;" />
-                <marker date="1521638827385" expanded="true" signature="3294:3342" ph="&lt;div.../&gt;" />
+                <marker date="1537651492411" expanded="false" signature="6:443" ph="..." />
+                <marker date="1537651492411" expanded="true" signature="614:5147" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="663:5145" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="1137:1474" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="1221:1308" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="1536:2055" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="1620:1707" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="1875:1959" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="1976:2045" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="2122:2398" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="2206:2293" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="2462:2898" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="2546:2633" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="2945:3347" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="3074:3161" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="3440:4256" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="3524:3611" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="3731:3942" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="3959:4072" ph="{...}" />
+                <marker date="1537651492411" expanded="true" signature="4266:5139" ph="/* [HttpPost] ... */" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -102,62 +147,50 @@
       <find>PerSecondStat</find>
       <find>DataMessage</find>
       <find>Entrance</find>
+      <find>ManageCameras</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseAddress.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/TestObject.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStats.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/549E3A02-C30C-4A42-B0AB-FC9E12496C38/e4/43b64d0d/MySqlConnection.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/HelperServices/MySqlDateTimeConverter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Startup.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/FailedPersistResponseBody.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/TimeInterval.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/TimeInterval.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/HelperServices/MySqlDateTimeConverter.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/27/e15c06eb/ExecutionContextSwitcher.cs" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderLocationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Startup.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderCameraService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/a2/4a473184/Nullable`1.cs" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7F8C3ACB-0FAC-4C88-B257-0BC9852782D6/ff/6547d9fb/RazorPage`1.cs" root0="SKIP_INSPECTION" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -202,6 +235,7 @@
         <option value="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" />
       </list>
     </option>
   </component>
@@ -218,44 +252,62 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="SolutionExplorer" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource />
-      <sortByType />
-      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="FileSystemExplorer" />
       <pane id="SolutionExplorer">
         <subPane>
           <expand>
             <path>
-              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-              <item name="BackEnd (1 project)" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
-              <item name="" type="13324e5d:SolutionExplorerViewPane$ProjectViewPaneTreeStructure$createRoot$1" />
-              <item name="BackEnd (1 project)" type="977d5f41:SolutionExplorerNodeRider" />
-              <item name="BackEndServer" type="977d5f41:SolutionExplorerNodeRider" />
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Controllers" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Controllers" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="FrontEndControllers" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Camera" type="24d0babc:SolutionExplorerModelNode" />
             </path>
           </expand>
           <select />
         </subPane>
-        <option name="show-file-system" value="false" />
-        <option name="show-all-items" value="false" />
+        <option name="show-all-files" value="false" />
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="camera&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;layout&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Shared/_Layout.cshtml&#10;camerainforma&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;gethourly&#9;null&#9;null&#10;camera.cs&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs&#10;databaseq&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;cameracontro&#9;null&#9;null&#10;database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;Database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;locationservice&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/LocationService.cs&#10;d&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;LocationCon&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="ManageCameras&#9;FILE&#9;file:///Users/umarrehmani/Desktop/project_jetson/BackEnd/BackEndServer/Views/Camera/ManageCameras.cshtml&#10;camera&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;layout&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Shared/_Layout.cshtml&#10;camerainforma&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;gethourly&#9;null&#9;null&#10;camera.cs&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs&#10;databaseq&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;cameracontro&#9;null&#9;null&#10;database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;Database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;locationservice&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/LocationService.cs&#10;d&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;LocationCon&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RunDashboard">
@@ -280,8 +332,9 @@
         <env name="ASPNETCORE_ENVIRONMENT" value="Development" />
         <env name="ASPNETCORE_URLS" value="http://localhost:5000" />
       </envs>
-      <option name="USE_MONO" value="0" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="PROJECT_PATH" value="$PROJECT_DIR$/BackEndServer/BackEndServer.csproj" />
       <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
       <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
@@ -289,10 +342,10 @@
       <option name="PROJECT_KIND" value="DotNetCore" />
       <option name="PROJECT_TFM" value=".NETCoreApp,Version=v2.0" />
       <browser url="http://localhost:5000" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
     </configuration>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -306,11 +359,12 @@
       <updated>1521525761457</updated>
       <workItem from="1521525762930" duration="24024000" />
       <workItem from="1521609444102" duration="1503000" />
+      <workItem from="1538161172808" duration="865000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26679000" />
+    <option name="totallyTimeSpent" value="27544000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -324,51 +378,46 @@
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36251542" sideWeight="0.5028612" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2219482" sideWeight="0.49713877" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.36251542" sideWeight="0.49713877" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2532189" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18125771" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Errors In Solution" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Unit Tests" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2219482" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18618989" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="NuGet" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3287483" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Change Signature" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24964234" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18125771" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2532189" />
+      <window_info id="Structure" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="REST Client" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="4" weight="0.18618989" />
+      <window_info anchor="bottom" id="Terminal" order="5" />
+      <window_info anchor="bottom" id="NuGet" order="6" weight="0.3287483" />
+      <window_info anchor="bottom" id="Change Signature" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" order="9" weight="0.32891566" />
+      <window_info anchor="bottom" id="Message" order="10" />
+      <window_info anchor="bottom" id="Find" order="11" />
+      <window_info anchor="bottom" id="Run" order="12" visible="true" weight="0.22168675" />
+      <window_info anchor="bottom" id="Debug" order="13" weight="0.18125771" />
+      <window_info anchor="bottom" id="Cvs" order="14" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="15" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="16" />
+      <window_info anchor="bottom" id="Messages" order="17" />
+      <window_info anchor="right" id="Database" order="0" weight="0.3298969" />
+      <window_info anchor="right" id="Errors In Solution" order="1" />
+      <window_info anchor="right" id="Commander" order="2" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="null" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -378,10 +427,10 @@
           <line>189</line>
           <properties documentPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" initialLine="188">
             <startOffsets>
-              <startOffset value="8357" />
+              <option value="8357" />
             </startOffsets>
             <endOffsets>
-              <endOffset value="8379" />
+              <option value="8379" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="11" />
@@ -391,21 +440,23 @@
           <line>195</line>
           <properties documentPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" initialLine="193">
             <startOffsets>
-              <startOffset value="8574" />
+              <option value="8574" />
             </startOffsets>
             <endOffsets>
-              <endOffset value="8587" />
+              <option value="8587" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="13" />
+        </breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="13" />
     </breakpoint-manager>
-    <watches-manager />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -417,50 +468,22 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStats.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="29" lean-forward="false" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="14" column="9" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/images/camera_images/no_location_picture.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
+      <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="314">
-          <caret line="15" column="86" lean-forward="false" selection-start-line="15" selection-start-column="86" selection-end-line="15" selection-end-column="86" />
+          <caret line="15" column="86" selection-start-line="15" selection-start-column="86" selection-end-line="15" selection-end-column="86" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderLocationService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="15" column="75" lean-forward="false" selection-start-line="15" selection-start-column="75" selection-end-line="15" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/appsettings.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="25" lean-forward="false" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="108" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderLocationService.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/appsettings.json" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
-          <caret line="7" column="8" lean-forward="false" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="78" />
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="78" />
         </state>
       </provider>
     </entry>
@@ -474,35 +497,23 @@
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/LocationService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
-          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="13" selection-end-column="62" />
+          <caret line="11" selection-start-line="11" selection-end-line="13" selection-end-column="62" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderCameraService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="16" column="90" lean-forward="false" selection-start-line="16" selection-start-column="90" selection-end-line="16" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderCameraService.cs" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerHourStats.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="29" lean-forward="false" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerHourStats.cs" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
-          <caret line="1" column="89" lean-forward="false" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
+          <caret line="1" column="89" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
         </state>
       </provider>
     </entry>
@@ -516,293 +527,220 @@
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
-          <caret line="6" column="21" lean-forward="false" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
+          <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7F8C3ACB-0FAC-4C88-B257-0BC9852782D6/ff/6547d9fb/RazorPage`1.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="19" column="18" lean-forward="true" selection-start-line="19" selection-start-column="18" selection-end-line="19" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/a2/4a473184/Nullable`1.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="34" column="13" lean-forward="false" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseAddress.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="6" column="39" lean-forward="false" selection-start-line="6" selection-start-column="39" selection-end-line="6" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/7F8C3ACB-0FAC-4C88-B257-0BC9852782D6/ff/6547d9fb/RazorPage`1.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/a2/4a473184/Nullable`1.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseAddress.cs" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="96">
-          <caret line="4" column="32" lean-forward="false" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/TestObject.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="96">
-          <caret line="4" column="29" lean-forward="false" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/27/e15c06eb/ExecutionContextSwitcher.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="15" column="6" lean-forward="false" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/TestObject.cs" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/899ABC88-C3F1-4C7D-B7BA-444AD3BDFC76/27/e15c06eb/ExecutionContextSwitcher.cs" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
-          <caret line="20" column="32" lean-forward="false" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
+          <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
-          <caret line="5" column="54" lean-forward="false" selection-start-line="5" selection-start-column="54" selection-end-line="5" selection-end-column="54" />
+          <caret line="5" column="54" selection-start-line="5" selection-start-column="54" selection-end-line="5" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="246">
-          <caret line="23" column="40" lean-forward="false" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
+          <caret line="23" column="40" selection-start-line="23" selection-start-column="40" selection-end-line="23" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="256">
-          <caret line="20" column="16" lean-forward="false" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="58" />
+          <caret line="20" column="16" selection-start-line="20" selection-start-column="16" selection-end-line="20" selection-end-column="58" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Startup.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
-          <caret line="44" column="29" lean-forward="false" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
+          <caret line="44" column="29" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/FailedPersistResponseBody.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
-          <caret line="8" column="52" lean-forward="false" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
+          <caret line="8" column="52" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3240">
-          <caret line="135" column="54" lean-forward="false" selection-start-line="135" selection-start-column="54" selection-end-line="135" selection-end-column="54" />
+          <caret line="135" column="54" selection-start-line="135" selection-start-column="54" selection-end-line="135" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="7" column="32" lean-forward="false" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="32" />
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="32" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="16" column="25" lean-forward="false" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="25" />
+          <caret line="16" column="25" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="24" column="60" lean-forward="false" selection-start-line="24" selection-start-column="60" selection-end-line="24" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2208">
-          <caret line="92" column="16" lean-forward="false" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="54" column="13" lean-forward="false" selection-start-line="54" selection-start-column="13" selection-end-line="54" selection-end-column="13" />
+          <caret line="92" column="16" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
-          <caret line="108" column="21" lean-forward="false" selection-start-line="108" selection-start-column="21" selection-end-line="108" selection-end-column="21" />
+          <caret line="108" column="21" selection-start-line="108" selection-start-column="21" selection-end-line="108" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/CameraService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
-          <caret line="21" column="61" lean-forward="false" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="61" />
+          <caret line="21" column="61" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="61" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
-          <caret line="12" column="0" lean-forward="false" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="24" column="41" lean-forward="false" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="9" column="45" lean-forward="false" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
-          <folding />
+        <state>
+          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1080">
-          <caret line="48" column="49" lean-forward="false" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
+          <caret line="48" column="49" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="22" column="64" lean-forward="false" selection-start-line="22" selection-start-column="64" selection-end-line="22" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="48" column="42" lean-forward="false" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="55" column="12" lean-forward="false" selection-start-line="55" selection-start-column="12" selection-end-line="55" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="364">
-          <caret line="41" column="12" lean-forward="false" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
+          <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/549E3A02-C30C-4A42-B0AB-FC9E12496C38/e4/43b64d0d/MySqlConnection.cs">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/549E3A02-C30C-4A42-B0AB-FC9E12496C38/e4/43b64d0d/MySqlConnection.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
-          <caret line="84" column="22" lean-forward="false" selection-start-line="84" selection-start-column="22" selection-end-line="84" selection-end-column="22" />
+        <state relative-caret-position="135">
+          <caret line="9" column="45" selection-start-line="9" selection-start-column="45" selection-end-line="9" selection-end-column="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7800">
-          <caret line="325" column="0" lean-forward="false" selection-start-line="325" selection-start-column="0" selection-end-line="325" selection-end-column="0" />
-          <folding>
-            <marker date="1521638827382" expanded="true" signature="15724:15730" ph="{...}" />
-          </folding>
+        <state relative-caret-position="4875">
+          <caret line="325" selection-start-line="325" selection-end-line="325" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="8" column="40" lean-forward="false" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+        <state relative-caret-position="120">
+          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
           <folding>
-            <marker date="1521638827385" expanded="true" signature="213:1917" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="240:680" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="273:669" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="317:654" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="360:639" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="685:1910" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="762:1899" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="816:1620" ph="@..." />
-            <marker date="1521638827385" expanded="true" signature="870:1413" ph="{...}" />
-            <marker date="1521638827385" expanded="true" signature="909:1062" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="1083:1242" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="1263:1395" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="1434:1606" ph="{...}" />
-            <marker date="1521638827385" expanded="true" signature="1473:1588" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="1633:1884" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="1946:3349" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="1973:3289" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="2019:2132" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="2141:3050" ph="@..." />
-            <marker date="1521638827385" expanded="true" signature="2253:2447" ph="{...}" />
-            <marker date="1521638827385" expanded="true" signature="2284:2425" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="2464:3040" ph="{...}" />
-            <marker date="1521638827385" expanded="true" signature="2544:2780" ph="{...}" />
-            <marker date="1521638827385" expanded="true" signature="2583:2751" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="2801:3026" ph="{...}" />
-            <marker date="1521638827385" expanded="true" signature="2840:3008" ph="&lt;div.../&gt;" />
-            <marker date="1521638827385" expanded="true" signature="3294:3342" ph="&lt;div.../&gt;" />
+            <marker date="1537307341176" expanded="true" signature="214:609" ph="&lt;div.../&gt;" />
+            <marker date="1537307341176" expanded="true" signature="252:417" ph="&lt;div.../&gt;" />
+            <marker date="1537307341176" expanded="true" signature="422:602" ph="&lt;div.../&gt;" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/EditCameraInformationModal.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
+          <folding>
+            <marker date="1537651492411" expanded="false" signature="6:443" ph="..." />
+            <marker date="1537651492411" expanded="true" signature="614:5147" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="663:5145" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="1137:1474" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="1221:1308" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="1536:2055" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="1620:1707" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="1875:1959" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="1976:2045" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="2122:2398" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="2206:2293" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="2462:2898" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="2546:2633" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="2945:3347" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="3074:3161" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="3440:4256" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="3524:3611" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="3731:3942" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="3959:4072" ph="{...}" />
+            <marker date="1537651492411" expanded="true" signature="4266:5139" ph="/* [HttpPost] ... */" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
         </state>
       </provider>
     </entry>

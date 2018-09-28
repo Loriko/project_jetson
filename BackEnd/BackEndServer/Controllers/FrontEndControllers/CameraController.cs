@@ -101,7 +101,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 cameraDetails.UserId = currentUsedId.Value;
                 CameraService.RegisterCamera(cameraDetails);
-//                CameraService.SaveNewCamera(cameraDetails);
+                //CameraService.SaveNewCamera(cameraDetails);
             }
             else
             {
@@ -110,5 +110,27 @@ namespace BackEndServer.Controllers.FrontEndControllers
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUsedId.Value);
             return View("ManageCameras", availableCameras);
         }
+
+        //[HttpPost]
+        //public IActionResult EditCamera(CameraDetails cameraDetails)
+        //{
+        //    if (HttpContext.Session.GetString("currentUsername") == null)
+        //    {
+        //        return RedirectToAction("SignIn", "Home");
+        //    }
+
+        //    int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+        //    if (currentUsedId != null)
+        //    {
+        //        cameraDetails.UserId = currentUsedId.Value;
+        //        CameraService.RegisterCamera(cameraDetails);
+        //    }
+        //    else
+        //    {
+        //        throw new InvalidOperationException("Can't get current user's id!");
+        //    }
+        //    CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUsedId.Value);
+        //    return View("ManageCameras", availableCameras);
+        //}
     }
 }

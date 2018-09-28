@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="RIDER_MODULE" version="4">
   <component name="NewModuleRootManager">
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/app.config.transform" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlCommand.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlCommandBuilder.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlConnection.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlConnectionStringBuilder.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlDataAdapter.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlDataReader.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlException.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlHelper.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlParameter.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlParameterCollection.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/docs/MySqlTransaction.xml" />
-    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/8.0.10-rc/contentFiles/any/netcoreapp2.0/web.config.transform" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/app.config.transform" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlCommand.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlCommandBuilder.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlConnection.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlConnectionStringBuilder.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlDataAdapter.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlDataReader.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlException.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlHelper.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlParameter.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlParameterCollection.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/docs/MySqlTransaction.xml" />
+    <content url="file://$USER_HOME$/.nuget/packages/mysql.data/6.10.6/contentFiles/any/netcoreapp2.0/web.config.transform" />
+    <content url="file://$USER_HOME$/.nuget/packages/nunit3testadapter/3.10.0/build/netcoreapp1.0/Mono.Cecil.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/nunit3testadapter/3.10.0/build/netcoreapp1.0/NUnit3.TestAdapter.dll" />
+    <content url="file://$USER_HOME$/.nuget/packages/nunit3testadapter/3.10.0/build/netcoreapp1.0/NUnit3.TestAdapter.pdb" />
+    <content url="file://$USER_HOME$/.nuget/packages/nunit3testadapter/3.10.0/build/netcoreapp1.0/nunit.engine.netstandard.dll" />
     <content url="file://$MODULE_DIR$/../.." />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
