@@ -22,6 +22,10 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
         public IActionResult SignIn()
         {
+            if (HttpContext.Session.GetString("currentUsername") != null)
+            {
+                return RedirectToAction("LocationSelection", "Location");
+            }
             AuthenticationInformation authenticationModel = new AuthenticationInformation();
             return View(authenticationModel);
         }

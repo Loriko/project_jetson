@@ -65,6 +65,7 @@
             <e p="HomeController.cs" t="Include" />
             <e p="LocationController.cs" t="Include" />
             <e p="NotificationController.cs" t="Include" />
+            <e p="UserController.cs" t="Include" />
           </e>
         </e>
         <e p="Database" t="Include">
@@ -84,6 +85,7 @@
             <e p="DatabaseNotification.cs" t="Include" />
             <e p="DatabasePerHourStat.cs" t="Include" />
             <e p="DatabasePerSecondStat.cs" t="Include" />
+            <e p="DatabaseUser.cs" t="Include" />
           </e>
           <e p="Enums" t="Include">
             <e p="ContactMethod.cs" t="Include" />
@@ -94,6 +96,7 @@
             <e p="AlertDashboardInformation.cs" t="Include" />
             <e p="AlertDetails.cs" t="Include" />
             <e p="AlertDisablingInformation.cs" t="Include" />
+            <e p="AlertTriggeredEmailInformation.cs" t="Include" />
             <e p="AuthenticationInformation.cs" t="Include" />
             <e p="CameraDetails.cs" t="Include" />
             <e p="CameraInformation.cs" t="Include" />
@@ -109,6 +112,7 @@
             <e p="NavigationBarDetails.cs" t="Include" />
             <e p="NotificationDetails.cs" t="Include" />
             <e p="SignInNavigationBarDetails.cs" t="Include" />
+            <e p="UserSettings.cs" t="Include" />
           </e>
         </e>
         <e p="obj" t="ExcludeRecursive">
@@ -134,6 +138,7 @@
             <e p="AbstractHourlyStatsService.cs" t="Include" />
             <e p="AbstractLocationService.cs" t="Include" />
             <e p="AbstractNotificationService.cs" t="Include" />
+            <e p="AbstractUserService.cs" t="Include" />
             <e p="IDatabaseQueryService.cs" t="Include" />
           </e>
           <e p="AlertMonitoringService.cs" t="Include" />
@@ -143,12 +148,15 @@
           <e p="CameraService.cs" t="Include" />
           <e p="DatabaseQueryService.cs" t="Include" />
           <e p="DataMessageService.cs" t="Include" />
+          <e p="EmailService.cs" t="Include" />
           <e p="GraphStatisticService.cs" t="Include" />
           <e p="HelperServices" t="Include">
             <e p="DateTimeTools.cs" t="Include" />
             <e p="HashingTools.cs" t="Include" />
+            <e p="HttpPostedFileBaseExtensions.cs" t="Include" />
             <e p="MySqlDateTimeConverter.cs" t="Include" />
             <e p="MySqlDateTimeTools.cs" t="Include" />
+            <e p="RazorEngineWrapper.cs" t="Include" />
             <e p="StringGenerator.cs" t="Include" />
           </e>
           <e p="HourlyStatsService.cs" t="Include" />
@@ -158,6 +166,7 @@
             <e p="PlaceholderAuthenticationService.cs" t="Include" />
             <e p="PlaceholderGraphStatisticsService.cs" t="Include" />
           </e>
+          <e p="UserService.cs" t="Include" />
         </e>
         <e p="Startup.cs" t="Include" />
         <e p="Tests" t="Include">
@@ -173,7 +182,9 @@
           <e p="_ViewStart.cshtml" t="Include" />
           <e p="Alert" t="Include">
             <e p="AlertCreationModal.cshtml" t="Include" />
+            <e p="AlertDeletionConfirmationModal.cshtml" t="Include" />
             <e p="AlertDisablingModal.cshtml" t="Include" />
+            <e p="AlertTriggeredEmailBodyTemplate.cshtml" t="Include" />
             <e p="Dashboard.cshtml" t="Include" />
           </e>
           <e p="Camera" t="Include">
@@ -211,9 +222,13 @@
             </e>
             <e p="Error.cshtml" t="Include" />
           </e>
+          <e p="User" t="Include">
+            <e p="UserSettings.cshtml" t="Include" />
+          </e>
         </e>
         <e p="wwwroot" t="Include">
           <e p="css" t="Include">
+            <e p="ImageUpload.css" t="Include" />
             <e p="site.css" t="Include" />
             <e p="site.min.css" t="Include" />
             <e p="site2.css" t="Include" />
@@ -235,6 +250,7 @@
             <e p="dead_camera.png" t="Include" />
           </e>
           <e p="js" t="Include">
+            <e p="ImageUpload.js" t="Include" />
             <e p="site.js" t="Include" />
             <e p="site.min.js" t="Include" />
           </e>

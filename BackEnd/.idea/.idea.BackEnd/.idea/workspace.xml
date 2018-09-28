@@ -2,17 +2,55 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/UserController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseUser.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/AlertTriggeredEmailInformation.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/UserSettings.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractUserService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Services/EmailService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Services/HelperServices/HttpPostedFileBaseExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Services/HelperServices/RazorEngineWrapper.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Services/UserService.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Views/Alert/AlertDeletionConfirmationModal.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Views/Alert/AlertTriggeredEmailBodyTemplate.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/Views/User/UserSettings.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/wwwroot/css/ImageUpload.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/BackEndServer/wwwroot/js/ImageUpload.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/BackEndServer.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/BackEndServer.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/AlertController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/AlertController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Database/jetson_schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Database/jetson_schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraDetails.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraDetails.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/IDatabaseQueryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/IDatabaseQueryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/AlertMonitoringService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/AlertMonitoringService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Alert/AlertCreationModal.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Alert/AlertCreationModal.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Notification/NotificationInformation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Notification/NotificationInformation.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css" afterDir="false" />
+    </list>
+    <list id="ef2f6c79-3e27-4649-a473-204411f42ef2" name="Unversioned" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.BackEnd/riderModule.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.BackEnd/riderModule.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/EditCameraInformationModal.cshtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -42,14 +80,28 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="cs" value="1" />
-          <entry key="cshtml" value="2" />
+          <entry key="cs" value="2" />
+          <entry key="cshtml" value="3" />
+          <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="C#" value="1" />
-          <entry key="Razor" value="2" />
+          <entry key="C#" value="2" />
+          <entry key="Razor" value="3" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cs" value="3" />
+          <entry key="txt" value="11" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="C#" value="3" />
+          <entry key="PLAIN_TEXT" value="11" />
         </counts>
       </usages-collector>
     </session>
@@ -68,8 +120,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4875">
-              <caret line="325" selection-start-line="325" selection-end-line="325" />
+            <state relative-caret-position="5055">
+              <caret line="337" selection-start-line="337" selection-end-line="337" />
             </state>
           </provider>
         </entry>
@@ -88,44 +140,78 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
+            <state relative-caret-position="640">
+              <caret line="157" column="112" selection-start-line="157" selection-start-column="112" selection-end-line="157" selection-end-column="112" />
               <folding>
-                <marker date="1537651492411" expanded="false" signature="6:443" ph="..." />
-                <marker date="1537651492411" expanded="true" signature="614:5147" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="663:5145" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="1137:1474" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="1221:1308" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="1536:2055" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="1620:1707" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="1875:1959" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="1976:2045" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="2122:2398" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="2206:2293" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="2462:2898" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="2546:2633" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="2945:3347" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="3074:3161" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="3440:4256" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="3524:3611" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="3731:3942" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="3959:4072" ph="{...}" />
-                <marker date="1537651492411" expanded="true" signature="4266:5139" ph="/* [HttpPost] ... */" />
+                <marker date="1538162752640" expanded="true" signature="6:291" ph="..." />
+                <marker date="1538162752640" expanded="true" signature="462:6265" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="511:6263" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="990:1596" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="1119:1206" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="1421:1524" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="1676:2195" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="1760:1847" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="2015:2099" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="2116:2185" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="2272:2548" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="2356:2443" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="2630:3082" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="2759:2846" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="3129:3531" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="3258:3345" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="3624:6257" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="3754:5969" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="3846:5892" ph="File Upload Verification" />
+                <marker date="1538162752640" expanded="true" signature="4030:5852" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="4157:4289" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="4481:5834" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="4528:4638" ph="/* Proceed to process the request with the valid image. ... */" />
+                <marker date="1538162752640" expanded="true" signature="4921:5010" ph="/* Save the file to disk. ... */" />
+                <marker date="1538162752640" expanded="true" signature="5581:5812" ph="{...}" />
+                <marker date="1538162752640" expanded="true" signature="5986:6073" ph="{...}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-286" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="22" column="9" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
+              <folding>
+                <marker date="1538162752645" expanded="false" signature="6:50" ph="..." />
+                <marker date="1538162752645" expanded="true" signature="93:1097" ph="{...}" />
+                <marker date="1538162752645" expanded="true" signature="130:1095" ph="{...}" />
+                <marker date="1538162752645" expanded="true" signature="481:658" ph="{...}" />
+                <marker date="1538162752645" expanded="true" signature="766:936" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+              <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -179,6 +265,7 @@
     <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/TimeInterval.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" root0="FORCE_HIGHLIGHTING" />
@@ -208,7 +295,6 @@
         <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" />
-        <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Models/LogicalModels/PerSecondStats.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCameraStat.cs" />
@@ -226,7 +312,6 @@
         <option value="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" />
-        <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" />
@@ -236,6 +321,8 @@
         <option value="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" />
       </list>
     </option>
   </component>
@@ -280,6 +367,19 @@
               <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
               <item name="Controllers" type="24d0babc:SolutionExplorerModelNode" />
               <item name="FrontEndControllers" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Models" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Models" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="ViewModels" type="24d0babc:SolutionExplorerModelNode" />
             </path>
             <path>
               <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
@@ -353,18 +453,19 @@
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="" />
+      <changelist id="ef2f6c79-3e27-4649-a473-204411f42ef2" name="Unversioned" comment="" />
       <created>1521525761457</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1521525761457</updated>
       <workItem from="1521525762930" duration="24024000" />
       <workItem from="1521609444102" duration="1503000" />
-      <workItem from="1538161172808" duration="865000" />
+      <workItem from="1538161172808" duration="1496000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27544000" />
+    <option name="totallyTimeSpent" value="28175000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -385,7 +486,7 @@
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
       <window_info anchor="bottom" id="Unit Tests" order="3" />
-      <window_info anchor="bottom" id="Version Control" order="4" weight="0.18618989" />
+      <window_info anchor="bottom" id="Version Control" order="4" visible="true" weight="0.0" />
       <window_info anchor="bottom" id="Terminal" order="5" />
       <window_info anchor="bottom" id="NuGet" order="6" weight="0.3287483" />
       <window_info anchor="bottom" id="Change Signature" order="7" side_tool="true" />
@@ -393,7 +494,7 @@
       <window_info anchor="bottom" id="Build" order="9" weight="0.32891566" />
       <window_info anchor="bottom" id="Message" order="10" />
       <window_info anchor="bottom" id="Find" order="11" />
-      <window_info anchor="bottom" id="Run" order="12" visible="true" weight="0.22168675" />
+      <window_info anchor="bottom" id="Run" order="12" weight="0.22168675" />
       <window_info anchor="bottom" id="Debug" order="13" weight="0.18125771" />
       <window_info anchor="bottom" id="Cvs" order="14" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="15" weight="0.4" />
@@ -468,29 +569,12 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/images/camera_images/no_location_picture.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="15" column="86" selection-start-line="15" selection-start-column="86" selection-end-line="15" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderLocationService.cs" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/appsettings.json" />
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
           <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="397">
-          <caret line="26" column="1" lean-forward="true" selection-start-line="26" selection-start-column="1" selection-end-line="26" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -684,8 +768,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4875">
-          <caret line="325" selection-start-line="325" selection-end-line="325" />
+        <state relative-caret-position="5055">
+          <caret line="337" selection-start-line="337" selection-end-line="337" />
         </state>
       </provider>
     </entry>
@@ -708,39 +792,67 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs">
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="83" column="13" selection-start-line="83" selection-start-column="13" selection-end-line="83" selection-end-column="13" />
+        <state relative-caret-position="150">
+          <caret line="10" column="44" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="22" column="9" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
           <folding>
-            <marker date="1537651492411" expanded="false" signature="6:443" ph="..." />
-            <marker date="1537651492411" expanded="true" signature="614:5147" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="663:5145" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="1137:1474" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="1221:1308" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="1536:2055" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="1620:1707" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="1875:1959" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="1976:2045" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="2122:2398" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="2206:2293" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="2462:2898" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="2546:2633" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="2945:3347" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="3074:3161" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="3440:4256" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="3524:3611" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="3731:3942" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="3959:4072" ph="{...}" />
-            <marker date="1537651492411" expanded="true" signature="4266:5139" ph="/* [HttpPost] ... */" />
+            <marker date="1538162752645" expanded="false" signature="6:50" ph="..." />
+            <marker date="1538162752645" expanded="true" signature="93:1097" ph="{...}" />
+            <marker date="1538162752645" expanded="true" signature="130:1095" ph="{...}" />
+            <marker date="1538162752645" expanded="true" signature="481:658" ph="{...}" />
+            <marker date="1538162752645" expanded="true" signature="766:936" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="44" lean-forward="true" selection-start-line="10" selection-start-column="44" selection-end-line="10" selection-end-column="44" />
+        <state relative-caret-position="-286" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="640">
+          <caret line="157" column="112" selection-start-line="157" selection-start-column="112" selection-end-line="157" selection-end-column="112" />
+          <folding>
+            <marker date="1538162752640" expanded="true" signature="6:291" ph="..." />
+            <marker date="1538162752640" expanded="true" signature="462:6265" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="511:6263" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="990:1596" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="1119:1206" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="1421:1524" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="1676:2195" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="1760:1847" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="2015:2099" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="2116:2185" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="2272:2548" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="2356:2443" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="2630:3082" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="2759:2846" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="3129:3531" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="3258:3345" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="3624:6257" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="3754:5969" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="3846:5892" ph="File Upload Verification" />
+            <marker date="1538162752640" expanded="true" signature="4030:5852" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="4157:4289" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="4481:5834" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="4528:4638" ph="/* Proceed to process the request with the valid image. ... */" />
+            <marker date="1538162752640" expanded="true" signature="4921:5010" ph="/* Save the file to disk. ... */" />
+            <marker date="1538162752640" expanded="true" signature="5581:5812" ph="{...}" />
+            <marker date="1538162752640" expanded="true" signature="5986:6073" ph="{...}" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @model BackEndServer.Models.ViewModels.CameraRegistrationDetails
 <h1 class="page-title center-align">Please enter your camera's details</h1>
 @Html.Partial("../Location/LocationCreationModal")
@@ -95,3 +96,143 @@
             $("#camera_resolution_div .select-dropdown").prop('disabled', false);
         }
     });</script>
+=======
+﻿@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
+
+<h1 class="page-title center-align">Please enter your camera's details</h1>
+
+@Html.Partial("../Location/LocationCreationModal")
+
+<div class="row">
+    <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="camera_name" name="CameraName" type="text" class="validate" required>
+                <label for="camera_name">Camera Name</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="monitored_area" name="MonitoredArea" type="text" class="validate">
+                <label for="monitored_area">Monitored Area</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="camera_key" name="CameraKey" type="text" class="validate" required>
+                <label for="camera_key">Camera Key</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s9">
+                <select id="location_id" name="LocationId">
+                    <option value="" disabled selected>Please select the location where the camera is installed</option>
+                    @{
+                        foreach (var locationInformation in Model.locations.LocationList)
+                        {
+                            <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>
+                        }
+                    }
+                </select>
+                <label for="location_id">Camera Location</label>
+            </div>
+            <div class="input-field col s3 right-align">
+                <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="camera_brand" name="Brand" type="text" class="validate">
+                <label for="camera_brand">Camera Brand</label>
+            </div>
+            <div class="input-field col s6">
+                <input id="camera_model" name="Model" type="text" class="validate">
+                <label for="camera_model">Camera Model</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s8" id="camera_resolution_div">
+                <select id="camera_resolution" name="Resolution">
+                    <option value="" disabled selected>Select your camera's resolution</option>
+                    @{
+                        foreach (string resolution in Model.resolutions)
+                        {
+                            <option value="@resolution">@resolution</option>
+                        }
+                    }
+                </select>
+                <label for="camera_resolution">Camera Resolution</label>
+            </div>
+            <div class="input-field col s4 center-align">
+                <input id="resolution_checkbox" type="checkbox" />
+                <label class="checkbox-label" for="resolution_checkbox">
+                    <span>Can't find your resolution?</span>
+                </label>
+            </div>
+        </div>
+        <div class="row hide" id="custom_resolution_row">
+            <div class="input-field col s8">
+                <input id="camera_custom_resolution" name="CustomResolution" type="text" class="validate">
+                <label for="camera_custom_resolution">Enter your camera's resolution</label>
+            </div>
+        </div>
+
+        <!-- Optional: User can upload an image representing the area monitored by the camera. -->
+        <!-- Modified from: https://bootsnipp.com/user/snippets/vl0Pd -->
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span id="browse_button">Browse...</span>
+                            <input id="image_input" type="file" name="UploadedImage" accept="image/*" />
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input id="file_name" class="file-path validate" type="text" placeholder="Upload an Image (Optional)">
+                        </div>
+                    </div>
+                    <img id='image_preview' class="center-block" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Added a Clear Button to allow users to remove an uploaded image. -->
+        <div class="row center-align">
+            <div class="s12">
+                <button class="btn" type="button" id="clear_image">
+                    Clear Image
+                </button>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="row">
+            <div class="s12 center-align">
+                <button class="btn waves-effect waves-light right-align" type="submit" name="action">
+                    Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    $('#resolution_checkbox').click(function () {
+        if ($("#resolution_checkbox").is(':checked')) {
+            $("#custom_resolution_row").removeClass("hide");
+            $("#camera_resolution_div .select-dropdown").prop('disabled', true);
+        } else {
+            $("#custom_resolution_row").addClass("hide");
+            $("#camera_custom_resolution").val("");
+            $("#camera_resolution_div .select-dropdown").prop('disabled', false);
+        }
+    });
+
+    // Client side verification for image file input.
+
+</script>
+>>>>>>> master

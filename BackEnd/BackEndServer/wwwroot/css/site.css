@@ -55,6 +55,10 @@ main {
     margin-bottom: 40px;
     font-size: 1.7em;
 }
+.confirmation-title {
+    margin-bottom: 30px;
+    font-size: 1.5em;
+}
 .last-updated-time {
     /*margin-bottom: 15px;*/
 }

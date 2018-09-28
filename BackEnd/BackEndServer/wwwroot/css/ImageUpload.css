@@ -1,0 +1,33 @@
+﻿/* Styling for pages that have a Image Upload UI element.
+    Modified from: https://bootsnipp.com/snippets/eNbOa
+*/
+
+#browse_button {
+    position: relative;
+    overflow: hidden;
+}
+
+#image_input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+#image_preview {
+    max-width: 1150px;
+}
+
+/* Added a Clear Image Preview button. Turn red upon hover. */
+#clear_image:hover {
+    background: #ff0000;
+}
