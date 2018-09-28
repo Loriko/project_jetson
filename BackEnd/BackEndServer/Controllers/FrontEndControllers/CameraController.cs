@@ -82,6 +82,19 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return View("CameraRegistration", registrationDetails);
         }
 
+        public IActionResult LoadUserCamera()
+        {
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+            CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUsedId.Value);
+
+            return View("ManageCameras", availableCameras);
+
+        }
+
         [HttpPost]
         public IActionResult RegisterCamera(CameraDetails cameraDetails)
         {
@@ -136,13 +149,14 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 #endregion
 
                 CameraService.RegisterCamera(cameraDetails);
+
             }
             else
             {
                 return RedirectToAction("SignIn", "Home");
             }
-
-            return View("CameraRegistration", CameraService.GetNewCameraRegistrationDetails(currentUserId.Value));
+            CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
+            return View("ManageCameras", availableCameras);
         }
     }
 }

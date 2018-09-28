@@ -105,6 +105,12 @@ namespace BackEndServer.Services
             };
         }
 
+
+        public CameraInformationList GetAllCamerasOwnedByUser(int userId) {
+            List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasOwnedByUser(userId);
+            return new CameraInformationList(dbCameras);
+        }
+
         public CameraInformationList getAllCamerasForUser(int userId)
         {
             List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasAvailableToUser(userId);
@@ -118,7 +124,7 @@ namespace BackEndServer.Services
 
         public bool RegisterCamera(CameraDetails cameraDetails)
         {
-            return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails));
+            return _dbQueryService.PersistExistingCameraByCameraKey (new DatabaseCamera(cameraDetails));
         }
 
         public List<string> GetExistingCameraResolutions()

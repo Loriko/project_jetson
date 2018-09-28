@@ -1,0 +1,16 @@
+﻿@using BackEndServer.Models.Enums
+@using BackEndServer.Models.ViewModels
+@model BackEndServer.Models.ViewModels.CameraInformationList
+@*@{ Html.RenderPartial("EditCameraInformationModal", Model.CameraList); }*@
+<h1 class="page-title center-align">Edit or Add New Cameras</h1>
+<div class="collection">
+    @foreach (var camera in Model.CameraList)
+    {
+        <div class="collection-item">
+            <span class="title">@camera.CameraRoomName</span>
+            <span class="secondary-content">
+                <a asp-controller="Camera" asp-action="BeginCameraRegistration"><i class="material-icons">edit</i></a>
+            </span>
+        </div>
+    }
+</div>

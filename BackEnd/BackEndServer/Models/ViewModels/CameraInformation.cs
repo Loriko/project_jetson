@@ -11,6 +11,7 @@ namespace BackEndServer.Models.ViewModels
         public string ImagePath { get; set; }
         public GraphStatistics GraphStatistics { get; set; }
 
+        
         public CameraInformation(int cameraId, string cameraRoomName, string imagePath){
             CameraId = cameraId;
             CameraRoomName = cameraRoomName;

@@ -161,6 +161,12 @@ main {
     height: 90% !important;
 }
 
+#camera-edit-modal {
+    top: 5% !important;
+    max-height: 90% !important;
+    height: 90% !important;
+}
+
 #notification-list li > a > i {
     margin-right: 12px;
 }
@@ -180,7 +186,6 @@ main {
 .disabled-forever-row {
     margin-bottom: 35px;
 }
-
 .full-width {
     width: 100%;
 }
