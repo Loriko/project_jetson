@@ -136,5 +136,15 @@ namespace BackEndServer.Services
         {
             return _dbQueryService.GetCameraIdFromKey(cameraKey);
         }
+
+        public CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId)
+        {
+            return new CameraRegistrationDetails
+            {
+                locations = _locationService.getAvailableLocationsForUser(userId),
+                CameraDetails = new CameraDetails(_dbQueryService.GetCameraById(cameraId)),
+                resolutions = GetExistingCameraResolutions()
+            };
+        }
     }
 }

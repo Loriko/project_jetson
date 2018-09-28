@@ -1216,7 +1216,12 @@ namespace BackEndServer.Services
         public bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
+            {
+                if (databaseCamera.ImagePath != null)
+                {
+                    databaseCamera.ImagePath = databaseCamera.ImagePath.Replace("\\", "/");
+                }
+
                 //We use formatNullableString for non nullable strings so that
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseCamera.TABLE_NAME} SET " +
@@ -1228,7 +1233,7 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
                                $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
                                // Ensure that the file path to the image contains only forward slashes, so replace all backslashes with a forward slash.
-                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath.Replace("\\", "/"))} " +
+                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath)} " +
                                $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
