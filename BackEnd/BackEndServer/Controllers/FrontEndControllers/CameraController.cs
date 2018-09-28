@@ -158,5 +158,19 @@ namespace BackEndServer.Controllers.FrontEndControllers
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
             return View("ManageCameras", availableCameras);
         }
+
+        public IActionResult ModifyCameraRegistration(int cameraId)
+        {
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            CameraRegistrationDetails registrationDetails =
+                CameraService.GetCameraRegistrationDetailsById(cameraId, currentUsedId.Value);
+            
+            return View("CameraRegistration", registrationDetails);
+        }
     }
 }
