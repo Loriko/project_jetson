@@ -29,8 +29,4 @@
     <Folder Include="Classes\DataResponseClasses\" />
     <Folder Include="wwwroot\lib\materialize\fonts" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Remove="Views\Camera\ManageCameras.cshtml" />
-    <Content Remove="Views\Camera\EmptyHTMLFile.cshtml" />
-  </ItemGroup>
 </Project>
