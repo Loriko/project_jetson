@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BackEndServer.Services;
 using BackEndServer.Services.AbstractServices;
+using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.PlaceholderServices;
+using System.IO;
 
 namespace BackEndServer
 {
@@ -67,8 +69,10 @@ namespace BackEndServer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -87,5 +91,27 @@ namespace BackEndServer
                     template: "{controller=Home}/{action=SignIn}/{id?}");
             });
         }
+
+        // This code is called when the application is stopped.
+        private void OnShutdown()
+        {
+            // Deletes all files copied into the temp folder when testing. Prevents uploading them to GitHub.
+            ClearWWWRootTempFolder();
+        }
+
+        private void ClearWWWRootTempFolder()
+        {
+            DirectoryInfo di = new DirectoryInfo(RootDirectoryTools.GetWWWRootTempFolderPhysicalPath());
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+        }
+
     }
 }
