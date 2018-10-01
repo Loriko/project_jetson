@@ -35,7 +35,7 @@ namespace BackEndServer
             // Passing it as a service ensures everything in the project will use this query service and use this connection string
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
 
-            bool alertMonitoringEnabled = false;
+            bool alertMonitoringEnabled = true;
             if (alertMonitoringEnabled)
             {
                 Thread alertMonitoringThread = new Thread(delegate()

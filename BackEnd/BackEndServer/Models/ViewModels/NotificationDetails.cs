@@ -10,6 +10,7 @@ namespace BackEndServer.Models.ViewModels
         public AlertDetails Alert { get; set; }
         public DateTime TriggerDateTime { get; set; }
         public bool Acknowledged { get; set; }
+        public bool FailedEmail { get; set; }
 
         public NotificationDetails()
         {
@@ -21,6 +22,7 @@ namespace BackEndServer.Models.ViewModels
             AlertId = dbNotification.AlertId;
             TriggerDateTime = dbNotification.TriggerDateTime;
             Acknowledged = dbNotification.Acknowledged;
+            FailedEmail = dbNotification.FailedEmail;
         }
     }
 }

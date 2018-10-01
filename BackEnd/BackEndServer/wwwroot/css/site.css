@@ -26,7 +26,7 @@ main {
     padding-top: 0;
 }
 .error-message {
-    color: red;
+    color: red !important;
 }
 .camera-card-title {
     width: 100%;
@@ -197,4 +197,7 @@ main {
 
 .unavailable-message-light {
     color: lightblue;
+}
+.no-email-message {
+    margin-bottom: 10px !important;
 }

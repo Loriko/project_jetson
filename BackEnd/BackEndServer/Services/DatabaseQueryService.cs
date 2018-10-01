@@ -998,7 +998,8 @@ namespace BackEndServer.Services
                             NotificationId = Convert.ToInt32(reader[DatabaseNotification.NOTIFICATION_ID_LABEL]),
                             AlertId = Convert.ToInt32(reader[DatabaseNotification.ALERT_ID_LABEL]),
                             Acknowledged = Convert.ToBoolean(reader[DatabaseNotification.ACKNOWLEDGED_LABEL]),
-                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL])
+                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL]),
+                            FailedEmail = Convert.ToBoolean(reader[DatabaseNotification.FAILED_EMAIL_LABEL])
                         };
                         notificationList.Add(notification);
                     }
@@ -1083,7 +1084,8 @@ namespace BackEndServer.Services
                             NotificationId = Convert.ToInt32(reader[DatabaseNotification.NOTIFICATION_ID_LABEL]),
                             AlertId = Convert.ToInt32(reader[DatabaseNotification.ALERT_ID_LABEL]),
                             Acknowledged = Convert.ToBoolean(reader[DatabaseNotification.ACKNOWLEDGED_LABEL]),
-                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL])
+                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL]),
+                            FailedEmail = Convert.ToBoolean(reader[DatabaseNotification.FAILED_EMAIL_LABEL])
                         };
                     }
                 }
@@ -1198,9 +1200,9 @@ namespace BackEndServer.Services
             {   
                 string query = $"INSERT INTO {DatabaseNotification.TABLE_NAME}(" +
                                $"{DatabaseNotification.ALERT_ID_LABEL}, {DatabaseNotification.TRIGGER_DATETIME_LABEL}, " +
-                               $"{DatabaseNotification.ACKNOWLEDGED_LABEL}" +
+                               $"{DatabaseNotification.ACKNOWLEDGED_LABEL}, {DatabaseNotification.FAILED_EMAIL_LABEL}" +
                                ") VALUES " +
-                               $"({dbNotification.AlertId},'{dbNotification.TriggerDateTime.ToMySqlDateTimeString()}',{dbNotification.Acknowledged});";
+                               $"({dbNotification.AlertId},'{dbNotification.TriggerDateTime.ToMySqlDateTimeString()}',{dbNotification.Acknowledged},{dbNotification.FailedEmail});";
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
