@@ -5,16 +5,29 @@
         <div class="col s10 offset-s1">
             <div class="card camera-card">
                 <div class="card-image">
-                    
+
                     @{
-                        if (Model.CameraInformation.CameraId <= 4)
+                        if (String.IsNullOrWhiteSpace(Model.TempImagePath))
                         {
-                            <img class="camera-card-image" src="~/images/camera_images/camera_image_@(Model.CameraInformation.CameraId).png" alt="@Model.CameraInformation.CameraRoomName">
+                            <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraRoomName">
+                        }
+                        else
+                        {
+                            <img class="camera-card-image" src="@Model.TempImagePath" alt="@Model.CameraInformation.CameraRoomName">
+                        }
+
+                        /*
+                        if (String.IsNullOrWhiteSpace(Model.CameraDetails.SavedImagePath) == false)
+                        {
+                            // Convert .NET Framework filepath to HTML URI for the HTML Image element source attribute.
+                            var uri = new System.Uri(Model.CameraDetails.SavedImagePath);
+                            <img class="camera-card-image" src="/Camera/myaction/@(Model.CameraDetails.SavedImagePath)" alt="@Model.CameraInformation.CameraRoomName">
                         }
                         else
                         {
                             <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraRoomName">
                         }
+                        */
                     }
                 </div>
             </div>
