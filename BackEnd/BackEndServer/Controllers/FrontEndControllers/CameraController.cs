@@ -7,6 +7,7 @@ using BackEndServer.Models.DBModels;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using Castle.Core.Internal;
+using System.Threading.Tasks;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,6 +45,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
+
             CameraStatistics cameraStatisticsModel = CameraService.getCameraStatisticsForNowById(cameraId);
             
             if (cameraStatisticsModel != null)
@@ -96,7 +98,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         }
 
         [HttpPost]
-        public IActionResult RegisterCamera(CameraDetails cameraDetails)
+        public async Task<IActionResult> RegisterCamera(CameraDetails cameraDetails)
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
@@ -141,7 +143,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
                         using (var fileStream = new FileStream(fullFilePath, FileMode.Create))
                         {
                             // NOTE: If this was for the Edit page, we would have to delete the previous picture first.
-                            image.CopyToAsync(fileStream);
+                            await image.CopyToAsync(fileStream);
                         }
                     }
                 }

@@ -14,5 +14,6 @@ namespace BackEndServer.Models.ViewModels
         public CameraInformation CameraInformation { get; set; }
         public CameraDetails CameraDetails { get; set; }
         public GraphStatistics GraphStatistics { get; set; }
+        public string TempImagePath { get; set; }
     }
 }

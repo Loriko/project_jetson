@@ -3,6 +3,9 @@ using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.PlaceholderServices;
+using BackEndServer.Services.HelperServices;
+using System;
+using System.IO;
 
 namespace BackEndServer.Services
 {
@@ -11,7 +14,7 @@ namespace BackEndServer.Services
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
         private readonly AbstractLocationService _locationService;
-        
+
         public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService, AbstractLocationService locationService)
         {
             _dbQueryService = dbQueryService;
@@ -28,9 +31,67 @@ namespace BackEndServer.Services
         public CameraInformationList GetCamerasAtLocationForUser(int locationId, int userId)
         {
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocationForUser(locationId, userId);
-            return new CameraInformationList(dbCameraList);
+
+            CameraInformationList listOfCameraInfo = new CameraInformationList(dbCameraList);
+
+            return InitialiseImagesBeforeDisplaying(listOfCameraInfo);
         }
-        
+
+        private CameraInformationList InitialiseImagesBeforeDisplaying(CameraInformationList list)
+        {
+            foreach(CameraInformation camInfo in list.CameraList)
+            {
+                camInfo.TempImagePath = GenerateTempImageAndTempPath(camInfo.ImagePath);
+            }
+
+            return list;
+        }
+
+        private string GenerateTempImageAndTempPath(string imagePath)
+        {
+            // If the camera has a value in the image_path column of the Camera table in the database, if not a question mark will be displayed instead.
+            if (String.IsNullOrWhiteSpace(imagePath) == false)
+            {
+                // Ensure the image file still exists on the server, if not a question mark will be displayed instead.
+                if (File.Exists(imagePath))
+                {
+                    /*
+                     NOTE: To create/delete/overwrite file in the wwwroot directory, physical file paths must be used
+                            and not virual paths (using ~). Use RootDirectoryTools.cs in HelperServices.
+                    */
+
+                    // 1. Extract the FileName from the path stored in the database.
+                    string fileName = Path.GetFileName(imagePath);
+
+                    // 2. Create the full file output path (physical).
+                    string tempPath = Path.Combine(RootDirectoryTools.GetWWWRootPhysicalPath(), fileName);
+
+                    // 3. Delete any previous file in the temp folder associated to the camera.
+                    if (File.Exists(tempPath))
+                    {
+                        File.Delete(tempPath);
+                    }
+
+                    // 4. Copy the image from the path in the "...\BackEnd\BackEndServer\ImageStorage\CameraImages" to the phycal wwwroot path's "\temp" folder.
+                    File.Copy
+                    (
+                        // Source Image Path (stored in the ImageStorage\CameraImages folder in the project.)
+                        imagePath,
+                        // Write to the wwwroot directory's temp path (physical), output filename remains the same. 
+                        Path.Combine(RootDirectoryTools.GetWWWRootTempFolderPhysicalPath(), fileName),
+                        // If file was not deleted properly, ensure the existing file is overwritten.
+                        true
+                    );
+
+                    // 5. Set the View Model object's "TempImagePath" attribute to the appropriate 
+                    // value for use in the img element's src attribute to locate the image in the wwwroot.
+                    return String.Concat(RootDirectoryTools.GetWWWRootTempFolderVirtualPathForHTML(), "/", fileName);
+                }
+            }
+
+            return null;
+        }
+
         public CameraInformationList getCamerasAtLocation(int locationId)
         {
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocation(locationId);
@@ -62,7 +123,8 @@ namespace BackEndServer.Services
                     PeriodOfTheDayAverageCount = 0,
                     PeriodOfTheDayAverageCountAvailable = false,
                     PeriodOfTheDayAverageCountDisplayString = null,
-                    GraphStatistics = graphStatistics
+                    GraphStatistics = graphStatistics,
+                    TempImagePath = null 
                 };
                 if (mostRecentStat != null)
                 {
@@ -73,6 +135,9 @@ namespace BackEndServer.Services
                 {
                     cameraStatistics.CameraDetails.Location = new LocationDetails(_dbQueryService.GetLocationById(camera.LocationId.Value));
                 }
+
+                cameraStatistics.TempImagePath = GenerateTempImageAndTempPath(camera.ImagePath);
+
                 return cameraStatistics;
             }
             
@@ -104,7 +169,6 @@ namespace BackEndServer.Services
                 resolutions = GetExistingCameraResolutions()
             };
         }
-
 
         public CameraInformationList GetAllCamerasOwnedByUser(int userId) {
             List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasOwnedByUser(userId);
