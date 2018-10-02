@@ -175,6 +175,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`notification` (
   `alert_id` INT(5) UNSIGNED NOT NULL,
   `trigger_datetime` DATETIME NOT NULL,
   `acknowledged` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  `failed_email` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_notification_has_alert`
     FOREIGN KEY (`alert_id`)

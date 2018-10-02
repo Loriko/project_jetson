@@ -65,7 +65,7 @@ namespace BackEndServer.Services
             {
                 if (!SendAlertTriggeredEmail(alert, earliestStatThatTriggersAlert))
                 {
-                    //TODO: Handle potential email sending failure... some other day
+                    CreateNotificationForTriggeredAlert(alert, earliestStatThatTriggersAlert, true);
                 }
             }
         }
@@ -141,13 +141,14 @@ namespace BackEndServer.Services
         }
 
         private void CreateNotificationForTriggeredAlert(DatabaseAlert alert,
-            DatabasePerSecondStat earliestStatThatTriggersAlert)
+            DatabasePerSecondStat earliestStatThatTriggersAlert, bool failedEmail = false)
         {
             DatabaseNotification dbNotification = new DatabaseNotification
             {
                 AlertId = alert.AlertId,
                 Acknowledged = false,
-                TriggerDateTime = earliestStatThatTriggersAlert.DateTime
+                TriggerDateTime = earliestStatThatTriggersAlert.DateTime,
+                FailedEmail = failedEmail
             };
             _databaseQueryService.PersistNewNotification(dbNotification);
         }

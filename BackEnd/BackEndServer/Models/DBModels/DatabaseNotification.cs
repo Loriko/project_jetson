@@ -12,11 +12,13 @@ namespace BackEndServer.Models.DBModels
         public static readonly string ALERT_ID_LABEL = "alert_id";
         public static readonly string TRIGGER_DATETIME_LABEL = "trigger_datetime";
         public static readonly string ACKNOWLEDGED_LABEL = "acknowledged";
+        public static readonly string FAILED_EMAIL_LABEL = "failed_email";
         
         public int NotificationId { get; set; }
         public int AlertId { get; set; }
         public DateTime TriggerDateTime { get; set; }
         public bool Acknowledged { get; set; }
+        public bool FailedEmail { get; set; }
 
         public DatabaseNotification()
         {
@@ -28,6 +30,7 @@ namespace BackEndServer.Models.DBModels
             AlertId = notificationDetails.AlertId;
             TriggerDateTime = notificationDetails.TriggerDateTime;
             Acknowledged = notificationDetails.Acknowledged;
+            FailedEmail = notificationDetails.FailedEmail;
         }
     }
 }

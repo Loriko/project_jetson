@@ -44,6 +44,10 @@
                                     <i class="material-icons">notifications_active</i>
                                 }
                                 '@(notification.Alert.AlertName)' alert triggered on @(notification.TriggerDateTime.ToShortDateString())
+                                @if (notification.FailedEmail)
+                                {
+                                    <span class="error-message">(Email Failure)</span>
+                                }
                             </a></li>
                     }
                     @* <li class="divider"></li> *@
