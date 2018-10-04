@@ -1,7 +1,8 @@
 ﻿@model BackEndServer.Models.ViewModels.NavigationBarDetails
 
 <ul id="profileDropDown" class="dropdown-content">
-    <li><a asp-controller="Home" asp-action="SignOut" >Sign Out</a></li>
+    <li><a asp-controller="User" asp-action="BeginUserSettingsModification">Modify Personal Settings</a></li>
+    <li><a asp-controller="Home" asp-action="SignOut">Sign Out</a></li>
 </ul>
 <nav>
     <div class="nav-wrapper teal">
@@ -13,7 +14,7 @@
                 <a asp-controller="Location" asp-action="LocationSelection" class="nav-link">Home</a>
             </li>
             <li>
-                <a asp-controller="Camera" asp-action="BeginCameraRegistration" class="nav-link">Register a Camera</a>
+                <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link">Manage Cameras</a>
             </li>
         </ul>
 
@@ -42,7 +43,11 @@
                                 {
                                     <i class="material-icons">notifications_active</i>
                                 }
-                                '@(notification.Alert.AlertName)' alert triggered at @(notification.TriggerDateTime.ToShortDateString())
+                                '@(notification.Alert.AlertName)' alert triggered on @(notification.TriggerDateTime.ToShortDateString())
+                                @if (notification.FailedEmail)
+                                {
+                                    <span class="error-message">(Email Failure)</span>
+                                }
                             </a></li>
                     }
                     @* <li class="divider"></li> *@

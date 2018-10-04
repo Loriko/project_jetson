@@ -249,13 +249,25 @@ namespace BackEndServer.Services
 
         // FRANCIS TO CHECK LATER 
         // Right now, username isn't used, but it will be as soon as the tables necessary for camera permissions are added.
-        public List<DatabaseLocation> GetLocationsForUser(string username)
+        public List<DatabaseLocation> GetLocationsForUser(int userId)
         {
             List<DatabaseLocation> locationList = new List<DatabaseLocation>();
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME}";
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.LOCATION_ID_LABEL} IN (" +
+                                   $"SELECT {DatabaseCamera.LOCATION_ID_LABEL} FROM {DatabaseCamera.TABLE_NAME} " +
+                                   $"WHERE {DatabaseCamera.CAMERA_ID_LABEL} IN ( " +
+                                       "SELECT user_camera_association.camera_id " +
+                                       "FROM user_camera_association " +
+                                       $"WHERE user_camera_association.user_id = {userId} " +
+                                   $") OR {DatabaseCamera.USER_ID_LABEL} = {userId}" +
+                               ");";
+                
+                Console.WriteLine("Query:");
+                Console.WriteLine(query + "\n");
+                
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -339,6 +351,29 @@ namespace BackEndServer.Services
                 }
             }
             return perSecondStat;
+        }
+
+        public int GetCameraIdFromKey(string cameraKey)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseCamera.CAMERA_ID_LABEL} FROM {DatabaseCamera.TABLE_NAME} "
+                    + $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{cameraKey}' LIMIT 1";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]);
+                    }
+                }
+            }
+
+            return -1;
         }
 
         public DatabaseCamera GetCameraById(int cameraId)
@@ -659,7 +694,45 @@ namespace BackEndServer.Services
             return true;
         }
         #endregion
-        
+
+        public List<DatabaseCamera> GetCamerasOwnedByUser(int userId)
+        {
+            List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               "FROM camera " +
+                               $"WHERE camera.user_id = {userId};";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseCamera camera = new DatabaseCamera()
+                        {
+                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
+                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
+                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
+                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
+                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
+                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
+                        };
+                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
+                        {
+                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
+                        }
+                        cameraList.Add(camera);
+                    }
+                }
+            }
+            return cameraList;
+        }
+
         public List<DatabaseCamera> GetCamerasAvailableToUser(int userId)
         {
             List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
@@ -925,7 +998,8 @@ namespace BackEndServer.Services
                             NotificationId = Convert.ToInt32(reader[DatabaseNotification.NOTIFICATION_ID_LABEL]),
                             AlertId = Convert.ToInt32(reader[DatabaseNotification.ALERT_ID_LABEL]),
                             Acknowledged = Convert.ToBoolean(reader[DatabaseNotification.ACKNOWLEDGED_LABEL]),
-                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL])
+                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL]),
+                            FailedEmail = Convert.ToBoolean(reader[DatabaseNotification.FAILED_EMAIL_LABEL])
                         };
                         notificationList.Add(notification);
                     }
@@ -1010,7 +1084,8 @@ namespace BackEndServer.Services
                             NotificationId = Convert.ToInt32(reader[DatabaseNotification.NOTIFICATION_ID_LABEL]),
                             AlertId = Convert.ToInt32(reader[DatabaseNotification.ALERT_ID_LABEL]),
                             Acknowledged = Convert.ToBoolean(reader[DatabaseNotification.ACKNOWLEDGED_LABEL]),
-                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL])
+                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL]),
+                            FailedEmail = Convert.ToBoolean(reader[DatabaseNotification.FAILED_EMAIL_LABEL])
                         };
                     }
                 }
@@ -1125,9 +1200,9 @@ namespace BackEndServer.Services
             {   
                 string query = $"INSERT INTO {DatabaseNotification.TABLE_NAME}(" +
                                $"{DatabaseNotification.ALERT_ID_LABEL}, {DatabaseNotification.TRIGGER_DATETIME_LABEL}, " +
-                               $"{DatabaseNotification.ACKNOWLEDGED_LABEL}" +
+                               $"{DatabaseNotification.ACKNOWLEDGED_LABEL}, {DatabaseNotification.FAILED_EMAIL_LABEL}" +
                                ") VALUES " +
-                               $"({dbNotification.AlertId},'{dbNotification.TriggerDateTime.ToMySqlDateTimeString()}',{dbNotification.Acknowledged});";
+                               $"({dbNotification.AlertId},'{dbNotification.TriggerDateTime.ToMySqlDateTimeString()}',{dbNotification.Acknowledged},{dbNotification.FailedEmail});";
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -1143,7 +1218,12 @@ namespace BackEndServer.Services
         public bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
+            {
+                if (databaseCamera.ImagePath != null)
+                {
+                    databaseCamera.ImagePath = databaseCamera.ImagePath.Replace("\\", "/");
+                }
+
                 //We use formatNullableString for non nullable strings so that
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseCamera.TABLE_NAME} SET " +
@@ -1153,7 +1233,9 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
                                $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
-                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} " +
+                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
+                               // Ensure that the file path to the image contains only forward slashes, so replace all backslashes with a forward slash.
+                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath)} " +
                                $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
@@ -1168,12 +1250,43 @@ namespace BackEndServer.Services
             return false;
         }
 
+        public List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId)
+        {
+            List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
+                               $"WHERE {DatabaseCamera.LOCATION_ID_LABEL} = {locationId} " +
+                               "AND (" +
+                                   $"{DatabaseCamera.CAMERA_ID_LABEL} IN ( " +
+                                       "SELECT user_camera_association.camera_id " +
+                                       "FROM user_camera_association " +
+                                       $"WHERE user_camera_association.user_id = {userId} " +
+                                   $") OR {DatabaseCamera.USER_ID_LABEL} = {userId}" +
+                               ");";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
+                        cameraList.Add(camera);
+                    }
+                }
+            }
+            return cameraList;
+        }
+
         private DatabaseCamera getDatabaseCameraFromReader(MySqlDataReader reader)
         {
             DatabaseCamera camera = new DatabaseCamera
             {
-                CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
-                CameraKey = Convert.ToString(reader[DatabaseCamera.CAMERA_KEY_LABEL])
+                CameraKey = Convert.ToString(reader[DatabaseCamera.CAMERA_KEY_LABEL]),
+                CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL])
             };
             if (reader[DatabaseCamera.CAMERA_NAME_LABEL] != DBNull.Value)
             {
@@ -1203,8 +1316,69 @@ namespace BackEndServer.Services
             {
                 camera.LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]);
             }
+            if (reader[DatabaseCamera.IMAGE_PATH_LABEL] != DBNull.Value)
+            {
+                camera.ImagePath = Convert.ToString(reader[DatabaseCamera.IMAGE_PATH_LABEL]);
+            }
 
             return camera;
+        }
+        
+        public DatabaseUser GetUserById(int userId)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USER_ID_LABEL} = {userId}";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
+        
+        public bool PersistExistingUser(DatabaseUser databaseUser)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.FIRST_NAME_LABEL} = {formatNullableString(databaseUser.FirstName)}," +
+                               $"{DatabaseUser.LAST_NAME_LABEL} = {formatNullableString(databaseUser.LastName)}," +
+                               $"{DatabaseUser.EMAIL_ADDRESS_LABEL} = {formatNullableString(databaseUser.EmailAddress)} " +
+                               $"WHERE {DatabaseUser.USER_ID_LABEL} = {databaseUser.UserId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
         public DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end)
         {

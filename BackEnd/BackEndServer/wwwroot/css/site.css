@@ -26,7 +26,7 @@ main {
     padding-top: 0;
 }
 .error-message {
-    color: red;
+    color: red !important;
 }
 .camera-card-title {
     width: 100%;
@@ -55,11 +55,15 @@ main {
     margin-bottom: 40px;
     font-size: 1.7em;
 }
+.confirmation-title {
+    margin-bottom: 30px;
+    font-size: 1.5em;
+}
 .last-updated-time {
     /*margin-bottom: 15px;*/
 }
 .people-count {
-    font-size: 1.7em;
+    font-size: 1.2em;
     /*font-weight: bold;*/
 }
 
@@ -157,6 +161,12 @@ main {
     height: 90% !important;
 }
 
+#camera-edit-modal {
+    top: 5% !important;
+    max-height: 90% !important;
+    height: 90% !important;
+}
+
 #notification-list li > a > i {
     margin-right: 12px;
 }
@@ -175,4 +185,19 @@ main {
 
 .disabled-forever-row {
     margin-bottom: 35px;
+}
+.full-width {
+    width: 100%;
+}
+
+.graph-card {
+    margin-bottom: 12px;
+    color: black;
+}
+
+.unavailable-message-light {
+    color: lightblue;
+}
+.no-email-message {
+    margin-bottom: 10px !important;
 }

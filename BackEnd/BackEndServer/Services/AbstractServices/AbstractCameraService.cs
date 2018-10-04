@@ -10,12 +10,16 @@ namespace BackEndServer.Services.AbstractServices
         CameraInformation getCameraInformationById(int cameraId);
         CameraStatistics getCameraStatisticsForNowById(int cameraId);
         // Temporary, needs to be changed to using the APIModel equivalent of the DatabaseCamera object
-        List<DatabaseCamera> getDatabaseCamerasAtLocation(int locationId);
+        List<DatabaseCamera> GetDatabaseCamerasAtLocation(int locationId);
+        CameraInformationList GetCamerasAtLocationForUser(int locationId, int userId);
         CameraInformation GetCameraInformationWithYearlyData(int cameraId);
         bool SaveNewCamera(CameraDetails cameraDetails);
-        CameraRegistrationDetails GetNewCameraRegistrationDetails(string username);
+        CameraRegistrationDetails GetNewCameraRegistrationDetails(int userId);
         CameraInformationList getAllCamerasForUser(int userId);
+        CameraInformationList GetAllCamerasOwnedByUser(int userId);
         List<CameraInformation> getAllCamerasForUser(string username);
         bool RegisterCamera(CameraDetails cameraDetails);
+        int GetExistingCameraId(string cameraKey);
+        CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId);
     }
 }

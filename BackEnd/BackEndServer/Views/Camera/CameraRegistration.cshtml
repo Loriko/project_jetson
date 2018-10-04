@@ -1,28 +1,37 @@
-﻿@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
+@using Castle.Core.Internal
+@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
 
 <h1 class="page-title center-align">Please enter your camera's details</h1>
 
 @Html.Partial("../Location/LocationCreationModal")
 
 <div class="row">
-    <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera">
+    <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
+        <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId"/>
         <div class="row">
             <div class="input-field col s6">
-                <input id="camera_name" name="CameraName" type="text" class="validate" required>
+                <input id="camera_name" name="CameraName" value="@Model.CameraDetails.CameraName" type="text" class="validate" required>
                 <label for="camera_name">Camera Name</label>
             </div>
             <div class="input-field col s6">
-                <input id="monitored_area" name="MonitoredArea" type="text" class="validate">
+                <input id="monitored_area" name="MonitoredArea" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
                 <label for="monitored_area">Monitored Area</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <input id="camera_key" name="CameraKey" type="text" class="validate" required>
+                @if(Model.CameraDetails.CameraKey.IsNullOrEmpty()) {
+                    <input id="camera_key" name="CameraKey" type="text" class="validate" required>
+                    <label for="camera_key">Camera Key</label>
+                }
+                else
+                {
+                    <input id="camera_key" name="CameraKey" type="text" class="validate" readonly required value="@Model.CameraDetails.CameraKey">
+                }
                 <label for="camera_key">Camera Key</label>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="input-field col s9">
                 <select id="location_id" name="LocationId">
@@ -30,7 +39,9 @@
                     @{
                         foreach (var locationInformation in Model.locations.LocationList)
                         {
-                            <option value="@locationInformation.LocationId">@locationInformation.LocationName</option>        
+                            <option selected="@(locationInformation.LocationId == Model.CameraDetails.LocationId)"
+                                    value="@locationInformation.LocationId">@locationInformation.LocationName
+                            </option>
                         }
                     }
                 </select>
@@ -43,15 +54,15 @@
 
         <div class="row">
             <div class="input-field col s6">
-                <input id="camera_brand" name="Brand" type="text" class="validate">
+                <input id="camera_brand" name="Brand" type="text" class="validate" value="@Model.CameraDetails.Brand">
                 <label for="camera_brand">Camera Brand</label>
             </div>
             <div class="input-field col s6">
-                <input id="camera_model" name="Model" type="text" class="validate">
+                <input id="camera_model" name="Model" type="text" class="validate" value="@Model.CameraDetails.Model">
                 <label for="camera_model">Camera Model</label>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="input-field col s8" id="camera_resolution_div">
                 <select id="camera_resolution" name="Resolution">
@@ -59,7 +70,8 @@
                     @{
                         foreach (string resolution in Model.resolutions)
                         {
-                            <option value="@resolution">@resolution</option>        
+                            <option selected="@(resolution == Model.CameraDetails.Resolution)"
+                                    value="@resolution">@resolution</option>
                         }
                     }
                 </select>
@@ -78,14 +90,47 @@
                 <label for="camera_custom_resolution">Enter your camera's resolution</label>
             </div>
         </div>
-        
+
+        <!-- Optional: User can upload an image representing the area monitored by the camera. -->
+        <!-- Modified from: https://bootsnipp.com/user/snippets/vl0Pd -->
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span id="browse_button">Browse...</span>
+                            <input id="image_input" type="file" name="UploadedImage" accept="image/*" />
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input id="file_name" class="file-path validate" value="@Model.CameraDetails.SavedImagePath" 
+                                   type="text" placeholder="Upload an Image (Optional)">
+                        </div>
+                    </div>
+                    <img id='image_preview' class="center-block" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Added a Clear Button to allow users to remove an uploaded image. -->
+        <div class="row center-align">
+            <div class="s12">
+                <button class="btn" type="button" id="clear_image">
+                    Clear Image
+                </button>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
         <div class="row">
             <div class="s12 center-align">
-                <button class="btn waves-effect waves-light right-align" type="submit" name="action">Submit
+                <button class="btn waves-effect waves-light right-align" type="submit" name="action">
+                    Submit
                     <i class="material-icons right">send</i>
                 </button>
             </div>
-        </div>  
+        </div>
+
     </form>
 </div>
 
@@ -100,4 +145,7 @@
             $("#camera_resolution_div .select-dropdown").prop('disabled', false);
         }
     });
+
+    // Client side verification for image file input.
+
 </script>

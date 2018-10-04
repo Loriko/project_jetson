@@ -11,7 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using BackEndServer.Services;
 using BackEndServer.Services.AbstractServices;
+using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.PlaceholderServices;
+using System.IO;
 
 namespace BackEndServer
 {
@@ -35,7 +37,7 @@ namespace BackEndServer
             // Passing it as a service ensures everything in the project will use this query service and use this connection string
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
 
-            bool alertMonitoringEnabled = false;
+            bool alertMonitoringEnabled = true;
             if (alertMonitoringEnabled)
             {
                 Thread alertMonitoringThread = new Thread(delegate()
@@ -54,6 +56,7 @@ namespace BackEndServer
             AbstractDataMessageService dataMessageService = new DataMessageService(dbQueryService);
             AbstractAlertService alertService = new AlertService(dbQueryService, cameraService);
             AbstractNotificationService notificationService = new NotificationService(dbQueryService);
+            AbstractUserService userService = new UserService(dbQueryService);
             
             services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
             services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));
@@ -62,11 +65,14 @@ namespace BackEndServer
             services.Add(new ServiceDescriptor(typeof(AbstractGraphStatisticService), graphStatisticService));
             services.Add(new ServiceDescriptor(typeof(AbstractAlertService), alertService));
             services.Add(new ServiceDescriptor(typeof(AbstractNotificationService), notificationService));
+            services.Add(new ServiceDescriptor(typeof(AbstractUserService), userService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -85,5 +91,27 @@ namespace BackEndServer
                     template: "{controller=Home}/{action=SignIn}/{id?}");
             });
         }
+
+        // This code is called when the application is stopped.
+        private void OnShutdown()
+        {
+            // Deletes all files copied into the temp folder when testing. Prevents uploading them to GitHub.
+            ClearWWWRootTempFolder();
+        }
+
+        private void ClearWWWRootTempFolder()
+        {
+            DirectoryInfo di = new DirectoryInfo(RootDirectoryTools.GetWWWRootTempFolderPhysicalPath());
+
+            foreach (FileInfo file in di.GetFiles())
+            {
+                file.Delete();
+            }
+            foreach (DirectoryInfo dir in di.GetDirectories())
+            {
+                dir.Delete(true);
+            }
+        }
+
     }
 }

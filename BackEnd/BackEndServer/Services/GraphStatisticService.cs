@@ -51,11 +51,11 @@ namespace BackEndServer.Services
             }
             
             List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
-            perSecondStatsFormattedStrings.Add(new string[2] { "Time", "People" });
+            perSecondStatsFormattedStrings.Add(new [] { "Time", "People" });
             
             foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
             {
-                perSecondStatsFormattedStrings.Add(new string[2]{perSecondStat.DateTime.ToString("HH:mm:ss"), perSecondStat.NumDetectedObjects.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("HH:mm:ss"), perSecondStat.NumDetectedObjects.ToString()});
             }
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             return graphStatistics;

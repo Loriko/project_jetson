@@ -92,7 +92,7 @@ namespace WebAPI.Controllers
                 return (BadRequest(new JsonResult(new InvalidLocationIdResponseBody())));
             }
 
-            List<DatabaseCamera> camerasForRequestedLocation = CameraService.getDatabaseCamerasAtLocation(cameraListRequest.LocationId);
+            List<DatabaseCamera> camerasForRequestedLocation = CameraService.GetDatabaseCamerasAtLocation(cameraListRequest.LocationId);
 
             // TODO: use list of EntityDefinitionClasses.Camera instead
 
