@@ -6,5 +6,6 @@ namespace BackEndServer.Services.AbstractServices
     {
         GraphStatistics GetYearlyGraphStatistics(int cameraId);
         GraphStatistics GetLast30MinutesStatistics(int cameraId);
+        GraphStatistics GetGraphStatisticsByInterval(int cameraId, int startDate, int endDate, int interval);
     }
 }
