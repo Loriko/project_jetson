@@ -36,16 +36,25 @@
 
 
 <div class="row">
-    <div class="input-field col s2">
-        <input type="text" class="datepicker">
-        <label>Start Date</label>
+    @* <div class="input-field col s2"> *@
+    @*     <input type="text" class="datepicker"> *@
+    @*     <label>Start Date</label> *@
+    @* </div> *@
+    @* <div class="input-field col s2"> *@
+    @*     <input type="text" class="datepicker"> *@
+    @*     <label>End Date</label> *@
+    @* </div> *@
+    @* <div class="input-field col s5"></div> *@
+    <div class="col s8">
+        <ul class="tabs">
+            <li class="tab"><a class="teal-text" href="#past_day">Past Day</a></li>
+            <li class="tab"><a class="teal-text" href="#past_week">Past Week</a></li>
+            <li class="tab"><a class="teal-text" href="#past_month">Past Month</a></li>
+            <li class="tab "><a class="teal-text active" href="#past_year">Past Year</a></li>
+            <div class="indicator teal" style="z-index:1"></div>
+        </ul>
     </div>
-    <div class="input-field col s2">
-        <input type="text" class="datepicker">
-        <label>End Date</label>
-    </div>
-    <div class="input-field col s5"></div>
-    <div class="input-field col s3">
+    <div class="input-field col s4">
         <select>
             <option value="" disabled>Measured Values</option>
             <option value="1">Avg number of People</option>
@@ -61,8 +70,10 @@
     <div class="col s12">
         <div class="card">
             <div class="card-content">
-                <h4 class="card-title">@Model.CameraName</h4>
-                <p>@Model.CameraRoomName</p>
+                <div id="past_day" class="card-title center-align">Number of people spotted by @Model.CameraName over the past day</div>
+                <div id="past_week" class="card-title center-align">Number of people spotted by @Model.CameraName over the past week</div>
+                <div id="past_month" class="card-title center-align">Number of people spotted by @Model.CameraName over the past month</div>
+                <div id="past_year" class="card-title center-align">Number of people spotted by @Model.CameraName over the past year</div>
                 <div id="curve_chart"></div>
             </div>
         </div>
