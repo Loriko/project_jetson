@@ -28,6 +28,5 @@
     <Folder Include="Controllers\APIControllers\" />
     <Folder Include="Classes\DataResponseClasses\" />
     <Folder Include="wwwroot\lib\materialize\fonts" />
-    <Folder Include="wwwroot\temp\" />
   </ItemGroup>
 </Project>
