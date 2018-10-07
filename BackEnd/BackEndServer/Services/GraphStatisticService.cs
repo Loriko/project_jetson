@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using BackEndServer.Models.DBModels;
+using BackEndServer.Models.Enums;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.PlaceholderServices;
@@ -45,11 +46,6 @@ namespace BackEndServer.Services
             
             perSecondStats.RemoveAll(stat => DateTime.Now.AddMinutes(-30.0) >= stat.DateTime);
             
-            if (perSecondStats.Count == 0)
-            {
-                return null;
-            }
-            
             List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
             perSecondStatsFormattedStrings.Add(new [] { "Time", "People" });
             
@@ -57,6 +53,12 @@ namespace BackEndServer.Services
             {
                 perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("HH:mm:ss"), perSecondStat.NumDetectedObjects.ToString()});
             }
+            
+            if (perSecondStats.Count == 0)
+            {
+                perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("HH:mm:ss"), 0.ToString()});
+            }
+            
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             return graphStatistics;
         }
@@ -84,6 +86,45 @@ namespace BackEndServer.Services
             maxStats.Reverse();
             graphStatistics.Stats = maxStats.ToArray();
 
+            return graphStatistics;
+        }
+
+        public GraphStatistics GetStatisticsForPastPeriod(int cameraId, PastPeriod pastPeriod)
+        {
+            GraphStatistics graphStatistics = new GraphStatistics();
+            List<DatabasePerSecondStat> perSecondStats = _databaseQueryService.GetPerSecondStatsForCamera(cameraId);
+
+            if (pastPeriod == PastPeriod.LastHalfHour)
+            {
+                perSecondStats.RemoveAll(stat => DateTime.Now.AddMinutes(-30) >= stat.DateTime);
+            } else if (pastPeriod == PastPeriod.LastDay)
+            {
+                perSecondStats.RemoveAll(stat => DateTime.Now.AddDays(-1) >= stat.DateTime);
+            } else if (pastPeriod == PastPeriod.LastWeek)
+            {
+                perSecondStats.RemoveAll(stat => DateTime.Now.AddDays(-7) >= stat.DateTime);
+            } else if (pastPeriod == PastPeriod.LastMonth)
+            {
+                perSecondStats.RemoveAll(stat => DateTime.Now.AddMonths(-1) >= stat.DateTime);
+            } else if (pastPeriod == PastPeriod.LastYear)
+            {
+                perSecondStats.RemoveAll(stat => DateTime.Now.AddYears(-1) >= stat.DateTime);
+            }
+
+            List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
+            perSecondStatsFormattedStrings.Add(new [] { "Time", "People" });
+            
+            foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
+            {
+                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("HH:mm:ss"), perSecondStat.NumDetectedObjects.ToString()});
+            }
+            
+            if (perSecondStats.Count == 0)
+            {
+                perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("HH:mm:ss"), 0.ToString()});
+            }
+            
+            graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             return graphStatistics;
         }
     }

@@ -1,4 +1,5 @@
-﻿@model BackEndServer.Models.ViewModels.CameraInformation
+﻿@using BackEndServer.Models.Enums
+@model BackEndServer.Models.ViewModels.CameraInformation
 
 <h1 class="page-title center-align">Statistics and Trends</h1>
 
@@ -7,32 +8,62 @@
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
         // Define the chart to be drawn.
-        var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
-        for (i = 0; i < array.length; i++) {
-            array[i][1] = parseInt(array[i][1]);
-            array[i][0] = new Date(parseInt(array[i][0]));
+        @{
+            if (Model.GraphStatistics != null)
+            {
+                <text>    
+                    var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
+                    for (i = 1; i < array.length; i++) {
+                        array[i][1] = parseInt(array[i][1]);
+                    }
 
+                    var data = new google.visualization.arrayToDataTable(array);
+
+                    var options = {
+                        legend: { position: 'bottom' },
+                        vAxis: {minValue: 0, maxValue: 50}
+                    }
+
+                    // Instantiate and draw the chart.
+                    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+                    chart.draw(data, options);
+                </text>
+            }
         }
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('datetime', 'Time');
-        data.addColumn('number', 'People');
-
-        data.addRows(array);
-
-
-
-        var options = {
-            legend: { position: 'bottom' }
-
-        }
-
-        // Instantiate and draw the chart.
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-        chart.draw(data, options);
-
     }
 </script>
+
+@* <script type="text/javascript"> *@
+@*     google.charts.load('current', { packages: ['corechart', 'line'] }); *@
+@*     google.charts.setOnLoadCallback(drawChart); *@
+@*     function drawChart() { *@
+@*         // Define the chart to be drawn. *@
+@*         var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats)); *@
+@*         for (i = 0; i < array.length; i++) { *@
+@*             array[i][1] = parseInt(array[i][1]); *@
+@*             array[i][0] = new Date(parseInt(array[i][0])); *@
+@* *@
+@*         } *@
+@* *@
+@*         var data = new google.visualization.DataTable(); *@
+@*         data.addColumn('datetime', 'Time'); *@
+@*         data.addColumn('number', 'People'); *@
+@* *@
+@*         data.addRows(array); *@
+@* *@
+@* *@
+@* *@
+@*         var options = { *@
+@*             legend: { position: 'bottom' } *@
+@* *@
+@*         } *@
+@* *@
+@*         // Instantiate and draw the chart. *@
+@*         var chart = new google.visualization.LineChart(document.getElementById('curve_chart')); *@
+@*         chart.draw(data, options); *@
+@* *@
+@*     } *@
+@* </script> *@
 
 
 <div class="row">
@@ -47,10 +78,10 @@
     @* <div class="input-field col s5"></div> *@
     <div class="col s8">
         <ul class="tabs">
-            <li class="tab"><a class="teal-text" href="#past_day">Past Day</a></li>
-            <li class="tab"><a class="teal-text" href="#past_week">Past Week</a></li>
-            <li class="tab"><a class="teal-text" href="#past_month">Past Month</a></li>
-            <li class="tab "><a class="teal-text active" href="#past_year">Past Year</a></li>
+            <li class="tab" onclick="reloadGraph('@PastPeriod.LastDay')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastDay ? "active" : "")" href="#past_day">Past Day</a></li>
+            <li class="tab" onclick="reloadGraph('@PastPeriod.LastWeek')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastWeek ? "active" : "")" href="#past_week">Past Week</a></li>
+            <li class="tab" onclick="reloadGraph('@PastPeriod.LastMonth')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastMonth ? "active" : "")" href="#past_month">Past Month</a></li>
+            <li class="tab" onclick="reloadGraph('@PastPeriod.LastYear')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastYear ? "active" : "")" href="#past_year">Past Year</a></li>
             <div class="indicator teal" style="z-index:1"></div>
         </ul>
     </div>
@@ -79,3 +110,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    function reloadGraph(pastPeriod) {
+        document.location = "GraphDashboard?cameraId=" + "@Model.CameraId" + "&pastPeriod=" + pastPeriod;
+    }
+</script>

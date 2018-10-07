@@ -265,9 +265,6 @@ namespace BackEndServer.Services
                                    $") OR {DatabaseCamera.USER_ID_LABEL} = {userId}" +
                                ");";
                 
-                Console.WriteLine("Query:");
-                Console.WriteLine(query + "\n");
-                
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
