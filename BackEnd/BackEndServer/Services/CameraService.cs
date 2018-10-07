@@ -6,6 +6,7 @@ using BackEndServer.Services.PlaceholderServices;
 using BackEndServer.Services.HelperServices;
 using System;
 using System.IO;
+using BackEndServer.Models.Enums;
 
 namespace BackEndServer.Services
 {
@@ -209,6 +210,15 @@ namespace BackEndServer.Services
                 CameraDetails = new CameraDetails(_dbQueryService.GetCameraById(cameraId)),
                 resolutions = GetExistingCameraResolutions()
             };
+        }
+
+        public CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod)
+        {
+            CameraInformation cameraInformation = getCameraInformationById(cameraId);
+            GraphStatistics graphStatistics = _graphStatisticsService.GetStatisticsForPastPeriod(cameraId, pastPeriod);
+            graphStatistics.selectedPeriod = pastPeriod;
+            cameraInformation.GraphStatistics = graphStatistics;
+            return cameraInformation;
         }
     }
 }

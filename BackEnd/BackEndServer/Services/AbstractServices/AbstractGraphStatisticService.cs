@@ -1,4 +1,5 @@
-﻿using BackEndServer.Models.ViewModels;
+﻿using BackEndServer.Models.Enums;
+using BackEndServer.Models.ViewModels;
 
 namespace BackEndServer.Services.AbstractServices
 {
@@ -7,5 +8,6 @@ namespace BackEndServer.Services.AbstractServices
         GraphStatistics GetYearlyGraphStatistics(int cameraId);
         GraphStatistics GetLast30MinutesStatistics(int cameraId);
         GraphStatistics GetGraphStatisticsByInterval(int cameraId, int startDate, int endDate, int interval);
+        GraphStatistics GetStatisticsForPastPeriod(int cameraId, PastPeriod pastPeriod);
     }
 }

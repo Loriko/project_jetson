@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using Castle.Core.Internal;
 using System.Threading.Tasks;
+using BackEndServer.Models.Enums;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -65,8 +66,9 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            
-            return RedirectToAction("GraphDashboard", "Graph", new { cameraId });
+
+            PastPeriod pastPeriod = PastPeriod.LastYear;
+            return RedirectToAction("GraphDashboard", "Graph", new { cameraId, pastPeriod });
         }
         
         [HttpGet]

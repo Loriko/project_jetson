@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackEndServer.Models.Enums;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Models.ViewModels;
@@ -27,13 +28,13 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
         
         // GET: /<controller>/
-        public IActionResult GraphDashboard(int cameraId)
+        public IActionResult GraphDashboard(int cameraId, PastPeriod pastPeriod)
         {
             if (HttpContext.Session.GetString("currentUsername") == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            CameraInformation cameraInfoWithStatistics = CameraService.GetCameraInformationWithYearlyData(cameraId);
+            CameraInformation cameraInfoWithStatistics = CameraService.GetCameraInformationForPastPeriod(cameraId, pastPeriod);
             return View(cameraInfoWithStatistics);
         }
     }
