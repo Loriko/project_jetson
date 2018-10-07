@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Classes.ErrorResponseClasses;
@@ -33,15 +34,16 @@ namespace WebAPI.Controllers
         /// <param name="receivedMessage">DataMessage object received from a capture system. May contain PerSecondStat from multiple cameras.</param>
         /// <returns>HTTP Response (401, 400, 200 or 500) with or without response object in body.</returns>
         [HttpPost]
-        [Route("persist")] // "api/datareceival/persist"
-        public IActionResult Persist([FromBody] DataMessage receivedMessage)
+        [Route("DataMessage")] // "api/datareceival/datamessage"
+        public IActionResult DataMessage([FromBody] DataMessage receivedMessage)
         {
-            // Verify device's API Key.
-            if (_apiKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
-            {
-                // If API Key does not exist or is deactivated.
-                return Unauthorized();
-            }
+        //Temporarily disabling validation on API key
+//            // Verify device's API Key.
+//            if (_apiKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
+//            {
+//                // If API Key does not exist or is deactivated.
+//                return Unauthorized();
+//            }
 
             if (DataMessageService.CheckDataMessageValidity(receivedMessage) == false)
             {
@@ -54,7 +56,7 @@ namespace WebAPI.Controllers
                     () => _hourlyStatsService.AutoCalculateHourlyStats(receivedMessage));
                 
                 // Return HTTP OK, without waiting on asynchronous Task.
-                return Ok("Received datamessage with " + receivedMessage.GetLength() + "per second stats.");
+                return Ok("Received datamessage with " + receivedMessage.GetLength() + " per second stats.");
             }
 
             return StatusCode(500, new JsonResult(new FailedPersistResponseBody()));

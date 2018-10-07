@@ -3,7 +3,7 @@ import urllib2
 import json
 
 ENDPOINT_HOST = "http://localhost"
-ENDPOINT_PORT = "5000"
+ENDPOINT_PORT = "5001"
 ENDPOINT_PATH = "/api/datareceival/datamessage"
 
 
@@ -33,7 +33,7 @@ def get_headers_for_per_second_stats_post():
 def get_json_encoded_data_for_per_second_stats(per_second_stats):
     json_data = {
         # "CameraId": camera_id,
-        # "Token": token,
+        "api_key": "AFRJNILIJHRU",
         "RealTimeStats": per_second_stats
     }
     json_encoded_data = json.dumps(json_data)

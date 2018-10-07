@@ -1,3 +1,5 @@
+import datetime
+
 class PerSecondStats:
     def __init__(self, camera_id, year, month, day, hour, minute, second, num_tracked_people, has_saved_image):
         self.camera_id = camera_id
@@ -13,6 +15,7 @@ class PerSecondStats:
     def to_json(self):
         return {
             "CameraId": self.camera_id,
+            "DateTime": datetime.datetime(self.year, self.month, self.day, self.hour, self.minute, self.second).strftime("%Y-%m-%d %H:%M:%S"),
             "Year": self.year,
             "Month": self.month,
             "Day": self.day,
