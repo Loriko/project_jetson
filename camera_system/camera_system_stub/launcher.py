@@ -4,7 +4,7 @@ import traceback
 
 
 # Number of camera system to emulate simultaneously
-EMULATED_CAMERA_COUNT = 10
+EMULATED_CAMERA_COUNT = 4
 CAMERA_THREADS = []
 
 

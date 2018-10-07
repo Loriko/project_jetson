@@ -7,7 +7,7 @@ from camera_system_facade import http_service
 
 
 CAMERA_INFO_LOCATION = "camera_information.json"
-DELAY_BETWEEN_MEASUREMENTS_IN_SECONDS = 2
+DELAY_BETWEEN_MEASUREMENTS_IN_SECONDS = 5
 
 
 def emulate_camera(camera_number):
