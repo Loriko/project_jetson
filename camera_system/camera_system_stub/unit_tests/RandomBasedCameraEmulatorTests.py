@@ -20,7 +20,7 @@ class RandomBasedCameraEmulatorTests(unittest.TestCase):
         previous_people_count = 2000
         today_datetime = datetime.datetime.now()
         camera_id = 1
-        seed_per_second_stat = camera_system_facade.classes.PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, previous_people_count, False)
+        seed_per_second_stat = camera_system_facade.classes.PerSecondStats(camera_id, today_datetime, previous_people_count, False)
         generated_per_second_stat = random_based_camera_emulator.generate_random_per_second_stat(camera_id, seed_per_second_stat)
         self.assertEqual(generated_per_second_stat.camera_id, seed_per_second_stat.camera_id)
         self.assertEqual(generated_per_second_stat.has_saved_image, seed_per_second_stat.has_saved_image)

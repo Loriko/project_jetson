@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.Enums;
 using BackEndServer.Models.ViewModels;
@@ -41,26 +42,7 @@ namespace BackEndServer.Services
 
         public GraphStatistics GetLast30MinutesStatistics(int cameraId)
         {
-            GraphStatistics graphStatistics = new GraphStatistics();
-            List<DatabasePerSecondStat> perSecondStats = _databaseQueryService.GetPerSecondStatsForCamera(cameraId);
-            
-            perSecondStats.RemoveAll(stat => DateTime.Now.AddMinutes(-30.0) >= stat.DateTime);
-            
-            List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
-            perSecondStatsFormattedStrings.Add(new [] { "Time", "People" });
-            
-            foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
-            {
-                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("HH:mm:ss"), perSecondStat.NumDetectedObjects.ToString()});
-            }
-            
-            if (perSecondStats.Count == 0)
-            {
-                perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("HH:mm:ss"), 0.ToString()});
-            }
-            
-            graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
-            return graphStatistics;
+            return GetStatisticsForPastPeriod(cameraId, PastPeriod.LastHalfHour);
         }
 
         //Grab Graph Stats between an interval of time using unix time and specify the interval between each data point in seconds for a specific camera.
@@ -112,16 +94,16 @@ namespace BackEndServer.Services
             }
 
             List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
-            perSecondStatsFormattedStrings.Add(new [] { "Time", "People" });
+            perSecondStatsFormattedStrings.Add(new [] { "DateTime", "People" });
             
             foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
             {
-                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("HH:mm:ss"), perSecondStat.NumDetectedObjects.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("s"), perSecondStat.NumDetectedObjects.ToString()});
             }
             
             if (perSecondStats.Count == 0)
             {
-                perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("HH:mm:ss"), 0.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("s"), 0.ToString()});
             }
             
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();

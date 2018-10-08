@@ -32,7 +32,7 @@ def get_camera_id(camera_number, camera_info_location=CAMERA_INFO_LOCATION):
 def serve_made_up_stats_to_server(camera_id, token):
     print "Now sending people count information from camera with id: %s" % camera_id
     today_datetime = datetime.datetime.now()
-    generated_random_per_second_stat = PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, 5, False)
+    generated_random_per_second_stat = PerSecondStats(camera_id, today_datetime, 5, False)
     send_one_per_second_stat(camera_id, token, generated_random_per_second_stat)
     while True:
         time.sleep(DELAY_BETWEEN_MEASUREMENTS_IN_SECONDS)
@@ -53,7 +53,7 @@ def generate_random_per_second_stat(camera_id, previous_per_second_stat):
     if new_people_count < 0:
         new_people_count = 0
     today_datetime = datetime.datetime.now()
-    generated_per_second_stat = PerSecondStats(camera_id, today_datetime.year, today_datetime.month, today_datetime.day, today_datetime.hour, today_datetime.minute, today_datetime.second, new_people_count, False)
+    generated_per_second_stat = PerSecondStats(camera_id, today_datetime, new_people_count, False)
     return generated_per_second_stat
 
 
