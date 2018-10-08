@@ -11,6 +11,7 @@
                 <text>    
                     var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
                     for (i = 1; i < array.length; i++) {
+                        array[i][0] = new Date(array[i][0]);
                         array[i][1] = parseInt(array[i][1]);
                     }
 

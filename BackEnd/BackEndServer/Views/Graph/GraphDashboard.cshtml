@@ -14,6 +14,7 @@
                 <text>    
                     var array = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
                     for (i = 1; i < array.length; i++) {
+                        array[i][0] = new Date(array[i][0]);
                         array[i][1] = parseInt(array[i][1]);
                     }
 
@@ -21,7 +22,15 @@
 
                     var options = {
                         legend: { position: 'bottom' },
-                        vAxis: {minValue: 0, maxValue: 50}
+                        explorer: { 
+                            actions: ['dragToZoom', 'rightClickToReset'],
+                            axis: 'horizontal',
+                            keepInBounds: true,
+                            maxZoomIn: 110.0
+                        },
+                        vAxis: {minValue: 0},
+                        hAxis: {title: 'datetime',  titleTextStyle: {color: '#333'},
+                            slantedText:true, slantedTextAngle:80}
                     }
 
                     // Instantiate and draw the chart.
