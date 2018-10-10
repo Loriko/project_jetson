@@ -107,51 +107,6 @@ namespace BackEndServer.Controllers.FrontEndControllers
             if (currentUserId != null)
             {
                 cameraDetails.UserId = currentUserId.Value;
-
-                #region File Upload Verification
-
-                IFormFile image = cameraDetails.UploadedImage;
-
-                // If the user has uploaded a file.
-                if (image != null)
-                {
-                    // Verify file size, must be under 5 MB.
-                    if (image.Length > 5000000)
-                    {
-                        // Return error page or process form without the uploaded file?
-                    }
-
-                    // Verify that the file is a valid image file (respects Minimum Size, File Extension and MIME Types).
-                    if (HttpPostedFileBaseExtensions.IsImage(image))
-                    {
-                        // Proceed to process the request with the valid image.
-
-                        // Obtain the file extension.
-                        string fileExtension = Path.GetExtension(image.FileName).ToLower();
-
-                        // Obtain the Database ID of the camera.
-                        int cameraId = CameraService.GetExistingCameraId(cameraDetails.CameraKey);
-
-                        // Save the file to disk.
-
-                        // 1. Ensure the output folder exists.
-                        DirectoryInfo outputDirectory = Directory.CreateDirectory(DatabaseCamera.PATH_FOR_USER_UPLOADED_IMAGES);
-
-                        // 2. Create the full file path (output path + filename).
-                        string fullFilePath = Path.Combine(outputDirectory.FullName, cameraId + fileExtension);
-                        cameraDetails.SavedImagePath = fullFilePath;
-
-                        // 3. Save IFormFile as an image file in the output path.
-                        using (var fileStream = new FileStream(fullFilePath, FileMode.Create))
-                        {
-                            // NOTE: If this was for the Edit page, we would have to delete the previous picture first.
-                            await image.CopyToAsync(fileStream);
-                        }
-                    }
-                }
-            
-                #endregion
-
                 CameraService.RegisterCamera(cameraDetails);
 
             }

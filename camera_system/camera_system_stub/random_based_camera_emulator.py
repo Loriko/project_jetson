@@ -41,7 +41,7 @@ def serve_made_up_stats_to_server(camera_id, token):
 
 
 def send_one_per_second_stat(camera_id, token, per_second_stat):
-    http_service.send_per_second_stats(camera_id, token, [per_second_stat.to_json(), ])
+    http_service.send_per_second_stats([per_second_stat.to_json(), ])
 
 
 # We take the previous per_second_stat and use it to calculate the next one.
