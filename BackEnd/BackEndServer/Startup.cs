@@ -14,6 +14,7 @@ using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.PlaceholderServices;
 using System.IO;
+using NLog;
 
 namespace BackEndServer
 {
@@ -84,6 +85,7 @@ namespace BackEndServer
 
             app.UseStaticFiles();
             app.UseSession();
+            ConfigureLogger();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -113,5 +115,17 @@ namespace BackEndServer
             }
         }
 
+        private void ConfigureLogger()
+        {
+            var config = new NLog.Config.LoggingConfiguration();
+
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "${basedir}/logs/webserver.log" };
+            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, logfile);
+            
+            LogManager.Configuration = config;
+        }
     }
 }

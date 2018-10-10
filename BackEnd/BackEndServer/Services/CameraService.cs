@@ -12,6 +12,7 @@ namespace BackEndServer.Services
 {
     public class CameraService : AbstractCameraService
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
         private readonly AbstractLocationService _locationService;
