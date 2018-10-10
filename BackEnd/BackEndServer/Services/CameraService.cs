@@ -6,7 +6,9 @@ using BackEndServer.Services.PlaceholderServices;
 using BackEndServer.Services.HelperServices;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace BackEndServer.Services
 {
@@ -189,7 +191,67 @@ namespace BackEndServer.Services
 
         public bool RegisterCamera(CameraDetails cameraDetails)
         {
-            return _dbQueryService.PersistExistingCameraByCameraKey (new DatabaseCamera(cameraDetails));
+            if (cameraDetails.UploadedImage == null || PerformCameraImageUpload(cameraDetails))
+            {
+                return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails));
+            }
+
+            return false;
+        }
+
+        private bool PerformCameraImageUpload(CameraDetails cameraDetails)
+        {
+            IFormFile image = cameraDetails.UploadedImage;
+
+            // If the user has uploaded a file.
+            if (image != null)
+            {
+                // Verify file size, must be under 5 MB.
+                if (image.Length > 5000000)
+                {
+                    return false;
+                }
+
+                try
+                {
+                    // Verify that the file is a valid image file (respects Minimum Size, File Extension and MIME Types).
+                    if (HttpPostedFileBaseExtensions.IsImage(image))
+                    {
+                        // Proceed to process the request with the valid image.
+
+                        // Obtain the file extension.
+                        string fileExtension = Path.GetExtension(image.FileName).ToLower();
+
+                        // Obtain the Database ID of the camera.
+                        int cameraId = GetExistingCameraId(cameraDetails.CameraKey);
+
+                        // Save the file to disk.
+
+                        // 1. Ensure the output folder exists.
+                        DirectoryInfo outputDirectory = Directory.CreateDirectory(DatabaseCamera.PATH_FOR_USER_UPLOADED_IMAGES);
+
+                        // 2. Create the full file path (output path + filename).
+                        string fullFilePath = Path.Combine(outputDirectory.FullName, cameraId + fileExtension);
+                        cameraDetails.SavedImagePath = fullFilePath;
+
+                        // 3. Save IFormFile as an image file in the output path.
+                        using (var fileStream = new FileStream(fullFilePath, FileMode.Create))
+                        {
+                            // NOTE: If this was for the Edit page, we would have to delete the previous picture first.
+                            Task task = image.CopyToAsync(fileStream);
+                            task.GetAwaiter().GetResult();
+                        }
+
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+            }
+
+            return false;
         }
 
         public List<string> GetExistingCameraResolutions()
