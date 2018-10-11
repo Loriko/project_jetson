@@ -30,6 +30,9 @@ namespace BackEndServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Configure logger ASAP so that if the app crashes latter we can have logs of the crash
+            ConfigureLogger();
+            
             services.AddMvc().AddSessionStateTempDataProvider();
             //Add session support
             services.AddSession();
@@ -86,7 +89,6 @@ namespace BackEndServer
 
             app.UseStaticFiles();
             app.UseSession();
-            ConfigureLogger();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
