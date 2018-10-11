@@ -40,13 +40,14 @@ namespace BackEndServer
             // Uses connection string from the project configuration
             // Passing it as a service ensures everything in the project will use this query service and use this connection string
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
-
+            EmailService emailService = new EmailService(Configuration.GetSection("EmailServiceConfiguration")["SourceEmailAddress"], 
+                Configuration.GetSection("EmailServiceConfiguration")["SourceEmailPassword"]);
             bool alertMonitoringEnabled = true;
             if (alertMonitoringEnabled)
             {
                 Thread alertMonitoringThread = new Thread(delegate()
                 {
-                    AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService);
+                    AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService, emailService);
                     alertMonitoringService.StartMonitoring();
                 });
                 alertMonitoringThread.Start();

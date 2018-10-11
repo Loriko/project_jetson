@@ -13,12 +13,14 @@ namespace BackEndServer.Services
     public class AlertMonitoringService
     {
         private readonly IDatabaseQueryService _databaseQueryService;
+        private readonly EmailService _emailService;
         private static readonly double ALERT_SNOOZE_HOURS = 2;
         private static readonly int TIME_BETWEEN_ALERT_CHECKS_MS = 30000;
         
-        public AlertMonitoringService(IDatabaseQueryService databaseQueryService)
+        public AlertMonitoringService(IDatabaseQueryService databaseQueryService, EmailService emailService)
         {
             _databaseQueryService = databaseQueryService;
+            _emailService = emailService;
         }
         
         public void StartMonitoring()
@@ -77,7 +79,7 @@ namespace BackEndServer.Services
             {
                 string emailSubject = GetEmailSubject(alert, earliestStatThatTriggersAlert);
                 string emailBody = GetEmailBody(alert, earliestStatThatTriggersAlert, databaseUser);
-                return EmailService.SendEmail(databaseUser.EmailAddress, emailSubject, emailBody);
+                return _emailService.SendEmail(databaseUser.EmailAddress, emailSubject, emailBody);
             }
             
             return false;
