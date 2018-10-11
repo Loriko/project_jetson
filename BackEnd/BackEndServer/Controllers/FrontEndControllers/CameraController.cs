@@ -100,20 +100,21 @@ namespace BackEndServer.Controllers.FrontEndControllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegisterCamera(CameraDetails cameraDetails)
+        public IActionResult RegisterCamera(CameraDetails cameraDetails)
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            if (currentUserId != null)
-            {
-                cameraDetails.UserId = currentUserId.Value;
-                CameraService.RegisterCamera(cameraDetails);
-
-            }
-            else
+            if (currentUserId == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
+            
+            cameraDetails.UserId = currentUserId.Value;
+            if (!CameraService.RegisterCamera(cameraDetails))
+            {
+                return View("Error");
+            }
+            
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
             return View("ManageCameras", availableCameras);
         }
