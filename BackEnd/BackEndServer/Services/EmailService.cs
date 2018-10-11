@@ -7,27 +7,30 @@ namespace BackEndServer.Services
 {
     public class EmailService
     {
-        public static string SOURCE_ADDRESS = "projectjetson1@gmail.com";
-        //FOR NOW, FILL IN PASSWORD MANUALY BEFORE COMPILING
-        //IMPORTANT: REMOVE PASSWORD BEFORE PUSHING TO REMOTE
-        public static string SOURCE_ADDRESS_PASSWORD = "";
-        public static SmtpClient SMTP_CLIENT = new SmtpClient("smtp.gmail.com", 587)
+        private readonly SmtpClient _smtpClient;
+        private readonly string _sourceEmailAddress;
+
+        public EmailService(string sourceEmailAddress, string sourceEmailPassword)
         {
-            EnableSsl = true,
-            //UseDefaultCredentials must be set to false before the Credentials are set.
-            //Weird but very critical for the success of the email sending operation
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential(SOURCE_ADDRESS, SOURCE_ADDRESS_PASSWORD),
-            DeliveryMethod = SmtpDeliveryMethod.Network
-        };
-        
-        public static bool SendEmail(string destinationAddress, 
+            _sourceEmailAddress = sourceEmailAddress;
+            _smtpClient = new SmtpClient("smtp.gmail.com", 587)
+            {
+                EnableSsl = true,
+                //UseDefaultCredentials must be set to false before the Credentials are set.
+                //Weird but very critical for the success of the email sending operation
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(_sourceEmailAddress, sourceEmailPassword),
+                DeliveryMethod = SmtpDeliveryMethod.Network
+            };
+        }
+
+        public bool SendEmail(string destinationAddress, 
                               string messageSubject, string messageBody)
         {
             try
             {
                 MailMessage mail = CreateMail(destinationAddress, messageSubject, messageBody);
-                SMTP_CLIENT.Send(mail);
+                _smtpClient.Send(mail);
             }
             catch (Exception)
             {
@@ -36,9 +39,9 @@ namespace BackEndServer.Services
             return true;
         }
 
-        private static MailMessage CreateMail(string destinationAddress, string messageSubject, string messageBody, bool isBodyHtml = true)
+        private MailMessage CreateMail(string destinationAddress, string messageSubject, string messageBody, bool isBodyHtml = true)
         {
-            MailMessage mail = new MailMessage(SOURCE_ADDRESS, destinationAddress)
+            MailMessage mail = new MailMessage(_sourceEmailAddress, destinationAddress)
             {
                 Subject = messageSubject,
                 Body = messageBody,
