@@ -1,8 +1,8 @@
 ﻿@using BackEndServer.Models.Enums
 @using BackEndServer.Models.ViewModels
 @model AlertDashboardInformation
-@{ Html.RenderPartial("../Alert/AlertCreationModal", Model.Availablecameras); }
-@{ Html.RenderPartial("AlertDeletionConfirmationModal"); }
+@{ Html.RenderPartial("~/Views/Alert/AlertCreationModal.cshtml", Model.Availablecameras); }
+@{ Html.RenderPartial("~/Views/Alert/AlertDeletionConfirmationModal.cshtml"); }
 <h1 class="page-title center-align">Your Alerts</h1>
 @{
     if (Model.ExistingAlertsByCameraId.Any(x => x.Value.Count > 0))
