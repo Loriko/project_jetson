@@ -43,19 +43,15 @@ namespace BackEndServer.Controllers.FrontEndControllers
         }
         
         [HttpPost]
-        public IActionResult SaveLocation(LocationDetails locationDetails)
+        public JsonResult SaveLocation(LocationDetails locationDetails)
         {
-            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
-            if (currentUsedId != null)
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
             {
-                LocationService.SaveLocation(locationDetails);
-            }
-            else
-            {
-                return RedirectToAction("SignIn", "Home");
+                return Json(LocationService.SaveLocation(locationDetails));
             }
 
-            return RedirectToAction("BeginCameraRegistration", "Camera");
+            return Json(false);
         }
     }
 }
