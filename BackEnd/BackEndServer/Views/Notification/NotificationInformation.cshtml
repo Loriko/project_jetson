@@ -1,7 +1,7 @@
 ﻿@using BackEndServer.Models.ViewModels
 @model NotificationDetails
 
-@Html.Partial("../Alert/AlertDisablingModal", new AlertDisablingInformation {AlertId = Model.AlertId})
+@Html.Partial("~/Views/Alert/AlertDisablingModal.cshtml", new AlertDisablingInformation {AlertId = Model.AlertId})
 
 <h1 class="page-title center-align">Here are the details concerning the selected notification</h1>
 <div class="row">

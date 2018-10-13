@@ -3,7 +3,7 @@
 
 <h1 class="page-title center-align">Please enter your camera's details</h1>
 
-@Html.Partial("../Location/LocationCreationModal")
+@Html.Partial("~/Views/Location/LocationCreationModal.cshtml")
 
 <div class="row">
     <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
@@ -146,6 +146,32 @@
         }
     });
 
-    // Client side verification for image file input.
+    // TODO: Add client side verification for image file input.
 
+    function handleLocationCreationFormSubmission(response) {
+        if (response === true) {
+            Materialize.toast("Location successfully created!", 4000);
+            $('#location-creation-modal').modal('close');
+        } else {
+            Materialize.toast("Couldn't create location.", 4000);
+        }
+    }
+
+    $("#location-creation-form").submit(function(e) {
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data) {
+                handleLocationCreationFormSubmission(data);
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+    
 </script>
