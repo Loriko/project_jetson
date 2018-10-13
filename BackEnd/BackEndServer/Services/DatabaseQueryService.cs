@@ -55,7 +55,8 @@ namespace BackEndServer.Services
 
             foreach (PerSecondStat stat in distinctStats)
             {
-                string cameraId = stat.CameraId.ToString();
+                //TODO: Usafe addition done for milestone 4
+                string cameraId = stat.CameraId.Value.ToString();
                 string numDetectedObjects = stat.NumTrackedPeople.ToString();
                 string hasImage = "0";
 
@@ -1421,6 +1422,28 @@ namespace BackEndServer.Services
             }
             return stat;
         }
-        
+
+        public string GetCameraKeyFromId(int cameraId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseCamera.CAMERA_KEY_LABEL} FROM {DatabaseCamera.TABLE_NAME} "
+                               + $"WHERE {DatabaseCamera.CAMERA_ID_LABEL} = {cameraId} LIMIT 1";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return Convert.ToString(reader[DatabaseCamera.CAMERA_KEY_LABEL]);
+                    }
+                }
+            }
+
+            return null;
+        }
     }
 }

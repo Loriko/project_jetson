@@ -6,6 +6,7 @@ import datetime
 
 CAMERA_INFO_LOCATION = "../camera_information.json"
 
+
 class RandomBasedCameraEmulatorTests(unittest.TestCase):
     def test_get_camera_id(self):
         camera_number = 1

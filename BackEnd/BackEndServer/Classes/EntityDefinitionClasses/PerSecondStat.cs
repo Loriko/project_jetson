@@ -5,7 +5,6 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
 {
     /// <summary>
     /// An object which represents information extracted for each second of real-time monitoring.
-    /// TODO: Go over this. I'm not sure that UnixTime is correct after all since it's not standard
     /// </summary>
     public class PerSecondStat : IComparable<PerSecondStat>
     {
@@ -14,8 +13,12 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         // Date and Time Information in MySQL Format, representing the exact second represented by the statistics in this object.
         public string DateTime { get; set; }
 
-        // The ID of the camera which produced these statistics for this exact second.
-        public int CameraId { get; set; } 
+        // The Key of the camera which produced these statistics for this exact second.
+        public string CameraKey { get; set; }
+
+        // The Database Id of the camera which produced these statistics for this exact second
+        //TODO: Adding nullable CameraId is not so good but done for milestone 4
+        public int? CameraId { get; set; }
 
         // Statistic #1: Stores the number of people identified within the second.
         public int NumTrackedPeople { get; set; }
@@ -25,10 +28,10 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
 
         #endregion
 
-        public PerSecondStat (string dateTime, int cameraId, int numTrackedPeople, bool hasSavedImage)
+        public PerSecondStat (string dateTime, string cameraKey, int numTrackedPeople, bool hasSavedImage)
         {
             this.DateTime = dateTime;
-            this.CameraId = cameraId;
+            this.CameraKey = cameraKey;
             this.NumTrackedPeople = numTrackedPeople;
             this.HasSavedImage = hasSavedImage;
         }
@@ -39,12 +42,12 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         /// <returns>Boolean indicating if the PerSecondStat object is valid.</returns>
         public bool isValidSecondStat()
         {
-            if (this.CameraId < 0 || this.NumTrackedPeople < 0 || this.DateTime.CheckIfSQLFormat() == false)
+            if (NumTrackedPeople < 0 || DateTime.CheckIfSQLFormat() == false)
             {
                 return false;
             }
 
-            DateTime toValidate = MySqlDateTimeConverter.ToDateTime(this.DateTime);
+            DateTime toValidate = MySqlDateTimeConverter.ToDateTime(DateTime);
 
             return DateTimeTools.ValidateDateTime(toValidate);
         }
@@ -57,11 +60,11 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         /// <returns></returns>
         public int CompareTo(PerSecondStat other)
         {
-            if (this.CameraId != other.CameraId)
+            if (CameraKey != other.CameraKey)
             {
                 return -1;
             }
-            else if (this.DateTime.Equals(other.DateTime))
+            else if (DateTime.Equals(other.DateTime))
             {
                 return 0;
             }
@@ -78,7 +81,7 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         public override bool Equals(object obj)
         {
             PerSecondStat other = obj as PerSecondStat;
-            return (other.DateTime == this.DateTime && this.CameraId == other.CameraId);
+            return (other.DateTime == DateTime && CameraKey == other.CameraKey);
         }
     }
 }
