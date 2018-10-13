@@ -26,7 +26,7 @@ namespace BackEndServer
         {
             Exception ex = (Exception)e.ExceptionObject;
             Logger log = LogManager.GetLogger("UnhandledExceptionHandler");
-            log.Error(ex);
+            log.Fatal(ex);
         }
         
         public static IWebHost BuildWebHost(string[] args) =>

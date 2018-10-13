@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Classes.ErrorResponseClasses;
 using System.Linq;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.DBModels;
+using Castle.Core.Internal;
 
 namespace BackEndServer.Services
 {
@@ -23,7 +25,7 @@ namespace BackEndServer.Services
         // Validates a received DataMessage object's contents (all PerSecondStat objects contained).
         public bool CheckDataMessageValidity(DataMessage message)
         {
-            if (message.IsEmpty())
+            if (message == null || message.IsEmpty())
             {
                 return false;
             }
@@ -42,7 +44,7 @@ namespace BackEndServer.Services
         // Creates an error response body custom to the characteristics of the received DataMessage object.
         public InvalidDataMessageResponseBody CreateInvalidDataMessageResponseBody(DataMessage message)
         {
-            if (message.IsEmpty())
+            if (message == null || message.IsEmpty())
             {
                 return new InvalidDataMessageResponseBody(true, null);
             }
@@ -97,6 +99,18 @@ namespace BackEndServer.Services
 
             for (int y = 0; y < verifiedMessage.GetLength(); y++)
             {
+                int associatedCameraId = _dbQueryService.GetCameraIdFromKey(verifiedMessage.RealTimeStats[y].CameraKey);
+                if (associatedCameraId != -1)
+                {
+                    verifiedMessage.RealTimeStats[y].CameraId = associatedCameraId;
+                }
+                else
+                {
+                    //If we can't get the camera id from the camera key, we won't know what to save the stat against,
+                    //might as well drop it all 
+                    return false;
+                }
+
                 temp.Add(verifiedMessage.RealTimeStats[y]);
             }
 
@@ -140,9 +154,23 @@ namespace BackEndServer.Services
 
             int x = 0;
 
+            Dictionary<int, string> cameraKeyMap = new Dictionary<int, string>();
+            
             foreach (DatabasePerSecondStat second in queryResults)
             {
-                PerSecondStat temp = new PerSecondStat(second.DateTime.ToString("yyyy-MM-dd HH:mm:ss"), second.CameraId, second.NumDetectedObjects, second.HasSavedImage);
+                if (!cameraKeyMap.ContainsKey(second.CameraId))
+                {
+                    string possibleKey = _dbQueryService.GetCameraKeyFromId(second.CameraId);
+                    if (possibleKey.IsNullOrEmpty())
+                    {
+                        throw new DataException("Database has a camera which doesn't have a key");
+                    }
+
+                    cameraKeyMap[second.CameraId] = possibleKey;
+                }
+                string cameraKey = cameraKeyMap[second.CameraId];
+
+                PerSecondStat temp = new PerSecondStat(second.DateTime.ToString("yyyy-MM-dd HH:mm:ss"), cameraKey, second.NumDetectedObjects, second.HasSavedImage);
                 stats[x] = temp;
                 x++;
             }

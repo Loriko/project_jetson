@@ -98,12 +98,12 @@ namespace BackEndServer.Services
             
             foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
             {
-                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("s"), perSecondStat.NumDetectedObjects.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToUniversalTime().ToString("s"), perSecondStat.NumDetectedObjects.ToString()});
             }
             
             if (perSecondStats.Count == 0)
             {
-                perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("s"), 0.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{DateTime.UtcNow.ToString("s"), 0.ToString()});
             }
             
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
