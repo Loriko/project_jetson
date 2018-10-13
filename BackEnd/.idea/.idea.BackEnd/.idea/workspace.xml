@@ -1,0 +1,1673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" afterDir="false" />
+    </list>
+    <list id="ef2f6c79-3e27-4649-a473-204411f42ef2" name="Unversioned" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <expand />
+    <select />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="-413139211">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.9" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="cs" value="12" />
+          <entry key="cshtml" value="20" />
+          <entry key="css" value="2" />
+          <entry key="json" value="3" />
+          <entry key="sql" value="4" />
+          <entry key="xml" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="C#" value="12" />
+          <entry key="CSS" value="2" />
+          <entry key="JSON" value="3" />
+          <entry key="Razor" value="20" />
+          <entry key="SQL" value="4" />
+          <entry key="XML" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cs" value="16" />
+          <entry key="cshtml" value="554" />
+          <entry key="txt" value="11" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="C#" value="16" />
+          <entry key="PLAIN_TEXT" value="11" />
+          <entry key="Razor" value="554" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-8">
+              <caret line="4" column="75" selection-start-line="4" selection-start-column="75" selection-end-line="4" selection-end-column="75" />
+              <folding>
+                <marker date="1539455781553" expanded="true" signature="61:340" ph="&lt;ul.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="341:3458" ph="&lt;nav.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="351:3451" ph="&lt;div.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="390:584" ph="&lt;a.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="593:952" ph="&lt;ul.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="644:778" ph="&lt;li.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="791:938" ph="&lt;li.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="962:3440" ph="&lt;ul.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="1014:3104" ph="&lt;li.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="1077:1478" ph="&lt;a.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="1183:1385" ph="@..." />
+                <marker date="1539455781553" expanded="true" signature="1235:1385" ph="{...}" />
+                <marker date="1539455781553" expanded="true" signature="1539:3086" ph="&lt;ul.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="1693:2839" ph="@..." />
+                <marker date="1539455781553" expanded="true" signature="1810:2839" ph="{...}" />
+                <marker date="1539455781553" expanded="true" signature="1857:2817" ph="&lt;li.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="1890:2812" ph="&lt;a.../&gt;" />
+                <marker date="1539455781553" expanded="true" signature="2048:2424" ph="@..." />
+                <marker date="1539455781553" expanded="true" signature="2079:2232" ph="{...}" />
+                <marker date="1539455781553" expanded="true" signature="2269:2424" ph="{...}" />
+                <marker date="1539455781553" expanded="true" signature="2594:2779" ph="@..." />
+                <marker date="1539455781553" expanded="true" signature="2624:2779" ph="{...}" />
+                <marker date="1539455781553" expanded="true" signature="2860:3064" ph="@*...*@" />
+                <marker date="1539455781553" expanded="true" signature="3117:3243" ph="&lt;li.../&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" column="21" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="21" />
+              <folding>
+                <marker date="1539462144755" expanded="true" signature="233:628" ph="&lt;div.../&gt;" />
+                <marker date="1539462144755" expanded="true" signature="271:436" ph="&lt;div.../&gt;" />
+                <marker date="1539462144755" expanded="true" signature="441:621" ph="&lt;div.../&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="454">
+              <caret line="85" column="24" lean-forward="true" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+              <folding>
+                <marker date="1539464290906" expanded="true" signature="173:1576" ph="&lt;script.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="350:1566" ph="{...}" />
+                <marker date="1539464290906" expanded="true" signature="401:1560" ph="@..." />
+                <marker date="1539464290906" expanded="true" signature="450:1550" ph="{...}" />
+                <marker date="1539464290906" expanded="true" signature="898:1301" ph="{...}" />
+                <marker date="1539464290906" expanded="true" signature="990:1233" ph="{...}" />
+                <marker date="1539464290906" expanded="true" signature="1578:2663" ph="@*...*@" />
+                <marker date="1539464290906" expanded="true" signature="2666:4432" ph="&lt;div.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="2688:3036" ph="@*...*@" />
+                <marker date="1539464290906" expanded="true" signature="3041:4040" ph="&lt;div.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="3070:4029" ph="&lt;ul.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="4045:4425" ph="&lt;div.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="4086:4367" ph="&lt;select.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="4435:5197" ph="&lt;div.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="4457:5190" ph="&lt;div.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="4487:5179" ph="&lt;div.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="4518:5164" ph="&lt;div.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="5199:5368" ph="&lt;script.../&gt;" />
+                <marker date="1539464290906" expanded="true" signature="5245:5358" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="75">
+              <caret line="5" column="114" selection-start-line="5" selection-start-column="114" selection-end-line="5" selection-end-column="114" />
+              <folding>
+                <marker date="1539459329512" expanded="true" signature="229:475" ph="&lt;div.../&gt;" />
+                <marker date="1539459329512" expanded="true" signature="274:468" ph="@..." />
+                <marker date="1539459329512" expanded="true" signature="319:468" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="195">
+              <caret line="13" column="40" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
+              <folding>
+                <marker date="1539462650841" expanded="true" signature="162:363" ph="&lt;!--...--&gt;" />
+                <marker date="1539462650841" expanded="true" signature="166:360" ph="&lt;div.../&gt;" />
+                <marker date="1539462650841" expanded="true" signature="195:353" ph="@..." />
+                <marker date="1539462650841" expanded="true" signature="236:353" ph="{...}" />
+                <marker date="1539462650841" expanded="true" signature="365:1412" ph="&lt;div.../&gt;" />
+                <marker date="1539462650841" expanded="true" signature="401:1405" ph="@..." />
+                <marker date="1539462650841" expanded="true" signature="442:1405" ph="{...}" />
+                <marker date="1539462650841" expanded="true" signature="452:1399" ph="&lt;div.../&gt;" />
+                <marker date="1539462650841" expanded="true" signature="488:1384" ph="&lt;div.../&gt;" />
+                <marker date="1539462650841" expanded="true" signature="535:1365" ph="&lt;div.../&gt;" />
+                <marker date="1539462650841" expanded="true" signature="610:1342" ph="&lt;a.../&gt;" />
+                <marker date="1539462650841" expanded="true" signature="689:1220" ph="@..." />
+                <marker date="1539462650841" expanded="true" signature="772:978" ph="{...}" />
+                <marker date="1539462650841" expanded="true" signature="1011:1194" ph="{...}" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="435">
+              <caret line="29" column="6" selection-start-line="3" selection-start-column="110" selection-end-line="29" selection-end-column="6" />
+              <folding>
+                <marker date="1539456963849" expanded="true" signature="66:194" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="195:273" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="274:1321" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="296:1314" ph="&lt;form.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="341:669" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="371:654" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="678:980" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="708:965" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="989:1121" ph="&lt;div.../&gt;" />
+                <marker date="1539456963849" expanded="true" signature="1130:1302" ph="&lt;button.../&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1141">
+              <caret line="92" column="16" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/css/site2.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4156" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/Components/CameraCard/CameraCard.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1245">
+              <caret line="83" column="6" selection-end-line="83" selection-end-column="6" />
+              <folding>
+                <marker date="1539141365196" expanded="true" signature="56:3385" ph="&lt;div.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="98:3378" ph="&lt;div.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="199:1742" ph="&lt;div.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="243:1727" ph="&lt;div.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="290:1708" ph="&lt;div.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="336:1685" ph="@..." />
+                <marker date="1539141365196" expanded="true" signature="414:625" ph="{...}" />
+                <marker date="1539141365196" expanded="true" signature="654:839" ph="{...}" />
+                <marker date="1539141365196" expanded="true" signature="865:1663" ph="/* if (String.IsNullOrWhiteSpace(Model.CameraDetails.SavedImagePath) == false) ... */" />
+                <marker date="1539141365196" expanded="true" signature="1751:3367" ph="&lt;table.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="1771:3350" ph="&lt;tbody.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="1791:1929" ph="&lt;tr.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="1951:2199" ph="@..." />
+                <marker date="1539141365196" expanded="true" signature="1998:2199" ph="{...}" />
+                <marker date="1539141365196" expanded="true" signature="2029:2185" ph="&lt;tr.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="2212:2348" ph="&lt;tr.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="2361:2584" ph="@..." />
+                <marker date="1539141365196" expanded="true" signature="2400:2584" ph="{...}" />
+                <marker date="1539141365196" expanded="true" signature="2431:2570" ph="&lt;tr.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="2597:2835" ph="@..." />
+                <marker date="1539141365196" expanded="true" signature="2641:2835" ph="{...}" />
+                <marker date="1539141365196" expanded="true" signature="2672:2821" ph="&lt;tr.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="2848:3071" ph="@..." />
+                <marker date="1539141365196" expanded="true" signature="2887:3071" ph="{...}" />
+                <marker date="1539141365196" expanded="true" signature="2918:3057" ph="&lt;tr.../&gt;" />
+                <marker date="1539141365196" expanded="true" signature="3084:3329" ph="@..." />
+                <marker date="1539141365196" expanded="true" signature="3126:3329" ph="{...}" />
+                <marker date="1539141365196" expanded="true" signature="3157:3315" ph="&lt;tr.../&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/AD857A18-8503-4E73-815A-D25F75447A99/ef/cbca4a38/IAuthenticationSignOutHandler.cs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>StatisticsDatabaseContext</find>
+      <find>Configuration.GetConnectionString</find>
+      <find>HttpContext.RequestServices</find>
+      <find>DMV</find>
+      <find>Ridgemont</find>
+      <find>Camera</find>
+      <find>getCameraStatisticsForNowById</find>
+      <find>validateCredentials</find>
+      <find>Logical</find>
+      <find>Username</find>
+      <find>getcamerasfor</find>
+      <find>getspecif</find>
+      <find>PerSecondStat</find>
+      <find>DataMessage</find>
+      <find>Entrance</find>
+      <find>ManageCameras</find>
+      <find>Modify Personal Settings</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/HelperServices/MySqlDateTimeConverter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationDetails.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractLocationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/AlertDashboardInformation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/AlertDetails.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractCameraService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Startup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/FailedPersistResponseBody.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/TimeInterval.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_ValidationScriptsPartial.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/Components/CameraCard/CameraCard.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/AD857A18-8503-4E73-815A-D25F75447A99/ef/cbca4a38/IAuthenticationSignOutHandler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseLocation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Services/AuthenticationService.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/StatisticsDatabaseContext.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/appsettings.json" />
+        <option value="$PROJECT_DIR$/BackEndServer/appsettings.Development.json" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseQueryService.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerHourStats.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStats.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/TestObject.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseLocation.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Services/LocationService.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformationList.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/LogicalModels/PerSecondStats.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCameraStat.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Services/CameraService.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Services/AuthenticationService.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractAuthenticationService.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderAuthenticationService.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraStatistics.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css" />
+        <option value="$PROJECT_DIR$/BackEndServer/Startup.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/HomeController.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1440" />
+    <option name="height" value="900" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator currentView="SolutionExplorer" proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="FileSystemExplorer" />
+      <pane id="SolutionExplorer">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Dependencies" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Properties" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Classes" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Database" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Models" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Models" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="DBModels" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Models" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="ViewModels" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Services" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Alert" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Camera" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Graph" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Home" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Location" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Notification" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Shared" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Shared" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Components" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Shared" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Components" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="CameraCard" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Shared" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Components" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="GraphCard" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Views" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Shared" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="Components" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="NavigationBar" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="wwwroot" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="wwwroot" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="css" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="wwwroot" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="lib" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="wwwroot" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="lib" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="bootstrap" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+            <path>
+              <item name="Project" type="784c90a0:SolutionExplorerRootNode" />
+              <item name="BackEnd" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="BackEndServer" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="wwwroot" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="lib" type="24d0babc:SolutionExplorerModelNode" />
+              <item name="jquery" type="24d0babc:SolutionExplorerModelNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+        <option name="show-all-files" value="false" />
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="SearchEverywhereHistoryKey" value="Sign Out&#9;null&#9;null&#10;ManageCameras&#9;FILE&#9;file:///Users/umarrehmani/Desktop/project_jetson/BackEnd/BackEndServer/Views/Camera/ManageCameras.cshtml&#10;camera&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;layout&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Shared/_Layout.cshtml&#10;camerainforma&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Views/Camera/CameraInformation.cshtml&#10;gethourly&#9;null&#9;null&#10;camera.cs&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs&#10;databaseq&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;cameracontro&#9;null&#9;null&#10;database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;Database&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Models/DBModels/DatabaseCamera.cs&#10;locationservice&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/LocationService.cs&#10;d&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Services/DatabaseQueryService.cs&#10;LocationCon&#9;FILE&#9;file:///Users/francismaher/Projects/BackEnd/BackEndServer/Controllers/FrontEndControllers/LocationController.cs" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Default" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="$PROJECT_DIR$/BackEndServer/bin/Debug/netcoreapp2.0/BackEndServer.dll" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/BackEndServer" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <envs>
+        <env name="ASPNETCORE_ENVIRONMENT" value="Development" />
+        <env name="ASPNETCORE_URLS" value="http://localhost:5000" />
+      </envs>
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/BackEndServer/BackEndServer.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value=".NETCoreApp,Version=v2.0" />
+      <browser url="http://localhost:5000" />
+      <method v="2">
+        <option name="Build" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="" />
+      <changelist id="ef2f6c79-3e27-4649-a473-204411f42ef2" name="Unversioned" comment="" />
+      <created>1521525761457</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1521525761457</updated>
+      <workItem from="1521525762930" duration="24024000" />
+      <workItem from="1521609444102" duration="1503000" />
+      <workItem from="1538161172808" duration="5499000" />
+      <workItem from="1538778379093" duration="6120000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="51349000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25679544" />
+      <window_info id="Structure" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="REST Client" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="3" />
+      <window_info anchor="bottom" id="Version Control" order="4" weight="0.31084338" />
+      <window_info anchor="bottom" id="Terminal" order="5" />
+      <window_info anchor="bottom" id="NuGet" order="6" weight="0.3287483" />
+      <window_info anchor="bottom" id="Change Signature" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" order="9" weight="0.32891566" />
+      <window_info anchor="bottom" id="Message" order="10" />
+      <window_info anchor="bottom" id="Find" order="11" />
+      <window_info anchor="bottom" id="Run" order="12" visible="true" weight="0.22168675" />
+      <window_info anchor="bottom" id="Debug" order="13" weight="0.18125771" />
+      <window_info anchor="bottom" id="Cvs" order="14" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="15" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="16" />
+      <window_info anchor="bottom" id="Messages" order="17" />
+      <window_info anchor="right" id="Database" order="0" weight="0.3298969" />
+      <window_info anchor="right" id="Errors In Solution" order="1" />
+      <window_info anchor="right" id="Commander" order="2" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Favorites" order="0" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.25679544" />
+      <window_info id="Structure" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="REST Client" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
+      <window_info anchor="bottom" id="Database Changes" order="2" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Unit Tests" order="3" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="4" visible="true" weight="0.31084338" />
+      <window_info anchor="bottom" id="Terminal" order="5" />
+      <window_info anchor="bottom" id="NuGet" order="6" weight="0.3287483" />
+      <window_info anchor="bottom" id="Change Signature" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Build" order="9" weight="0.32891566" />
+      <window_info anchor="bottom" id="Message" order="10" />
+      <window_info anchor="bottom" id="Find" order="11" />
+      <window_info anchor="bottom" id="Run" order="12" weight="0.22168675" />
+      <window_info anchor="bottom" id="Debug" order="13" weight="0.18125771" />
+      <window_info anchor="bottom" id="Cvs" order="14" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="15" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="16" />
+      <window_info anchor="bottom" id="Messages" order="17" />
+      <window_info anchor="right" id="Database" order="0" weight="0.3298969" />
+      <window_info anchor="right" id="Errors In Solution" order="1" />
+      <window_info anchor="right" id="Commander" order="2" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="3" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="4" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs</url>
+          <line>189</line>
+          <properties documentPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" initialLine="188">
+            <startOffsets>
+              <option value="8357" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8379" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs</url>
+          <line>195</line>
+          <properties documentPath="$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs" initialLine="193">
+            <startOffsets>
+              <option value="8574" />
+            </startOffsets>
+            <endOffsets>
+              <option value="8587" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <breakpoint enabled="true" suspend="NONE" type="DotNet Exception Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="13" />
+        </breakpoint>
+      </breakpoints>
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+    </breakpoint-manager>
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>insertCommand</expression-string>
+        <language-id>C#</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Startup.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="44" column="29" selection-start-line="44" selection-start-column="29" selection-end-line="44" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/ErrorResponseClasses/FailedPersistResponseBody.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="8" column="52" selection-start-line="8" selection-start-column="52" selection-end-line="8" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataRequestController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3240">
+          <caret line="135" column="54" selection-start-line="135" selection-start-column="54" selection-end-line="135" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/Camera.cs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabasePerSecondStat.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="7" column="32" selection-start-line="7" selection-start-column="24" selection-end-line="7" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseCamera.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="16" column="25" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DatabaseTestController.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/AbstractServices/AbstractGraphStatisticService.cs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/PlaceholderServices/PlaceholderGraphStatisticsService.cs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/GraphStatistics.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/GraphController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerHourStats.cs">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/DataMessage.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1080">
+          <caret line="48" column="49" selection-start-line="48" selection-start-column="49" selection-end-line="48" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/PerSecondStats.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldDataMessage.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Classes/EntityDefinitionClasses/OldPerSecondStat.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/APIControllers/DataReceivalController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="41" column="12" selection-start-line="41" selection-start-column="12" selection-end-line="41" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/549E3A02-C30C-4A42-B0AB-FC9E12496C38/e4/43b64d0d/MySqlConnection.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/EditCameraInformationModal.cshtml" />
+    <entry file="file://$PROJECT_DIR$/.idea/.idea.BackEnd/.idea/indexLayout.xml" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/ManageCameraInfo.cs" />
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="24" column="9" selection-start-line="24" selection-start-column="9" selection-end-line="24" selection-end-column="9" />
+          <folding>
+            <marker date="1539141365189" expanded="false" signature="6:50" ph="..." />
+            <marker date="1539141365189" expanded="true" signature="93:1207" ph="{...}" />
+            <marker date="1539141365189" expanded="true" signature="130:1205" ph="{...}" />
+            <marker date="1539141365189" expanded="true" signature="1035:1046" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/AlertDashboardInformation.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1536941376591" expanded="true" signature="121:361" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="335:355" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/AlertDetails.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1536941376591" expanded="false" signature="6:135" ph="..." />
+            <marker date="1536941376591" expanded="true" signature="210:2975" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="808:880" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="1123:1193" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="1240:1746" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="1777:1797" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="1849:2969" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="2462:2553" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="2603:2690" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="2737:2826" ph="{...}" />
+            <marker date="1536941376591" expanded="true" signature="2872:2959" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="15" selection-start-line="26" selection-start-column="15" selection-end-line="26" selection-end-column="15" />
+          <folding>
+            <marker date="1539239213681" expanded="true" signature="6:355" ph="..." />
+            <marker date="1539239213681" expanded="true" signature="526:4897" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="575:4895" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="1054:1660" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="1183:1270" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="1485:1588" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="1740:2260" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="1824:1911" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="2080:2164" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="2181:2250" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="2337:2670" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="2421:2508" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="2752:3204" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="2881:2968" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="3251:3653" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="3380:3467" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="4173:4357" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="4426:4889" ph="{...}" />
+            <marker date="1539239213681" expanded="true" signature="4555:4642" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/CameraService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="21" column="61" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="61" />
+          <folding>
+            <marker date="1539239213683" expanded="false" signature="6:379" ph="..." />
+            <marker date="1539239213683" expanded="true" signature="413:12636" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="470:12634" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="934:1109" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="1191:1343" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="1437:1738" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="1838:2067" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="1914:2031" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="2138:4523" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="2364:4487" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="2541:4473" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="2580:2828" ph="/* NOTE: To create/delete/overwrite file in the wwwroot directory, physical file paths must be used ... */" />
+            <marker date="1539239213683" expanded="true" signature="3304:3395" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="4150:4337" ph="/* 5. Set the View Model object's &quot;TempImagePath&quot; attribute to the appropriate ... */" />
+            <marker date="1539239213683" expanded="true" signature="4598:4777" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="4850:4997" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="5074:6918" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="5411:6870" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="5515:6235" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="6280:6492" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="6539:6716" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="7001:7552" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="7616:7768" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="7854:8151" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="7928:8140" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="8227:8387" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="8458:8631" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="8709:8843" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="8908:8931" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="11340:11360" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="11340:11374" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="11340:11411" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="11471:11558" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="11616:11702" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="11803:12137" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="11875:12126" ph="{...}" />
+            <marker date="1539239213683" expanded="true" signature="12242:12628" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/NoCamera.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="89" selection-start-line="1" selection-start-column="89" selection-end-line="1" selection-end-column="89" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_Layout.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="531">
+          <caret line="92" selection-start-line="92" selection-end-line="92" />
+          <folding>
+            <marker date="1538162319772" expanded="true" signature="16:3758" ph="&lt;html.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="23:1244" ph="&lt;head.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="194:653" ph="&lt;environment.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="658:1034" ph="&lt;environment.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1245:3750" ph="&lt;body.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1300:1383" ph="&lt;main.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1385:2392" ph="&lt;footer.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1432:2255" ph="&lt;!--...--&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1436:2252" ph="&lt;div.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1468:2241" ph="&lt;div.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1498:1723" ph="&lt;div.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1736:2226" ph="&lt;div.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="1837:2207" ph="&lt;ul.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="2260:2382" ph="&lt;div.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="2299:2371" ph="&lt;div.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="2394:2640" ph="&lt;environment.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="2641:2895" ph="&lt;environment.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="2897:3708" ph="&lt;script.../&gt;" />
+            <marker date="1538162319772" expanded="true" signature="2944:3621" ph="{...}" />
+            <marker date="1538162319772" expanded="true" signature="3132:3277" ph="{...}" />
+            <marker date="1538162319772" expanded="true" signature="3315:3613" ph="{...}" />
+            <marker date="1538162319772" expanded="true" signature="3655:3696" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/_ValidationScriptsPartial.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1521778420000" expanded="true" signature="0:221" ph="&lt;environment.../&gt;" />
+            <marker date="1521778420000" expanded="true" signature="222:1153" ph="&lt;environment.../&gt;" />
+            <marker date="1521778420000" expanded="true" signature="262:656" ph="&lt;script.../&gt;" />
+            <marker date="1521778420000" expanded="true" signature="661:1138" ph="&lt;script.../&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Database/jetson_schema.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="18" column="27" selection-end-line="184" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Database/jetson_initial_insertion.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="22" selection-end-line="3615" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Services/DatabaseQueryService.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1286">
+          <caret line="334" selection-start-line="334" selection-end-line="334" />
+          <folding>
+            <marker date="1539141365193" expanded="false" signature="6:462" ph="..." />
+            <marker date="1539141365193" expanded="true" signature="464:632" ph="/* More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core ... */" />
+            <marker date="1539141365193" expanded="true" signature="666:65522" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="733:65520" ph="{...}" />
+            <marker date="1539141365193" expanded="false" signature="824:1312" ph="Database Context" />
+            <marker date="1539141365193" expanded="true" signature="1026:1100" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="1214:1292" ph="{...}" />
+            <marker date="1539141365193" expanded="false" signature="1322:3230" ph="Data Receival Controller (API)" />
+            <marker date="1539141365193" expanded="true" signature="1441:3210" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="2036:2580" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="2268:2340" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="2484:2566" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="2704:3175" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="2768:2929" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="2965:3161" ph="{...}" />
+            <marker date="1539141365193" expanded="false" signature="3240:10364" ph="Hourly Stats Service (API)" />
+            <marker date="1539141365193" expanded="true" signature="3358:5282" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="4010:4652" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="4556:4638" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="4776:5247" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="4840:5001" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="5037:5233" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="5389:7297" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="5724:7248" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="6241:7234" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="6301:7216" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="6423:7192" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="7371:9041" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="7557:8999" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="7988:8985" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="8090:8967" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="8201:8944" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="9134:10344" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="9842:10309" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="9906:10063" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="10099:10295" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="10374:10524" ph="/* FRANCIS TO CHECK LATER ... */" />
+            <marker date="1539141365193" expanded="true" signature="10594:12550" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="10744:12507" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="11670:12493" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="11730:12475" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="11841:12451" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="12650:14190" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="12816:14141" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="13292:14127" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="13352:14109" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="13474:14085" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="14274:15769" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="14400:15725" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="14841:15711" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="14944:15693" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="15059:15670" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="15826:16561" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="15895:16527" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="16261:16513" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="16363:16495" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="16620:17331" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="16732:17293" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="17045:17279" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="17147:17261" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="17494:18857" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="17656:18812" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="17983:18798" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="18043:18780" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="18161:18756" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="18940:19711" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="19084:19670" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="19401:19656" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="19461:19638" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="19797:20428" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="19866:20392" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="20170:20378" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="20279:20360" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="20486:21465" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="20591:21424" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="20861:21410" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="20976:21084" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="21125:21214" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="21239:21392" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="21526:22491" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="21595:22455" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="22372:22441" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="22551:23271" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="22683:23225" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="23004:23211" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="23064:23193" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="23339:23435" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="23503:23597" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="23676:23806" ph="{...}" />
+            <marker date="1539141365193" expanded="false" signature="23816:29055" ph="API Key Service (API)" />
+            <marker date="1539141365193" expanded="true" signature="23985:25154" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="24098:25116" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="24432:25102" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="24535:25084" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="24637:25061" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="25275:26339" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="25400:26295" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="25645:26281" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="25705:26263" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="25815:26239" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="26499:27502" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="27000:27467" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="27064:27221" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="27257:27453" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="27645:29036" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="27767:27875" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="27961:28077" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="28534:29001" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="28598:28755" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="28791:28987" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="29126:30865" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="29270:30824" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="29599:30810" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="29659:30792" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="29775:30477" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="30563:30722" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="30940:32023" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="31084:31982" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="31713:31968" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="31773:31950" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="32081:33650" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="32150:33614" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="33531:33600" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="33715:36499" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="33856:36459" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="34016:34134" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="34155:34225" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="34379:36445" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="34439:36427" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="34550:35379" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="35464:35620" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="35702:35854" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="35942:36108" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="36195:36359" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="36553:37119" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="36622:37083" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="37000:37069" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="37182:39020" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="37251:38984" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="37285:37443" ph="/* We use formatNullableString for non nullable strings so that ... */" />
+            <marker date="1539141365193" expanded="true" signature="38901:38970" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="39089:40169" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="39158:40133" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="40050:40119" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="40294:43145" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="40561:43101" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="41146:41326" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="41375:41556" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="41597:41862" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="42107:43087" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="42164:43069" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="42277:43046" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="43224:44878" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="43386:44831" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="43944:44817" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="44004:44799" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="44136:44716" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="44948:47895" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="45066:47855" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="45143:47841" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="45625:47823" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="45693:47801" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="45816:46681" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="46770:46938" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="47024:47188" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="47280:47458" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="47549:47725" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="47972:49325" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="48096:49281" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="48433:49267" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="48535:49249" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="48646:49226" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="49390:50064" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="49459:50028" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="49945:50014" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="50120:52678" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="50242:52642" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="50625:52628" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="50682:52610" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="50779:51608" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="51693:51849" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="51931:52083" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="52171:52337" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="52424:52588" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="52743:54082" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="52877:54043" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="53218:54029" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="53275:54011" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="53378:53988" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="54163:55104" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="54232:55068" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="54985:55054" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="55189:57244" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="55258:57208" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="55326:55454" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="55472:55630" ph="/* We use formatNullableString for non nullable strings so that ... */" />
+            <marker date="1539141365193" expanded="true" signature="57125:57194" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="57338:58644" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="57482:58603" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="58334:58589" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="58394:58571" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="58728:60570" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="58806:58991" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="59066:59190" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="59258:59371" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="59448:59578" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="59646:59759" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="59832:59955" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="60025:60140" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="60214:60337" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="60410:60532" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="60631:62022" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="60739:61986" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="61044:61972" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="61146:61954" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="61241:61931" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="62098:63205" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="62167:63169" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="62201:62359" ph="/* We use formatNullableString for non nullable strings so that ... */" />
+            <marker date="1539141365193" expanded="true" signature="63086:63155" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="63309:65505" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="63422:65470" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="64445:65456" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="64502:65438" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="64602:64810" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="64874:65021" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="65085:65206" ph="{...}" />
+            <marker date="1539141365193" expanded="true" signature="65270:65391" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformation.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1536941376593" expanded="false" signature="6:50" ph="..." />
+            <marker date="1536941376593" expanded="true" signature="93:565" ph="{...}" />
+            <marker date="1536941376593" expanded="true" signature="132:563" ph="{...}" />
+            <marker date="1536941376593" expanded="true" signature="304:412" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationInformationList.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1536941376594" expanded="false" signature="6:84" ph="..." />
+            <marker date="1536941376594" expanded="true" signature="128:704" ph="{...}" />
+            <marker date="1536941376594" expanded="true" signature="171:702" ph="{...}" />
+            <marker date="1536941376594" expanded="true" signature="295:375" ph="{...}" />
+            <marker date="1536941376594" expanded="true" signature="453:696" ph="{...}" />
+            <marker date="1536941376594" expanded="true" signature="582:686" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/DBModels/DatabaseLocation.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1536941376589" expanded="true" signature="79:1385" ph="{...}" />
+            <marker date="1536941376589" expanded="true" signature="115:1383" ph="{...}" />
+            <marker date="1536941376589" expanded="true" signature="983:1003" ph="{...}" />
+            <marker date="1536941376589" expanded="true" signature="1069:1377" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Models/ViewModels/LocationDetails.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <marker date="1536941376593" expanded="true" signature="79:828" ph="{...}" />
+            <marker date="1536941376593" expanded="true" signature="114:826" ph="{...}" />
+            <marker date="1536941376593" expanded="true" signature="418:438" ph="{...}" />
+            <marker date="1536941376593" expanded="true" signature="512:820" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/appsettings.Development.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/appsettings.Release.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="18" selection-start-line="14" selection-start-column="18" selection-end-line="14" selection-end-column="18" />
+          <folding>
+            <marker date="1538166765973" expanded="true" signature="223:6286" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="245:6279" ph="&lt;form.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="457:1019" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="487:736" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="749:1004" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="1028:1637" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="1058:1622" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="1108:1544" ph="@..." />
+            <marker date="1538166765973" expanded="true" signature="1159:1340" ph="{...}" />
+            <marker date="1538166765973" expanded="true" signature="1361:1544" ph="{...}" />
+            <marker date="1538166765973" expanded="true" signature="1647:2661" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="1677:2450" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="1726:2366" ph="&lt;select.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="1911:2340" ph="@..." />
+            <marker date="1538166765973" expanded="true" signature="2003:2318" ph="{...}" />
+            <marker date="1538166765973" expanded="true" signature="2058:2292" ph="&lt;option.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="2463:2646" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="2671:3195" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="2701:2934" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="2947:3180" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="3205:4234" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="3235:3916" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="3311:3824" ph="&lt;select.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="3477:3798" ph="@..." />
+            <marker date="1538166765973" expanded="true" signature="3552:3776" ph="{...}" />
+            <marker date="1538166765973" expanded="true" signature="3607:3750" ph="&lt;option.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="3929:4219" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4058:4200" ph="&lt;label.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4243:4571" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4305:4556" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4755:5603" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4785:5588" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4824:5569" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4869:5478" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="4930:5153" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="5178:5451" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="5238:5420" ph="&lt;input.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="5695:5915" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="5738:5900" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="5772:5881" ph="&lt;button.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="5956:6266" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="5986:6251" ph="&lt;div.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="6033:6232" ph="&lt;button.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="6288:6837" ph="&lt;script.../&gt;" />
+            <marker date="1538166765973" expanded="true" signature="6345:6769" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+          <folding>
+            <marker date="1539281739535" expanded="true" signature="150:454" ph="&lt;div.../&gt;" />
+            <marker date="1539281739535" expanded="true" signature="172:447" ph="&lt;div.../&gt;" />
+            <marker date="1539281739535" expanded="true" signature="234:436" ph="&lt;a.../&gt;" />
+            <marker date="1539281739535" expanded="true" signature="455:919" ph="&lt;div.../&gt;" />
+            <marker date="1539281739535" expanded="true" signature="501:912" ph="@..." />
+            <marker date="1539281739535" expanded="true" signature="542:912" ph="{...}" />
+            <marker date="1539281739535" expanded="true" signature="557:906" ph="&lt;div.../&gt;" />
+            <marker date="1539281739535" expanded="true" signature="681:891" ph="&lt;span.../&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="930">
+          <caret line="63" column="121" selection-start-line="63" selection-start-column="12" selection-end-line="63" selection-end-column="121" />
+          <folding>
+            <marker date="1539452421160" expanded="false" signature="7:72" ph="..." />
+            <marker date="1539452421160" expanded="true" signature="314:4237" ph="@..." />
+            <marker date="1539452421160" expanded="true" signature="384:4006" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="399:4000" ph="&lt;ul.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="450:3986" ph="@..." />
+            <marker date="1539452421160" expanded="true" signature="512:3986" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="598:3972" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="774:3954" ph="&lt;ul.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="885:3928" ph="&lt;li.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="1003:3898" ph="&lt;div.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="1100:3863" ph="@..." />
+            <marker date="1539452421160" expanded="true" signature="1164:3863" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="1235:3829" ph="&lt;span.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="2389:3138" ph="@..." />
+            <marker date="1539452421160" expanded="true" signature="2437:2620" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="2720:2910" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="2955:3138" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="3263:3333" ph="&lt;p.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="3374:3785" ph="&lt;span.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="4015:4235" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="4030:4229" ph="&lt;div.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="4239:4509" ph="&lt;div.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="4261:4502" ph="&lt;div.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="4323:4491" ph="&lt;a.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="4511:5733" ph="&lt;script.../&gt;" />
+            <marker date="1539452421160" expanded="true" signature="4579:4737" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="4786:5494" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="4808:5400" ph="{...}" />
+            <marker date="1539452421160" expanded="true" signature="5568:5723" ph="@..." />
+            <marker date="1539452421160" expanded="true" signature="5635:5723" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/Components/CameraCard/CameraCard.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1245">
+          <caret line="83" column="6" selection-end-line="83" selection-end-column="6" />
+          <folding>
+            <marker date="1539141365196" expanded="true" signature="56:3385" ph="&lt;div.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="98:3378" ph="&lt;div.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="199:1742" ph="&lt;div.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="243:1727" ph="&lt;div.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="290:1708" ph="&lt;div.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="336:1685" ph="@..." />
+            <marker date="1539141365196" expanded="true" signature="414:625" ph="{...}" />
+            <marker date="1539141365196" expanded="true" signature="654:839" ph="{...}" />
+            <marker date="1539141365196" expanded="true" signature="865:1663" ph="/* if (String.IsNullOrWhiteSpace(Model.CameraDetails.SavedImagePath) == false) ... */" />
+            <marker date="1539141365196" expanded="true" signature="1751:3367" ph="&lt;table.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="1771:3350" ph="&lt;tbody.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="1791:1929" ph="&lt;tr.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="1951:2199" ph="@..." />
+            <marker date="1539141365196" expanded="true" signature="1998:2199" ph="{...}" />
+            <marker date="1539141365196" expanded="true" signature="2029:2185" ph="&lt;tr.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="2212:2348" ph="&lt;tr.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="2361:2584" ph="@..." />
+            <marker date="1539141365196" expanded="true" signature="2400:2584" ph="{...}" />
+            <marker date="1539141365196" expanded="true" signature="2431:2570" ph="&lt;tr.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="2597:2835" ph="@..." />
+            <marker date="1539141365196" expanded="true" signature="2641:2835" ph="{...}" />
+            <marker date="1539141365196" expanded="true" signature="2672:2821" ph="&lt;tr.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="2848:3071" ph="@..." />
+            <marker date="1539141365196" expanded="true" signature="2887:3071" ph="{...}" />
+            <marker date="1539141365196" expanded="true" signature="2918:3057" ph="&lt;tr.../&gt;" />
+            <marker date="1539141365196" expanded="true" signature="3084:3329" ph="@..." />
+            <marker date="1539141365196" expanded="true" signature="3126:3329" ph="{...}" />
+            <marker date="1539141365196" expanded="true" signature="3157:3315" ph="&lt;tr.../&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/AD857A18-8503-4E73-815A-D25F75447A99/ef/cbca4a38/IAuthenticationSignOutHandler.cs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/css/site.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1141">
+          <caret line="92" column="16" selection-start-line="92" selection-start-column="16" selection-end-line="92" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/css/site2.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4156" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" column="6" selection-start-line="3" selection-start-column="110" selection-end-line="29" selection-end-column="6" />
+          <folding>
+            <marker date="1539456963849" expanded="true" signature="66:194" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="195:273" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="274:1321" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="296:1314" ph="&lt;form.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="341:669" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="371:654" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="678:980" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="708:965" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="989:1121" ph="&lt;div.../&gt;" />
+            <marker date="1539456963849" expanded="true" signature="1130:1302" ph="&lt;button.../&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="4" column="75" selection-start-line="4" selection-start-column="75" selection-end-line="4" selection-end-column="75" />
+          <folding>
+            <marker date="1539455781553" expanded="true" signature="61:340" ph="&lt;ul.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="341:3458" ph="&lt;nav.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="351:3451" ph="&lt;div.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="390:584" ph="&lt;a.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="593:952" ph="&lt;ul.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="644:778" ph="&lt;li.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="791:938" ph="&lt;li.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="962:3440" ph="&lt;ul.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="1014:3104" ph="&lt;li.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="1077:1478" ph="&lt;a.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="1183:1385" ph="@..." />
+            <marker date="1539455781553" expanded="true" signature="1235:1385" ph="{...}" />
+            <marker date="1539455781553" expanded="true" signature="1539:3086" ph="&lt;ul.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="1693:2839" ph="@..." />
+            <marker date="1539455781553" expanded="true" signature="1810:2839" ph="{...}" />
+            <marker date="1539455781553" expanded="true" signature="1857:2817" ph="&lt;li.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="1890:2812" ph="&lt;a.../&gt;" />
+            <marker date="1539455781553" expanded="true" signature="2048:2424" ph="@..." />
+            <marker date="1539455781553" expanded="true" signature="2079:2232" ph="{...}" />
+            <marker date="1539455781553" expanded="true" signature="2269:2424" ph="{...}" />
+            <marker date="1539455781553" expanded="true" signature="2594:2779" ph="@..." />
+            <marker date="1539455781553" expanded="true" signature="2624:2779" ph="{...}" />
+            <marker date="1539455781553" expanded="true" signature="2860:3064" ph="@*...*@" />
+            <marker date="1539455781553" expanded="true" signature="3117:3243" ph="&lt;li.../&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="114" selection-start-line="5" selection-start-column="114" selection-end-line="5" selection-end-column="114" />
+          <folding>
+            <marker date="1539459329512" expanded="true" signature="229:475" ph="&lt;div.../&gt;" />
+            <marker date="1539459329512" expanded="true" signature="274:468" ph="@..." />
+            <marker date="1539459329512" expanded="true" signature="319:468" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="40" selection-start-line="13" selection-start-column="40" selection-end-line="13" selection-end-column="40" />
+          <folding>
+            <marker date="1539462650841" expanded="true" signature="162:363" ph="&lt;!--...--&gt;" />
+            <marker date="1539462650841" expanded="true" signature="166:360" ph="&lt;div.../&gt;" />
+            <marker date="1539462650841" expanded="true" signature="195:353" ph="@..." />
+            <marker date="1539462650841" expanded="true" signature="236:353" ph="{...}" />
+            <marker date="1539462650841" expanded="true" signature="365:1412" ph="&lt;div.../&gt;" />
+            <marker date="1539462650841" expanded="true" signature="401:1405" ph="@..." />
+            <marker date="1539462650841" expanded="true" signature="442:1405" ph="{...}" />
+            <marker date="1539462650841" expanded="true" signature="452:1399" ph="&lt;div.../&gt;" />
+            <marker date="1539462650841" expanded="true" signature="488:1384" ph="&lt;div.../&gt;" />
+            <marker date="1539462650841" expanded="true" signature="535:1365" ph="&lt;div.../&gt;" />
+            <marker date="1539462650841" expanded="true" signature="610:1342" ph="&lt;a.../&gt;" />
+            <marker date="1539462650841" expanded="true" signature="689:1220" ph="@..." />
+            <marker date="1539462650841" expanded="true" signature="772:978" ph="{...}" />
+            <marker date="1539462650841" expanded="true" signature="1011:1194" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="21" selection-start-line="2" selection-start-column="8" selection-end-line="2" selection-end-column="21" />
+          <folding>
+            <marker date="1539462144755" expanded="true" signature="233:628" ph="&lt;div.../&gt;" />
+            <marker date="1539462144755" expanded="true" signature="271:436" ph="&lt;div.../&gt;" />
+            <marker date="1539462144755" expanded="true" signature="441:621" ph="&lt;div.../&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="85" column="24" lean-forward="true" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+          <folding>
+            <marker date="1539464290906" expanded="true" signature="173:1576" ph="&lt;script.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="350:1566" ph="{...}" />
+            <marker date="1539464290906" expanded="true" signature="401:1560" ph="@..." />
+            <marker date="1539464290906" expanded="true" signature="450:1550" ph="{...}" />
+            <marker date="1539464290906" expanded="true" signature="898:1301" ph="{...}" />
+            <marker date="1539464290906" expanded="true" signature="990:1233" ph="{...}" />
+            <marker date="1539464290906" expanded="true" signature="1578:2663" ph="@*...*@" />
+            <marker date="1539464290906" expanded="true" signature="2666:4432" ph="&lt;div.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="2688:3036" ph="@*...*@" />
+            <marker date="1539464290906" expanded="true" signature="3041:4040" ph="&lt;div.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="3070:4029" ph="&lt;ul.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="4045:4425" ph="&lt;div.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="4086:4367" ph="&lt;select.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="4435:5197" ph="&lt;div.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="4457:5190" ph="&lt;div.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="4487:5179" ph="&lt;div.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="4518:5164" ph="&lt;div.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="5199:5368" ph="&lt;script.../&gt;" />
+            <marker date="1539464290906" expanded="true" signature="5245:5358" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
