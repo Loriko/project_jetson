@@ -49,7 +49,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(new JsonResult(DataMessageService.CreateInvalidDataMessageResponseBody(receivedMessage)));
             }
-            else if (DataMessageService.StoreStatsFromDataMessage(receivedMessage) == true)
+            else if (DataMessageService.StoreStatsFromDataMessage(receivedMessage))
             {
                 // Asynchronously check hourly stats are ready for calculation and perform if needed.
                 Task hourlyStatsCheck = Task.Factory.StartNew(
