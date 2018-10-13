@@ -53,7 +53,7 @@ namespace BackEndServer.Services.HelperServices
             }
 
             //  Hour
-            if (Hour < 1 || Hour > 23)
+            if (Hour < 0 || Hour > 23)
                 return (false);
 
             //  Minute

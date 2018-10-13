@@ -26,9 +26,10 @@ namespace BackEndServer.Services
 
         public void AutoCalculateHourlyStats(DataMessage dataMessage)
         {
-            // Obtain a list of all the unique Cameras sending data through the DataMessage. 
+            // Obtain a list of all the unique Cameras sending data through the DataMessage.
+            //TODO: Unsafe usage of nullable CameraId done for milestone 4
             List<int> cameraIdsToProcess = dataMessage.RealTimeStats
-                                           .Select(x => x.CameraId).Distinct()
+                                           .Select(x => x.CameraId.Value).Distinct()
                                            .ToList<int>();
 
             foreach(int cameraId in cameraIdsToProcess)
