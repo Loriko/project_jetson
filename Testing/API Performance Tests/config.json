@@ -1,0 +1,33 @@
+{
+  "web_server_location": "http://localhost:5001",
+  "delay_between_stats_sec": 0.01,
+  "api_key": "AFRJNILIJHRU",
+  "camera_keys": [
+    "AFRJNILIJHRU",
+    "BFRJNILIJHRU",
+    "CFRJNILIJHRU",
+    "DFRJNILIJHRU",
+    "EFRJNILIJHRU",
+    "FFRJNILIJHRU",
+    "GFRJNILIJHRU",
+    "HFRJNILIJHRU",
+    "IFRJNILIJHRU",
+    "JFRJNILIJHRU",
+    "KFRJNILIJHRU",
+    "LFRJNILIJHRU",
+    "MFRJNILIJHRU",
+    "NFRJNILIJHRU",
+    "OFRJNILIJHRU",
+    "PFRJNILIJHRU",
+    "QFRJNILIJHRU",
+    "RFRJNILIJHRU",
+    "SFRJNILIJHRU",
+    "TFRJNILIJHRU",
+    "UFRJNILIJHRU",
+    "VFRJNILIJHRU",
+    "WFRJNILIJHRU",
+    "XFRJNILIJHRU",
+    "YFRJNILIJHRU",
+    "ZFRJNILIJHRU"
+  ]
+}
