@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1fdafc4d-254f-45e3-b9c7-2d95f9c672fe" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Location/LocationSelection.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" afterDir="false" />
     </list>
     <list id="ef2f6c79-3e27-4649-a473-204411f42ef2" name="Unversioned" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,7 +36,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="cs" value="12" />
-          <entry key="cshtml" value="20" />
+          <entry key="cshtml" value="21" />
           <entry key="css" value="2" />
           <entry key="json" value="3" />
           <entry key="sql" value="4" />
@@ -55,7 +48,7 @@
           <entry key="C#" value="12" />
           <entry key="CSS" value="2" />
           <entry key="JSON" value="3" />
-          <entry key="Razor" value="20" />
+          <entry key="Razor" value="21" />
           <entry key="SQL" value="4" />
           <entry key="XML" value="1" />
         </counts>
@@ -63,7 +56,7 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="cs" value="16" />
-          <entry key="cshtml" value="554" />
+          <entry key="cshtml" value="556" />
           <entry key="txt" value="11" />
         </counts>
       </usages-collector>
@@ -71,7 +64,7 @@
         <counts>
           <entry key="C#" value="16" />
           <entry key="PLAIN_TEXT" value="11" />
-          <entry key="Razor" value="554" />
+          <entry key="Razor" value="556" />
         </counts>
       </usages-collector>
     </session>
@@ -127,11 +120,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="454">
-              <caret line="85" column="24" lean-forward="true" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+              <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
               <folding>
                 <marker date="1539464290906" expanded="true" signature="173:1576" ph="&lt;script.../&gt;" />
                 <marker date="1539464290906" expanded="true" signature="350:1566" ph="{...}" />
@@ -196,6 +189,25 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="180">
+              <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+              <folding>
+                <marker date="1539473834664" expanded="true" signature="150:454" ph="&lt;div.../&gt;" />
+                <marker date="1539473834664" expanded="true" signature="172:447" ph="&lt;div.../&gt;" />
+                <marker date="1539473834664" expanded="true" signature="234:436" ph="&lt;a.../&gt;" />
+                <marker date="1539473834664" expanded="true" signature="455:921" ph="&lt;div.../&gt;" />
+                <marker date="1539473834664" expanded="true" signature="501:914" ph="@..." />
+                <marker date="1539473834664" expanded="true" signature="542:914" ph="{...}" />
+                <marker date="1539473834664" expanded="true" signature="557:908" ph="&lt;div.../&gt;" />
+                <marker date="1539473834664" expanded="true" signature="683:893" ph="&lt;span.../&gt;" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml">
           <provider selected="true" editor-type-id="text-editor">
@@ -230,45 +242,6 @@
         <entry file="file://$PROJECT_DIR$/BackEndServer/wwwroot/css/site2.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-4156" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Shared/Components/CameraCard/CameraCard.cshtml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1245">
-              <caret line="83" column="6" selection-end-line="83" selection-end-column="6" />
-              <folding>
-                <marker date="1539141365196" expanded="true" signature="56:3385" ph="&lt;div.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="98:3378" ph="&lt;div.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="199:1742" ph="&lt;div.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="243:1727" ph="&lt;div.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="290:1708" ph="&lt;div.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="336:1685" ph="@..." />
-                <marker date="1539141365196" expanded="true" signature="414:625" ph="{...}" />
-                <marker date="1539141365196" expanded="true" signature="654:839" ph="{...}" />
-                <marker date="1539141365196" expanded="true" signature="865:1663" ph="/* if (String.IsNullOrWhiteSpace(Model.CameraDetails.SavedImagePath) == false) ... */" />
-                <marker date="1539141365196" expanded="true" signature="1751:3367" ph="&lt;table.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="1771:3350" ph="&lt;tbody.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="1791:1929" ph="&lt;tr.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="1951:2199" ph="@..." />
-                <marker date="1539141365196" expanded="true" signature="1998:2199" ph="{...}" />
-                <marker date="1539141365196" expanded="true" signature="2029:2185" ph="&lt;tr.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="2212:2348" ph="&lt;tr.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="2361:2584" ph="@..." />
-                <marker date="1539141365196" expanded="true" signature="2400:2584" ph="{...}" />
-                <marker date="1539141365196" expanded="true" signature="2431:2570" ph="&lt;tr.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="2597:2835" ph="@..." />
-                <marker date="1539141365196" expanded="true" signature="2641:2835" ph="{...}" />
-                <marker date="1539141365196" expanded="true" signature="2672:2821" ph="&lt;tr.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="2848:3071" ph="@..." />
-                <marker date="1539141365196" expanded="true" signature="2887:3071" ph="{...}" />
-                <marker date="1539141365196" expanded="true" signature="2918:3057" ph="&lt;tr.../&gt;" />
-                <marker date="1539141365196" expanded="true" signature="3084:3329" ph="@..." />
-                <marker date="1539141365196" expanded="true" signature="3126:3329" ph="{...}" />
-                <marker date="1539141365196" expanded="true" signature="3157:3315" ph="&lt;tr.../&gt;" />
-              </folding>
-            </state>
           </provider>
         </entry>
       </file>
@@ -399,7 +372,6 @@
         <option value="$PROJECT_DIR$/BackEndServer/Models/ViewModels/CameraInformation.cs" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraRegistration.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Controllers/FrontEndControllers/CameraController.cs" />
-        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Shared/Components/NavigationBar/NavigationBar.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Home/SignIn.cshtml" />
@@ -407,6 +379,7 @@
         <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraInformation.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/CameraSelectionForLocation.cshtml" />
         <option value="$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml" />
+        <option value="$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml" />
       </list>
     </option>
   </component>
@@ -687,7 +660,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51349000" />
+    <option name="totallyTimeSpent" value="51369000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1430,23 +1403,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
-          <folding>
-            <marker date="1539281739535" expanded="true" signature="150:454" ph="&lt;div.../&gt;" />
-            <marker date="1539281739535" expanded="true" signature="172:447" ph="&lt;div.../&gt;" />
-            <marker date="1539281739535" expanded="true" signature="234:436" ph="&lt;a.../&gt;" />
-            <marker date="1539281739535" expanded="true" signature="455:919" ph="&lt;div.../&gt;" />
-            <marker date="1539281739535" expanded="true" signature="501:912" ph="@..." />
-            <marker date="1539281739535" expanded="true" signature="542:912" ph="{...}" />
-            <marker date="1539281739535" expanded="true" signature="557:906" ph="&lt;div.../&gt;" />
-            <marker date="1539281739535" expanded="true" signature="681:891" ph="&lt;span.../&gt;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Alert/Dashboard.cshtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="930">
@@ -1644,7 +1600,7 @@
     <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Graph/GraphDashboard.cshtml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="454">
-          <caret line="85" column="24" lean-forward="true" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+          <caret line="85" column="24" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
           <folding>
             <marker date="1539464290906" expanded="true" signature="173:1576" ph="&lt;script.../&gt;" />
             <marker date="1539464290906" expanded="true" signature="350:1566" ph="{...}" />
@@ -1665,6 +1621,23 @@
             <marker date="1539464290906" expanded="true" signature="4518:5164" ph="&lt;div.../&gt;" />
             <marker date="1539464290906" expanded="true" signature="5199:5368" ph="&lt;script.../&gt;" />
             <marker date="1539464290906" expanded="true" signature="5245:5358" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BackEndServer/Views/Camera/ManageCameras.cshtml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="37" lean-forward="true" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+          <folding>
+            <marker date="1539473834664" expanded="true" signature="150:454" ph="&lt;div.../&gt;" />
+            <marker date="1539473834664" expanded="true" signature="172:447" ph="&lt;div.../&gt;" />
+            <marker date="1539473834664" expanded="true" signature="234:436" ph="&lt;a.../&gt;" />
+            <marker date="1539473834664" expanded="true" signature="455:921" ph="&lt;div.../&gt;" />
+            <marker date="1539473834664" expanded="true" signature="501:914" ph="@..." />
+            <marker date="1539473834664" expanded="true" signature="542:914" ph="{...}" />
+            <marker date="1539473834664" expanded="true" signature="557:908" ph="&lt;div.../&gt;" />
+            <marker date="1539473834664" expanded="true" signature="683:893" ph="&lt;span.../&gt;" />
           </folding>
         </state>
       </provider>

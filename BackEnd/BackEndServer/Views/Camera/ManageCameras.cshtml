@@ -11,7 +11,7 @@
     @foreach (var camera in Model.CameraList)
     {
         <div class="collection-item">
-            <span class="title" id=@camera.CameraId>@camera.CameraRoomName</span>
+            <span class="title" id="@camera.CameraId">@camera.CameraRoomName</span>
             <span class="secondary-content">
                 <a asp-controller="Camera" asp-action="ModifyCameraRegistration" asp-route-cameraId="@camera.CameraId"><i class="material-icons">edit</i></a>
             </span>
