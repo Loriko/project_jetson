@@ -1,1 +1,1 @@
-{"RealTimeStats":[{"DateTime":"2000-08-30 10:23:48","CameraId":0,"NumTrackedPeople":1,"HasSavedImage":false},{"DateTime":"2000-08-30 10:23:49","CameraId":0,"NumTrackedPeople":-1,"HasSavedImage":false}]}
+{"API_Key":"FAKE_API_KEY_123","RealTimeStats":[{"DateTime":"2000-08-30 10:23:48","CameraKey":"AFRJNILIJHRU","NumTrackedPeople":1,"HasSavedImage":false},{"DateTime":"2000-08-30 10:23:49","CameraKey":"AFRJNILIJHRU","NumTrackedPeople":-1,"HasSavedImage":false}]}
