@@ -154,6 +154,36 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "API_DataReceival_Test6",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"API_Key\":\"Invalid_Key_1090_test\",\"RealTimeStats\":[{\"DateTime\":\"2018-10-14 21:59:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false}]}"
+				},
+				"url": {
+					"raw": "http://localhost:55556/api/datareceival/datamessage",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "55556",
+					"path": [
+						"api",
+						"datareceival",
+						"datamessage"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

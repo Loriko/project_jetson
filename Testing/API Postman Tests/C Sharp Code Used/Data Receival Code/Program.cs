@@ -15,10 +15,14 @@ namespace ConsoleApp1
             string cameraKey_2 = "HGTIBNERMESD";
             string cameraKey_3 = "EPOVHTRKMQZU";
 
+            // Ensure this isn't used in the database camera table in the camera_key column.
             string invalidCameraKey = "123ABC_Invalid_Key";
 
             // We must have the data insertion script insert a precalculated key and salt for testing purposes.
             string fakeAPIKey = "FAKE_API_KEY_123";
+
+            // Ensure this isn't used in the database api table.
+            string invalidAPIKey = "Invalid_Key_1090_test";
 
             // Test 1: Three cameras for 4 seconds total. Expected to PASS.
             PerSecondStat s1 = new PerSecondStat("2000-08-30 10:23:45", cameraKey_1, 5, false);
@@ -76,6 +80,10 @@ namespace ConsoleApp1
             DataMessage d5 = new DataMessage(fakeAPIKey, test5);
             System.IO.File.WriteAllText(@"C:\Users\Mohamed\Desktop\DataReceival_Test5.json", JsonConvert.SerializeObject(d5));
 
+            s1 = new PerSecondStat("2018-10-14 21:59:48", cameraKey_1, 5, false);
+            PerSecondStat[] test6 = new PerSecondStat[] { s1 };
+            DataMessage d6 = new DataMessage(invalidAPIKey, test6);
+            System.IO.File.WriteAllText(@"C:\Users\Mohamed\Desktop\DataReceival_Test6.json", JsonConvert.SerializeObject(d6));
         }
     }
 }
