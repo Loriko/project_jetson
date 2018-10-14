@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using Newtonsoft.Json;
 
 namespace ConsoleApp1
 {
@@ -12,11 +11,14 @@ namespace ConsoleApp1
     public class DataMessage
     {
         // Attribute(s)
+        public string API_Key { get; set; }
         public PerSecondStat[] RealTimeStats { get; set; }
 
-        // Constructor which is also the Json deserialising constructor.
-        public DataMessage(PerSecondStat[] perSecondStats)
+        // Constructor which is also the JSON deserialising constructor.
+        [JsonConstructor]
+        public DataMessage(string api_key, PerSecondStat[] perSecondStats)
         {
+            this.API_Key = api_key;
             this.RealTimeStats = perSecondStats;
         }
 

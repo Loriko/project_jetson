@@ -8,13 +8,11 @@ namespace ConsoleApp1
     /// </summary>
     public class PerSecondStat
     {
-        #region Attributes 
-
         // Date and Time Information in MySQL Format, representing the exact second represented by the statistics in this object.
         public string DateTime { get; set; }
 
-        // The ID of the camera which produced these statistics for this exact second.
-        public int CameraId { get; set; } 
+        // The Key of the camera which produced these statistics for this exact second.
+        public string CameraKey { get; set; }
 
         // Statistic #1: Stores the number of people identified within the second.
         public int NumTrackedPeople { get; set; }
@@ -22,12 +20,10 @@ namespace ConsoleApp1
         // Statistic #2: Indicates if the embedded system has stored an image locally of this second. This happens when a key statistic has occured. 
         public bool HasSavedImage { get; set; }
 
-        #endregion
-
-        public PerSecondStat (string dateTime, int cameraId, int numTrackedPeople, bool hasSavedImage)
+        public PerSecondStat(string dateTime, string cameraKey, int numTrackedPeople, bool hasSavedImage)
         {
             this.DateTime = dateTime;
-            this.CameraId = cameraId;
+            this.CameraKey = cameraKey;
             this.NumTrackedPeople = numTrackedPeople;
             this.HasSavedImage = hasSavedImage;
         }

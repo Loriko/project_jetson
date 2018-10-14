@@ -1,8 +1,7 @@
 {
 	"info": {
+		"_postman_id": "daed5ae5-f323-43c0-b2c0-fa137e4ea408",
 		"name": "API_DataReceival_Tests",
-		"_postman_id": "0ab6b35c-212b-72ba-2353-23f80fcee98c",
-		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -18,10 +17,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraId\":0,\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraId\":1,\"NumTrackedPeople\":3,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraId\":2,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraId\":0,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraId\":1,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraId\":2,\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraId\":0,\"NumTrackedPeople\":15,\"HasSavedImage\":true},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraId\":1,\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraId\":2,\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":15,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":1,\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":2,\"NumTrackedPeople\":8,\"HasSavedImage\":true}]}"
+					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":3,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":15,\"HasSavedImage\":true},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:42\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":15,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:42\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:42\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":8,\"HasSavedImage\":true}]}"
 				},
 				"url": {
-					"raw": "http://localhost:55556/api/datareceival/persist",
+					"raw": "http://localhost:55556/api/datareceival/datamessage",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -30,10 +29,9 @@
 					"path": [
 						"api",
 						"datareceival",
-						"persist"
+						"datamessage"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -49,10 +47,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-8-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:49\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:50\",\"CameraId\":0,\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:51\",\"CameraId\":0,\"NumTrackedPeople\":2,\"HasSavedImage\":false}]}"
+					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:49\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-8-30 10:23:50\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:51\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":2,\"HasSavedImage\":false}]}"
 				},
 				"url": {
-					"raw": "http://localhost:55556/api/datareceival/persist",
+					"raw": "http://localhost:55556/api/datareceival/datamessage",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -61,10 +59,9 @@
 					"path": [
 						"api",
 						"datareceival",
-						"persist"
+						"datamessage"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -80,10 +77,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":-1,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false}]}"
+					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"123ABC_Invalid_Key\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false}]}"
 				},
 				"url": {
-					"raw": "http://localhost:55556/api/datareceival/persist",
+					"raw": "http://localhost:55556/api/datareceival/datamessage",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -92,10 +89,9 @@
 					"path": [
 						"api",
 						"datareceival",
-						"persist"
+						"datamessage"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -111,10 +107,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":-1,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":1,\"HasSavedImage\":false}]}"
+					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:49\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":-1,\"HasSavedImage\":false}]}"
 				},
 				"url": {
-					"raw": "http://localhost:55556/api/datareceival/persist",
+					"raw": "http://localhost:55556/api/datareceival/datamessage",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -123,10 +119,9 @@
 					"path": [
 						"api",
 						"datareceival",
-						"persist"
+						"datamessage"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		},
@@ -142,10 +137,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"RealTimeStats\":[{\"DateTime\":\"20000-08-30 10:23:48\",\"CameraId\":-1,\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraId\":0,\"NumTrackedPeople\":-8,\"HasSavedImage\":false},{\"DateTime\":\"2000/08/30 10:23:48\",\"CameraId\":1,\"NumTrackedPeople\":5,\"HasSavedImage\":false}]}"
+					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"20000-08-30 10:23:48\",\"CameraKey\":\"123ABC_Invalid_Key\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":-8,\"HasSavedImage\":false},{\"DateTime\":\"2000/08/30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false}]}"
 				},
 				"url": {
-					"raw": "http://localhost:55556/api/datareceival/persist",
+					"raw": "http://localhost:55556/api/datareceival/datamessage",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -154,10 +149,9 @@
 					"path": [
 						"api",
 						"datareceival",
-						"persist"
+						"datamessage"
 					]
-				},
-				"description": ""
+				}
 			},
 			"response": []
 		}
