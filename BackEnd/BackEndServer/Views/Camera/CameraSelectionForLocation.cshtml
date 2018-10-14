@@ -11,7 +11,7 @@
     @foreach (var camera in Model.CameraList){
         <div class="col s6 m4">
             <div class="card camera-card">
-                <div id=@camera.CameraId class="card-image clickable">
+                <div id="@camera.CameraId" class="card-image clickable">
                     <a href="CameraInformation?cameraId=@camera.CameraId">
                         @{
                             if (String.IsNullOrWhiteSpace(camera.TempImagePath))
