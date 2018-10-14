@@ -3,11 +3,11 @@
 @model AlertDashboardInformation
 @{ Html.RenderPartial("~/Views/Alert/AlertCreationModal.cshtml", Model.Availablecameras); }
 @{ Html.RenderPartial("~/Views/Alert/AlertDeletionConfirmationModal.cshtml"); }
-<h1 class="page-title center-align">Your Alerts</h1>
+<h1 id="alertTitle" class="page-title center-align">Your Alerts</h1>
 @{
     if (Model.ExistingAlertsByCameraId.Any(x => x.Value.Count > 0))
     {
-        <ul class="collection">
+        <ul id="alertList" class="collection">
             @foreach (var cameraId in Model.ExistingAlertsByCameraId.Keys)
             {
                 if (Model.ExistingAlertsByCameraId[cameraId].Count > 0)
@@ -60,7 +60,7 @@
     }
     else
     {
-        <div class="unavailable-message center-align">
+        <div id="alertList" class="unavailable-message center-align">
             It seems you don't have any alert so far. Clicking the red floating button will allow you to set up an alert. 
         </div>
     }

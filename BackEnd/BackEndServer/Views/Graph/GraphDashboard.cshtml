@@ -1,7 +1,7 @@
 ﻿@using BackEndServer.Models.Enums
 @model BackEndServer.Models.ViewModels.CameraInformation
 
-<h1 class="page-title center-align">Statistics and Trends</h1>
+<h1 id="headerGraph" class="page-title center-align">Statistics and Trends</h1>
 
 <script type="text/javascript">
     google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -84,7 +84,7 @@
     @* </div> *@
     @* <div class="input-field col s5"></div> *@
     <div class="col s8">
-        <ul class="tabs">
+        <ul id="graphNameList" class="tabs">
             <li class="tab" onclick="reloadGraph('@PastPeriod.LastDay')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastDay ? "active" : "")" href="#past_day">Past Day</a></li>
             <li class="tab" onclick="reloadGraph('@PastPeriod.LastWeek')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastWeek ? "active" : "")" href="#past_week">Past Week</a></li>
             <li class="tab" onclick="reloadGraph('@PastPeriod.LastMonth')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastMonth ? "active" : "")" href="#past_month">Past Month</a></li>
