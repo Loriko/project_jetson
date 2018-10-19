@@ -66,6 +66,19 @@
 </environment>
 
 <script>
+    function convertTime12to24Format(time) {
+        var hours = Number(time.match(/^(\d+)/)[1]);
+        var minutes = Number(time.match(/:(\d+)/)[1]);
+        var AMPM = time.match(/(AM)|(PM)/)[1];
+        if (AMPM == "PM" && hours < 12) hours = hours + 12;
+        if (AMPM == "AM" && hours == 12) hours = hours - 12;
+        var sHours = hours.toString();
+        var sMinutes = minutes.toString();
+        if (hours < 10) sHours = "0" + sHours;
+        if (minutes < 10) sMinutes = "0" + sMinutes;
+        return sHours + ":" + sMinutes;
+    }
+
     function loadMaterializeEffects() {
         $(".dropdown-button").dropdown();
         $('select').material_select();
@@ -74,6 +87,21 @@
         $('.timepicker').pickatime({
             default: 'now', // Set default time: 'now', '1:30AM', '16:30'
             twelvehour: true // Use AM/PM or 24-hour format
+        });
+        $('.timepicker').on('change', function () {
+            if ($('#start_time').val() && $('#end_time').val()) {
+                var startTime = new Date('1970-01-01T' + convertTime12to24Format($('#start_time').val()) + 'Z');
+                var endTime = new Date('1970-01-01T' + convertTime12to24Format($('#end_time').val()) + 'Z');
+                if ((startTime - endTime) > 0) {
+                    $(this).val("");
+                    if ($(this).attr('id') === 'start_time') {
+                        alert("Chosen start time is after end time and thus invalid");
+                    }
+                    else if ($(this).attr('id') === 'end_time') {
+                        alert("Chosen end time is before start time and thus invalid");
+                    }
+                }
+            }
         });
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
