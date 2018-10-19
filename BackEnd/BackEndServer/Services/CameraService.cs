@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
+using Castle.Core.Internal;
 using Microsoft.AspNetCore.Http;
 
 namespace BackEndServer.Services
@@ -196,7 +197,7 @@ namespace BackEndServer.Services
             {
                 if (cameraDetails.UploadedImage == null || PerformCameraImageUpload(cameraDetails))
                 {
-                    return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails));
+                    return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails), cameraDetails.ImageDeleted);
                 }
             }
             catch (Exception e)
@@ -266,12 +267,18 @@ namespace BackEndServer.Services
 
         public CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId)
         {
-            return new CameraRegistrationDetails
+            CameraRegistrationDetails registrationDetails = new CameraRegistrationDetails
             {
                 locations = _locationService.getAvailableLocationsForUser(userId),
                 CameraDetails = new CameraDetails(_dbQueryService.GetCameraById(cameraId)),
                 resolutions = GetExistingCameraResolutions()
             };
+            if (!registrationDetails.CameraDetails.SavedImagePath.IsNullOrEmpty())
+            {
+                registrationDetails.CameraDetails.SavedImagePath = CameraRegistrationDetails.IMAGE_UPLOADED_TEXT;
+            }
+
+            return registrationDetails;
         }
 
         public CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod)

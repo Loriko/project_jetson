@@ -10,6 +10,7 @@ using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.APIModels;
 using System.ComponentModel;
 using BackEndServer.Models.Enums;
+using Castle.Core.Internal;
 using static BackEndServer.Models.Enums.TriggerOperatorExtension;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
@@ -1213,7 +1214,7 @@ namespace BackEndServer.Services
             return false;
         }
 
-        public bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera)
+        public bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted)
         {
             using (MySqlConnection conn = GetConnection())
             {
@@ -1231,10 +1232,18 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
                                $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
-                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
-                               // Ensure that the file path to the image contains only forward slashes, so replace all backslashes with a forward slash.
-                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath)} " +
-                               $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
+                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} ";
+
+                if (imageDeleted)
+                {
+                    query += $", {DatabaseCamera.IMAGE_PATH_LABEL} = NULL";
+                }
+                else if (!databaseCamera.ImagePath.IsNullOrEmpty())
+                {
+                    query += $", {DatabaseCamera.IMAGE_PATH_LABEL} = '{databaseCamera.ImagePath}'";
+                }
+
+                query += $" WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
