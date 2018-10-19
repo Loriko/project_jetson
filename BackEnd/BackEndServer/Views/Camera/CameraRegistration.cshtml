@@ -94,6 +94,8 @@
         <!-- Optional: User can upload an image representing the area monitored by the camera. -->
         <!-- Modified from: https://bootsnipp.com/user/snippets/vl0Pd -->
 
+        <input type="hidden" name="ImageDeleted" value="false"/>
+        
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -135,7 +137,7 @@
 </div>
 
 <script>
-    $('#resolution_checkbox').click(function () {
+    $('#resolution_checkbox').click(function() {
         if ($("#resolution_checkbox").is(':checked')) {
             $("#custom_resolution_row").removeClass("hide");
             $("#camera_resolution_div .select-dropdown").prop('disabled', true);
@@ -161,6 +163,10 @@
 
         var form = $(this);
         var url = form.attr('action');
+
+        if ($("#file_name").val() === false) {
+            $("input[name='ImageDeleted']").val("true");
+        }
 
         $.ajax({
             type: "POST",
