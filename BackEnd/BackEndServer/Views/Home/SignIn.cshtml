@@ -1,16 +1,19 @@
 ﻿@model BackEndServer.Models.ViewModels.AuthenticationInformation
+@{
+    ViewBag.Title = "Project Jetson - Home";
+}
 
 <div>
     <h1 id="headerHome" class="welcome-message center-align">Welcome to the Real Time Object Monitoring System</h1>
 </div>
 <div class="center-align">
-    <img src="~/images/camera_sign_in.png"/>
+    <img src="~/images/camera_sign_in.png" />
 </div>
 <div class="row">
     <form class="col s12" method="post">
         <div class="row">
             <div class="input-field col s12">
-                <input value="@Model.Username" type="text" placeholder="Enter Username" name="username" required="required" class="validate" id="enterUserName" />      
+                <input value="@Model.Username" type="text" placeholder="Enter Username" name="username" required="required" class="validate" id="enterUserName" />
                 <label for="username"><b>Username</b></label>
             </div>
         </div>
@@ -21,9 +24,11 @@
             </div>
         </div>
         <div class="row">
-            @{ if(Model.Username != null){<p class="error-message">Invalid username/password</p>} }
+            @{ if (Model.Username != null)
+                {<p class="error-message">Invalid username/password</p>} }
         </div>
-        <button id ="submitLoginInfo" class="btn waves-effect waves-light" type="submit" name="action">Submit
+        <button id="submitLoginInfo" class="btn waves-effect waves-light" type="submit" name="action">
+            Submit
             <i class="material-icons right">send</i>
         </button>
     </form>
