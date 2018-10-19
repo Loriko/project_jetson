@@ -52,7 +52,7 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseLocation GetLocationById(int locationId);
         bool PersistNewNotification(DatabaseNotification dbNotification);
         List<DatabaseCamera> GetCamerasOwnedByUser(int userId);
-        bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera);
+        bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted);
         List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
         DatabaseUser GetUserById(int userId);
         bool PersistExistingUser(DatabaseUser databaseUser);

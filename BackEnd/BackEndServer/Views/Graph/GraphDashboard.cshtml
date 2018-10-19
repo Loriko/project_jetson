@@ -83,7 +83,7 @@
     @*     <label>End Date</label> *@
     @* </div> *@
     @* <div class="input-field col s5"></div> *@
-    <div class="col s8">
+    <div class="col s12">
         <ul id="graphNameList" class="tabs">
             <li class="tab" onclick="reloadGraph('@PastPeriod.LastDay')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastDay ? "active" : "")" href="#past_day">Past Day</a></li>
             <li class="tab" onclick="reloadGraph('@PastPeriod.LastWeek')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastWeek ? "active" : "")" href="#past_week">Past Week</a></li>
@@ -91,15 +91,6 @@
             <li class="tab" onclick="reloadGraph('@PastPeriod.LastYear')"><a class="teal-text @(Model.GraphStatistics.selectedPeriod == PastPeriod.LastYear ? "active" : "")" href="#past_year">Past Year</a></li>
             <div class="indicator teal" style="z-index:1"></div>
         </ul>
-    </div>
-    <div class="input-field col s4">
-        <select>
-            <option value="" disabled>Measured Values</option>
-            <option value="1">Avg number of People</option>
-            <option selected="" value="2">Max Number of People</option>
-            <option value="3">Min Number of People</option>
-        </select>
-        <label>Select Value to Measure</label>
     </div>
 </div>
 

@@ -22,6 +22,7 @@ namespace BackEndServer.Models.ViewModels
         // Supports users uploading a picture of what an installed camera is tracking (the monitored area).
         public IFormFile UploadedImage { get; set; }
         public string SavedImagePath { get; set; }
+        public bool ImageDeleted { get; set; }
 
         public CameraDetails()
         {
