@@ -29,7 +29,7 @@ namespace BackEndServer.Models.ViewModels
                     }
                 }
 
-                ListOfCameraKeys.Add(new CameraKey(dbCamera.CameraKey, isRegistered));
+                ListOfCameraKeys.Add(new CameraKey(dbCamera.CameraId, dbCamera.CameraKey, isRegistered));
             }
         }
     }
