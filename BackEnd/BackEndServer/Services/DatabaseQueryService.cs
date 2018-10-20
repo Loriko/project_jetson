@@ -700,9 +700,8 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = "SELECT * " +
-                               "FROM camera " +
-                               $"WHERE camera.user_id = {userId};";
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
+                               $"WHERE camera.user_id = {userId}";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -711,20 +710,30 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        DatabaseCamera camera = new DatabaseCamera()
-                        {
-                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
-                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
-                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
-                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
-                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
-                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
-                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
-                        };
-                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
-                        {
-                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
-                        }
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
+                        cameraList.Add(camera);
+                    }
+                }
+            }
+            return cameraList;
+        }
+
+        public List<DatabaseCamera> GetAllCameras()
+        {
+            List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
                         cameraList.Add(camera);
                     }
                 }

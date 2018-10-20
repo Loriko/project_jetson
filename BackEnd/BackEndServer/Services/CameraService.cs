@@ -42,6 +42,12 @@ namespace BackEndServer.Services
             return InitialiseImagesBeforeDisplaying(listOfCameraInfo);
         }
 
+        public CameraKeyList GetCameraKeyListForAdmin()
+        {
+            List<DatabaseCamera> dbCameraList = _dbQueryService.GetAllCameras();
+            return new CameraKeyList(dbCameraList);
+        }
+
         private CameraInformationList InitialiseImagesBeforeDisplaying(CameraInformationList list)
         {
             foreach(CameraInformation camInfo in list.CameraList)
