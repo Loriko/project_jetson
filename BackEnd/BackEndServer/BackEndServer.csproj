@@ -24,8 +24,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="logs" />
-    <Folder Include="Models\ViewModels\" />
-    <Folder Include="Views\Camera\" />
     <Folder Include="wwwroot\images\camera_images\" />
     <Folder Include="Controllers\APIControllers\" />
     <Folder Include="Classes\DataResponseClasses\" />

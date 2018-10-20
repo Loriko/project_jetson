@@ -9,6 +9,7 @@ namespace BackEndServer.Services.AbstractServices
     {
         CameraInformationList getCamerasAtLocation(int locationId);
         CameraKeyList GetCameraKeyListForAdmin();
+        NewCameraKey GenerateUniqueCameraKey();
         CameraInformation getCameraInformationById(int cameraId);
         CameraStatistics getCameraStatisticsForNowById(int cameraId);
         // Temporary, needs to be changed to using the APIModel equivalent of the DatabaseCamera object

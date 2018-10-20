@@ -4,31 +4,101 @@
     ViewBag.Title = "Project Jetson - Manage Camera Keys";
 }
 
+<script>
+    function updateDeleteModal(camId,camKey,isReg)
+    {
+        //window.alert(isReg);
+
+        var messageBody = document.getElementById("deleteWarning_Message");
+        var messageHead = document.getElementById("deleteModalLabel");
+        var deleteButton = document.getElementById("deleteWarning_DeleteButton");
+
+        var message = "You have selected camera key: " + camKey.toString() + ". ";
+
+        if (isReg == "True")
+        {
+            messageHead.innerHTML = "Delete Registered Camera Key";
+            message += "This is a Registered Camera Key, meaning it is currently being used by the capture system. Deleting it could have a significant impact or crash the system."
+        }
+        else
+        {
+            messageHead.innerHTML = "Delete Non-Registered Camera Key";
+            message += "This camera key is Not Registered. Deleting it will not affect the system."
+        }
+        
+        message += " Are you sure you want to delete this Camera Key?"
+
+        messageBody.innerHTML = message;
+
+        // Update the delete button with the correct camera key to delete.
+        deleteButton.attributes("asp-route-cameraId") = camId.toString();
+    }
+</script>
+
 <h1 class="page-title center-align" id="headerManageCameraKeys">Manage Camera Keys</h1>
 <div class="row">
     <div class="right-align" style="margin-right: 11px;">
-        <a asp-controller="Camera" asp-action="CreateCameraKey" id="create_alert_btn" class="btn-floating btn-large green modal-trigger">
+        <a id="create_camera_key_btn"
+           class="btn-floating btn-large green modal-trigger" data-toggle="modal" data-target="#createWarning">
             <i class="large material-icons">add</i>
         </a>
+    </div>
+</div>
+
+<!-- Create New Camera Key Warning Modal -->
+<div class="modal fade" id="createWarning" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create Camera Key</h5>
+            </div>
+            <div class="modal-body">
+                A new randomly generated, unique camera key will be created and saved in the system. Are you sure you want to create a new camera key?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a asp-controller="Camera" asp-action="CreateCameraKey" class="btn btn-primary">Create New Key</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Camera Key Warning Modal -->
+<div class="modal fade" id="deleteWarning" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Delete Camera Key</h5>
+            </div>
+            <div class="modal-body" id="deleteWarning_Message">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a id="deleteWarning_DeleteButton" asp-controller="Camera" asp-action="DeleteCameraKey" asp-route-cameraId="-1" class="btn btn-primary" style="background:#ff0000;">Delete</a>
+            </div>
+        </div>
     </div>
 </div>
 
 <div id="adminCameraKeys" class="collection">
     @foreach (var cameraKey in Model.ListOfCameraKeys)
     {
-    <div class="collection-item">
-        <span class="title" id="@cameraKey.CameraId">@cameraKey.Key</span>
-        <span class="secondary-content">
-            @if (cameraKey.IsRegistered == true)
-            {
-                <span class="title">Registered</span>
-            }
-            else
-            {
-                <span class="title">Not Registered</span>
-            }
-            <a asp-controller="Camera" asp-action="DeleteCameraKey" asp-route-cameraId="@cameraKey.CameraId"><i class="material-icons">delete</i></a>
-        </span>
-    </div>
+        <div class="collection-item">
+            <span class="title">@cameraKey.Key</span>
+            <span class="secondary-content">
+                @if (cameraKey.IsRegistered == true)
+                {
+                    <span id="@cameraKey.CameraId" class="title">Registered</span>
+                }
+                else
+                {
+                    <span id="'@cameraKey.CameraId'" class="title">Not Registered</span>
+                }
+                <a data-toggle="modal" data-target="#deleteWarning" 
+                   onclick="updateDeleteModal('@cameraKey.CameraId','@cameraKey.Key','@cameraKey.IsRegistered')">
+                    <i class="material-icons">delete</i>
+                </a>
+            </span>
+        </div>
     }
 </div>

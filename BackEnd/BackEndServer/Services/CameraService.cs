@@ -48,6 +48,38 @@ namespace BackEndServer.Services
             return new CameraKeyList(dbCameraList);
         }
 
+        public NewCameraKey GenerateUniqueCameraKey()
+        {
+            bool keyGenerated = false;
+
+            while (keyGenerated == false)
+            {
+                // Camera Key must be exactly 12 characters.
+                string randomCameraKey = StringGenerator.GenerateRandomString(12, 12);
+
+                // Ensure Key does not exist in database (return value is -1).
+                if (_dbQueryService.GetCameraIdFromKey(randomCameraKey) == -1)
+                {
+                    // Persist new camera key to database.
+
+                    DatabaseCamera emptyCamera = new DatabaseCamera();
+                    emptyCamera.CameraKey = randomCameraKey;
+                    bool success = _dbQueryService.PersistNewCamera(emptyCamera);
+
+                    if (success)
+                    {
+                        return new NewCameraKey(randomCameraKey);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         private CameraInformationList InitialiseImagesBeforeDisplaying(CameraInformationList list)
         {
             foreach(CameraInformation camInfo in list.CameraList)

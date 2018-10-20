@@ -147,5 +147,20 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
             return View("ManageCameraKeys", listOfCameraKeys);
         }
+
+        [HttpGet]
+        public IActionResult CreateCameraKey()
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            NewCameraKey newCameraKey = CameraService.GenerateUniqueCameraKey();
+
+            return View("CreateCameraKey", newCameraKey);
+        }
     }
 }

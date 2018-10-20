@@ -506,14 +506,17 @@ namespace BackEndServer.Services
         public bool PersistNewCamera(DatabaseCamera camera)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
-                string query = "INSERT INTO camera(" +
-                               "camera_name, location_id, user_id, monitored_area, brand, model, resolution" +
-                               ") VALUES " +
-                               $"('{camera.CameraName}',{formatNullableInt(camera.LocationId)},{formatNullableInt(camera.UserId)}," +
-                               $"'{camera.MonitoredArea}',{formatNullableString(camera.Brand)}," +
-                               $"{formatNullableString(camera.Model)},{formatNullableString(camera.Resolution)});";
-                
+            {
+                string query = $"INSERT INTO {DatabaseCamera.TABLE_NAME} (" +
+                               $"{DatabaseCamera.BRAND_LABEL},{DatabaseCamera.CAMERA_KEY_LABEL},{DatabaseCamera.CAMERA_NAME_LABEL}," +
+                               $"{DatabaseCamera.IMAGE_PATH_LABEL},{DatabaseCamera.LOCATION_ID_LABEL},{DatabaseCamera.MODEL_LABEL}," +
+                               $"{DatabaseCamera.MONITORED_AREA_LABEL},{DatabaseCamera.USER_ID_LABEL},{DatabaseCamera.RESOLUTION_LABEL}" +
+                               ") VALUES (" +
+                               $"{formatNullableString(camera.Brand)},'{camera.CameraKey}',{formatNullableString(camera.CameraName)}," +
+                               $"{formatNullableString(camera.ImagePath)},{formatNullableInt(camera.LocationId)},{formatNullableString(camera.Model)}," +
+                               $"{formatNullableString(camera.MonitoredArea)},{formatNullableInt(camera.UserId)},{formatNullableString(camera.Resolution)}" +
+                               ")";
+
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
