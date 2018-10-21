@@ -23,5 +23,13 @@ namespace BackEndServer.Services
         {
             return _dbQueryService.PersistExistingUser(new DatabaseUser(userSettings));
         }
+
+        public UserSettings CreateUser(UserSettings userSettings)
+        {
+            _dbQueryService.PersistNewUser(new DatabaseUser(userSettings));
+            UserSettings newUser = new UserSettings(_dbQueryService.GetUserByUsername(userSettings.Username));
+            newUser.CreateAPIKey = userSettings.CreateAPIKey;
+            return newUser;
+        }
     }
 }

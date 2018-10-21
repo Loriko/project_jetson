@@ -26,6 +26,7 @@ namespace BackEndServer.Models.DBModels
             EmailAddress = userSettings.EmailAddress;
             FirstName = userSettings.FirstName;
             LastName = userSettings.LastName;
+            Password = userSettings.Password;
         }
 
         // Database Model Class Attributes

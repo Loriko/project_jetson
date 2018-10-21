@@ -6,5 +6,6 @@ namespace BackEndServer.Services.AbstractServices
     {
         UserSettings GetUserSettings(int userId);
         bool ModifyUser(UserSettings userSettings);
+        UserSettings CreateUser(UserSettings userSettings);
     }
 }
