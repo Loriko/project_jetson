@@ -8,6 +8,9 @@ namespace BackEndServer.Services.AbstractServices
     public interface AbstractCameraService
     {
         CameraInformationList getCamerasAtLocation(int locationId);
+        CameraKeyList GetCameraKeyListForAdmin();
+        bool DeleteCameraFromKey(string cameraKey);
+        NewCameraKey GenerateUniqueCameraKey();
         CameraInformation getCameraInformationById(int cameraId);
         CameraStatistics getCameraStatisticsForNowById(int cameraId);
         // Temporary, needs to be changed to using the APIModel equivalent of the DatabaseCamera object

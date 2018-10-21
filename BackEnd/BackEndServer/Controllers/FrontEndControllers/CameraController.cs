@@ -132,5 +132,63 @@ namespace BackEndServer.Controllers.FrontEndControllers
             
             return View("CameraRegistration", registrationDetails);
         }
+
+        [HttpGet]
+        public IActionResult ManageCameraKeys()
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            // TODO: Ensure User is an ADMIN
+
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            CameraKeyList listOfCameraKeys = CameraService.GetCameraKeyListForAdmin();
+
+            return View("ManageCameraKeys", listOfCameraKeys);
+        }
+
+        [HttpGet]
+        public IActionResult CreateCameraKey()
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            // TODO: Ensure User is an ADMIN
+
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            NewCameraKey newCameraKey = CameraService.GenerateUniqueCameraKey();
+
+            return View("CreateCameraKey", newCameraKey);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteCameraKey(string cameraKey)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            // TODO: Ensure User is an ADMIN
+
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            bool success = CameraService.DeleteCameraFromKey(cameraKey);
+
+            if (success == false)
+            {
+                return View("Error");
+            }
+
+            NewCameraKey deletedCameraKey = new NewCameraKey(cameraKey);
+
+            return View("DeleteCameraKey", deletedCameraKey);
+        }
     }
 }
