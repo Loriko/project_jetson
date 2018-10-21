@@ -983,8 +983,8 @@ namespace BackEndServer.Services
                 }
                 if (!alert.AlwaysActive)
                 {
-                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= CAST('{alert.StartTime}' as TIME)" +
-                             $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} <= CAST('{alert.EndTime}' as TIME)";
+                    query += $" AND CAST({DatabasePerSecondStat.DATE_TIME_LABEL} as TIME) >= '{alert.StartTime}'" +
+                             $" AND CAST({DatabasePerSecondStat.DATE_TIME_LABEL} as TIME) <= '{alert.EndTime}'";
                 }
                 query += $" ORDER BY {DatabasePerSecondStat.DATE_TIME_LABEL} ASC LIMIT 1;";
                 conn.Open();
