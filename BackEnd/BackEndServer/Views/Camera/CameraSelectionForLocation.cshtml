@@ -1,4 +1,7 @@
 ﻿@model BackEndServer.Models.ViewModels.CameraInformationList
+@{
+    ViewBag.Title = "Project Jetson - Camera Selection";
+}
 
 <h1 class="page-title center-align">Please select the camera whose information you wish to see</h1>
 <!--<div class="collection">
@@ -8,7 +11,8 @@
 </div>-->
 
 <div id="roomList" class="row">
-    @foreach (var camera in Model.CameraList){
+    @foreach (var camera in Model.CameraList)
+    {
         <div class="col s6 m4">
             <div class="card camera-card">
                 <div id="@camera.CameraId" class="card-image clickable">

@@ -1,5 +1,8 @@
 ﻿@using BackEndServer.Models.Enums
 @using BackEndServer.Models.ViewModels
+@{
+    ViewBag.Title = "Project Jetson - Alert Dashboard";
+}
 @model AlertDashboardInformation
 @{ Html.RenderPartial("~/Views/Alert/AlertCreationModal.cshtml", Model.Availablecameras); }
 @{ Html.RenderPartial("~/Views/Alert/AlertDeletionConfirmationModal.cshtml"); }
@@ -13,7 +16,7 @@
                 if (Model.ExistingAlertsByCameraId[cameraId].Count > 0)
                 {
                     CameraInformation camera = Model.Availablecameras.CameraList.Find(x => x.CameraId == cameraId);
-                    
+
                     <ul class="collapsible collapsible-collection-container" data-collapsible="accordion">
                         <li>
                             <div class="collapsible-header">@camera.CameraName</div>
@@ -43,14 +46,15 @@
                                             <i class="material-icons circle light-green">error</i>
                                         }
                                         <span class="title">@alert.AlertName</span>
-                                        <p>@alert.TriggerString()
-                                        </p>
-                                        <span class="secondary-content">
-                                            <a href="#!" onclick="showAlertDeletionConfirmationModal(this.parentNode.parentNode)"><i class="material-icons">remove_circle</i></a>
-                                            <a href="#!" onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
-                                        </span>
+                                        <p>
+                                            @alert.TriggerString()
+                                    </p>
+                                    <span class="secondary-content">
+                                        <a href="#!" onclick="showAlertDeletionConfirmationModal(this.parentNode.parentNode)"><i class="material-icons">remove_circle</i></a>
+                                        <a href="#!" onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
                                     </span>
-                                }
+                                </span>
+                            }
                             </div>
                         </li>
                     </ul>
@@ -61,7 +65,7 @@
     else
     {
         <div id="alertList" class="unavailable-message center-align">
-            It seems you don't have any alert so far. Clicking the red floating button will allow you to set up an alert. 
+            It seems you don't have any alert so far. Clicking the red floating button will allow you to set up an alert.
         </div>
     }
 }
@@ -79,7 +83,7 @@
         $("input[name='ToBeDeletedAlertId']").val(cameraDiv.children["AlertId"].value);
         $('#alert-deletion_confirmation-modal').modal("open");
     }
-    
+
     function showAlertEditModal(cameraDiv) {
         var alert = {
             alertId: cameraDiv.children["AlertId"].value,
@@ -96,7 +100,7 @@
         $('#alert-creation-modal').modal("open");
     }
     $("#create_alert_btn").on("click", window.setToCreateMode);
-    
+
     @if (Context.Request.Headers["x-requested-with"]=="XMLHttpRequest")
     {
         <text>

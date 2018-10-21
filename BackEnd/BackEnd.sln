@@ -4,9 +4,9 @@ VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BackEndServer", "BackEndServer\BackEndServer.csproj", "{4ADDAF68-AFC8-40CB-B8CF-77F68BBEE474}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI-UnitTests", "WebAPI-UnitTests\WebAPI-UnitTests.csproj", "{469915B0-466F-4539-AE6C-127B066CEB84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI-UnitTests", "WebAPI-UnitTests\WebAPI-UnitTests.csproj", "{469915B0-466F-4539-AE6C-127B066CEB84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebServer-UnitTests", "WebServer-UnitTests\WebServer-UnitTests.csproj", "{63CA028D-D297-4185-8783-B164386C99CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebServer-UnitTests", "WebServer-UnitTests\WebServer-UnitTests.csproj", "{63CA028D-D297-4185-8783-B164386C99CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

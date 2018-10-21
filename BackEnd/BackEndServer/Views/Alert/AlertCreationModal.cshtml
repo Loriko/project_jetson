@@ -1,4 +1,7 @@
 ﻿@model BackEndServer.Models.ViewModels.CameraInformationList
+@{
+    ViewBag.Title = "Project Jetson - Alert Creation";
+}
 
 <!-- Modal Structure -->
 <div id="alert-creation-modal" class="modal modal-fixed-footer">
@@ -43,7 +46,7 @@
                     <label for="contact_method">Contact Method</label>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="input-field col s12">
                     <div id="trigger-details-container">
@@ -64,11 +67,11 @@
                         <span>people are spotted:</span>
                     </div>
                     <p class="no-top-margin">
-                        <input name="AlwaysActive" type="radio" id="all-time-radio" value="true" checked="checked"/>
+                        <input name="AlwaysActive" type="radio" id="all-time-radio" value="true" checked="checked" />
                         <label class="radio-label" for="all-time-radio">At all times</label>
                     </p>
                     <p>
-                        <input name="AlwaysActive" type="radio" id="specific-time-radio" value="false"/>
+                        <input name="AlwaysActive" type="radio" id="specific-time-radio" value="false" />
                         <label class="radio-label" for="specific-time-radio">Between specific times</label>
                     </p>
                     <label class="fake-label">Trigger details</label>
@@ -86,7 +89,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Submit
                 <i class="material-icons right">send</i>
             </button>
         </div>
@@ -95,7 +99,7 @@
 
 <script>
     $("input[name='AlwaysActive']").on("change",
-        function() {
+        function () {
             if ($("input[name='AlwaysActive']:checked").val() === "true") {
                 $("#time_row").addClass("hide");
             } else if ($("input[name='AlwaysActive']:checked").val() === "false") {
@@ -103,18 +107,18 @@
             }
         }
     ).change();
-    //Kinda (very) hacky, but is the cost we have to pay to use the materialize dropdown look 
+    //Kinda (very) hacky, but is the cost we have to pay to use the materialize dropdown look
     function selectTriggerOperator(operator) {
         $("#operator_value").val(operator);
         $("#operator_button").text(operator);
     }
     $("#operator_dropdown a").on("click",
-        function() {
+        function () {
             selectTriggerOperator($(this).attr("value"));
         }
     );
     $("#operator_dropdown a").first().click();
-    
+
     function setToCreateMode() {
         $("#edit-title").addClass("hide");
         $("#create-title").removeClass("hide");
@@ -130,7 +134,7 @@
         modal.find("select[name='CameraId']").material_select();
         modal.find("select[name='ContactMethod']").material_select();
     }
-    
+
     function setToEditMode(alert) {
         $("#create-title").addClass("hide");
         $("#edit-title").removeClass("hide");
