@@ -18,11 +18,15 @@ namespace BackEndServer.Services.AbstractServices
         // UPDATE methods:
         bool UpdatePerSecondStatsWithPerHourStatId(DateTime hour, int perHourStatId);
 
+        // DELETE methods:
+        bool DeleteCameraFromCameraKey(string cameraKey);
+
         // QUERY methods:
 
         // For Camera:
         DatabaseCamera GetCameraById(int cameraId);
         List<DatabaseCamera> GetCamerasForLocation(int locationId);
+        List<DatabaseCamera> GetAllCameras();
         List<string> GetExistingCameraResolutions();
         int GetCameraIdFromKey(string cameraKey);
         string GetCameraKeyFromId(int cameraId);
@@ -52,7 +56,7 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseLocation GetLocationById(int locationId);
         bool PersistNewNotification(DatabaseNotification dbNotification);
         List<DatabaseCamera> GetCamerasOwnedByUser(int userId);
-        bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera);
+        bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted);
         List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
         DatabaseUser GetUserById(int userId);
         bool PersistExistingUser(DatabaseUser databaseUser);

@@ -1,5 +1,8 @@
 @using Castle.Core.Internal
 @model BackEndServer.Models.ViewModels.CameraRegistrationDetails
+@{
+    ViewBag.Title = "Project Jetson - Camera Registration";
+}
 
 <h1 class="page-title center-align">Please enter your camera's details</h1>
 
@@ -7,7 +10,7 @@
 
 <div class="row">
     <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
-        <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId"/>
+        <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId" />
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" value="@Model.CameraDetails.CameraName" type="text" class="validate" required>
@@ -20,7 +23,8 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                @if(Model.CameraDetails.CameraKey.IsNullOrEmpty()) {
+                @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
+                {
                     <input id="camera_key" name="CameraKey" type="text" class="validate" required>
                     <label for="camera_key">Camera Key</label>
                 }
@@ -40,9 +44,10 @@
                         foreach (var locationInformation in Model.locations.LocationList)
                         {
                             <option selected="@(locationInformation.LocationId == Model.CameraDetails.LocationId)"
-                                    value="@locationInformation.LocationId">@locationInformation.LocationName
-                            </option>
-                        }
+                                    value="@locationInformation.LocationId">
+                                @locationInformation.LocationName
+                                </option>
+                            }
                     }
                 </select>
                 <label for="location_id">Camera Location</label>
@@ -71,8 +76,10 @@
                         foreach (string resolution in Model.resolutions)
                         {
                             <option selected="@(resolution == Model.CameraDetails.Resolution)"
-                                    value="@resolution">@resolution</option>
-                        }
+                                    value="@resolution">
+                                @resolution
+                                </option>
+                            }
                     }
                 </select>
                 <label for="camera_resolution">Camera Resolution</label>
@@ -94,6 +101,8 @@
         <!-- Optional: User can upload an image representing the area monitored by the camera. -->
         <!-- Modified from: https://bootsnipp.com/user/snippets/vl0Pd -->
 
+        <input type="hidden" name="ImageDeleted" value="false" />
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -103,7 +112,7 @@
                             <input id="image_input" type="file" name="UploadedImage" accept="image/*" />
                         </div>
                         <div class="file-path-wrapper">
-                            <input id="file_name" class="file-path validate" value="@Model.CameraDetails.SavedImagePath" 
+                            <input id="file_name" class="file-path validate" value="@Model.CameraDetails.SavedImagePath"
                                    type="text" placeholder="Upload an Image (Optional)">
                         </div>
                     </div>
@@ -157,21 +166,25 @@
         }
     }
 
-    $("#location-creation-form").submit(function(e) {
+    $("#location-creation-form").submit(function (e) {
 
         var form = $(this);
         var url = form.attr('action');
+
+        if ($("#file_name").val() === false) {
+            $("input[name='ImageDeleted']").val("true");
+        }
 
         $.ajax({
             type: "POST",
             url: url,
             data: form.serialize(), // serializes the form's elements.
-            success: function(data) {
+            success: function (data) {
                 handleLocationCreationFormSubmission(data);
             }
         });
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
     });
-    
+
 </script>

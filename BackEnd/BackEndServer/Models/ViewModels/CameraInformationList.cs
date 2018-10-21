@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using BackEndServer.Models.DBModels;
 
 namespace BackEndServer.Models.ViewModels

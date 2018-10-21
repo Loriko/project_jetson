@@ -10,6 +10,7 @@ using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.APIModels;
 using System.ComponentModel;
 using BackEndServer.Models.Enums;
+using Castle.Core.Internal;
 using static BackEndServer.Models.Enums.TriggerOperatorExtension;
 
 // More Info: http://www.c-sharpcorner.com/article/how-to-connect-mysql-with-asp-net-core/
@@ -505,16 +506,19 @@ namespace BackEndServer.Services
         public bool PersistNewCamera(DatabaseCamera camera)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
-                string query = "INSERT INTO camera(" +
-                               "camera_name, location_id, user_id, monitored_area, brand, model, resolution" +
-                               ") VALUES " +
-                               $"('{camera.CameraName}',{formatNullableInt(camera.LocationId)},{formatNullableInt(camera.UserId)}," +
-                               $"'{camera.MonitoredArea}',{formatNullableString(camera.Brand)}," +
-                               $"{formatNullableString(camera.Model)},{formatNullableString(camera.Resolution)});";
-                
+            {
+                string command = $"INSERT INTO {DatabaseCamera.TABLE_NAME} (" +
+                               $"{DatabaseCamera.BRAND_LABEL},{DatabaseCamera.CAMERA_KEY_LABEL},{DatabaseCamera.CAMERA_NAME_LABEL}," +
+                               $"{DatabaseCamera.IMAGE_PATH_LABEL},{DatabaseCamera.LOCATION_ID_LABEL},{DatabaseCamera.MODEL_LABEL}," +
+                               $"{DatabaseCamera.MONITORED_AREA_LABEL},{DatabaseCamera.USER_ID_LABEL},{DatabaseCamera.RESOLUTION_LABEL}" +
+                               ") VALUES (" +
+                               $"{formatNullableString(camera.Brand)},'{camera.CameraKey}',{formatNullableString(camera.CameraName)}," +
+                               $"{formatNullableString(camera.ImagePath)},{formatNullableInt(camera.LocationId)},{formatNullableString(camera.Model)}," +
+                               $"{formatNullableString(camera.MonitoredArea)},{formatNullableInt(camera.UserId)},{formatNullableString(camera.Resolution)}" +
+                               ")";
+
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(command, conn);
 
                 int success = cmd.ExecuteNonQuery();
                 if (success != 0)
@@ -522,6 +526,32 @@ namespace BackEndServer.Services
                     return true;
                 }
             }
+            return false;
+        }
+
+        public bool DeleteCameraFromCameraKey(string cameraKey)
+        {
+            if (String.IsNullOrWhiteSpace(cameraKey))
+            {
+                return false;
+            }
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string command = $"DELETE FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL}='{cameraKey}'";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(command, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+
+            // TODO: DELETE any associations that the camera had.
+
             return false;
         }
 
@@ -699,9 +729,8 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = "SELECT * " +
-                               "FROM camera " +
-                               $"WHERE camera.user_id = {userId};";
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
+                               $"WHERE camera.user_id = {userId}";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -710,20 +739,30 @@ namespace BackEndServer.Services
                 {
                     while (reader.Read())
                     {
-                        DatabaseCamera camera = new DatabaseCamera()
-                        {
-                            CameraId = Convert.ToInt32(reader[DatabaseCamera.CAMERA_ID_LABEL]),
-                            CameraName = Convert.ToString(reader[DatabaseCamera.CAMERA_NAME_LABEL]),
-                            LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]),
-                            UserId = Convert.ToInt32(reader[DatabaseCamera.USER_ID_LABEL]),
-                            MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]),
-                            Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]),
-                            Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL])
-                        };
-                        if (reader[DatabaseCamera.RESOLUTION_LABEL] != DBNull.Value)
-                        {
-                            camera.Resolution = Convert.ToString(reader[DatabaseCamera.RESOLUTION_LABEL]);
-                        }
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
+                        cameraList.Add(camera);
+                    }
+                }
+            }
+            return cameraList;
+        }
+
+        public List<DatabaseCamera> GetAllCameras()
+        {
+            List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
                         cameraList.Add(camera);
                     }
                 }
@@ -1213,7 +1252,7 @@ namespace BackEndServer.Services
             return false;
         }
 
-        public bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera)
+        public bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted)
         {
             using (MySqlConnection conn = GetConnection())
             {
@@ -1231,10 +1270,18 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
                                $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
-                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
-                               // Ensure that the file path to the image contains only forward slashes, so replace all backslashes with a forward slash.
-                               $"{DatabaseCamera.IMAGE_PATH_LABEL} = {formatNullableString(databaseCamera.ImagePath)} " +
-                               $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
+                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} ";
+
+                if (imageDeleted)
+                {
+                    query += $", {DatabaseCamera.IMAGE_PATH_LABEL} = NULL";
+                }
+                else if (!databaseCamera.ImagePath.IsNullOrEmpty())
+                {
+                    query += $", {DatabaseCamera.IMAGE_PATH_LABEL} = '{databaseCamera.ImagePath}'";
+                }
+
+                query += $" WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{databaseCamera.CameraKey}';";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);

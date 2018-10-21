@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
+using Castle.Core.Internal;
 using Microsoft.AspNetCore.Http;
 
 namespace BackEndServer.Services
@@ -39,6 +40,49 @@ namespace BackEndServer.Services
             CameraInformationList listOfCameraInfo = new CameraInformationList(dbCameraList);
 
             return InitialiseImagesBeforeDisplaying(listOfCameraInfo);
+        }
+
+        public CameraKeyList GetCameraKeyListForAdmin()
+        {
+            List<DatabaseCamera> dbCameraList = _dbQueryService.GetAllCameras();
+            return new CameraKeyList(dbCameraList);
+        }
+
+        public NewCameraKey GenerateUniqueCameraKey()
+        {
+            bool keyGenerated = false;
+
+            while (keyGenerated == false)
+            {
+                // Camera Key must be exactly 12 characters.
+                string randomCameraKey = StringGenerator.GenerateRandomString(12, 12);
+
+                // Ensure Key does not exist in database (return value is -1).
+                if (_dbQueryService.GetCameraIdFromKey(randomCameraKey) == -1)
+                {
+                    // Persist new camera key to database.
+
+                    DatabaseCamera emptyCamera = new DatabaseCamera();
+                    emptyCamera.CameraKey = randomCameraKey;
+                    bool success = _dbQueryService.PersistNewCamera(emptyCamera);
+
+                    if (success)
+                    {
+                        return new NewCameraKey(randomCameraKey);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public bool DeleteCameraFromKey(string cameraKey)
+        {
+            return _dbQueryService.DeleteCameraFromCameraKey(cameraKey);
         }
 
         private CameraInformationList InitialiseImagesBeforeDisplaying(CameraInformationList list)
@@ -196,7 +240,7 @@ namespace BackEndServer.Services
             {
                 if (cameraDetails.UploadedImage == null || PerformCameraImageUpload(cameraDetails))
                 {
-                    return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails));
+                    return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails), cameraDetails.ImageDeleted);
                 }
             }
             catch (Exception e)
@@ -266,12 +310,18 @@ namespace BackEndServer.Services
 
         public CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId)
         {
-            return new CameraRegistrationDetails
+            CameraRegistrationDetails registrationDetails = new CameraRegistrationDetails
             {
                 locations = _locationService.getAvailableLocationsForUser(userId),
                 CameraDetails = new CameraDetails(_dbQueryService.GetCameraById(cameraId)),
                 resolutions = GetExistingCameraResolutions()
             };
+            if (!registrationDetails.CameraDetails.SavedImagePath.IsNullOrEmpty())
+            {
+                registrationDetails.CameraDetails.SavedImagePath = CameraRegistrationDetails.IMAGE_UPLOADED_TEXT;
+            }
+
+            return registrationDetails;
         }
 
         public CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod)
