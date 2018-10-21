@@ -5,7 +5,7 @@
 
 <!-- Modal Structure -->
 <div id="alert-creation-modal" class="modal modal-fixed-footer">
-    <form class="col s12" method="post" asp-controller="Alert" asp-action="SaveAlert">
+    <form id="alert_creation_form" class="col s12" method="post" asp-controller="Alert" asp-action="SaveAlert">
         <div class="modal-content">
             <h1 id="create-title" class="page-title left-align">Set up an alert</h1>
             <h1 id="edit-title" class="page-title left-align hide">Modify an alert</h1>
@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="input-field col s12">
                     @*TODO: Fix how the select displays by updating to the newest version of materialize *@
-                    <select id="camera_id" name="CameraId">
+                    <select id="camera_id" name="CameraId" class="validate" required>
                         <option value="" disabled selected>Please select the camera you wish to set up the alert on</option>
                         @{
                             foreach (var cameraInformation in Model.CameraList)
@@ -34,7 +34,7 @@
 
             <div class="row">
                 <div class="input-field col s12">
-                    <select id="contact_method" name="ContactMethod">
+                    <select id="contact_method" name="ContactMethod" class="validate" required>
                         <option value="" disabled selected>Please select the way you wish to be contacted when the alert is triggered</option>
                         @{
                             foreach (var contactMethod in Enum.GetValues(typeof(BackEndServer.Models.Enums.ContactMethod)))
@@ -62,7 +62,7 @@
                         <span>than</span>
                         &nbsp;
                         <div class="input-field inline">
-                            <input id="trigger_number" name="TriggerNumber" type="number" class="small-input validate">
+                            <input id="trigger_number" name="TriggerNumber" type="number" class="small-input validate" required>
                         </div>&nbsp;
                         <span>people are spotted:</span>
                     </div>
@@ -79,12 +79,12 @@
             </div>
             <div id="time_row" class="row">
                 <div class="input-field col s12">
-                    <label for="start_time">From</label>
-                    <input name="StartTime" id="start_time" type="text" class="timepicker">
+                    <input name="StartTime" id="start_time" type="text" class="timepicker validate">
+                    <label for="start_time" data-error="Start Time cannot be higher than End Time">From</label>
                 </div>
                 <div class="input-field col s12">
-                    <label for="end_time">To</label>
-                    <input name="EndTime" id="end_time" type="text" class="timepicker">
+                    <input name="EndTime" id="end_time" type="text" class="timepicker validate">
+                    <label for="end_time" data-error="End Time cannot be lower than Start Time">To</label>
                 </div>
             </div>
         </div>
@@ -155,4 +155,41 @@
         modal.find("input[name='EndTime']").val(alert.endTime);
         modal.find("label[for='end_time']").addClass("active");
     }
+
+    function validateStartEndTime() {
+        if ($("input[name='AlwaysActive']:checked").val() === "false" && $('#start_time').val() && $('#end_time').val()) {
+            var startElem = $('#start_time');
+            var endElem = $('#end_time'); 
+            var startTime = moment(startElem.val(), "HH:mmA");
+            var endTime = moment(endElem.val(), "HH:mmA");
+            if ((startTime - endTime) > 0) {
+                //Needed because label needs to be right after to show validation text
+                $("label[for='" + startElem.attr('id') + "']").insertAfter(startElem);
+                startElem.removeClass("valid");
+                startElem.addClass("invalid");
+                startElem.prop("aria-invalid", "true");
+                //Needed because label needs to be right after to show validation text
+                $("label[for='" + endElem.attr('id') + "']").insertAfter(endElem);
+                endElem.removeClass("valid");
+                endElem.addClass("invalid");
+                endElem.prop("aria-invalid", "true");
+                return false;
+            }
+        }
+        return true;
+    }
+    $("#alert_creation_form").submit(function (e) {
+        if (!validateStartEndTime()) {
+            return false;
+        }
+        return true;
+    });
+    
+    $('.timepicker').on('change', function () {
+        $('#start_time').removeClass("invalid");
+        $('#end_time').removeClass("invalid");
+        $('#start_time').addClass("valid");
+        $('#end_time').addClass("valid");
+    });
+    
 </script>
