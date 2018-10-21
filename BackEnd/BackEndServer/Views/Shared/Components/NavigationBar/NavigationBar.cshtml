@@ -4,6 +4,10 @@
     <li><a asp-controller="User" asp-action="BeginUserSettingsModification" id="modifyPersonalSettings">Modify Personal Settings</a></li>
     <li><a asp-controller="Home" asp-action="SignOut" id="signOut">Sign Out</a></li>
 </ul>
+<ul id="adminDropDown" class="dropdown-content">
+    <li><a asp-controller="User" asp-action="BeginUserCreation" id="userCreation">Create New User</a></li>
+    <li><a asp-controller="Camera" asp-action="ManageCameraKeys" id="manageCameraKeys">Manage Camera Keys</a></li>
+</ul>
 <nav>
     <div class="nav-wrapper teal">
         <a asp-controller="Location" asp-action="LocationSelection" class="brand-logo center">
@@ -15,9 +19,6 @@
             </li>
             <li>
                 <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
-            </li>
-            <li>
-                <a asp-controller="Camera" asp-action="ManageCameraKeys" id="manageCameraKeys">Manage Camera Keys</a>
             </li>
         </ul>
 
@@ -62,6 +63,7 @@
                 <a asp-controller="Alert" asp-action="Index" class="nav-link" id="alerts">My Alerts</a>
             </li>
             <li><a class="dropdown-button" href="#" data-activates="profileDropDown" id="profile">Profile<i class="material-icons right" id="profileDrop">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-button" href="#" data-activates="adminDropDown" id="admin">Admin Centre<i class="material-icons right" id="adminDrop">arrow_drop_down</i></a></li>
         </ul>
     </div>
 </nav>
