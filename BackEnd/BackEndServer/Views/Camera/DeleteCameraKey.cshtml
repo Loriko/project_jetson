@@ -1,0 +1,16 @@
+﻿@model BackEndServer.Models.ViewModels.NewCameraKey
+
+@{
+    ViewBag.Title = "Project Jetson - Camera Key Deleted";
+}
+
+<h1 class="page-title center-align" id="newCameraKey">The Following Camera Key Was Deleted</h1>
+
+<h2 class="center-align">@Model.CameraKey</h2>
+
+<!-- Return Button -->
+<div class="row">
+    <div class="s12 center-align">
+        <a class="btn waves-effect waves-light" asp-controller="Camera" asp-action="ManageCameraKeys">Return to Camera Key Management</a>
+    </div>
+</div>

@@ -507,7 +507,7 @@ namespace BackEndServer.Services
         {
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"INSERT INTO {DatabaseCamera.TABLE_NAME} (" +
+                string command = $"INSERT INTO {DatabaseCamera.TABLE_NAME} (" +
                                $"{DatabaseCamera.BRAND_LABEL},{DatabaseCamera.CAMERA_KEY_LABEL},{DatabaseCamera.CAMERA_NAME_LABEL}," +
                                $"{DatabaseCamera.IMAGE_PATH_LABEL},{DatabaseCamera.LOCATION_ID_LABEL},{DatabaseCamera.MODEL_LABEL}," +
                                $"{DatabaseCamera.MONITORED_AREA_LABEL},{DatabaseCamera.USER_ID_LABEL},{DatabaseCamera.RESOLUTION_LABEL}" +
@@ -518,7 +518,7 @@ namespace BackEndServer.Services
                                ")";
 
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(command, conn);
 
                 int success = cmd.ExecuteNonQuery();
                 if (success != 0)
@@ -526,6 +526,32 @@ namespace BackEndServer.Services
                     return true;
                 }
             }
+            return false;
+        }
+
+        public bool DeleteCameraFromCameraKey(string cameraKey)
+        {
+            if (String.IsNullOrWhiteSpace(cameraKey))
+            {
+                return false;
+            }
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string command = $"DELETE FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL}='{cameraKey}'";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(command, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+
+            // TODO: DELETE any associations that the camera had.
+
             return false;
         }
 

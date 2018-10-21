@@ -80,6 +80,11 @@ namespace BackEndServer.Services
             return null;
         }
 
+        public bool DeleteCameraFromKey(string cameraKey)
+        {
+            return _dbQueryService.DeleteCameraFromCameraKey(cameraKey);
+        }
+
         private CameraInformationList InitialiseImagesBeforeDisplaying(CameraInformationList list)
         {
             foreach(CameraInformation camInfo in list.CameraList)

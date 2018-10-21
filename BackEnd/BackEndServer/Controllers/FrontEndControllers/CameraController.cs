@@ -138,6 +138,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
+            // TODO: Ensure User is an ADMIN
+
             if (currentUserId == null)
             {
                 return RedirectToAction("SignIn", "Home");
@@ -153,6 +155,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
+            // TODO: Ensure User is an ADMIN
+
             if (currentUserId == null)
             {
                 return RedirectToAction("SignIn", "Home");
@@ -161,6 +165,30 @@ namespace BackEndServer.Controllers.FrontEndControllers
             NewCameraKey newCameraKey = CameraService.GenerateUniqueCameraKey();
 
             return View("CreateCameraKey", newCameraKey);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteCameraKey(string cameraKey)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            // TODO: Ensure User is an ADMIN
+
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            bool success = CameraService.DeleteCameraFromKey(cameraKey);
+
+            if (success == false)
+            {
+                return View("Error");
+            }
+
+            NewCameraKey deletedCameraKey = new NewCameraKey(cameraKey);
+
+            return View("DeleteCameraKey", deletedCameraKey);
         }
     }
 }

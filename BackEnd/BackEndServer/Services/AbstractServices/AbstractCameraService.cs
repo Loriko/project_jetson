@@ -9,6 +9,7 @@ namespace BackEndServer.Services.AbstractServices
     {
         CameraInformationList getCamerasAtLocation(int locationId);
         CameraKeyList GetCameraKeyListForAdmin();
+        bool DeleteCameraFromKey(string cameraKey);
         NewCameraKey GenerateUniqueCameraKey();
         CameraInformation getCameraInformationById(int cameraId);
         CameraStatistics getCameraStatisticsForNowById(int cameraId);

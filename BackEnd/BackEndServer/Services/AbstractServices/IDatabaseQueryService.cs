@@ -18,6 +18,9 @@ namespace BackEndServer.Services.AbstractServices
         // UPDATE methods:
         bool UpdatePerSecondStatsWithPerHourStatId(DateTime hour, int perHourStatId);
 
+        // DELETE methods:
+        bool DeleteCameraFromCameraKey(string cameraKey);
+
         // QUERY methods:
 
         // For Camera:
