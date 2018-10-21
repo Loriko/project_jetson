@@ -1,0 +1,85 @@
+@model BackEndServer.Models.ViewModels.UserSettings
+@{
+    ViewBag.Title = "Project Jetson - New User Creation";
+}
+
+<h1 class="page-title center-align">Fill out the form below to create a new user</h1>
+
+<div class="row">
+    <form id="user_creation_form" class="col s12" method="post" asp-controller="User" asp-action="CreateUser" enctype="multipart/form-data">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="first_name" name="FirstName" type="text" class="validate">
+                <label for="first_name">First Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="last_name" name="LastName" type="text" class="validate">
+                <label for="last_name">Last Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="username" name="UserName" type="text" class="validate">
+                <label for="username">Username</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="email_address" name="EmailAddress" type="text" class="validate">
+                <label for="email_address">Email Address</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="password" name="Password" type="password" class="validate">
+                <label for="password">Password</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="password2" type="password" class="validate">
+                <label data-error="The passwords do not match" for="password2">Retype Password</label>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="input-field col s6 form-checkbox">
+                <input id="API_checkbox" name="CreateAPIKey" type="checkbox" value="true" />
+                <label class="checkbox-label" for="API_checkbox">
+                    <span>Generate API Key for User?</span>
+                </label>
+            </div>
+        </div>
+        
+        <!-- Submit Button -->
+        <div class="row">
+            <div class="s12">
+                <button class="btn waves-effect waves-light right-align" type="submit" name="action">
+                    Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+
+    $("#user_creation_form").submit(function (e) {
+
+        var form = $(this);
+
+        var password1 = $("#password");
+        var password2 = $("#password2");
+        
+        if(password1.val().toLowerCase() != password2.val().toLowerCase()) {
+            password2.addClass("invalid");
+            password2.prop("aria-invalid", "true");
+            return false;
+        }
+    });
+</script>

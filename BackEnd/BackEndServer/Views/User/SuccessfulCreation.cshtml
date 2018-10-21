@@ -1,0 +1,47 @@
+@using BackEndServer.Models.ViewModels
+@model UserSettings
+@{
+    ViewBag.Title = "Project Jetson - New User Creation";
+}
+
+<h1 class="page-title center-align">New User Successfully Created</h1>
+<div class="row">
+    <div class="col s12 m6">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">New User Details</span>
+                @* TODO: Put the table in a partial *@
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="property-name">User Name</td>
+                        <td>@Model.Username</td>
+                    </tr>
+                    <tr>
+                        <td class="property-name">First Name</td>
+                        <td>@Model.FirstName</td>
+                    </tr>
+                    <tr>
+                        <td class="property-name">Last Name</td>
+                        <td>@Model.LastName</td>
+                    </tr>
+                    <tr>
+                        <td class="property-name">Email Address</td>
+                        <td>@Model.EmailAddress</td>
+                    </tr>
+                    </tbody>
+                </table>
+                
+                @if (Model.CreateAPIKey)
+                {
+                    <div class="unavailable-message-light center-align">
+                     
+                            This user's API Key will be sent to him by email
+                        
+                    </div>
+                }
+                
+            </div>
+        </div>
+    </div>
+</div>

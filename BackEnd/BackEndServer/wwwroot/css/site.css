@@ -201,3 +201,9 @@ main {
 .no-email-message {
     margin-bottom: 10px !important;
 }
+
+.form-checkbox {
+    min-height: 50px !important;
+    padding-left: 0 !important;
+    margin-top: 0 !important;
+}

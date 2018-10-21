@@ -1402,6 +1402,39 @@ namespace BackEndServer.Services
             return user;
         }
         
+        public DatabaseUser GetUserByUsername(string username)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USERNAME_LABEL} = '{username}';";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
+        
         public bool PersistExistingUser(DatabaseUser databaseUser)
         {
             using (MySqlConnection conn = GetConnection())
@@ -1425,6 +1458,37 @@ namespace BackEndServer.Services
             }
             return false;
         }
+        
+        public bool PersistNewUser(DatabaseUser databaseUser)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $" INSERT INTO {DatabaseUser.TABLE_NAME}(" +
+                               $"{DatabaseUser.USERNAME_LABEL}," +
+                               $"{DatabaseUser.FIRST_NAME_LABEL}," +
+                               $"{DatabaseUser.LAST_NAME_LABEL}," +
+                               $"{DatabaseUser.EMAIL_ADDRESS_LABEL}," +
+                               $"{DatabaseUser.PASSWORD_LABEL}," +
+                               $"{DatabaseUser.API_KEY_LABEL}" +
+                               $") VALUES "+
+                               $"('{databaseUser.Username}', {formatNullableString(databaseUser.FirstName)}, " +
+                               $"{formatNullableString(databaseUser.LastName)}, {formatNullableString(databaseUser.EmailAddress)}, " +
+                               $"'{databaseUser.Password}', NULL);";
+
+                conn.Open();     
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        
         public DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end)
         {
             DatabaseGraphStat stat = null;

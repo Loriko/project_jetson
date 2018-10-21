@@ -1,3 +1,4 @@
+using System;
 using BackEndServer.Models.DBModels;
 
 namespace BackEndServer.Models.ViewModels
@@ -9,6 +10,8 @@ namespace BackEndServer.Models.ViewModels
         public string EmailAddress { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Password { get; set; }
+        public bool CreateAPIKey { get; set; }
 
         public UserSettings()
         {
@@ -21,6 +24,7 @@ namespace BackEndServer.Models.ViewModels
             EmailAddress = dbUser.EmailAddress;
             FirstName = dbUser.FirstName;
             LastName = dbUser.LastName;
+            Password = dbUser.Password;
         }
     }
 }

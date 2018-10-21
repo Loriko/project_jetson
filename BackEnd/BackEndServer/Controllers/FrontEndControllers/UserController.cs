@@ -3,6 +3,7 @@ using BackEndServer.Services;
 using BackEndServer.Services.AbstractServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 namespace BackEndServer.Controllers.FrontEndControllers
 {
@@ -35,6 +36,35 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             
             return Json(false);
+        }
+        
+        public IActionResult BeginUserCreation()
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            return View("UserCreation");
+        }
+        
+        [HttpPost]
+        public IActionResult CreateUser(UserSettings userSettings)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            UserSettings createdUser = UserService.CreateUser(userSettings);
+            if (createdUser == null)
+            {
+                return View("Error");
+            }
+            
+            return View("SuccessfulCreation", createdUser);
         }
     }
 }

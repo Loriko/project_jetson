@@ -60,6 +60,8 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
         DatabaseUser GetUserById(int userId);
         bool PersistExistingUser(DatabaseUser databaseUser);
+        bool PersistNewUser(DatabaseUser databaseUser);
+        DatabaseUser GetUserByUsername(string username);
         DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end);
     }
 }
