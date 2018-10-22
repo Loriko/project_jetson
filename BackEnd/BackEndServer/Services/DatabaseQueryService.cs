@@ -457,7 +457,7 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} " +
-                               $AC"WHERE {DatabaseUser.USERNAME_LABEL} = '{username}' " +
+                               $"WHERE {DatabaseUser.USERNAME_LABEL} = '{username}' " +
                                $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1";
                 
                 conn.Open();
