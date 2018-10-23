@@ -53,5 +53,10 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
             return Json(false);
         }
+
+        public IActionResult LoadLocationSelector(string selectorId, string selectorName, int selectedLocationId)
+        {
+            return PartialView("LocationSelectorWrapper", new LocationSelectorInfo(selectorId, selectorName, selectedLocationId));
+        }
     }
 }
