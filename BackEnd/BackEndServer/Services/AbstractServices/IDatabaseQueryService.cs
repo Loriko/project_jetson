@@ -63,5 +63,6 @@ namespace BackEndServer.Services.AbstractServices
         bool PersistNewUser(DatabaseUser databaseUser);
         DatabaseUser GetUserByUsername(string username);
         DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end);
+        List<DatabaseLocation> GetLocations();
     }
 }

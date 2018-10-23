@@ -6,5 +6,6 @@ namespace BackEndServer.Services.AbstractServices
     {
         LocationInformationList getAvailableLocationsForUser(int userId);
         bool SaveLocation(LocationDetails locationDetails);
+        LocationInformationList GetAvailableLocations();
     }
 }

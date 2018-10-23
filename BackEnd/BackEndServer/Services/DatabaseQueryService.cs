@@ -1536,6 +1536,36 @@ namespace BackEndServer.Services
             return stat;
         }
 
+        public List<DatabaseLocation> GetLocations()
+        {
+            List<DatabaseLocation> locationList = new List<DatabaseLocation>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        locationList.Add(new DatabaseLocation
+                        {
+                            LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
+                            AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
+                            City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
+                            State = Convert.ToString(reader[DatabaseLocation.STATE_LABEL]),
+                            Zip = Convert.ToString(reader[DatabaseLocation.ZIP_LABEL])
+                        });
+                    }
+                }
+            }
+            return locationList;
+        }
+
         public string GetCameraKeyFromId(int cameraId)
         {
             using (MySqlConnection conn = GetConnection())

@@ -26,5 +26,11 @@ namespace BackEndServer.Services
             DatabaseLocation dbLocation = new DatabaseLocation(locationDetails);
             return _dbQueryService.PersistNewLocation(dbLocation);
         }
+
+        public LocationInformationList GetAvailableLocations()
+        {
+            List<DatabaseLocation> dbAddressList = _dbQueryService.GetLocations();
+            return new LocationInformationList(dbAddressList);
+        }
     }
 }
