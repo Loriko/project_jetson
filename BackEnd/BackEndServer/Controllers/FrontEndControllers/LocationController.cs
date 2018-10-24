@@ -54,9 +54,9 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return Json(false);
         }
 
-        public IActionResult LoadLocationSelector(string selectorId, string selectorName, int selectedLocationId)
+        public IActionResult LoadLocationSelector(string selectorId, string selectorName, bool required, int selectedLocationId)
         {
-            return PartialView("LocationSelectorWrapper", new LocationSelectorInfo(selectorId, selectorName, selectedLocationId));
+            return PartialView("LocationSelectorWrapper", new LocationSelectorInfo(selectorId, selectorName, required, selectedLocationId));
         }
     }
 }
