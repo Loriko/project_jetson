@@ -102,8 +102,12 @@
         function () {
             if ($("input[name='AlwaysActive']:checked").val() === "true") {
                 $("#time_row").addClass("hide");
+                $("#start_time").prop('required',false);
+                $("#end_time").prop('required',false);
             } else if ($("input[name='AlwaysActive']:checked").val() === "false") {
                 $("#time_row").removeClass("hide");
+                $("#start_time").prop('required',true);
+                $("#end_time").prop('required',true);
             }
         }
     ).change();
@@ -157,25 +161,33 @@
     }
 
     function validateStartEndTime() {
-        if ($("input[name='AlwaysActive']:checked").val() === "false" && $('#start_time').val() && $('#end_time').val()) {
-            var startElem = $('#start_time');
-            var endElem = $('#end_time'); 
-            var startTime = moment(startElem.val(), "HH:mmA");
-            var endTime = moment(endElem.val(), "HH:mmA");
-            if ((startTime - endTime) > 0) {
-                //Needed because label needs to be right after to show validation text
-                $("label[for='" + startElem.attr('id') + "']").insertAfter(startElem);
-                startElem.removeClass("valid");
-                startElem.addClass("invalid");
-                startElem.prop("aria-invalid", "true");
-                //Needed because label needs to be right after to show validation text
-                $("label[for='" + endElem.attr('id') + "']").insertAfter(endElem);
-                endElem.removeClass("valid");
-                endElem.addClass("invalid");
-                endElem.prop("aria-invalid", "true");
-                return false;
-            }
+        if ($("input[name='AlwaysActive']:checked").val() === "true") {
+            return true;
         }
+        
+        var startElem = $('#start_time');
+        var endElem = $('#end_time');
+        
+        if (!startElem.val() || !endElem.val()) {
+            return false;
+        }
+        
+        var startTime = moment(startElem.val(), "HH:mmA");
+        var endTime = moment(endElem.val(), "HH:mmA");
+        if ((startTime - endTime) > 0) {
+            //Needed because label needs to be right after to show validation text
+            $("label[for='" + startElem.attr('id') + "']").insertAfter(startElem);
+            startElem.removeClass("valid");
+            startElem.addClass("invalid");
+            startElem.prop("aria-invalid", "true");
+            //Needed because label needs to be right after to show validation text
+            $("label[for='" + endElem.attr('id') + "']").insertAfter(endElem);
+            endElem.removeClass("valid");
+            endElem.addClass("invalid");
+            endElem.prop("aria-invalid", "true");
+            return false;
+        }
+        
         return true;
     }
     $("#alert_creation_form").submit(function (e) {
