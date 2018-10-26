@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.Enums;
 using BackEndServer.Models.ViewModels;
@@ -25,6 +26,6 @@ namespace BackEndServer.Services.AbstractServices
         bool RegisterCamera(CameraDetails cameraDetails);
         int GetExistingCameraId(string cameraKey);
         CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId);
-        CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod);
+        CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null);
     }
 }

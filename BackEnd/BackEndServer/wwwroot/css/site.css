@@ -221,3 +221,12 @@ select:required {
     left: 3em;
     opacity: 0;
 }
+
+label[data-error], label[data-success] {
+    width: 100% !important;
+}
+#select-range-message {
+    margin-top: 20px;
+    color: darkslateblue;
+    font-size: 1.3em;
+}
