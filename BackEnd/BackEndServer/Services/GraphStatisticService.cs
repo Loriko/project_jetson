@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.Enums;
 using BackEndServer.Models.ViewModels;
@@ -71,7 +72,7 @@ namespace BackEndServer.Services
             return graphStatistics;
         }
 
-        public GraphStatistics GetStatisticsForPastPeriod(int cameraId, PastPeriod pastPeriod)
+        public GraphStatistics GetStatisticsForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null)
         {
             GraphStatistics graphStatistics = new GraphStatistics();
             List<DatabasePerSecondStat> perSecondStats = _databaseQueryService.GetPerSecondStatsForCamera(cameraId);
@@ -91,6 +92,16 @@ namespace BackEndServer.Services
             } else if (pastPeriod == PastPeriod.LastYear)
             {
                 perSecondStats.RemoveAll(stat => DateTime.Now.AddYears(-1) >= stat.DateTime);
+            } else if (pastPeriod == PastPeriod.Custom)
+            {
+                if (startDate == null || endDate == null)
+                {
+                    throw new InvalidDataException(
+                        "Graph on custom date range requested but startDate or endDate is null");
+                }
+                perSecondStats.RemoveAll(stat => startDate.Value >= stat.DateTime || endDate.Value <= stat.DateTime);
+                graphStatistics.StartDate = startDate;
+                graphStatistics.EndDate = endDate;
             }
 
             List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
@@ -107,6 +118,7 @@ namespace BackEndServer.Services
             }
             
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
+            graphStatistics.SelectedPeriod = pastPeriod;
             return graphStatistics;
         }
     }

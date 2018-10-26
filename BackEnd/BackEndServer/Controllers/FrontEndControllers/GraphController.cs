@@ -37,5 +37,39 @@ namespace BackEndServer.Controllers.FrontEndControllers
             CameraInformation cameraInfoWithStatistics = CameraService.GetCameraInformationForPastPeriod(cameraId, pastPeriod);
             return View(cameraInfoWithStatistics);
         }
+
+        public IActionResult LoadCustomGraph(int cameraId, DateTime startDate, DateTime endDate)
+        {
+            if (HttpContext.Session.GetString("currentUsername") == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+            CameraInformation cameraInfoWithStatistics = CameraService.GetCameraInformationForPastPeriod(cameraId, PastPeriod.Custom, startDate, endDate);
+            return View("GraphDashboard", cameraInfoWithStatistics);
+        }
+
+        public JsonResult GetCustomGraphStats(int cameraId, DateTime startDate, DateTime endDate)
+        {
+            if (HttpContext.Session.GetString("currentUsername") == null)
+            {
+                return Json(false);
+            }
+
+            GraphStatistics statistics =
+                GraphStatisticService.GetStatisticsForPastPeriod(cameraId, PastPeriod.Custom, startDate, endDate);
+            return Json(statistics);
+        }
+        
+        public JsonResult GetGraphStats(int cameraId, PastPeriod pastPeriod)
+        {
+            if (HttpContext.Session.GetString("currentUsername") == null)
+            {
+                return Json(false);
+            }
+
+            GraphStatistics statistics =
+                GraphStatisticService.GetStatisticsForPastPeriod(cameraId, pastPeriod);
+            return Json(statistics);
+        }
     }
 }
