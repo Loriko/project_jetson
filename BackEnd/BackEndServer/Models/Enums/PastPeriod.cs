@@ -6,6 +6,7 @@
         LastDay,
         LastWeek,
         LastMonth,
-        LastYear
+        LastYear,
+        Custom
     }
 }

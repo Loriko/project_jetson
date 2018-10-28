@@ -9,6 +9,8 @@ namespace BackEndServer.Models.ViewModels
     public class GraphStatistics
     {
         public string[][] Stats { get; set; }
-        public PastPeriod selectedPeriod { get; set; }
+        public PastPeriod SelectedPeriod { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
     }
 }

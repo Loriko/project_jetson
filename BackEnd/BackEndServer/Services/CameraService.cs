@@ -331,11 +331,11 @@ namespace BackEndServer.Services
             return registrationDetails;
         }
 
-        public CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod)
+        public CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null)
         {
             CameraInformation cameraInformation = getCameraInformationById(cameraId);
-            GraphStatistics graphStatistics = _graphStatisticsService.GetStatisticsForPastPeriod(cameraId, pastPeriod);
-            graphStatistics.selectedPeriod = pastPeriod;
+            GraphStatistics graphStatistics = _graphStatisticsService.GetStatisticsForPastPeriod(cameraId, pastPeriod, startDate, endDate);
+            graphStatistics.SelectedPeriod = pastPeriod;
             cameraInformation.GraphStatistics = graphStatistics;
             return cameraInformation;
         }
