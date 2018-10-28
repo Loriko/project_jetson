@@ -41,6 +41,10 @@ main {
     height: 210px;
     border-radius: 10px !important;
 }
+.camera-card-image-sm {
+    height: 148px;
+    border-radius: 10px !important;
+}
 .camera-card {
     margin: 0.5rem 0 0.5rem 0;
 }
@@ -233,4 +237,10 @@ label[data-error], label[data-success] {
 
 #cameras_in_room_container a {
     color: #b3e59f;
+}
+#camera_card {
+    height: 510px;
+}
+#graph_card {
+    max-height: 510px;
 }

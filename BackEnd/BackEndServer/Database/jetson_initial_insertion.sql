@@ -14,11 +14,11 @@ VALUES  (1, 1, 'East Waiting Room'),
         (3, 1, 'Written Test Room'),
         (4, 1, 'Front Entrance');
 
-INSERT INTO camera (id, camera_name, camera_key, location_id, monitored_area, user_id, room_id)
-VALUES  (1, 'East Waiting Room Camera', 'AFRJNILIJHRU', 1, 'East Waiting Room', 1, 1), 
-        (2, 'West Waiting Room Camera', 'HGTIBNERMESD',1, 'West Waiting Room', 1, 2), 
-        (3, 'Written Test Room Camera', 'EPOVHTRKMQZU',1, 'Written Test Room', 1, 3), 
-        (4, 'Front Entrance Camera', 'ZKYVWKJAQQIZ',1, 'Front Entrance', 1, 4);
+INSERT INTO camera (id, camera_name, camera_key, location_id, user_id, room_id)
+VALUES  (1, 'East Waiting Room Camera', 'AFRJNILIJHRU', 1, 1, 1), 
+        (2, 'West Waiting Room Camera', 'HGTIBNERMESD',1, 1, 2), 
+        (3, 'Written Test Room Camera', 'EPOVHTRKMQZU',1, 1, 3), 
+        (4, 'Front Entrance Camera', 'ZKYVWKJAQQIZ',1, 1, 4);
 
 insert into per_second_stat (camera_id, num_detected_object, date_time, has_saved_image)
 VALUES  (1, 1, '2018-04-11 14:36:38',  0),

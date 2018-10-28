@@ -20,6 +20,10 @@ namespace BackEndServer.ViewComponents
         public IViewComponentResult Invoke(int roomId)
         {
             CameraInformationList camerasInRoom = CameraService.GetAllCamerasInRoom(roomId);
+            if (camerasInRoom.CameraList.Count < 2)
+            {
+                return Content(string.Empty);
+            }
             return View("SharedRoomCard", camerasInRoom);
         }
     }

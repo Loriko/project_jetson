@@ -38,7 +38,6 @@ namespace BackEndServer.Models.ViewModels
             CameraName = dbCamera.CameraName;
             LocationId = dbCamera.LocationId.GetValueOrDefault(0);
             UserId = dbCamera.UserId.GetValueOrDefault(0);
-            MonitoredArea = dbCamera.MonitoredArea;
             Brand = dbCamera.Brand;
             Model = dbCamera.Model;
             Resolution = dbCamera.Resolution;

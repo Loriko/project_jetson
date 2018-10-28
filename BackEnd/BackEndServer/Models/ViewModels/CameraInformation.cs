@@ -14,18 +14,9 @@ namespace BackEndServer.Models.ViewModels
         public string TempImagePath { get; set; }
 
 
-        public CameraInformation(int cameraId, string cameraRoomName, string imagePath){
-            CameraId = cameraId;
-            CameraRoomName = cameraRoomName;
-            CameraName = cameraRoomName + " Camera";
-            ImagePath = imagePath;
-            TempImagePath = null;
-        }
-
-        public CameraInformation(int cameraId, string cameraRoomName, string cameraName, string imagePath)
+        public CameraInformation(int cameraId, string cameraName, string imagePath)
         {
             CameraId = cameraId;
-            CameraRoomName = cameraRoomName;
             CameraName = cameraName;
             ImagePath = imagePath;
             TempImagePath = null;
@@ -34,7 +25,6 @@ namespace BackEndServer.Models.ViewModels
         public CameraInformation(DatabaseCamera dbCamera)
         {
             CameraId = dbCamera.CameraId;
-            CameraRoomName = dbCamera.MonitoredArea;
             CameraName = dbCamera.CameraName;
             ImagePath = dbCamera.ImagePath;
             TempImagePath = null;

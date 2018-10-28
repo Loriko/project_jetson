@@ -512,11 +512,11 @@ namespace BackEndServer.Services
                 string command = $"INSERT INTO {DatabaseCamera.TABLE_NAME} (" +
                                $"{DatabaseCamera.BRAND_LABEL},{DatabaseCamera.CAMERA_KEY_LABEL},{DatabaseCamera.CAMERA_NAME_LABEL}," +
                                $"{DatabaseCamera.IMAGE_PATH_LABEL},{DatabaseCamera.LOCATION_ID_LABEL},{DatabaseCamera.MODEL_LABEL}," +
-                               $"{DatabaseCamera.MONITORED_AREA_LABEL},{DatabaseCamera.USER_ID_LABEL},{DatabaseCamera.RESOLUTION_LABEL}" +
+                               $"{DatabaseCamera.USER_ID_LABEL},{DatabaseCamera.RESOLUTION_LABEL}" +
                                ") VALUES (" +
                                $"{formatNullableString(camera.Brand)},'{camera.CameraKey}',{formatNullableString(camera.CameraName)}," +
                                $"{formatNullableString(camera.ImagePath)},{formatNullableInt(camera.LocationId)},{formatNullableString(camera.Model)}," +
-                               $"{formatNullableString(camera.MonitoredArea)},{formatNullableInt(camera.UserId)},{formatNullableString(camera.Resolution)}" +
+                               $"{formatNullableInt(camera.UserId)},{formatNullableString(camera.Resolution)}" +
                                ")";
 
                 conn.Open();
@@ -1270,7 +1270,6 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.RESOLUTION_LABEL} = {formatNullableString(databaseCamera.Resolution)}," +
                                $"{DatabaseCamera.BRAND_LABEL} = {formatNullableString(databaseCamera.Brand)}," +
                                $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
-                               $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
                                $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
                                $"{DatabaseCamera.ROOM_ID_LABEL} = {formatNullableInt(databaseCamera.RoomId)}";
@@ -1343,10 +1342,6 @@ namespace BackEndServer.Services
             if (reader[DatabaseCamera.MODEL_LABEL] != DBNull.Value)
             {
                 camera.Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL]);
-            }
-            if (reader[DatabaseCamera.MONITORED_AREA_LABEL] != DBNull.Value)
-            {
-                camera.MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]);
             }
             if (reader[DatabaseCamera.BRAND_LABEL] != DBNull.Value)
             {
