@@ -69,5 +69,7 @@ namespace BackEndServer.Services.AbstractServices
         int GetRoomIdByLocationIdAndRoomName(int locationId, string roomName);
         DatabaseRoom GetRoomById(int cameraRoomId);
         List<DatabaseCamera> GetAllCamerasInRoom(int roomId);
+        List<DatabaseUser> GetAllUsers();
+        bool CreateUserCameraAssociation(int userId, int cameraId);
     }
 }

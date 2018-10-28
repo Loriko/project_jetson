@@ -155,6 +155,12 @@ namespace BackEndServer.Services
         }
 
         //TODO: Refactor this method, a lot of things aren't used anymore
+        public CameraDetails GetCameraInfoById(int cameraId)
+        {
+            DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
+            return new CameraDetails(camera);
+        }
+
         public CameraStatistics getCameraStatisticsForNowById(int cameraId)
         {
             DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
@@ -372,6 +378,19 @@ namespace BackEndServer.Services
                 DisplayedCameras = camerasInRoom,
                 Room = roomInfo
             };
+        }
+        
+        public List<DatabaseUser> GetAllUsers()
+        {
+            List<DatabaseUser> dbUserList = _dbQueryService.GetAllUsers();
+            
+            return dbUserList;
+        }
+
+        public bool GiveAccessToUser(int cameraId, int userId)
+        {
+            bool value = _dbQueryService.CreateUserCameraAssociation(userId, cameraId);
+            return value;
         }
     }
 }

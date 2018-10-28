@@ -1404,6 +1404,38 @@ namespace BackEndServer.Services
             return user;
         }
         
+        public List<DatabaseUser> GetAllUsers()
+        {
+            List<DatabaseUser> userList = new List<DatabaseUser>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseUser user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                        };
+                        userList.Add(user);
+                    }
+                }
+            }
+            return userList;
+        }
+        
         public DatabaseUser GetUserByUsername(string username)
         {
             DatabaseUser user = null;
@@ -1718,5 +1750,31 @@ namespace BackEndServer.Services
 
             return null;
         }
+
+        public bool CreateUserCameraAssociation(int userId, int cameraId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"INSERT INTO {DatabaseUserCameraAssociation.TABLE_NAME}(" +
+                               $"{DatabaseUserCameraAssociation.CAMERA_ID}," +
+                               $"{DatabaseUserCameraAssociation.USER_ID}" +
+                               ") VALUES (" +
+                               $"{cameraId}, " +
+                               $"{userId});";
+
+                conn.Open();     
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
