@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
@@ -9,6 +10,7 @@ using System.IO;
 using Castle.Core.Internal;
 using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
+using BackEndServer.Services;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,7 +22,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         private AbstractCameraService CameraService => _cameraService ?? (_cameraService =
                                                            HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
                                                                AbstractCameraService);
-
+        
         [HttpGet] // /<controller>/
         public IActionResult CameraSelectionForLocation(int locationId)
         {
@@ -189,6 +191,51 @@ namespace BackEndServer.Controllers.FrontEndControllers
             NewCameraKey deletedCameraKey = new NewCameraKey(cameraKey);
 
             return View("DeleteCameraKey", deletedCameraKey);
+        }
+        
+        public IActionResult ViewAllUsersExceptCurrent(int cameraId)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+            List<DatabaseUser> dbUserList = CameraService.GetAllUsers();
+            List<DatabaseUser> userList = new List<DatabaseUser>();
+            foreach (var user in dbUserList)
+            {
+                if (currentUserId != user.UserId)
+                {
+                    userList.Add(user);
+                }
+                
+            }
+            if (userList == null)
+            {
+                return View("Error");
+            }
+            UserSettingsList users = new UserSettingsList(userList, cameraId);
+            return View("UserViewAccess", users);
+        }
+        
+        [HttpPost]
+        public IActionResult GiveUserAccess(UserCameraAssociation association)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+            CameraDetails cameraInfo = CameraService.GetCameraInfoById(association.CameraId);
+
+           
+            if (!CameraService.GiveAccessToUser(association.CameraId, association.UserId))
+            {
+                return View("Error");
+            }
+            
+            CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
+            return View("ManageCameras", availableCameras);
         }
     }
 }

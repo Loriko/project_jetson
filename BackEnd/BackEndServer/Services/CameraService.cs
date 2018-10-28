@@ -19,6 +19,7 @@ namespace BackEndServer.Services
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
         private readonly AbstractLocationService _locationService;
+        private readonly UserService userService;
 
         public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService, AbstractLocationService locationService)
         {
@@ -150,6 +151,12 @@ namespace BackEndServer.Services
         {
             DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
             return new CameraInformation(camera);
+        }
+
+        public CameraDetails GetCameraInfoById(int cameraId)
+        {
+            DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
+            return new CameraDetails(camera);
         }
 
         public CameraStatistics getCameraStatisticsForNowById(int cameraId)
@@ -331,6 +338,19 @@ namespace BackEndServer.Services
             graphStatistics.SelectedPeriod = pastPeriod;
             cameraInformation.GraphStatistics = graphStatistics;
             return cameraInformation;
+        }
+        
+        public List<DatabaseUser> GetAllUsers()
+        {
+            List<DatabaseUser> dbUserList = _dbQueryService.GetAllUsers();
+            
+            return dbUserList;
+        }
+
+        public bool GiveAccessToUser(int cameraId, int userId)
+        {
+            bool value = _dbQueryService.CreateUserCameraAssociation(userId, cameraId);
+            return value;
         }
     }
 }

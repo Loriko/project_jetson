@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using BackEndServer.Models.DBModels;
 using BackEndServer.Models.ViewModels;
 
 namespace BackEndServer.Services.AbstractServices
