@@ -1,0 +1,37 @@
+@model BackEndServer.Models.ViewModels.UserSettingsList
+@{
+    ViewBag.Title = "Project Jetson - Give view access to other users";
+}
+<h1 id="headerUserView" class="page-title center-align">Give a user access to your camera</h1>
+<div class="row">
+    <form class="col s12" method="post" asp-controller="Camera" asp-action="GiveUserAccess">
+        <input type="hidden" name="CameraId" value="@Model.CameraId">
+        <div class="row">
+            <div class="input-field col s8" id="camera_resolution_div">
+                <select id="user_id" name="UserId">
+                    <option value="" disabled selected>Select the user you want to give access to</option>
+                    @{
+                        foreach (var user in Model.UserList)
+                        {
+                            <option value="@user.UserId">@user.Username</option>
+                        }
+                    }
+                </select>
+                <label for="user_id">Select User</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="row">
+            <div class="s12 center-align">
+                <button class="btn waves-effect waves-light right-align" type="submit" name="action">
+                    Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+

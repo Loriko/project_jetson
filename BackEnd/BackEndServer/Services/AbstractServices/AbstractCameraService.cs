@@ -26,5 +26,8 @@ namespace BackEndServer.Services.AbstractServices
         int GetExistingCameraId(string cameraKey);
         CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId);
         CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod);
+        List<DatabaseUser> GetAllUsers();
+        CameraDetails GetCameraInfoById(int cameraId);
+        bool GiveAccessToUser(int cameraId, int userId);
     }
 }
