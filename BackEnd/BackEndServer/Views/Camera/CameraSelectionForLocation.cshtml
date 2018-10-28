@@ -4,11 +4,6 @@
 }
 
 <h1 class="page-title center-align">Please select the camera whose information you wish to see</h1>
-<!--<div class="collection">
-    @foreach (var camera in Model.CameraList){
-        <a href="CameraSelected?cameraId=@camera.CameraId" class="collection-item">@camera.CameraRoomName</a>
-    }
-</div>-->
 
 <div id="roomList" class="row">
     @foreach (var camera in Model.CameraList)
@@ -20,14 +15,14 @@
                         @{
                             if (String.IsNullOrWhiteSpace(camera.TempImagePath))
                             {
-                                <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@camera.CameraRoomName">
+                                <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@camera.CameraName">
                             }
                             else
                             {
-                                <img class="camera-card-image" src="@(camera.TempImagePath)" alt="@camera.CameraRoomName">
+                                <img class="camera-card-image" src="@(camera.TempImagePath)" alt="@camera.CameraName">
                             }
                         }
-                        <span class="camera-card-title card-title">@camera.CameraRoomName</span>
+                        <span class="camera-card-title card-title">@camera.CameraName</span>
                     </a>
                 </div>
             </div>

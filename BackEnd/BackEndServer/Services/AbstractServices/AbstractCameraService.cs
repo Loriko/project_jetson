@@ -27,5 +27,7 @@ namespace BackEndServer.Services.AbstractServices
         int GetExistingCameraId(string cameraKey);
         CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId);
         CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null);
+        CameraInformationList GetAllCamerasInRoom(int roomId);
+        SharedGraphStatistics GetSharedRoomGraphStatistics(int roomId);
     }
 }

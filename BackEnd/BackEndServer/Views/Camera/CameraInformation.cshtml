@@ -6,10 +6,13 @@
 <h1 id="headerCamInfo" class="page-title center-align">Here is the most recent information concerning the data captured by:<br><b>@Model.CameraInformation.CameraName</b></h1>
 
 <div class="row cards-container">
-    <div class="col s12 m6 center-align valign-wrapper">
+    <div class="col s12 m4 center-align valign-wrapper">
         @await Component.InvokeAsync("CameraCard", new { cameraId = Model.CameraInformation.CameraId })
     </div>
-    <div class="col s12 m6 center-align main-statistics valign-wrapper">
+    <div class="col s12 m8 center-align main-statistics valign-wrapper">
         @await Component.InvokeAsync("GraphCard", new { cameraId = Model.CameraInformation.CameraId })
+    </div>
+    <div class="col s12 m8 center-align main-statistics valign-wrapper">
+        @await Component.InvokeAsync("SharedRoomCard", new { roomId = Model.CameraDetails.ExistingRoomId })
     </div>
 </div>

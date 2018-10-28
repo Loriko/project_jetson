@@ -15,7 +15,7 @@ namespace BackEndServer.Services
         }
 
         
-        public LocationInformationList getAvailableLocationsForUser(int userId)
+        public LocationInformationList GetAvailableLocationsForUser(int userId)
         {
             List<DatabaseLocation> dbAddressList = _dbQueryService.GetLocationsForUser(userId);
             return new LocationInformationList(dbAddressList);
@@ -31,6 +31,17 @@ namespace BackEndServer.Services
         {
             List<DatabaseLocation> dbAddressList = _dbQueryService.GetLocations();
             return new LocationInformationList(dbAddressList);
+        }
+
+        public List<RoomInfo> GetRoomsAtLocation(int locationId)
+        {
+            List<DatabaseRoom> dbRoomList = _dbQueryService.GetRoomsAtLocation(locationId);
+            List<RoomInfo> roomList = new List<RoomInfo>();
+            foreach (var dbRoom in dbRoomList)
+            {
+                roomList.Add(new RoomInfo(dbRoom));
+            }
+            return roomList;
         }
     }
 }

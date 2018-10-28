@@ -230,3 +230,7 @@ label[data-error], label[data-success] {
     color: darkslateblue;
     font-size: 1.3em;
 }
+
+#cameras_in_room_container a {
+    color: #b3e59f;
+}

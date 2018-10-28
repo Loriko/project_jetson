@@ -28,7 +28,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            LocationInformationList locationListModel = LocationService.getAvailableLocationsForUser(currentUsedId.Value);
+            LocationInformationList locationListModel = LocationService.GetAvailableLocationsForUser(currentUsedId.Value);
             return View(locationListModel);
         }
 
@@ -57,6 +57,11 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public IActionResult LoadLocationSelector(string selectorId, string selectorName, bool required, int selectedLocationId)
         {
             return PartialView("LocationSelectorWrapper", new LocationSelectorInfo(selectorId, selectorName, required, selectedLocationId));
+        }
+        
+        public IActionResult LoadRoomSelector(int locationId, string selectorId, string selectorName, bool required, int selectedRoomId)
+        {
+            return PartialView("RoomSelectorWrapper", new RoomSelectorInfo(locationId, selectorId, selectorName, required, selectedRoomId));
         }
     }
 }

@@ -1,0 +1,13 @@
+﻿@model BackEndServer.Models.ViewModels.RoomSelectorInfo
+
+<select id="@Model.SelectorId" name="@Model.SelectorName" @(Model.Required ? "required" : "")>
+    <option value="" disabled selected>Please select the room where the camera is installed</option>
+    @{
+        foreach (var roomInformation in Model.Rooms)
+        {
+            <option selected="@(roomInformation.RoomId == Model.SelectedRoomId.GetValueOrDefault(0))"
+                    value="@roomInformation.RoomId">@roomInformation.RoomName</option>
+        }
+    }
+</select>
+<label for="@Model.SelectorId">Monitored Area@(Model.Required ? " *": "")</label>
