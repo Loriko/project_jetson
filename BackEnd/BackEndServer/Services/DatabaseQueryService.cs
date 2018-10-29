@@ -1450,7 +1450,6 @@ namespace BackEndServer.Services
                             UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
                             Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
-                            ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
                             LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
