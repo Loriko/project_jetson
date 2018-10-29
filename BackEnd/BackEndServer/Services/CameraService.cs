@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
 using Castle.Core.Internal;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BackEndServer.Services
 {
@@ -19,7 +20,7 @@ namespace BackEndServer.Services
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
         private readonly AbstractLocationService _locationService;
-        private readonly UserService userService;
+        private AbstractCameraService _abstractCameraServiceImplementation;
 
         public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService, AbstractLocationService locationService)
         {
@@ -153,6 +154,7 @@ namespace BackEndServer.Services
             return new CameraInformation(camera);
         }
 
+        //TODO: Refactor this method, a lot of things aren't used anymore
         public CameraDetails GetCameraInfoById(int cameraId)
         {
             DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
@@ -162,6 +164,11 @@ namespace BackEndServer.Services
         public CameraStatistics getCameraStatisticsForNowById(int cameraId)
         {
             DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
+            DatabaseRoom room = null;
+            if (camera != null && camera.RoomId != null)
+            {
+                room = _dbQueryService.GetRoomById(camera.RoomId.Value);
+            }
             DatabasePerSecondStat mostRecentStat = _dbQueryService.GetLatestPerSecondStatForCamera(cameraId);
             GraphStatistics graphStatistics = _graphStatisticsService.GetLast30MinutesStatistics(cameraId);
             if (camera != null)
@@ -181,6 +188,13 @@ namespace BackEndServer.Services
                     GraphStatistics = graphStatistics,
                     TempImagePath = null 
                 };
+                if (room != null)
+                {
+                    cameraStatistics.CameraDetails.MonitoredArea = room.RoomName;
+                    cameraStatistics.CameraInformation.CameraRoomName = room.RoomName;
+                    cameraStatistics.CameraInformation.RoomId = room.RoomId;
+                }
+
                 if (mostRecentStat != null)
                 {
                     cameraStatistics.LastUpdatedTime = mostRecentStat.DateTime;
@@ -219,7 +233,7 @@ namespace BackEndServer.Services
         {
             return new CameraRegistrationDetails()
             {
-                locations = _locationService.getAvailableLocationsForUser(userId),
+                locations = _locationService.GetAvailableLocationsForUser(userId),
                 CameraDetails = new CameraDetails(),
                 resolutions = GetExistingCameraResolutions()
             };
@@ -247,12 +261,21 @@ namespace BackEndServer.Services
             {
                 if (cameraDetails.UploadedImage == null || PerformCameraImageUpload(cameraDetails))
                 {
+                    if (cameraDetails.ExistingRoomId <= 0)
+                    {
+                        DatabaseRoom dbRoom = new DatabaseRoom(cameraDetails);
+                        if (!_dbQueryService.PersistNewRoom(dbRoom))
+                        {
+                            return false;
+                        }
+                        cameraDetails.ExistingRoomId = _dbQueryService.GetRoomIdByLocationIdAndRoomName(dbRoom.LocationId, dbRoom.RoomName);
+                    }
                     return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails), cameraDetails.ImageDeleted);
                 }
             }
             catch (Exception e)
             {
-                logger.Error(e, "Unhandled exception occured while trying to register camera");
+                logger.Error(e);
             }
 
             return false;
@@ -319,7 +342,7 @@ namespace BackEndServer.Services
         {
             CameraRegistrationDetails registrationDetails = new CameraRegistrationDetails
             {
-                locations = _locationService.getAvailableLocationsForUser(userId),
+                locations = _locationService.GetAvailableLocationsForUser(userId),
                 CameraDetails = new CameraDetails(_dbQueryService.GetCameraById(cameraId)),
                 resolutions = GetExistingCameraResolutions()
             };
@@ -338,6 +361,23 @@ namespace BackEndServer.Services
             graphStatistics.SelectedPeriod = pastPeriod;
             cameraInformation.GraphStatistics = graphStatistics;
             return cameraInformation;
+        }
+
+        public CameraInformationList GetAllCamerasInRoom(int roomId)
+        {
+            List<DatabaseCamera> dbCameras = _dbQueryService.GetAllCamerasInRoom(roomId);
+            return new CameraInformationList(dbCameras);
+        }
+
+        public SharedGraphStatistics GetSharedRoomGraphStatistics(int roomId)
+        {
+            CameraInformationList camerasInRoom = GetAllCamerasInRoom(roomId);
+            RoomInfo roomInfo = new RoomInfo(_dbQueryService.GetRoomById(roomId));
+            return new SharedGraphStatistics
+            {
+                DisplayedCameras = camerasInRoom,
+                Room = roomInfo
+            };
         }
         
         public List<DatabaseUser> GetAllUsers()

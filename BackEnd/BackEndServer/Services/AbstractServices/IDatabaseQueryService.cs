@@ -64,6 +64,11 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseUser GetUserByUsername(string username);
         DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end);
         List<DatabaseLocation> GetLocations();
+        List<DatabaseRoom> GetRoomsAtLocation(int locationId);
+        bool PersistNewRoom(DatabaseRoom databaseRoom);
+        int GetRoomIdByLocationIdAndRoomName(int locationId, string roomName);
+        DatabaseRoom GetRoomById(int cameraRoomId);
+        List<DatabaseCamera> GetAllCamerasInRoom(int roomId);
         List<DatabaseUser> GetAllUsers();
         bool CreateUserCameraAssociation(int userId, int cameraId);
     }

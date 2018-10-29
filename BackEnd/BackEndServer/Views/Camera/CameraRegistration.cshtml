@@ -18,12 +18,6 @@
                 <label for="camera_name">Camera Name *</label>
             </div>
             <div class="input-field col s6">
-                <input id="monitored_area" name="MonitoredArea" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
-                <label for="monitored_area">Monitored Area</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
                 @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
                 {
                     <input id="camera_key" name="CameraKey" type="text" class="validate" required>
@@ -33,6 +27,29 @@
                     <input id="camera_key" name="CameraKey" type="text" class="validate" readonly required value="@Model.CameraDetails.CameraKey">
                 }
                 <label for="camera_key">Camera Key *</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s8">
+                <div id="new_room_container">
+                    <input id="new_room_name" name="NewRoomName" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
+                    <label for="new_room_name">Monitored Room</label>
+                </div>
+                <div id="existing_room_container" class="hide">
+                    @{ Html.RenderPartial("~/Views/Location/RoomSelectorWrapper.cshtml", new RoomSelectorInfo
+                       {
+                           SelectorId = "existing_room_id", SelectorName = "ExistingRoomId",
+                           SelectedRoomId = Model.CameraDetails.ExistingRoomId, LocationId = Model.CameraDetails.LocationId,
+                           Required = true
+                       });
+                    }
+                </div>
+            </div>
+            <div class="input-field col s4 center-align">
+                <input id="existing_room_checkbox" type="checkbox" @(Model.CameraDetails.ExistingRoomId > 0 ? "checked" : "") />
+                <label class="checkbox-label" for="existing_room_checkbox">
+                    <span>Use an existing room from this location?</span>
+                </label>
             </div>
         </div>
 
@@ -146,9 +163,37 @@
             $("#camera_resolution_div .select-dropdown").prop('disabled', false);
         }
     });
+    
+    $('#existing_room_checkbox').change(function () {
+        if ($("#existing_room_checkbox").is(':checked')) {
+            $("#existing_room_container").removeClass("hide");
+            $("#new_room_container").addClass("hide");
+            $("#existing_room_id").prop("required", true);
+            $("#new_room_name").prop("required", false);
+            $("#new_room_name").val("");
+            $("#existing_room_container .select-dropdown").prop('disabled', false);
+        } else {
+            $("#existing_room_container").addClass("hide");
+            $("#new_room_container").removeClass("hide");
+            $("#existing_room_id").prop("required", false);
+            $("#new_room_name").prop("required", true);
+            $("#existing_room_id").val("");
+            $("#existing_room_container .select-dropdown").prop('disabled', true);
+        }
+    }).change();
 
+    $("#location_id").change(function() {
+        var locationId = $(this).val();
+        var url = "../location/LoadRoomSelector?locationId=" + locationId + "&selectorId=existing_room_id&selectorName=ExistingRoomId&required=true&selectedRoomId=" + "@Model.CameraDetails.ExistingRoomId";
+        $('#existing_room_container').load(url, roomSelectorLoaded);
+    });
+    
     // TODO: Add client side verification for image file input.
 
+    function roomSelectorLoaded() {
+        $('#existing_room_id').material_select();
+    }
+    
     function locationSelectorLoaded() {
         $("#location_id option:last").attr("selected", "selected");
         $('#location_id').material_select();

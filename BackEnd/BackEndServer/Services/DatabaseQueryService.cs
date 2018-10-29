@@ -512,11 +512,11 @@ namespace BackEndServer.Services
                 string command = $"INSERT INTO {DatabaseCamera.TABLE_NAME} (" +
                                $"{DatabaseCamera.BRAND_LABEL},{DatabaseCamera.CAMERA_KEY_LABEL},{DatabaseCamera.CAMERA_NAME_LABEL}," +
                                $"{DatabaseCamera.IMAGE_PATH_LABEL},{DatabaseCamera.LOCATION_ID_LABEL},{DatabaseCamera.MODEL_LABEL}," +
-                               $"{DatabaseCamera.MONITORED_AREA_LABEL},{DatabaseCamera.USER_ID_LABEL},{DatabaseCamera.RESOLUTION_LABEL}" +
+                               $"{DatabaseCamera.USER_ID_LABEL},{DatabaseCamera.RESOLUTION_LABEL}" +
                                ") VALUES (" +
                                $"{formatNullableString(camera.Brand)},'{camera.CameraKey}',{formatNullableString(camera.CameraName)}," +
                                $"{formatNullableString(camera.ImagePath)},{formatNullableInt(camera.LocationId)},{formatNullableString(camera.Model)}," +
-                               $"{formatNullableString(camera.MonitoredArea)},{formatNullableInt(camera.UserId)},{formatNullableString(camera.Resolution)}" +
+                               $"{formatNullableInt(camera.UserId)},{formatNullableString(camera.Resolution)}" +
                                ")";
 
                 conn.Open();
@@ -1270,9 +1270,9 @@ namespace BackEndServer.Services
                                $"{DatabaseCamera.RESOLUTION_LABEL} = {formatNullableString(databaseCamera.Resolution)}," +
                                $"{DatabaseCamera.BRAND_LABEL} = {formatNullableString(databaseCamera.Brand)}," +
                                $"{DatabaseCamera.MODEL_LABEL} = {formatNullableString(databaseCamera.Model)}," +
-                               $"{DatabaseCamera.MONITORED_AREA_LABEL} = {formatNullableString(databaseCamera.MonitoredArea)}," +
                                $"{DatabaseCamera.LOCATION_ID_LABEL} = {formatNullableInt(databaseCamera.LocationId)}," +
-                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)} ";
+                               $"{DatabaseCamera.USER_ID_LABEL} = {formatNullableInt(databaseCamera.UserId)}," +
+                               $"{DatabaseCamera.ROOM_ID_LABEL} = {formatNullableInt(databaseCamera.RoomId)}";
 
                 if (imageDeleted)
                 {
@@ -1343,10 +1343,6 @@ namespace BackEndServer.Services
             {
                 camera.Model = Convert.ToString(reader[DatabaseCamera.MODEL_LABEL]);
             }
-            if (reader[DatabaseCamera.MONITORED_AREA_LABEL] != DBNull.Value)
-            {
-                camera.MonitoredArea = Convert.ToString(reader[DatabaseCamera.MONITORED_AREA_LABEL]);
-            }
             if (reader[DatabaseCamera.BRAND_LABEL] != DBNull.Value)
             {
                 camera.Brand = Convert.ToString(reader[DatabaseCamera.BRAND_LABEL]);
@@ -1362,6 +1358,10 @@ namespace BackEndServer.Services
             if (reader[DatabaseCamera.LOCATION_ID_LABEL] != DBNull.Value)
             {
                 camera.LocationId = Convert.ToInt32(reader[DatabaseCamera.LOCATION_ID_LABEL]);
+            }
+            if (reader[DatabaseCamera.ROOM_ID_LABEL] != DBNull.Value)
+            {
+                camera.RoomId = Convert.ToInt32(reader[DatabaseCamera.ROOM_ID_LABEL]);
             }
             if (reader[DatabaseCamera.IMAGE_PATH_LABEL] != DBNull.Value)
             {
@@ -1596,6 +1596,136 @@ namespace BackEndServer.Services
                 }
             }
             return locationList;
+        }
+
+        public List<DatabaseRoom> GetRoomsAtLocation(int locationId)
+        {
+            List<DatabaseRoom> roomList = new List<DatabaseRoom>();            
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseRoom.TABLE_NAME} "
+                               + $"WHERE {DatabaseRoom.LOCATION_ID_LABEL} = {locationId}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    while (reader.Read())
+                    {
+                        roomList.Add(new DatabaseRoom
+                        {
+                            RoomId = Convert.ToInt32(reader[DatabaseRoom.ROOM_ID_LABEL]),
+                            LocationId = Convert.ToInt32(reader[DatabaseRoom.LOCATION_ID_LABEL]),
+                            RoomName = Convert.ToString(reader[DatabaseRoom.ROOM_NAME_LABEL])
+                        });
+                    }
+                }
+            }
+
+            return roomList;
+        }
+
+        public bool PersistNewRoom(DatabaseRoom databaseRoom)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $" INSERT INTO {DatabaseRoom.TABLE_NAME}(" +
+                               $"{DatabaseRoom.LOCATION_ID_LABEL}," +
+                               $"{DatabaseRoom.ROOM_NAME_LABEL}" +
+                               ") VALUES "+
+                               $"('{databaseRoom.LocationId}', '{databaseRoom.RoomName}');";
+
+                conn.Open();     
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public int GetRoomIdByLocationIdAndRoomName(int locationId, string roomName)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseRoom.ROOM_ID_LABEL} FROM {DatabaseRoom.TABLE_NAME} " + 
+                               $"WHERE {DatabaseRoom.LOCATION_ID_LABEL} = {locationId} " +
+                               $"AND {DatabaseRoom.ROOM_NAME_LABEL} = '{roomName}' LIMIT 1;";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return Convert.ToInt32(reader[DatabaseRoom.ROOM_ID_LABEL]);
+                    }
+                }
+            }
+
+            return -1;
+        }
+
+        public DatabaseRoom GetRoomById(int cameraRoomId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseRoom.TABLE_NAME} " + 
+                               $"WHERE {DatabaseRoom.ROOM_ID_LABEL} = {cameraRoomId} LIMIT 1;";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return new DatabaseRoom
+                        {
+                            RoomId = Convert.ToInt32(reader[DatabaseRoom.ROOM_ID_LABEL]),
+                            LocationId = Convert.ToInt32(reader[DatabaseRoom.ROOM_ID_LABEL]),
+                            RoomName = Convert.ToString(reader[DatabaseRoom.ROOM_NAME_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        public List<DatabaseCamera> GetAllCamerasInRoom(int roomId)
+        {
+            List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
+                               $"WHERE {DatabaseCamera.ROOM_ID_LABEL} = {roomId};";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseCamera camera = getDatabaseCameraFromReader(reader);
+                        cameraList.Add(camera);
+                    }
+                }
+            }
+            return cameraList;
         }
 
         public string GetCameraKeyFromId(int cameraId)

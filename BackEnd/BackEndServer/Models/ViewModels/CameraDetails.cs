@@ -23,6 +23,8 @@ namespace BackEndServer.Models.ViewModels
         public IFormFile UploadedImage { get; set; }
         public string SavedImagePath { get; set; }
         public bool ImageDeleted { get; set; }
+        public int ExistingRoomId { get; set; }
+        public string NewRoomName { get; set; }
 
         public CameraDetails()
         {
@@ -34,20 +36,13 @@ namespace BackEndServer.Models.ViewModels
             CameraId = dbCamera.CameraId;
             CameraKey = dbCamera.CameraKey;
             CameraName = dbCamera.CameraName;
-            if (dbCamera.LocationId != null)
-            {
-                LocationId = dbCamera.LocationId.Value;
-            }
-
-            if (dbCamera.UserId != null)
-            {
-                UserId = dbCamera.UserId.Value;
-            }
-            MonitoredArea = dbCamera.MonitoredArea;
+            LocationId = dbCamera.LocationId.GetValueOrDefault(0);
+            UserId = dbCamera.UserId.GetValueOrDefault(0);
             Brand = dbCamera.Brand;
             Model = dbCamera.Model;
             Resolution = dbCamera.Resolution;
             SavedImagePath = dbCamera.ImagePath;
+            ExistingRoomId = dbCamera.RoomId.GetValueOrDefault(0);
         }
     }
 }
