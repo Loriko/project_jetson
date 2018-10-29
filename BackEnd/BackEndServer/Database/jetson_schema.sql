@@ -114,7 +114,6 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `api_key` VARCHAR(45) NULL,
   `email_address` VARCHAR(45) NULL,
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
@@ -150,10 +149,16 @@ DROP TABLE IF EXISTS `jetson`.`api_key` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`api_key` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `key` CHAR(32) NOT NULL,
+  `user_id` INT(5) UNSIGNED NOT NULL,
+  `api_key` CHAR(32) NOT NULL,
   `salt` VARCHAR(24) NOT NULL,
   `is_active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_apikey_has_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `jetson`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------

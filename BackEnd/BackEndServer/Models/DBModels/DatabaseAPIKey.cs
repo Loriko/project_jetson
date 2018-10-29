@@ -6,7 +6,8 @@
         public static readonly string TABLE_NAME = "api_key";
         // Attributes of API Key table.
         public static readonly string API_KEY_ID_LABEL = "id";
-        public static readonly string API_KEY_LABEL = "key";
+        public static readonly string USER_ID_LABEL = "user_id";
+        public static readonly string API_KEY_LABEL = "api_key";
         public static readonly string API_KEY_SALT_LABEL = "salt";
         public static readonly string API_KEY_ISACTIVE_LABEL = "is_active";
         
@@ -18,9 +19,10 @@
         }
 
         // Database Model Class Attributes
-        public int API_KeyId { get; set; }
-        public string API_Key { get; set; }
-        public string API_KeySalt { get; set; }
+        public int APIKeyId { get; set; }
+        public int UserId { get; set; }
+        public string Key { get; set; }
+        public string Salt { get; set; }
         public int IsActive { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace BackEndServer.Models.ViewModels
         public string LastName { get; set; }
         public string Password { get; set; }
         public bool CreateAPIKey { get; set; }
+        public string APIKey { get; set; }
 
         public UserSettings()
         {

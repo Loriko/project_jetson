@@ -52,10 +52,10 @@ namespace BackEndServer.Services
 
         public NewCameraKey GenerateUniqueCameraKey()
         {
-            bool keyGenerated = false;
-
-            while (keyGenerated == false)
+            int count = 0;
+            while (count < 5)
             {
+                count++;
                 // Camera Key must be exactly 12 characters.
                 string randomCameraKey = StringGenerator.GenerateRandomString(12, 12);
 
@@ -72,10 +72,8 @@ namespace BackEndServer.Services
                     {
                         return new NewCameraKey(randomCameraKey);
                     }
-                    else
-                    {
-                        return null;
-                    }
+
+                    return null;
                 }
             }
 
