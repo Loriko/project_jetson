@@ -129,10 +129,10 @@ namespace BackEndServer.Services
 
             foreach(DatabaseAPIKey db_api_key in db_all_api_keys)
             {
-                string salted_hashed_api_key_to_check = HashAndSaltAPIKey(unsalted_unhashed_api_key, db_api_key.API_KeySalt);
+                string salted_hashed_api_key_to_check = HashAndSaltAPIKey(unsalted_unhashed_api_key, db_api_key.Salt);
 
                 // Compare the values.
-                if (salted_hashed_api_key_to_check == db_api_key.API_Key)
+                if (salted_hashed_api_key_to_check == db_api_key.Key)
                 {
                     // If they are identical, then the API key was found in the database.
                     if (db_api_key.IsActive == (int)DatabaseAPIKey.API_Key_Status.INACTIVE)
@@ -140,7 +140,7 @@ namespace BackEndServer.Services
                         // API key is deactivated. Returns a -2.
                         return -2;
                     }
-                    else if (String.IsNullOrWhiteSpace(db_api_key.API_Key))
+                    else if (String.IsNullOrWhiteSpace(db_api_key.Key))
                     {
                         // LOG ERROR HERE, the database contained an empty string as one of the api keys. Specify ID.
                         return -3;
@@ -148,7 +148,7 @@ namespace BackEndServer.Services
                     else
                     {
                         // API key was found and is Active.
-                        return db_api_key.API_KeyId;
+                        return db_api_key.APIKeyId;
                     }
                 }
             }

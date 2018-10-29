@@ -60,13 +60,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            UserSettings createdUser = UserService.CreateUser(userSettings);
-            if (createdUser == null)
+            UserSettings createdUser = UserService.CreateAndReturnUser(userSettings);
+            if (createdUser != null)
             {
-                return View("Error");
+                return View("SuccessfulCreation", createdUser);
             }
-            
-            return View("SuccessfulCreation", createdUser);
+            return View("Error");
         }
     }
 }

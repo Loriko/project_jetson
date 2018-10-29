@@ -374,6 +374,33 @@ namespace BackEndServer.Services
 
             return -1;
         }
+        
+        public int GetAPIKeyIdFromKey(string apiKey)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseAPIKey.API_KEY_ID_LABEL} FROM {DatabaseAPIKey.TABLE_NAME} "
+                               + $"WHERE {DatabaseAPIKey.API_KEY_LABEL} = '{apiKey}' LIMIT 1;";
+
+                Console.WriteLine("\n");
+                Console.WriteLine(query);
+                Console.WriteLine("\n");
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]);
+                    }
+                }
+            }
+
+            return -1;
+        }
 
         public DatabaseCamera GetCameraById(int cameraId)
         {
@@ -615,9 +642,9 @@ namespace BackEndServer.Services
                     {
                         api_key = new DatabaseAPIKey()
                         {
-                            API_KeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
-                            API_Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
-                            API_KeySalt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
+                            APIKeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
+                            Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
+                            Salt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
                             IsActive = Convert.ToInt16(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL])
                         };
                     }
@@ -644,9 +671,9 @@ namespace BackEndServer.Services
                     {
                         api_keys_list.Add(new DatabaseAPIKey()
                         {
-                            API_KeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
-                            API_Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
-                            API_KeySalt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
+                            APIKeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
+                            Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
+                            Salt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
                             IsActive = Convert.ToInt16(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL])
                         });
                     }
@@ -1392,7 +1419,6 @@ namespace BackEndServer.Services
                             UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
                             Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
-                            ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
                             LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
@@ -1457,7 +1483,6 @@ namespace BackEndServer.Services
                             UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
                             Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
-                            ApiKey = Convert.ToString(reader[DatabaseUser.API_KEY_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
                             LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
@@ -1504,12 +1529,11 @@ namespace BackEndServer.Services
                                $"{DatabaseUser.FIRST_NAME_LABEL}," +
                                $"{DatabaseUser.LAST_NAME_LABEL}," +
                                $"{DatabaseUser.EMAIL_ADDRESS_LABEL}," +
-                               $"{DatabaseUser.PASSWORD_LABEL}," +
-                               $"{DatabaseUser.API_KEY_LABEL}" +
+                               $"{DatabaseUser.PASSWORD_LABEL}" +
                                $") VALUES "+
                                $"('{databaseUser.Username}', {formatNullableString(databaseUser.FirstName)}, " +
                                $"{formatNullableString(databaseUser.LastName)}, {formatNullableString(databaseUser.EmailAddress)}, " +
-                               $"'{databaseUser.Password}', NULL);";
+                               $"'{databaseUser.Password}');";
 
                 conn.Open();     
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1726,6 +1750,29 @@ namespace BackEndServer.Services
                 }
             }
             return cameraList;
+        }
+
+        public bool PersistNewAPIKey(DatabaseAPIKey apiKey)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"INSERT INTO {DatabaseAPIKey.TABLE_NAME}(" +
+                               $"{DatabaseAPIKey.API_KEY_LABEL}, {DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}, " +
+                               $"{DatabaseAPIKey.API_KEY_SALT_LABEL}, {DatabaseAPIKey.USER_ID_LABEL}" +
+                               ") VALUES " +
+                               $"('{apiKey.Key}',{apiKey.IsActive}," +
+                               $"'{apiKey.Salt}',{apiKey.UserId});";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public string GetCameraKeyFromId(int cameraId)

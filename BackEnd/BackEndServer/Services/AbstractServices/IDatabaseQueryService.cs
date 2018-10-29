@@ -29,6 +29,7 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseCamera> GetAllCameras();
         List<string> GetExistingCameraResolutions();
         int GetCameraIdFromKey(string cameraKey);
+        int GetAPIKeyIdFromKey(string apiKey);
         string GetCameraKeyFromId(int cameraId);
         // For PerSecondStat:
         DatabasePerSecondStat GetLatestPerSecondStatForCamera(int cameraId);
@@ -71,5 +72,6 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseCamera> GetAllCamerasInRoom(int roomId);
         List<DatabaseUser> GetAllUsers();
         bool CreateUserCameraAssociation(int userId, int cameraId);
+        bool PersistNewAPIKey(DatabaseAPIKey apiKey);
     }
 }
