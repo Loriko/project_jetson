@@ -12,7 +12,10 @@
     <div class="col s12 m8 center-align main-statistics valign-wrapper">
         @await Component.InvokeAsync("GraphCard", new { cameraId = Model.CameraInformation.CameraId })
     </div>
-    <div class="col s12 m8 center-align main-statistics valign-wrapper">
+    <div class="col s12 m8 center-align valign-wrapper">
+        @await Component.InvokeAsync("StatFramesCard", new { cameraId = Model.CameraInformation.CameraId })
+    </div>
+    <div class="col s12 m4 center-align main-statistics valign-wrapper">
         @await Component.InvokeAsync("SharedRoomCard", new { roomId = Model.CameraDetails.ExistingRoomId })
     </div>
 </div>

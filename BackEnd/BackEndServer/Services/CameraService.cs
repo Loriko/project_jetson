@@ -377,7 +377,22 @@ namespace BackEndServer.Services
                 Room = roomInfo
             };
         }
-        
+
+        public JpgStatFrameList GetStatFrameList(int cameraId)
+        {
+            List<DatabasePerSecondStat> statsForCamera = _dbQueryService.GetPerSecondStatsForCamera(cameraId);
+            JpgStatFrameList frmList = new JpgStatFrameList();
+            frmList.JpgFramePathList = new List<string>();
+            foreach(DatabasePerSecondStat stat in statsForCamera){
+                if (!stat.FrameJpgPath.IsNullOrEmpty())
+                {
+                    frmList.JpgFramePathList.Add(stat.FrameJpgPath);
+                }
+            }
+
+            return frmList;
+        }
+
         public List<DatabaseUser> GetAllUsers()
         {
             List<DatabaseUser> dbUserList = _dbQueryService.GetAllUsers();

@@ -117,8 +117,26 @@ namespace BackEndServer.Services
             // Remove any possible duplicates.
             List<PerSecondStat> distinctStats = temp.Distinct().ToList();
 
+            foreach (PerSecondStat stat in distinctStats)
+            {
+                SaveStatJpgIfNecessary(stat);
+            }
+
             return _dbQueryService.PersistNewPerSecondStats(distinctStats);
         }
+
+        private static void SaveStatJpgIfNecessary(PerSecondStat stat)
+        {
+            string modifiedTimestamp = stat.DateTime.Replace(" ", "").Replace(":", "").Replace("-", "");
+            string filePath = DatabasePerSecondStat.FRM_JPG_FOLDER_PATH + "stat_frm" + modifiedTimestamp + ".jpg";
+            bool success = ImageDecodingTools.SaveBase64StringToFile(stat.FrameAsJpg,
+                filePath);
+            if (success)
+            {
+                stat.FrameAsJpgPath = filePath;
+            }
+        }
+
 
         // Before processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval, this method is used to validate the received TimeInterval.
         public bool CheckTimeIntervalValidity(TimeInterval timeInterval)

@@ -66,5 +66,6 @@ class RandomBasedCameraEmulatorTests(unittest.TestCase):
         for camera in cameras:
             self.assertLessEqual(camera.get_error_rate(), ACCEPTED_ERROR_RATE_THRESHOLD)
 
+
 if __name__ == '__main__':
     unittest.main(testRunner=HTMLTestRunner(output=""))

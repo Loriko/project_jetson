@@ -49,7 +49,7 @@ namespace BackEndServer.Services
             // Define the bulk insert query without any values to insert.
             string bulkInsertCommand = $"INSERT INTO {DatabasePerSecondStat.TABLE_NAME} "
                 + $"({DatabasePerSecondStat.CAMERA_ID_LABEL},{DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL}, "
-                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL}) VALUES ";
+                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL},{DatabasePerSecondStat.FRM_JPG_PATH_LABEL}) VALUES ";
 
             // Append the values one by one to the bulk insert query.
             PerSecondStat lastStat = distinctStats.Last();
@@ -66,7 +66,7 @@ namespace BackEndServer.Services
                     hasImage = "1";
                 }
 
-                bulkInsertCommand += $"({cameraId},{numDetectedObjects},'{stat.DateTime}',{hasImage})";
+                bulkInsertCommand += $"({cameraId},{numDetectedObjects},'{stat.DateTime}',{hasImage},{formatNullableString(stat.FrameAsJpgPath)})";
 
                 if (stat != lastStat)
                 {
@@ -448,7 +448,8 @@ namespace BackEndServer.Services
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
                             NumDetectedObjects =  Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
-                            HasSavedImage = Convert.ToBoolean(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])
+                            HasSavedImage = Convert.ToBoolean(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL]),
+                            FrameJpgPath = Convert.ToString(reader[DatabasePerSecondStat.FRM_JPG_PATH_LABEL])
                         });
                     }
                 }

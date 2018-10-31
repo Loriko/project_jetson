@@ -32,5 +32,6 @@ namespace BackEndServer.Services.AbstractServices
         CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null);
         CameraInformationList GetAllCamerasInRoom(int roomId);
         SharedGraphStatistics GetSharedRoomGraphStatistics(int roomId);
+        JpgStatFrameList GetStatFrameList(int cameraId);
     }
 }
