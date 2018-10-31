@@ -242,5 +242,5 @@ label[data-error], label[data-success] {
     height: 510px;
 }
 #graph_card {
-    max-height: 510px;
+    height: 510px;
 }

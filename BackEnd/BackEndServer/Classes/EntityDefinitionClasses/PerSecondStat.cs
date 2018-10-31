@@ -25,8 +25,16 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
 
         // Statistic #2: Indicates if the embedded system has stored an image locally of this second. This happens when a key statistic has occured. 
         public bool HasSavedImage { get; set; }
+        
+        public string FrameAsJpg { get; set; }
+        
+        public string FrameAsJpgPath { get; set; }
 
         #endregion
+
+        public PerSecondStat()
+        {
+        }
 
         public PerSecondStat (string dateTime, string cameraKey, int numTrackedPeople, bool hasSavedImage)
         {

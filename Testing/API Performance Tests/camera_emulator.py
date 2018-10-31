@@ -7,7 +7,7 @@ import random
 
 class CameraEmulator:
     def __init__(self, camera_key, api_key, destination_address, delay_between_stats_sec):
-        http_service.initialize_stats_sender(api_key, destination_address)
+        self.http_service = http_service.HttpService(api_key, destination_address, camera_key)
         self.camera_key = camera_key
         self.delay_between_stats_sec = delay_between_stats_sec
         self.stats_sent = 0
@@ -30,7 +30,7 @@ class CameraEmulator:
 
     def send_per_second_stat(self, per_second_stat):
         self.stats_sent = self.stats_sent + 1
-        if http_service.send_per_second_stat(per_second_stat):
+        if self.http_service.send_per_second_stat(per_second_stat):
             self.stats_acked = self.stats_acked + 1
 
 
