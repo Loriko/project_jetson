@@ -507,7 +507,7 @@ namespace BackEndServer.Services
             int? idToReturn = null;
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT id FROM ${DatabaseUser.TABLE_NAME} WHERE username = '{username}';";
+                string query = $"SELECT id FROM {DatabaseUser.TABLE_NAME} WHERE username = '{username}';";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
