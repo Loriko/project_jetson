@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Project Jetson - Manage API Keys";
+}
+
+<!--Title of page -->
+<h1 class="page-title center-align" id="headerManageAPIKeys">Manage API Keys</h1>
+
+<!-- Add New API Key Button-->
+<div class="row">
+    <div class="right-align" style="margin-right: 11px;">
+        <a id="create_api_key_btn"
+           class="btn-floating btn-large green modal-trigger" data-toggle="modal" data-target="#createWarning">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+</div>
+
+<!-- Create New API Key Warning Modal -->
+<div class="modal fade" id="createWarning" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createModalLabel">Create API Key</h5>
+            </div>
+            <div class="modal-body">
+                A new randomly generated, unique API key will be created and saved in the system. Are you sure you want to create a new API key?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <a asp-controller="APIKey" asp-action="CreateAPIKey" class="btn btn-primary">Create New Key</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="center-align">API Keys are non-recoverable codes. Therefore, once created, they can no longer be viewed. 
+    If you do not have an API Key, please create a new one using the add button above.</h4>

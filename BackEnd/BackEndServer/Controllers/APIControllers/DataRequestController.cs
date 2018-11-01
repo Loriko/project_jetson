@@ -31,7 +31,7 @@ namespace WebAPI.Controllers
                                                                HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
                                                                          AbstractAPIKeyService);
         #endregion
-
+        /*
         [HttpPost]
         public IActionResult GetPerSecondStatsFromTimeInterval([FromBody] PerSecondStatsFromTimeIntervalRequest unverifiedTimeIntervalRequest)
         {
@@ -107,6 +107,7 @@ namespace WebAPI.Controllers
 
             return (Ok(new JsonResult(camerasForRequestedLocation)));
         }
+        */
 
         /// <summary>
         /// 
