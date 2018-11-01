@@ -234,13 +234,22 @@ label[data-error], label[data-success] {
     color: darkslateblue;
     font-size: 1.3em;
 }
-
+#cameras_in_room_container {
+    height: 200px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    overflow: scroll !important;
+}
 #cameras_in_room_container a {
     color: #b3e59f;
 }
-#camera_card {
+#camera_card, #graph_card {
     height: 510px;
 }
-#graph_card {
-    height: 510px;
+#stat_frames_card, #shared_room_card{
+    height: 370px;
+}
+#frame_carousel{
+    top: -85px;
 }

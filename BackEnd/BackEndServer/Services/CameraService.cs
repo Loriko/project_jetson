@@ -382,11 +382,11 @@ namespace BackEndServer.Services
         {
             List<DatabasePerSecondStat> statsForCamera = _dbQueryService.GetPerSecondStatsForCamera(cameraId);
             JpgStatFrameList frmList = new JpgStatFrameList();
-            frmList.JpgFramePathList = new List<string>();
+            frmList.JpgFramePathList = new List<FrameInformation>();
             foreach(DatabasePerSecondStat stat in statsForCamera){
                 if (!stat.FrameJpgPath.IsNullOrEmpty())
                 {
-                    frmList.JpgFramePathList.Add(stat.FrameJpgPath);
+                    frmList.JpgFramePathList.Add(new FrameInformation(stat));
                 }
             }
 

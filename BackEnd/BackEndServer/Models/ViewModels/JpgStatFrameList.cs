@@ -4,6 +4,6 @@ namespace BackEndServer.Models.ViewModels
 {
     public class JpgStatFrameList
     {
-        public List<string> JpgFramePathList { get; set; }
+        public List<FrameInformation> JpgFramePathList { get; set; }
     }
 }
