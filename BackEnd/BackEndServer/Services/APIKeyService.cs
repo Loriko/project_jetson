@@ -24,7 +24,7 @@ namespace BackEndServer.Services
             this._dbQueryService = null;
         }
 
-        #region Methods For APIKeyService
+        #region Methods Offered By APIKeyService
 
         // Returns a string representing a randomly generated, unhashed and unsalted API Key.
         public string GenerateRandomAPIKey()
@@ -53,7 +53,7 @@ namespace BackEndServer.Services
         #region Methods For Controllers
 
         // Creates a new API Key in the database and returns the plain text version for display to the user.
-        public string RegisterNewAPIKey()
+        public string RegisterNewAPIKey(int? userId)
         {
             string new_Salt = GenerateRandomSalt();
 
@@ -78,7 +78,7 @@ namespace BackEndServer.Services
 
             string salted_hashed_api_key = HashAndSaltAPIKey(new_APIKey, new_Salt);
 
-            APIKey api_key_to_persist = new APIKey(salted_hashed_api_key, new_Salt);
+            APIKey api_key_to_persist = new APIKey(salted_hashed_api_key, new_Salt, userId);
 
             // Attempt to persist the newly created API Key and Salt to the Database. The stored API key is salted and hashed for security reasons.
             bool persistSuccess = _dbQueryService.PersistAPIKey(api_key_to_persist);
@@ -93,7 +93,7 @@ namespace BackEndServer.Services
             // Return the newly generated API Key in plain text format (shown on front-end) for the system admin to use.
             return new_APIKey;
         }
-
+        
         // Attempts to first verify that the key exists in the database and then sets the API key to inactive. 
         public bool UnregisterAPIKey(string unsalted_unhashed_api_key)
         {

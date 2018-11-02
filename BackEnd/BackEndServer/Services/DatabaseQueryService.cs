@@ -657,7 +657,7 @@ namespace BackEndServer.Services
         // Performs a SELECT to query all API Keys in the database.
         public List<DatabaseAPIKey> GetAllAPIKeys()
         {
-            List<DatabaseAPIKey> api_keys_list = null;
+            List<DatabaseAPIKey> api_keys_list = new List<DatabaseAPIKey>();
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -675,7 +675,8 @@ namespace BackEndServer.Services
                             APIKeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
                             Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
                             Salt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
-                            IsActive = Convert.ToInt16(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL])
+                            IsActive = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseAPIKey.USER_ID_LABEL])
                         });
                     }
                 }
@@ -686,26 +687,30 @@ namespace BackEndServer.Services
         // Performs an INSERT to persist a newly created API Key (salted and hashed key and its Salt value).
         public bool PersistAPIKey(APIKey api_key)
         {
+            int isKeyActive = (int)DatabaseAPIKey.API_Key_Status.INACTIVE;
+
+            if (api_key.IsActive)
+            {
+                isKeyActive = (int)DatabaseAPIKey.API_Key_Status.ACTIVE;
+            }
+
             // Define the insert command with the values to insert.
             string insertCommand = $"INSERT INTO {DatabaseAPIKey.TABLE_NAME} "
-                + $"({DatabaseAPIKey.API_KEY_LABEL},{DatabaseAPIKey.API_KEY_SALT_LABEL},{DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}) VALUES "
-                + $"({api_key.API_Key},{api_key.API_KeySalt},{api_key.IsActive})";
+                + $"({DatabaseAPIKey.API_KEY_LABEL},{DatabaseAPIKey.API_KEY_SALT_LABEL},"
+                + $"{DatabaseAPIKey.USER_ID_LABEL},{DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}) VALUES "
+                + $"('{api_key.API_Key}','{api_key.API_KeySalt}',"
+                + $"{formatNullableInt(api_key.UserId)},{isKeyActive})";
 
             // Open connection and execute the insert command.
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
+                MySqlCommand cmd = new MySqlCommand(insertCommand, conn);
 
-                try
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
                 {
-                    MySqlCommand cmd = new MySqlCommand(insertCommand, conn);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // Write to Log
-                    return false; // This is probably not going to be executed...
+                    return true;
                 }
             }
             return true;

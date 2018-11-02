@@ -1,0 +1,18 @@
+﻿@model BackEndServer.Models.ViewModels.NewAPIKey
+
+@{
+    ViewBag.Title = "Project Jetson - New API Key Generated";
+}
+
+<h1 class="page-title center-align" id="newAPIKey">A New API Key Was Generated</h1>
+
+<h2 class="center-align" style="word-wrap:break-word;">@Model.PlainTextAPIKey</h2>
+
+<h4 class="center-align">This is a non-recoverable code. Please copy it somewhere safe or use it immediately.</h4>
+
+<!-- Return Button -->
+<div class="row">
+    <div class="s12 center-align">
+        <a class="btn waves-effect waves-light" asp-controller="APIKey" asp-action="ManageAPIKeys">Return to API Key Management</a>
+    </div>
+</div>
