@@ -25,11 +25,15 @@
         </div>
         <div class="row">
             @{ if (Model.Username != null)
-                {<p class="error-message">Invalid username/password</p>} }
+            {<p class="error-message">Invalid username/password</p>} }
         </div>
         <button id="submitLoginInfo" class="btn waves-effect waves-light" type="submit" name="action">
             Submit
             <i class="material-icons right">send</i>
         </button>
+                <a class="right-align teal-text" name="action" href="/User/ForgotPassword">
+                    Forgot Password
+                </a>
+
     </form>
 </div>

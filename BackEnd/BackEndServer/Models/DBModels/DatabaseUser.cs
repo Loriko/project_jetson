@@ -13,6 +13,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string EMAIL_ADDRESS_LABEL = "email_address";
         public static readonly string FIRST_NAME_LABEL = "first_name";
         public static readonly string LAST_NAME_LABEL = "last_name";
+        public static readonly string PASSWORD_RESET_TOKEN_LABEL = "password_reset_token";
 
         public DatabaseUser()
         {
