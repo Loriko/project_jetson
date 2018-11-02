@@ -590,7 +590,7 @@ namespace BackEndServer.Services
             List<string> resolutionsInDB = new List<string>();
             using (MySqlConnection conn = GetConnection())
             {
-                string query = "SELECT resolution FROM Camera WHERE resolution IS NOT NULL GROUP BY resolution ORDER BY COUNT(*) DESC;";
+                string query = "SELECT resolution FROM camera WHERE resolution IS NOT NULL GROUP BY resolution ORDER BY COUNT(*) DESC;";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
