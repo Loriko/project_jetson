@@ -79,9 +79,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return Json(UserService.SendResetPasswordLink(passwordResetLink.Email));
             }
-
-
         }
+        
         [HttpPost]
         public JsonResult ChangePassword(UserPassword userPassword)
         {
