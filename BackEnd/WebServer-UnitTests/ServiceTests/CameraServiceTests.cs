@@ -8,13 +8,13 @@ using BackEndServer.Services;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
 
-namespace BackEndServer.Tests
+namespace WebServer_UnitTests.ServiceTests
 {
     [TestFixture]
-    public class TestCameraService
+    public class CameraServiceTests
     {
         [Test]
-        public void ShouldRetrieveItem()
+        public void getCameraDetailsByCameraIDTest()
         {
             DatabaseCamera testCamera = new DatabaseCamera
             {
@@ -52,9 +52,26 @@ namespace BackEndServer.Tests
             mockDBService.Setup(x => x.GetPerSecondStatsForCamera(1)).Returns(listOfStats);
             mockDBService.Setup(x => x.GetLocationById(1)).Returns(testLocation);
 
-            CameraService cameraService = new CameraService(mockDBService.Object,new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object));
+            CameraService cameraService = new CameraService(mockDBService.Object, new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object));
             Assert.That(cameraService.getCameraStatisticsForNowById(1).MostRecentPeopleCount.Value, Is.EqualTo(23));
 
         }
+
+        [Test]
+        public void createNewCameraTest()
+        {
+            Assert.Fail();
+        }
+        [Test]
+        public void editCameraTest()
+        {
+            Assert.Fail();
+        }
+        [Test]
+        public void deleteCameraTest()
+        {
+            Assert.Fail();
+        }
+
     }
 }

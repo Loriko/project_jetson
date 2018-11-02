@@ -61,8 +61,8 @@ namespace BackEndServer.Services
                 DatabaseGraphStat value = _databaseQueryService.getGraphStatByTimeInterval(cameraId, start, end);
                 int epochUnixTime = (int)(value.End - new DateTime(1970, 1, 1)).TotalSeconds;
                 maxStats.Add(new string[2] { epochUnixTime.ToString(), value.MaximumDetectedObjects.ToString() });
-                start = start.AddSeconds(5);
-                end = end.AddSeconds(5);
+                start = start.AddSeconds(interval);
+                end = end.AddSeconds(interval);
             }
             // maxStats.Add(new string[2] { "dateTime", "People" });
             maxStats.Reverse();
