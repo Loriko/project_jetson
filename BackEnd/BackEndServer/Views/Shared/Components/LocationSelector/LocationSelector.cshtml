@@ -1,0 +1,13 @@
+﻿@model BackEndServer.Models.ViewModels.LocationSelectorInfo
+
+<select id="@Model.SelectorId" name="@Model.SelectorName" @(Model.Required ? "required" : "")>
+    <option value="" disabled selected>Please select the location where the camera is installed</option>
+    @{
+        foreach (var locationInformation in Model.Locations.LocationList)
+        {
+            <option selected="@(locationInformation.LocationId == Model.SelectedLocationId.GetValueOrDefault(0))"
+                    value="@locationInformation.LocationId">@locationInformation.LocationName</option>
+        }
+    }
+</select>
+<label for="location_id">Camera Location@(Model.Required ? " *": "")</label>

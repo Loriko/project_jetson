@@ -18,13 +18,19 @@ namespace BackEndServer.Services.AbstractServices
         // UPDATE methods:
         bool UpdatePerSecondStatsWithPerHourStatId(DateTime hour, int perHourStatId);
 
+        // DELETE methods:
+        bool DeleteCameraFromCameraKey(string cameraKey);
+
         // QUERY methods:
 
         // For Camera:
         DatabaseCamera GetCameraById(int cameraId);
         List<DatabaseCamera> GetCamerasForLocation(int locationId);
+        List<DatabaseCamera> GetAllCameras();
         List<string> GetExistingCameraResolutions();
         int GetCameraIdFromKey(string cameraKey);
+        int GetAPIKeyIdFromKey(string apiKey);
+        string GetCameraKeyFromId(int cameraId);
         // For PerSecondStat:
         DatabasePerSecondStat GetLatestPerSecondStatForCamera(int cameraId);
         List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId);
@@ -51,11 +57,21 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseLocation GetLocationById(int locationId);
         bool PersistNewNotification(DatabaseNotification dbNotification);
         List<DatabaseCamera> GetCamerasOwnedByUser(int userId);
-        bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera);
+        bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted);
         List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
         DatabaseUser GetUserById(int userId);
         bool PersistExistingUser(DatabaseUser databaseUser);
-        int? GetUserIdByUsername(string username);
+        bool PersistNewUser(DatabaseUser databaseUser);
+        DatabaseUser GetUserByUsername(string username);
         DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end);
+        List<DatabaseLocation> GetLocations();
+        List<DatabaseRoom> GetRoomsAtLocation(int locationId);
+        bool PersistNewRoom(DatabaseRoom databaseRoom);
+        int GetRoomIdByLocationIdAndRoomName(int locationId, string roomName);
+        DatabaseRoom GetRoomById(int cameraRoomId);
+        List<DatabaseCamera> GetAllCamerasInRoom(int roomId);
+        List<DatabaseUser> GetAllUsers();
+        bool CreateUserCameraAssociation(int userId, int cameraId);
+        bool PersistNewAPIKey(DatabaseAPIKey apiKey);
     }
 }

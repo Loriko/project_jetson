@@ -1,51 +1,67 @@
+@using BackEndServer.Models.ViewModels
 @using Castle.Core.Internal
-@model BackEndServer.Models.ViewModels.CameraRegistrationDetails
+@model CameraRegistrationDetails
+@{
+    ViewBag.Title = "Project Jetson - Camera Registration";
+}
 
 <h1 class="page-title center-align">Please enter your camera's details</h1>
 
-@Html.Partial("../Location/LocationCreationModal")
+@Html.Partial("~/Views/Location/LocationCreationModal.cshtml")
 
 <div class="row">
     <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
-        <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId"/>
+        <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId" />
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" value="@Model.CameraDetails.CameraName" type="text" class="validate" required>
-                <label for="camera_name">Camera Name</label>
+                <label for="camera_name">Camera Name *</label>
             </div>
             <div class="input-field col s6">
-                <input id="monitored_area" name="MonitoredArea" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
-                <label for="monitored_area">Monitored Area</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                @if(Model.CameraDetails.CameraKey.IsNullOrEmpty()) {
+                @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
+                {
                     <input id="camera_key" name="CameraKey" type="text" class="validate" required>
-                    <label for="camera_key">Camera Key</label>
                 }
                 else
                 {
                     <input id="camera_key" name="CameraKey" type="text" class="validate" readonly required value="@Model.CameraDetails.CameraKey">
                 }
-                <label for="camera_key">Camera Key</label>
+                <label for="camera_key">Camera Key *</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s8">
+                <div id="new_room_container">
+                    <input id="new_room_name" name="NewRoomName" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
+                    <label for="new_room_name">Monitored Room</label>
+                </div>
+                <div id="existing_room_container" class="hide">
+                    @{ Html.RenderPartial("~/Views/Location/RoomSelectorWrapper.cshtml", new RoomSelectorInfo
+                       {
+                           SelectorId = "existing_room_id", SelectorName = "ExistingRoomId",
+                           SelectedRoomId = Model.CameraDetails.ExistingRoomId, LocationId = Model.CameraDetails.LocationId,
+                           Required = true
+                       });
+                    }
+                </div>
+            </div>
+            <div class="input-field col s4 center-align">
+                <input id="existing_room_checkbox" type="checkbox" @(Model.CameraDetails.ExistingRoomId > 0 ? "checked" : "") />
+                <label class="checkbox-label" for="existing_room_checkbox">
+                    <span>Use an existing room from this location?</span>
+                </label>
             </div>
         </div>
 
         <div class="row">
-            <div class="input-field col s9">
-                <select id="location_id" name="LocationId">
-                    <option value="" disabled selected>Please select the location where the camera is installed</option>
-                    @{
-                        foreach (var locationInformation in Model.locations.LocationList)
-                        {
-                            <option selected="@(locationInformation.LocationId == Model.CameraDetails.LocationId)"
-                                    value="@locationInformation.LocationId">@locationInformation.LocationName
-                            </option>
-                        }
-                    }
-                </select>
-                <label for="location_id">Camera Location</label>
+            <div class="input-field col s9" id="location-selector-container">
+                @{ Html.RenderPartial("~/Views/Location/LocationSelectorWrapper.cshtml", new LocationSelectorInfo
+                   {
+                       SelectorId = "location_id", SelectorName = "LocationId",
+                       SelectedLocationId = Model.CameraDetails.LocationId,
+                       Required = true
+                   });
+                }
             </div>
             <div class="input-field col s3 right-align">
                 <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
@@ -72,7 +88,7 @@
                         {
                             <option selected="@(resolution == Model.CameraDetails.Resolution)"
                                     value="@resolution">@resolution</option>
-                        }
+                            }
                     }
                 </select>
                 <label for="camera_resolution">Camera Resolution</label>
@@ -94,6 +110,8 @@
         <!-- Optional: User can upload an image representing the area monitored by the camera. -->
         <!-- Modified from: https://bootsnipp.com/user/snippets/vl0Pd -->
 
+        <input type="hidden" name="ImageDeleted" value="false" />
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
@@ -103,8 +121,8 @@
                             <input id="image_input" type="file" name="UploadedImage" accept="image/*" />
                         </div>
                         <div class="file-path-wrapper">
-                            <input id="file_name" class="file-path validate" value="@Model.CameraDetails.SavedImagePath" 
-                                   type="text" placeholder="Upload an Image (Optional)">
+                            <input id="file_name" class="file-path validate" value="@Model.CameraDetails.SavedImagePath"
+                                   type="text" placeholder="Upload an Image">
                         </div>
                     </div>
                     <img id='image_preview' class="center-block" />
@@ -145,7 +163,73 @@
             $("#camera_resolution_div .select-dropdown").prop('disabled', false);
         }
     });
+    
+    $('#existing_room_checkbox').change(function () {
+        if ($("#existing_room_checkbox").is(':checked')) {
+            $("#existing_room_container").removeClass("hide");
+            $("#new_room_container").addClass("hide");
+            $("#existing_room_id").prop("required", true);
+            $("#new_room_name").prop("required", false);
+            $("#new_room_name").val("");
+            $("#existing_room_container .select-dropdown").prop('disabled', false);
+        } else {
+            $("#existing_room_container").addClass("hide");
+            $("#new_room_container").removeClass("hide");
+            $("#existing_room_id").prop("required", false);
+            $("#new_room_name").prop("required", true);
+            $("#existing_room_id").val("");
+            $("#existing_room_container .select-dropdown").prop('disabled', true);
+        }
+    }).change();
 
-    // Client side verification for image file input.
+    $("#location_id").change(function() {
+        var locationId = $(this).val();
+        var url = "../location/LoadRoomSelector?locationId=" + locationId + "&selectorId=existing_room_id&selectorName=ExistingRoomId&required=true&selectedRoomId=" + "@Model.CameraDetails.ExistingRoomId";
+        $('#existing_room_container').load(url, roomSelectorLoaded);
+    });
+    
+    // TODO: Add client side verification for image file input.
+
+    function roomSelectorLoaded() {
+        $('#existing_room_id').material_select();
+    }
+    
+    function locationSelectorLoaded() {
+        $("#location_id option:last").attr("selected", "selected");
+        $('#location_id').material_select();
+    }
+
+    function handleLocationCreationFormSubmission(response) {
+        if (response === true) {
+            Materialize.toast("Location successfully created!", 4000);
+            $('#location-creation-modal').modal('close');
+            $('#location-selector-container').load("@Html.Raw(Url.Action("LoadLocationSelector", "Location",
+                                                        new {selectorId = "location_id", selectorName = "LocationId", required = true, selectedLocationId = Model.CameraDetails.LocationId}))", locationSelectorLoaded);
+            
+        } else {
+            Materialize.toast("Couldn't create location.", 4000);
+        }
+    }
+
+    $("#location-creation-form").submit(function (e) {
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        if ($("#file_name").val() === false) {
+            $("input[name='ImageDeleted']").val("true");
+        }
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                handleLocationCreationFormSubmission(data);
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
 
 </script>

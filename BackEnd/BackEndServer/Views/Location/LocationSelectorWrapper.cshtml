@@ -1,0 +1,9 @@
+﻿@using BackEndServer.Models.ViewModels
+@model LocationSelectorInfo
+
+@await Component.InvokeAsync("LocationSelector",
+ new LocationSelectorInfo
+ {
+     SelectorId = Model.SelectorId, SelectorName = Model.SelectorName,
+     Required = Model.Required, SelectedLocationId = Model.SelectedLocationId
+ })

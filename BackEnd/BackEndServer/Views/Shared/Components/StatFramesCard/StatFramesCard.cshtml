@@ -1,0 +1,23 @@
+﻿@using BackEndServer.Models.ViewModels
+@model JpgStatFrameList
+<div class="card blue-grey darken-1 full-width" id="stat_frames_card">
+    <div class="card-content white-text">
+        <span class="card-title">Key Frames</span>
+        <div id="frame_carousel" class="carousel">
+            @foreach (var statInfo in Model.JpgFramePathList)
+            {
+                <li class="carousel-item">
+                    <img src="../@statInfo.FrmJpgPath.Replace("wwwroot/", "")">
+                    <p>People Identified: @statInfo.PeopleCount</p>
+                    <p>Timestamp:<br>@statInfo.Timestamp</p>
+                </li>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $('.carousel').carousel({});
+    });
+</script>

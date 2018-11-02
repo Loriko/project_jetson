@@ -6,6 +6,7 @@ namespace BackEndServer.Models.ViewModels
     public class CameraInformation
     {
         public int CameraId { get; set; }
+        public int RoomId { get; set; }
         public string CameraRoomName { get; set; }
         public string CameraName { get; set; }
         public string ImagePath { get; set; }
@@ -13,23 +14,21 @@ namespace BackEndServer.Models.ViewModels
         public string TempImagePath { get; set; }
 
 
-        public CameraInformation(int cameraId, string cameraRoomName, string imagePath){
-            CameraId = cameraId;
-            CameraRoomName = cameraRoomName;
-            CameraName = cameraRoomName + " Camera";
-            ImagePath = imagePath;
-            TempImagePath = null;
-        }
-
-        public CameraInformation(int cameraId, string cameraRoomName, string cameraName, string imagePath)
+        public CameraInformation(int cameraId, string cameraName, string imagePath)
         {
             CameraId = cameraId;
-            CameraRoomName = cameraRoomName;
             CameraName = cameraName;
             ImagePath = imagePath;
             TempImagePath = null;
         }
 
-        public CameraInformation(DatabaseCamera dbCamera) : this(dbCamera.CameraId, dbCamera.MonitoredArea, dbCamera.CameraName, dbCamera.ImagePath) {}
+        public CameraInformation(DatabaseCamera dbCamera)
+        {
+            CameraId = dbCamera.CameraId;
+            CameraName = dbCamera.CameraName;
+            ImagePath = dbCamera.ImagePath;
+            TempImagePath = null;
+            RoomId = dbCamera.RoomId.GetValueOrDefault(0);
+        }
     }
 }

@@ -1,5 +1,8 @@
 ﻿@model BackEndServer.Models.ViewModels.CameraInformationList
-<h1 class="page-title center-align">Edit or Add New Cameras</h1>
+@{
+    ViewBag.Title = "Project Jetson - Manage Cameras";
+}
+<h1 class="page-title center-align" id="headerManageCamera">Edit or Add New Cameras</h1>
 <div class="row">
     <div class="right-align" style="margin-right: 11px;">
         <a asp-controller="Camera" asp-action="BeginCameraRegistration" id="create_alert_btn" class="btn-floating btn-large green modal-trigger">
@@ -7,13 +10,14 @@
         </a>
     </div>
 </div>
-<div class="collection">
+<div id="userCameras" class="collection">
     @foreach (var camera in Model.CameraList)
     {
         <div class="collection-item">
-            <span class="title">@camera.CameraRoomName</span>
+            <span class="title" id="@camera.CameraId">@camera.CameraName</span>
             <span class="secondary-content">
                 <a asp-controller="Camera" asp-action="ModifyCameraRegistration" asp-route-cameraId="@camera.CameraId"><i class="material-icons">edit</i></a>
+                <a asp-controller="Camera" asp-action="ViewAllUsersExceptCurrent" asp-route-cameraId="@camera.CameraId"><i class="material-icons">remove_red_eye</i></a>
             </span>
         </div>
     }

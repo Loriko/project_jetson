@@ -22,6 +22,23 @@ CREATE TABLE IF NOT EXISTS `jetson`.`location` (
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
+-- Table `jetson`.`room`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jetson`.`room` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`room` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `location_id` INT(5) UNSIGNED NULL DEFAULT NULL,
+  `room_name` VARCHAR(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_room_Address`
+    FOREIGN KEY (`location_id`)
+    REFERENCES `jetson`.`location` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
 -- Table `jetson`.`camera`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `jetson`.`camera` ;
@@ -31,9 +48,10 @@ CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   `camera_name` VARCHAR(45) NULL DEFAULT NULL,
   `camera_key` VARCHAR(12) NOT NULL UNIQUE,
   `location_id` INT(5) UNSIGNED NULL DEFAULT NULL,
+  `room_id` INT(5) UNSIGNED NULL DEFAULT NULL,
   `user_id` INT(5) UNSIGNED NULL DEFAULT NULL,
   `monitored_area` VARCHAR(45) NULL DEFAULT NULL,
-  `brand` VARCHAR(45) NULL DEFAULT NULL, -- TODO: Check if NULL DEFAULT NULL makes sense or just really stupid
+  `brand` VARCHAR(45) NULL DEFAULT NULL,
   `model` VARCHAR(45) NULL DEFAULT NULL,
   `resolution` VARCHAR(45) NULL DEFAULT NULL,
   `image_path` VARCHAR(150) NULL DEFAULT NULL,
@@ -41,6 +59,11 @@ CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
   CONSTRAINT `fk_camera_Address`
     FOREIGN KEY (`location_id`)
     REFERENCES `jetson`.`location` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_camera_Room`
+    FOREIGN KEY (`room_id`)
+    REFERENCES `jetson`.`room` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 DEFAULT CHARACTER SET = utf8;
@@ -71,8 +94,9 @@ CREATE TABLE IF NOT EXISTS `jetson`.`per_second_stat` (
   `camera_id` INT(5) UNSIGNED NOT NULL,
   `num_detected_object` INT(5) UNSIGNED NOT NULL,
   `date_time` DATETIME NOT NULL,
-  `has_saved_image` TINYINT UNSIGNED NOT NULL,
+  `has_saved_image` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `per_hour_stat_id` INT(8) UNSIGNED NULL DEFAULT NULL,
+  `frm_jpg_path` VARCHAR(150) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idStat_UNIQUE` (`id` ASC),
   CONSTRAINT `fk_per_second_stat_camera`
@@ -91,7 +115,6 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  `api_key` VARCHAR(45) NULL,
   `email_address` VARCHAR(45) NULL,
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
@@ -127,10 +150,16 @@ DROP TABLE IF EXISTS `jetson`.`api_key` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`api_key` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `key` CHAR(32) NOT NULL,
+  `user_id` INT(5) UNSIGNED NOT NULL,
+  `api_key` CHAR(32) NOT NULL,
   `salt` VARCHAR(24) NOT NULL,
   `is_active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_apikey_has_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `jetson`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------

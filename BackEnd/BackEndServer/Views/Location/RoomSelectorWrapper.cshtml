@@ -1,0 +1,9 @@
+﻿@using BackEndServer.Models.ViewModels
+@model RoomSelectorInfo
+
+@await Component.InvokeAsync("RoomSelector", new RoomSelectorInfo
+    {
+        LocationId = Model.LocationId, SelectorId = Model.SelectorId, SelectorName = Model.SelectorName,
+        Required = Model.Required, SelectedRoomId = Model.SelectedRoomId
+    }
+)

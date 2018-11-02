@@ -1,7 +1,10 @@
 ﻿@using BackEndServer.Models.ViewModels
 @model NotificationDetails
+@{
+    ViewBag.Title = "Project Jetson - Notification Information";
+}
 
-@Html.Partial("../Alert/AlertDisablingModal", new AlertDisablingInformation {AlertId = Model.AlertId})
+@Html.Partial("~/Views/Alert/AlertDisablingModal.cshtml", new AlertDisablingInformation { AlertId = Model.AlertId })
 
 <h1 class="page-title center-align">Here are the details concerning the selected notification</h1>
 <div class="row">
@@ -12,22 +15,22 @@
                 @* TODO: Put the table in a partial *@
                 <table>
                     <tbody>
-                    <tr>
-                        <td class="property-name">Triggered Alert Name</td>
-                        <td>@Model.Alert.AlertName</td>
-                    </tr>
-                    <tr>
-                        <td class="property-name">Associated Camera</td>
-                        <td>@Model.Alert.Camera.CameraName</td>
-                    </tr>
-                    <tr>
-                        <td class="property-name">Associated Location</td>
-                        <td>@Model.Alert.Camera.Location.LocationName</td>
-                    </tr>
-                    <tr>
-                        <td class="property-name">Date Triggered</td>
-                        <td>@Model.TriggerDateTime</td>
-                    </tr>
+                        <tr>
+                            <td class="property-name">Triggered Alert Name</td>
+                            <td>@Model.Alert.AlertName</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">Associated Camera</td>
+                            <td>@Model.Alert.Camera.CameraName</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">Associated Location</td>
+                            <td>@Model.Alert.Camera.Location.LocationName</td>
+                        </tr>
+                        <tr>
+                            <td class="property-name">Date Triggered</td>
+                            <td>@Model.TriggerDateTime</td>
+                        </tr>
                     </tbody>
                 </table>
                 @if (Model.FailedEmail)

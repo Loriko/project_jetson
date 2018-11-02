@@ -1,4 +1,7 @@
 @model BackEndServer.Models.ViewModels.UserSettings
+@{
+    ViewBag.Title = "Project Jetson - User Settings";
+}
 
 <h1 class="page-title center-align">Please modify your personal settings as you will</h1>
 
@@ -46,7 +49,7 @@
         }
     }
 
-    $("#user_settings_modification_form").submit(function(e) {
+    $("#user_settings_modification_form").submit(function (e) {
 
         var form = $(this);
         var url = form.attr('action');
@@ -55,7 +58,7 @@
             type: "POST",
             url: url,
             data: form.serialize(), // serializes the form's elements.
-            success: function(data) {
+            success: function (data) {
                 handleUserModificationFormSubmission(data);
             }
         });

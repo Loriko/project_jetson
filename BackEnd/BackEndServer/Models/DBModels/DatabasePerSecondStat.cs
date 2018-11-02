@@ -4,6 +4,8 @@ namespace BackEndServer.Models.DBModels
 {
     public class DatabasePerSecondStat
     {
+        public static readonly string FRM_JPG_FOLDER_PATH = "wwwroot/frmjpg/";
+        
         // Table Name
         public static readonly string TABLE_NAME = "per_second_stat";
         // Attributes of PerSecondStat table.
@@ -13,6 +15,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string DATE_TIME_LABEL = "date_time";
         public static readonly string HAS_SAVED_IMAGE_LABEL = "has_saved_image";
         public static readonly string PER_HOUR_STAT_ID_LABEL = "per_hour_stat_id";
+        public static readonly string FRM_JPG_PATH_LABEL = "frm_jpg_path";
         
         // Database Model Class Attributes
         public int PerSecondStatId { get; set; }
@@ -21,5 +24,6 @@ namespace BackEndServer.Models.DBModels
         public int NumDetectedObjects { get; set; }
         public int CameraId { get; set; }
         public int PerHourStatId { get; set; }
+        public string FrameJpgPath { get; set; }
     }
 }

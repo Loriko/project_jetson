@@ -6,15 +6,21 @@ using BackEndServer.Services.PlaceholderServices;
 using BackEndServer.Services.HelperServices;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
+using Castle.Core.Internal;
+using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace BackEndServer.Services
 {
     public class CameraService : AbstractCameraService
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
         private readonly AbstractLocationService _locationService;
+        private AbstractCameraService _abstractCameraServiceImplementation;
 
         public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService, AbstractLocationService locationService)
         {
@@ -36,6 +42,47 @@ namespace BackEndServer.Services
             CameraInformationList listOfCameraInfo = new CameraInformationList(dbCameraList);
 
             return InitialiseImagesBeforeDisplaying(listOfCameraInfo);
+        }
+
+        public CameraKeyList GetCameraKeyListForAdmin()
+        {
+            List<DatabaseCamera> dbCameraList = _dbQueryService.GetAllCameras();
+            return new CameraKeyList(dbCameraList);
+        }
+
+        public NewCameraKey GenerateUniqueCameraKey()
+        {
+            int count = 0;
+            while (count < 5)
+            {
+                count++;
+                // Camera Key must be exactly 12 characters.
+                string randomCameraKey = StringGenerator.GenerateRandomString(12, 12);
+
+                // Ensure Key does not exist in database (return value is -1).
+                if (_dbQueryService.GetCameraIdFromKey(randomCameraKey) == -1)
+                {
+                    // Persist new camera key to database.
+
+                    DatabaseCamera emptyCamera = new DatabaseCamera();
+                    emptyCamera.CameraKey = randomCameraKey;
+                    bool success = _dbQueryService.PersistNewCamera(emptyCamera);
+
+                    if (success)
+                    {
+                        return new NewCameraKey(randomCameraKey);
+                    }
+
+                    return null;
+                }
+            }
+
+            return null;
+        }
+
+        public bool DeleteCameraFromKey(string cameraKey)
+        {
+            return _dbQueryService.DeleteCameraFromCameraKey(cameraKey);
         }
 
         private CameraInformationList InitialiseImagesBeforeDisplaying(CameraInformationList list)
@@ -105,9 +152,21 @@ namespace BackEndServer.Services
             return new CameraInformation(camera);
         }
 
+        //TODO: Refactor this method, a lot of things aren't used anymore
+        public CameraDetails GetCameraInfoById(int cameraId)
+        {
+            DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
+            return new CameraDetails(camera);
+        }
+
         public CameraStatistics getCameraStatisticsForNowById(int cameraId)
         {
             DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
+            DatabaseRoom room = null;
+            if (camera != null && camera.RoomId != null)
+            {
+                room = _dbQueryService.GetRoomById(camera.RoomId.Value);
+            }
             DatabasePerSecondStat mostRecentStat = _dbQueryService.GetLatestPerSecondStatForCamera(cameraId);
             GraphStatistics graphStatistics = _graphStatisticsService.GetLast30MinutesStatistics(cameraId);
             if (camera != null)
@@ -127,6 +186,13 @@ namespace BackEndServer.Services
                     GraphStatistics = graphStatistics,
                     TempImagePath = null 
                 };
+                if (room != null)
+                {
+                    cameraStatistics.CameraDetails.MonitoredArea = room.RoomName;
+                    cameraStatistics.CameraInformation.CameraRoomName = room.RoomName;
+                    cameraStatistics.CameraInformation.RoomId = room.RoomId;
+                }
+
                 if (mostRecentStat != null)
                 {
                     cameraStatistics.LastUpdatedTime = mostRecentStat.DateTime;
@@ -165,7 +231,7 @@ namespace BackEndServer.Services
         {
             return new CameraRegistrationDetails()
             {
-                locations = _locationService.getAvailableLocationsForUser(userId),
+                locations = _locationService.GetAvailableLocationsForUser(userId),
                 CameraDetails = new CameraDetails(),
                 resolutions = GetExistingCameraResolutions()
             };
@@ -189,7 +255,75 @@ namespace BackEndServer.Services
 
         public bool RegisterCamera(CameraDetails cameraDetails)
         {
-            return _dbQueryService.PersistExistingCameraByCameraKey (new DatabaseCamera(cameraDetails));
+            try
+            {
+                if (cameraDetails.UploadedImage == null || PerformCameraImageUpload(cameraDetails))
+                {
+                    if (cameraDetails.ExistingRoomId <= 0)
+                    {
+                        DatabaseRoom dbRoom = new DatabaseRoom(cameraDetails);
+                        if (!_dbQueryService.PersistNewRoom(dbRoom))
+                        {
+                            return false;
+                        }
+                        cameraDetails.ExistingRoomId = _dbQueryService.GetRoomIdByLocationIdAndRoomName(dbRoom.LocationId, dbRoom.RoomName);
+                    }
+                    return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails), cameraDetails.ImageDeleted);
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error(e);
+            }
+
+            return false;
+        }
+
+        private bool PerformCameraImageUpload(CameraDetails cameraDetails)
+        {
+            IFormFile image = cameraDetails.UploadedImage;
+
+            // If the user has uploaded a file.
+            if (image != null)
+            {
+                // Verify file size, must be under 5 MB.
+                if (image.Length > 5000000)
+                {
+                    return false;
+                }
+
+                // Verify that the file is a valid image file (respects Minimum Size, File Extension and MIME Types).
+                if (HttpPostedFileBaseExtensions.IsImage(image))
+                {
+                    // Proceed to process the request with the valid image.
+
+                    // Obtain the file extension.
+                    string fileExtension = Path.GetExtension(image.FileName).ToLower();
+
+                    // Obtain the Database ID of the camera.
+                    int cameraId = GetExistingCameraId(cameraDetails.CameraKey);
+
+                    // Save the file to disk.
+
+                    // 1. Ensure the output folder exists.
+                    DirectoryInfo outputDirectory = Directory.CreateDirectory(DatabaseCamera.PATH_FOR_USER_UPLOADED_IMAGES);
+
+                    // 2. Create the full file path (output path + filename).
+                    string fullFilePath = Path.Combine(outputDirectory.FullName, cameraId + fileExtension);
+                    cameraDetails.SavedImagePath = fullFilePath;
+
+                    // 3. Save IFormFile as an image file in the output path.
+                    using (var fileStream = new FileStream(fullFilePath, FileMode.Create))
+                    {
+                        // NOTE: If this was for the Edit page, we would have to delete the previous picture first.
+                        Task task = image.CopyToAsync(fileStream);
+                        task.GetAwaiter().GetResult();
+                    }
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public List<string> GetExistingCameraResolutions()
@@ -204,21 +338,72 @@ namespace BackEndServer.Services
 
         public CameraRegistrationDetails GetCameraRegistrationDetailsById(int cameraId, int userId)
         {
-            return new CameraRegistrationDetails
+            CameraRegistrationDetails registrationDetails = new CameraRegistrationDetails
             {
-                locations = _locationService.getAvailableLocationsForUser(userId),
+                locations = _locationService.GetAvailableLocationsForUser(userId),
                 CameraDetails = new CameraDetails(_dbQueryService.GetCameraById(cameraId)),
                 resolutions = GetExistingCameraResolutions()
             };
+            if (!registrationDetails.CameraDetails.SavedImagePath.IsNullOrEmpty())
+            {
+                registrationDetails.CameraDetails.SavedImagePath = CameraRegistrationDetails.IMAGE_UPLOADED_TEXT;
+            }
+
+            return registrationDetails;
         }
 
-        public CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod)
+        public CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null)
         {
             CameraInformation cameraInformation = getCameraInformationById(cameraId);
-            GraphStatistics graphStatistics = _graphStatisticsService.GetStatisticsForPastPeriod(cameraId, pastPeriod);
-            graphStatistics.selectedPeriod = pastPeriod;
+            GraphStatistics graphStatistics = _graphStatisticsService.GetStatisticsForPastPeriod(cameraId, pastPeriod, startDate, endDate);
+            graphStatistics.SelectedPeriod = pastPeriod;
             cameraInformation.GraphStatistics = graphStatistics;
             return cameraInformation;
+        }
+
+        public CameraInformationList GetAllCamerasInRoom(int roomId)
+        {
+            List<DatabaseCamera> dbCameras = _dbQueryService.GetAllCamerasInRoom(roomId);
+            return new CameraInformationList(dbCameras);
+        }
+
+        public SharedGraphStatistics GetSharedRoomGraphStatistics(int roomId)
+        {
+            CameraInformationList camerasInRoom = GetAllCamerasInRoom(roomId);
+            RoomInfo roomInfo = new RoomInfo(_dbQueryService.GetRoomById(roomId));
+            return new SharedGraphStatistics
+            {
+                DisplayedCameras = camerasInRoom,
+                Room = roomInfo
+            };
+        }
+
+        public JpgStatFrameList GetStatFrameList(int cameraId)
+        {
+            List<DatabasePerSecondStat> statsForCamera = _dbQueryService.GetPerSecondStatsForCamera(cameraId);
+            JpgStatFrameList frmList = new JpgStatFrameList();
+            frmList.JpgFramePathList = new List<FrameInformation>();
+            foreach(DatabasePerSecondStat stat in statsForCamera){
+                if (!stat.FrameJpgPath.IsNullOrEmpty())
+                {
+                    frmList.JpgFramePathList.Add(new FrameInformation(stat));
+                }
+            }
+
+            return frmList;
+        }
+
+        public List<DatabaseUser> GetAllUsers()
+        {
+            List<DatabaseUser> dbUserList = _dbQueryService.GetAllUsers();
+            
+            return dbUserList;
+        }
+
+        public bool GiveAccessToUser(int cameraId, int userId)
+        {
+            bool value = _dbQueryService.CreateUserCameraAssociation(userId, cameraId);
+            return value;
         }
     }
 }

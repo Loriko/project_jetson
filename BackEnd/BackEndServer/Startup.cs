@@ -14,6 +14,7 @@ using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.PlaceholderServices;
 using System.IO;
+using NLog;
 
 namespace BackEndServer
 {
@@ -29,6 +30,9 @@ namespace BackEndServer
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Configure logger ASAP so that if the app crashes latter we can have logs of the crash
+            ConfigureLogger();
+            
             services.AddMvc().AddSessionStateTempDataProvider();
             //Add session support
             services.AddSession();
@@ -36,13 +40,14 @@ namespace BackEndServer
             // Uses connection string from the project configuration
             // Passing it as a service ensures everything in the project will use this query service and use this connection string
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
-
+            EmailService emailService = new EmailService(Configuration.GetSection("EmailServiceConfiguration")["SourceEmailAddress"], 
+                Configuration.GetSection("EmailServiceConfiguration")["SourceEmailPassword"]);
             bool alertMonitoringEnabled = true;
             if (alertMonitoringEnabled)
             {
                 Thread alertMonitoringThread = new Thread(delegate()
                 {
-                    AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService);
+                    AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService, emailService);
                     alertMonitoringService.StartMonitoring();
                 });
                 alertMonitoringThread.Start();
@@ -113,5 +118,17 @@ namespace BackEndServer
             }
         }
 
+        private void ConfigureLogger()
+        {
+            var config = new NLog.Config.LoggingConfiguration();
+
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "${basedir}/logs/webserver.log" };
+            var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
+            
+            config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
+            config.AddRule(LogLevel.Info, LogLevel.Fatal, logfile);
+            
+            LogManager.Configuration = config;
+        }
     }
 }

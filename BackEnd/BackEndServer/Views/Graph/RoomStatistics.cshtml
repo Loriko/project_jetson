@@ -1,0 +1,158 @@
+﻿@using BackEndServer.Models.Enums
+@model BackEndServer.Models.ViewModels.SharedGraphStatistics
+
+<h1 id="headerGraph" class="page-title center-align">Statistics for cameras monitoring <b>@Model.Room.RoomName</b></h1>
+
+<script type="text/javascript">
+google.charts.load('current', { packages: ['corechart', 'line'] });
+google.charts.setOnLoadCallback(function() {
+    $("#graph_name_list li a.active").click();
+});
+
+function drawChart(stats) {
+    // Define the chart to be drawn.
+    var array = stats;
+    for (let i = 1; i < array.length; i++) {
+        array[i][0] = new Date(array[i][0]);
+        for (let j = 1; j < array[i].length; j++) {
+            array[i][j] = parseInt(array[i][j]);
+        }
+    }
+
+    var data = new google.visualization.arrayToDataTable(array);
+
+    var options = {
+        legend: { position: 'bottom' },
+        explorer: { 
+            actions: ['dragToZoom', 'rightClickToReset'],
+            axis: 'horizontal',
+            keepInBounds: true,
+            maxZoomIn: 110.0
+        },
+        vAxis: {minValue: 0}
+    }
+
+    // Instantiate and draw the chart.
+    var chart = new google.visualization.AreaChart(document.getElementById('area_chart'));
+    chart.draw(data, options);
+}
+</script>
+
+<div class="row">
+    <div class="col m8 s12">
+        <ul id="graph_name_list" class="tabs">
+            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastDay ? "active" : "")" value="@PastPeriod.LastDay" href="#past_day">Past Day</a></li>
+            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastWeek ? "active" : "")" value="@PastPeriod.LastWeek" href="#past_week">Past Week</a></li>
+            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastMonth ? "active" : "")" value="@PastPeriod.LastMonth" href="#past_month">Past Month</a></li>
+            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastYear ? "active" : "")" value="@PastPeriod.LastYear" href="#past_year">Past Year</a></li>
+            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.Custom ? "active" : "")" value="@PastPeriod.Custom" href="#past_custom">Custom Duration</a></li>
+            <div class="indicator teal" style="z-index:1"></div>
+        </ul>
+    </div>
+    <div class="input-field col m2 s4 no-top-margin date-container hide">
+        <input id="start_date" type="text" class="datepicker no-bottom-margin">
+        <label for="start_date" data-error="Start Date cannot be higher than End Date">Start Date</label>
+    </div>
+    <div class="input-field col m2 s4 no-top-margin date-container hide">
+        <input id="end_date" type="text" class="datepicker no-bottom-margin">
+        <label for="end_date" data-error="End Date cannot be lower than Start Date">End Date</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col s12">
+        <div class="card">
+            <div class="card-content">
+                <div id="past_day" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over the past day</div>
+                <div id="past_week" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over the past week</div>
+                <div id="past_month" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over the past month</div>
+                <div id="past_year" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over the past year</div>
+                <div id="past_custom" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over a custom period</div>
+                <div id="area_chart"></div>
+                <div id="select-range-message" class="center-align hide">
+                    To draw the chart, please select a valid date range using the date pickers
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function reloadGraphWithCustomDateRange() {
+    var startDate = $("#start_date").val();
+    var endDate = $("#end_date").val();
+    var url = "GetSharedRoomCustomGraphStats?roomId=" + "@Model.Room.RoomId" + "&startDate=" + startDate + "&endDate=" + endDate;
+    $.get(url, function(data) {
+        console.dir(data);
+        $("#select-range-message").addClass("hide");
+        $("#area_chart").removeClass("hide");
+        drawChart(data.stats);
+    });
+};
+
+function reloadGraph(pastPeriod) {
+    var url = "GetSharedRoomGraphStats?roomId=" + "@Model.Room.RoomId" + "&pastPeriod=" + pastPeriod;
+    $.get(url, function(data) {
+        console.dir(data);
+        drawChart(data.stats);
+    });
+}
+
+$("#graph_name_list li a").click(function() {
+    var pastPeriod = $(this).attr("value");
+    if (pastPeriod === "@PastPeriod.Custom") {
+        $(".date-container").removeClass("hide");
+        $("#select-range-message").removeClass("hide");
+        $("#area_chart").addClass("hide");
+    } else {
+        $(".date-container").addClass("hide");
+        $("#select-range-message").addClass("hide");
+        $("#area_chart").removeClass("hide");
+        $("#start_date").val("").removeClass("valid");
+        $("#end_date").val("").removeClass("valid");
+        reloadGraph(pastPeriod);
+    }
+});
+
+function validateStartEndDate() {
+    var startElem = $('#start_date');
+    var endElem = $('#end_date');
+
+    if (!startElem.val() || !endElem.val()) {
+        return false;
+    }
+
+    var startDate = moment(startElem.val(), "DD MMMM, YYYY");
+    var endDate = moment(endElem.val(), "DD MMMM, YYYY");
+    if ((startDate - endDate) > 0) {
+        //Needed because label needs to be right after to show validation text
+        $("label[for='" + startElem.attr('id') + "']").insertAfter(startElem);
+        startElem.removeClass("valid");
+        startElem.addClass("invalid");
+        startElem.prop("aria-invalid", "true");
+        //Needed because label needs to be right after to show validation text
+        $("label[for='" + endElem.attr('id') + "']").insertAfter(endElem);
+        endElem.removeClass("valid");
+        endElem.addClass("invalid");
+        endElem.prop("aria-invalid", "true");
+        return false;
+    }
+
+    return true;
+}
+
+$("#start_date,#end_date").change(function() {
+    if (validateStartEndDate()) {
+        $('#start_date').removeClass("invalid");
+        $('#end_date').removeClass("invalid");
+        $('#start_date').addClass("valid");
+        $('#end_date').addClass("valid");
+    } else {
+        return;
+    }
+    
+    if ($("#graph_name_list li a.active").attr("value") === "@PastPeriod.Custom") {
+        reloadGraphWithCustomDateRange();
+    }
+});
+</script>

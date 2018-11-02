@@ -1,5 +1,5 @@
 ﻿@model BackEndServer.Models.ViewModels.CameraStatistics
-<div class="card blue-grey darken-1">
+<div class="card blue-grey darken-1" id="camera_card">
     <div class="card-content white-text">
         <span class="card-title">Camera Details</span>
         <div class="col s10 offset-s1">
@@ -9,25 +9,12 @@
                     @{
                         if (String.IsNullOrWhiteSpace(Model.TempImagePath))
                         {
-                            <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraRoomName">
+                            <img class="camera-card-image-sm" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraName">
                         }
                         else
                         {
-                            <img class="camera-card-image" src="@Model.TempImagePath" alt="@Model.CameraInformation.CameraRoomName">
+                            <img class="camera-card-image-sm" src="@Model.TempImagePath" alt="@Model.CameraInformation.CameraName">
                         }
-
-                        /*
-                        if (String.IsNullOrWhiteSpace(Model.CameraDetails.SavedImagePath) == false)
-                        {
-                            // Convert .NET Framework filepath to HTML URI for the HTML Image element source attribute.
-                            var uri = new System.Uri(Model.CameraDetails.SavedImagePath);
-                            <img class="camera-card-image" src="/Camera/myaction/@(Model.CameraDetails.SavedImagePath)" alt="@Model.CameraInformation.CameraRoomName">
-                        }
-                        else
-                        {
-                            <img class="camera-card-image" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraRoomName">
-                        }
-                        */
                     }
                 </div>
             </div>

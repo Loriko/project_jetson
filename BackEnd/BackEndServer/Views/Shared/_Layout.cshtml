@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BackEndServer</title>
+    <title>@ViewBag.Title</title>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <link rel="stylesheet" href="~/lib/materialize/css/materialize.css" />
@@ -20,6 +20,7 @@
     </environment>
     <!-- This script needs to be loaded asap, otherwise graphs won't work, which is why it is in the head -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="~/js/moment.min.js"></script>
 </head>
 <body>
 
@@ -66,15 +67,20 @@
 </environment>
 
 <script>
+
+    function loadTimePickers() {
+        $('.timepicker').pickatime({
+            default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+            twelvehour: true // Use AM/PM or 24-hour format
+        });
+    }
+    
     function loadMaterializeEffects() {
         $(".dropdown-button").dropdown();
         $('select').material_select();
         $('.modal').modal();
         $('.collapsible').collapsible();
-        $('.timepicker').pickatime({
-            default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-            twelvehour: true // Use AM/PM or 24-hour format
-        });
+        loadTimePickers();
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
             selectYears: 10, // Creates a dropdown of 15 years to control year,

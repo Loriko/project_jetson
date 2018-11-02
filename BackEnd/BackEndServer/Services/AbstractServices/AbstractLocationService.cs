@@ -1,10 +1,13 @@
-﻿using BackEndServer.Models.ViewModels;
+﻿using System.Collections.Generic;
+using BackEndServer.Models.ViewModels;
 
 namespace BackEndServer.Services.AbstractServices
 {
     public interface AbstractLocationService
     {
-        LocationInformationList getAvailableLocationsForUser(int userId);
+        LocationInformationList GetAvailableLocationsForUser(int userId);
         bool SaveLocation(LocationDetails locationDetails);
+        LocationInformationList GetAvailableLocations();
+        List<RoomInfo> GetRoomsAtLocation(int locationId);
     }
 }

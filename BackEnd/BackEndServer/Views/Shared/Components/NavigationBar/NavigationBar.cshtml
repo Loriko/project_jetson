@@ -1,8 +1,12 @@
 ﻿@model BackEndServer.Models.ViewModels.NavigationBarDetails
 
 <ul id="profileDropDown" class="dropdown-content">
-    <li><a asp-controller="User" asp-action="BeginUserSettingsModification">Modify Personal Settings</a></li>
-    <li><a asp-controller="Home" asp-action="SignOut">Sign Out</a></li>
+    <li><a asp-controller="User" asp-action="BeginUserSettingsModification" id="modifyPersonalSettings">Modify Personal Settings</a></li>
+    <li><a asp-controller="Home" asp-action="SignOut" id="signOut">Sign Out</a></li>
+</ul>
+<ul id="adminDropDown" class="dropdown-content">
+    <li><a asp-controller="User" asp-action="BeginUserCreation" id="userCreation">Create New User</a></li>
+    <li><a asp-controller="Camera" asp-action="ManageCameraKeys" id="manageCameraKeys">Manage Camera Keys</a></li>
 </ul>
 <nav>
     <div class="nav-wrapper teal">
@@ -11,11 +15,12 @@
         </a>
         <ul class="left hide-on-med-and-down">
             <li>
-                <a asp-controller="Location" asp-action="LocationSelection" class="nav-link">Home</a>
+                <a asp-controller="Location" asp-action="LocationSelection" class="nav-link" id="home">Home</a>
             </li>
             <li>
-                <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link">Manage Cameras</a>
+                <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
             </li>
+            <li><a class="dropdown-button" href="#" data-activates="adminDropDown" id="admin">Admin Center<i class="material-icons right" id="adminDrop">arrow_drop_down</i></a></li>
         </ul>
 
         <ul class="right hide-on-med-and-down">
@@ -56,9 +61,9 @@
                 </ul>
             </li>
             <li>
-                <a asp-controller="Alert" asp-action="Index" class="nav-link">My Alerts</a>
+                <a asp-controller="Alert" asp-action="Index" class="nav-link" id="alerts">My Alerts</a>
             </li>
-            <li><a class="dropdown-button" href="#" data-activates="profileDropDown">Profile<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-button" href="#" data-activates="profileDropDown" id="profile">Profile<i class="material-icons right" id="profileDrop">arrow_drop_down</i></a></li>
         </ul>
     </div>
 </nav>
