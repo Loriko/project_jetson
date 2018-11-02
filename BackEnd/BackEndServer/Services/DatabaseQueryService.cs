@@ -590,7 +590,7 @@ namespace BackEndServer.Services
             List<string> resolutionsInDB = new List<string>();
             using (MySqlConnection conn = GetConnection())
             {
-                string query = "SELECT resolution FROM Camera WHERE resolution IS NOT NULL GROUP BY resolution ORDER BY COUNT(*) DESC;";
+                string query = "SELECT resolution FROM camera WHERE resolution IS NOT NULL GROUP BY resolution ORDER BY COUNT(*) DESC;";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1498,7 +1498,114 @@ namespace BackEndServer.Services
 
             return user;
         }
-        
+
+        public DatabaseUser GetUserByEmailAddress(string email)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{email}';";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
+
+        public DatabaseUser GetUserByPasswordResetToken(string token)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{token}';";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
+
+        public bool PersistPasswordResetToken(string passwordResetToken, string emailAddress)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = {formatNullableString(passwordResetToken)} " +
+                               $"WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{emailAddress}';";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool PersistRemovePasswordResetToken(int userId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = NULL " +
+                               $"WHERE {DatabaseUser.USER_ID_LABEL} = {userId};";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool PersistExistingUser(DatabaseUser databaseUser)
         {
             using (MySqlConnection conn = GetConnection())
@@ -1522,7 +1629,29 @@ namespace BackEndServer.Services
             }
             return false;
         }
-        
+
+        public bool PersistPasswordChange(DatabaseUser databaseUser)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.PASSWORD_LABEL} = {formatNullableString(databaseUser.Password)} " +
+                               $"WHERE {DatabaseUser.USER_ID_LABEL} = {databaseUser.UserId};";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool PersistNewUser(DatabaseUser databaseUser)
         {
             using (MySqlConnection conn = GetConnection())

@@ -253,3 +253,6 @@ label[data-error], label[data-success] {
 #frame_carousel{
     top: -85px;
 }
+#password_reset_link {
+    margin-left: 20px;
+}
