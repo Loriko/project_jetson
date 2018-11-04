@@ -405,5 +405,11 @@ namespace BackEndServer.Services
             bool value = _dbQueryService.CreateUserCameraAssociation(userId, cameraId);
             return value;
         }
+
+        public List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations()
+        {
+            List<DatabaseUserCameraAssociation> userCameraAssociations = _dbQueryService.GetAllUserCameraAssociations();
+            return userCameraAssociations;
+        }
     }
 }

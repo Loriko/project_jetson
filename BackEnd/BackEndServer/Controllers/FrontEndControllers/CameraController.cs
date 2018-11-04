@@ -202,6 +202,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             List<DatabaseUser> dbUserList = CameraService.GetAllUsers();
             List<DatabaseUser> userList = new List<DatabaseUser>();
+            List<DatabaseUserCameraAssociation> cameraAssociations = CameraService.GetAllUserCameraAssociations();
+            List<string> names = new List<string>();
+            foreach (var user in dbUserList)
+            {
+                foreach (var userCameraAss in cameraAssociations)
+                {
+                    if ((userCameraAss.UserId == user.UserId) && (cameraId == userCameraAss.CameraId))
+                    {
+                        names.Add(user.Username);
+                    }
+                }
+            }
             foreach (var user in dbUserList)
             {
                 if (currentUserId != user.UserId)
@@ -214,7 +226,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return View("Error");
             }
-            UserSettingsList users = new UserSettingsList(userList, cameraId);
+            UserSettingsList users = new UserSettingsList(userList, cameraId, names);
             return View("UserViewAccess", users);
         }
         

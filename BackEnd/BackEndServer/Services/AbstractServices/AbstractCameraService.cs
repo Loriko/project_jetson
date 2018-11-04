@@ -33,5 +33,6 @@ namespace BackEndServer.Services.AbstractServices
         CameraInformationList GetAllCamerasInRoom(int roomId);
         SharedGraphStatistics GetSharedRoomGraphStatistics(int roomId);
         JpgStatFrameList GetStatFrameList(int cameraId);
+        List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
     }
 }
