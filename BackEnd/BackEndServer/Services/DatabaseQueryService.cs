@@ -1957,5 +1957,32 @@ namespace BackEndServer.Services
             return false;
         }
 
+        public List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations()
+        {
+            List<DatabaseUserCameraAssociation> userList = new List<DatabaseUserCameraAssociation>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUserCameraAssociation.TABLE_NAME}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseUserCameraAssociation user = new DatabaseUserCameraAssociation
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUserCameraAssociation.USER_ID]),
+                            CameraId = Convert.ToInt32(reader[DatabaseUserCameraAssociation.CAMERA_ID])
+                        };
+                        userList.Add(user);
+                    }
+                }
+            }
+            return userList;
+        }
+
     }
 }
