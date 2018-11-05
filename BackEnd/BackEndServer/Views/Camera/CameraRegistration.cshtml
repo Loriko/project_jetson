@@ -12,6 +12,7 @@
 <div class="row">
     <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
         <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId" />
+        <input type="hidden" name="ImageDeleted" value="false" />
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" value="@Model.CameraDetails.CameraName" type="text" class="validate" required>

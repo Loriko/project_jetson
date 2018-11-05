@@ -257,6 +257,11 @@ namespace BackEndServer.Services
         {
             try
             {
+                if (cameraDetails.ImageDeleted)
+                {
+                    DeleteCameraImage(cameraDetails);
+                }
+
                 if (cameraDetails.UploadedImage == null || PerformCameraImageUpload(cameraDetails))
                 {
                     if (cameraDetails.ExistingRoomId <= 0)
@@ -276,6 +281,25 @@ namespace BackEndServer.Services
                 logger.Error(e);
             }
 
+            return false;
+        }
+
+        private bool DeleteCameraImage(CameraDetails cameraDetails)
+        {
+            DatabaseCamera dbCamera = _dbQueryService.GetCameraById(cameraDetails.CameraId);
+            string imagePath = dbCamera.ImagePath;
+            if(File.Exists(imagePath))
+            {
+                try
+                {
+                    File.Delete(imagePath);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e);
+                }
+            }
             return false;
         }
 

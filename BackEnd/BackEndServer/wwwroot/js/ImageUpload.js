@@ -5,7 +5,9 @@
 $(document).ready(function () {
 
     // On Load, hide the clear button. Cannot set the element to hidden by default as it can no longer be accessed once hidden.
-    $('#clear_image').hide();
+    if (!($("#file_name").val())) {
+        $('#clear_image').hide();
+    }
 
     // On Click of the Clear button:
     $('#clear_image').click(function () {
@@ -13,6 +15,8 @@ $(document).ready(function () {
         $('#image_input').val('');
         // Clear the file name label.
         $('#file_name').val('');
+        // Indicate the image was cleared so it can be deleted
+        $("input[name='ImageDeleted']").val("true");
         // Hide the image preview, no need clear the source.
         $('#image_preview').hide();
         // Hide the clear button.
