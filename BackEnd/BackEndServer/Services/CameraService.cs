@@ -435,5 +435,11 @@ namespace BackEndServer.Services
             List<DatabaseUserCameraAssociation> userCameraAssociations = _dbQueryService.GetAllUserCameraAssociations();
             return userCameraAssociations;
         }
+
+        public bool ValidateCameraKey(string cameraKey)
+        {
+            DatabaseCamera dbCamera = _dbQueryService.GetCameraByKey(cameraKey);
+            return dbCamera != null && dbCamera.UserId.GetValueOrDefault(0) == 0;
+        }
     }
 }

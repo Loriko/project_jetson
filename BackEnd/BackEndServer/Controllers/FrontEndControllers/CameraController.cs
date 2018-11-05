@@ -7,6 +7,7 @@ using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Security.Policy;
 using Castle.Core.Internal;
 using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
@@ -99,6 +100,19 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
             return View("ManageCameras", availableCameras);
 
+        }
+
+        [HttpPost]
+        public JsonResult ValidateCameraKey(string cameraKey)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(CameraService.ValidateCameraKey(cameraKey));
+            }
+
+            return Json(false);
         }
 
         [HttpPost]

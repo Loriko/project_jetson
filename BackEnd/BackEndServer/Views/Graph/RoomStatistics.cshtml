@@ -45,7 +45,7 @@ function drawChart(stats) {
             <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastWeek ? "active" : "")" value="@PastPeriod.LastWeek" href="#past_week">Past Week</a></li>
             <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastMonth ? "active" : "")" value="@PastPeriod.LastMonth" href="#past_month">Past Month</a></li>
             <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastYear ? "active" : "")" value="@PastPeriod.LastYear" href="#past_year">Past Year</a></li>
-            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.Custom ? "active" : "")" value="@PastPeriod.Custom" href="#past_custom">Custom Duration</a></li>
+            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.Custom ? "active" : "")" value="@PastPeriod.Custom" href="#past_custom">Custom</a></li>
             <div class="indicator teal" style="z-index:1"></div>
         </ul>
     </div>

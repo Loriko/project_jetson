@@ -426,6 +426,30 @@ namespace BackEndServer.Services
             return camera;
         }
         
+        public DatabaseCamera GetCameraByKey(string cameraKey)
+        {
+            DatabaseCamera camera = null;
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{cameraKey}'";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        camera = getDatabaseCameraFromReader(reader);
+                    }
+                }
+            }
+
+            return camera;
+        }
+        
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {
