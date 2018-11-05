@@ -12,14 +12,15 @@ namespace BackEndServer.ViewComponents
                                                                            HttpContext.RequestServices.GetService(typeof(AbstractNotificationService)) as
                                                                            AbstractNotificationService);
         
+        private AbstractUserService _userService;
+        private AbstractUserService UserService => _userService ?? (_userService =
+                                                       HttpContext.RequestServices.GetService(typeof(AbstractUserService)) as
+                                                           AbstractUserService);
+        
         public IViewComponentResult Invoke()
         {
-            NavigationBarDetails navigationBarDetails = new NavigationBarDetails();
             int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
-            if (currentUsedId != null)
-            {
-                navigationBarDetails.NotificationList = NotificationService.GetNotificationsForUser(currentUsedId.Value);
-            }
+            NavigationBarDetails navigationBarDetails = UserService.GetNavigationBarDetailsForUser(currentUsedId);
             return View("NavigationBar", navigationBarDetails);
         }
     }

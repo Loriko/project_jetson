@@ -61,6 +61,7 @@ namespace BackEndServer.Services.AbstractServices
         bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted);
         List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
         DatabaseUser GetUserById(int userId);
+        bool IsUserAdministrator(int userId);
         bool PersistExistingUser(DatabaseUser databaseUser);
         bool PersistPasswordChange(DatabaseUser databaseUser);
         bool PersistNewUser(DatabaseUser databaseUser);

@@ -15,5 +15,6 @@ namespace BackEndServer.Services.AbstractServices
         UserSettings GetUserByUsername(string username);
         UserSettings GetUserByEmailAddress(string email);
         string GenerateUniqueAPIKey(int userId);
+        NavigationBarDetails GetNavigationBarDetailsForUser(int? userId);
     }
 }

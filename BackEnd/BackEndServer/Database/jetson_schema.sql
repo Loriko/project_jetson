@@ -119,6 +119,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
   `password_reset_token` VARCHAR(100) NULL,
+  `is_administrator` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `username_UNIQUE` (`username` ASC))
 DEFAULT CHARACTER SET = utf8;

@@ -13,14 +13,17 @@ namespace BackEndServer.Services
     {
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly EmailService _emailService;
+        private readonly AbstractNotificationService _notificationService;
         private string _hostname;
 
 
-        public UserService(IDatabaseQueryService dbQueryService, string hostname, EmailService emailService)
+        public UserService(IDatabaseQueryService dbQueryService, AbstractNotificationService notificationService, 
+                           string hostname, EmailService emailService)
         {
             _dbQueryService = dbQueryService;
             _hostname = hostname;
             _emailService = emailService;
+            _notificationService = notificationService;
         }
 
         public UserSettings GetUserSettings(int userId)
@@ -172,6 +175,24 @@ namespace BackEndServer.Services
             }
 
             return null;
+        }
+
+        public NavigationBarDetails GetNavigationBarDetailsForUser(int? userId)
+        {
+            NavigationBarDetails barDetails = new NavigationBarDetails();
+            if (userId != null && userId.Value > 0)
+            {
+                barDetails.NotificationList = _notificationService.GetNotificationsForUser(userId.Value);
+                barDetails.SignedIn = true;
+                barDetails.IsAdministrator = _dbQueryService.IsUserAdministrator(userId.Value);
+            }
+            else
+            {
+                barDetails.SignedIn = false;
+                barDetails.IsAdministrator = false;
+            }
+            
+            return barDetails;
         }
     }
 }

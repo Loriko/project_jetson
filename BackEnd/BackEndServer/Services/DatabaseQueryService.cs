@@ -1418,6 +1418,32 @@ namespace BackEndServer.Services
             return camera;
         }
         
+        public bool IsUserAdministrator(int userId)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseUser.IS_ADMINISTRATOR_LABEL} " +
+                               $"FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USER_ID_LABEL} = {userId} " +
+                               "LIMIT 1;";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL]);
+                    }
+                }
+            }
+
+            return false;
+        }
+        
         public DatabaseUser GetUserById(int userId)
         {
             DatabaseUser user = null;
@@ -1441,7 +1467,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                     }
                 }
@@ -1472,7 +1499,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                         userList.Add(user);
                     }
@@ -1504,7 +1532,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                     }
                 }
@@ -1536,7 +1565,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                     }
                 }
@@ -1568,7 +1598,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                     }
                 }

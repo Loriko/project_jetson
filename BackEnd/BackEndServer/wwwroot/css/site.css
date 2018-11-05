@@ -259,3 +259,7 @@ label[data-error], label[data-success] {
 .collection  .collection-item:hover {
     background: rgba(143, 246, 0, 0.24) !important;
 }
+#logo {
+    padding-left: 20px;
+    padding-right: 20px;
+}

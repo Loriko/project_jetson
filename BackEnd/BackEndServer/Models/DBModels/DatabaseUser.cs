@@ -14,6 +14,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string FIRST_NAME_LABEL = "first_name";
         public static readonly string LAST_NAME_LABEL = "last_name";
         public static readonly string PASSWORD_RESET_TOKEN_LABEL = "password_reset_token";
+        public static readonly string IS_ADMINISTRATOR_LABEL = "is_administrator";
 
         public DatabaseUser()
         {
@@ -27,6 +28,7 @@ namespace BackEndServer.Models.DBModels
             FirstName = userSettings.FirstName;
             LastName = userSettings.LastName;
             Password = userSettings.Password;
+            IsAdministrator = userSettings.IsAdministrator;
         }
 
         // Database Model Class Attributes
@@ -36,5 +38,6 @@ namespace BackEndServer.Models.DBModels
         public string EmailAddress { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public bool IsAdministrator { get; set; }
     }
 }
