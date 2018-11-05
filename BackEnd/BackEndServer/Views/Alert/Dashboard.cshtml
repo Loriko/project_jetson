@@ -7,6 +7,22 @@
 @{ Html.RenderPartial("~/Views/Alert/AlertCreationModal.cshtml", Model.Availablecameras); }
 @{ Html.RenderPartial("~/Views/Alert/AlertDeletionConfirmationModal.cshtml"); }
 <h1 id="alertTitle" class="page-title center-align">Your Alerts</h1>
+
+@if (!Model.ExistingAlertsByCameraId.Any(x => x.Value.Count > 0))
+{
+    <div id="alertList" class="unavailable-message center-align">
+        It seems you don't have any alert so far. Clicking the red floating button will allow you to set up an alert.
+    </div>
+}
+
+<div class="row">
+    <div class="right-align" style="margin-right: 11px;">
+        <a id="create_alert_btn" class="btn-floating btn-large green modal-trigger" href="#alert-creation-modal">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+</div>
+
 @{
     if (Model.ExistingAlertsByCameraId.Any(x => x.Value.Count > 0))
     {
@@ -62,21 +78,7 @@
             }
         </ul>
     }
-    else
-    {
-        <div id="alertList" class="unavailable-message center-align">
-            It seems you don't have any alert so far. Clicking the red floating button will allow you to set up an alert.
-        </div>
-    }
 }
-
-<div class="row">
-    <div class="right-align" style="margin-right: 11px;">
-        <a id="create_alert_btn" class="btn-floating btn-large red modal-trigger" href="#alert-creation-modal">
-            <i class="large material-icons">add</i>
-        </a>
-    </div>
-</div>
 
 <script>
     function showAlertDeletionConfirmationModal(cameraDiv) {

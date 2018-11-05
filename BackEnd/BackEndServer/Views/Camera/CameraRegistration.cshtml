@@ -34,7 +34,7 @@
             <div class="input-field col s8">
                 <div id="new_room_container">
                     <input id="new_room_name" name="NewRoomName" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
-                    <label for="new_room_name">Monitored Room</label>
+                    <label for="new_room_name">Monitored Room *</label>
                 </div>
                 <div id="existing_room_container" class="hide">
                     @{ Html.RenderPartial("~/Views/Location/RoomSelectorWrapper.cshtml", new RoomSelectorInfo
@@ -193,6 +193,7 @@
 
     function roomSelectorLoaded() {
         $('#existing_room_id').material_select();
+        $('#existing_room_checkbox').change();
     }
     
     function locationSelectorLoaded() {
