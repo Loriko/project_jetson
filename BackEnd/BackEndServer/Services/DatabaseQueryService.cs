@@ -837,7 +837,13 @@ namespace BackEndServer.Services
         public bool PersistNewAlert(DatabaseAlert alert)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
+            {
+                if (alert.AlwaysActive)
+                {
+                    alert.StartTime = null;
+                    alert.EndTime = null;
+                }
+
                 string query = $"INSERT INTO {DatabaseAlert.TABLE_NAME}(" +
                                $"{DatabaseAlert.ALERT_NAME_LABEL}, {DatabaseAlert.CAMERA_ID_LABEL}, {DatabaseAlert.USER_ID_LABEL}, " +
                                $"{DatabaseAlert.CONTACT_METHOD_LABEL}, {DatabaseAlert.TRIGGER_OPERATOR_LABEL}, {DatabaseAlert.TRIGGER_NUMBER_LABEL}, " +
@@ -943,7 +949,13 @@ namespace BackEndServer.Services
         public bool PersistExistingAlert(DatabaseAlert alert)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
+            {
+                if (alert.AlwaysActive)
+                {
+                    alert.StartTime = null;
+                    alert.EndTime = null;
+                }
+
                 //We use formatNullableString for non nullable strings so that
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseAlert.TABLE_NAME} SET " +
@@ -1008,7 +1020,7 @@ namespace BackEndServer.Services
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
                                $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s')" +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s')"; //TODO: maybe get date right now from another parameter
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s')";
                 
                 if (alert.SnoozedUntil != null)
                 {
