@@ -256,3 +256,6 @@ label[data-error], label[data-success] {
 #password_reset_link {
     margin-left: 20px;
 }
+.collection  .collection-item:hover {
+    background: rgba(143, 246, 0, 0.24) !important;
+}
