@@ -73,11 +73,24 @@ namespace BackEndServer.Controllers.FrontEndControllers
             UserSettings userSettings = UserService.GetUserByEmailAddress(passwordResetLink.Email);
             if(userSettings == null)
             {
-                return Json(false);
+                PostRequestResult result = new PostRequestResult
+                {
+                    Success = false,
+                    ErrorMessage = "A user with the specified email address could not be found"
+                };
+
+                return Json(result);
             }
             else
             {
-                return Json(UserService.SendResetPasswordLink(passwordResetLink.Email));
+                bool success = UserService.SendResetPasswordLink(passwordResetLink.Email);
+                PostRequestResult result = new PostRequestResult
+                {
+                    Success = success,
+                    ErrorMessage = success ? "" : "Couldn't send email because of an unexpected error"
+                };
+
+                return Json(result);
             }
         }
         
