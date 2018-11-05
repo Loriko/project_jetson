@@ -24,7 +24,61 @@
         </ul>
         @if (Model.SignedIn)
         {
-            <ul class="right">
+            <ul class="right hide-on-med-and-down">
+                <li>
+                    <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
+                </li>
+                <li>
+                    <a asp-controller="Alert" asp-action="Index" class="nav-link" id="alerts">Manage Alerts</a>
+                </li>
+                @if (Model.IsAdministrator)
+                {
+                    <li><a class="dropdown-button" href="#" data-activates="adminDropDown" id="admin">Admin Center<i class="material-icons right" id="adminDrop">arrow_drop_down</i></a></li>
+                }
+                <li>
+                    <!-- Dropdown Trigger -->
+                    <a class='dropdown-button' href='#' data-activates='notification-list'>Notifications
+                        @if (Model.GetUnacknowledgedNotificationCount() > 0)
+                        {
+                            <span class="new badge pink">@(Model.GetUnacknowledgedNotificationCount())</span>
+                        }
+                        @if (!Model.NotificationList.IsNullOrEmpty())
+                        {
+                            <i class="material-icons right">arrow_drop_down</i>
+                        }
+                    </a>
+                    <!-- Dropdown Structure -->
+                    <ul id='notification-list' class='dropdown-content'>
+                        @*TODO: Add a date added property and sort by that instead*@
+                        @foreach (var notification in Model.NotificationList.OrderByDescending(notification => notification.TriggerDateTime))
+                        {
+                            <li>
+                                <a asp-controller="Notification" asp-action="NotificationSelected" asp-route-notificationId="@(notification.NotificationId)">
+                                    @if (notification.Acknowledged)
+                                    {
+                                        <i class="material-icons">notifications_none</i>
+                                    }
+                                    else
+                                    {
+                                        <i class="material-icons">notifications_active</i>
+                                    }
+                                    '@(notification.Alert.AlertName)' alert triggered on @(notification.TriggerDateTime.ToShortDateString())
+                                    @if (notification.FailedEmail)
+                                    {
+                                        <span class="error-message">(Email Failure)</span>
+                                    }
+                                </a></li>
+                        }
+                        @* <li class="divider"></li> *@
+                        @* <li><a href="#!">Notification Center</a></li> *@
+                        @* TODO: Add a notification center, but only if the client finds it necessary *@
+                    </ul>
+                </li>
+                <li><a class="dropdown-button" href="#" data-activates="profileDropDown" id="profile">Profile<i class="material-icons right" id="profileDrop">arrow_drop_down</i></a></li>
+            </ul>
+            
+            <a href="#" data-activates="mobile_nav" class="button-collapse right"><i class="material-icons">menu</i></a>
+            <ul class="side-nav" id="mobile_nav">
                 <li>
                     <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
                 </li>

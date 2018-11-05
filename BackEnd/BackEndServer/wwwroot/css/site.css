@@ -263,3 +263,9 @@ label[data-error], label[data-success] {
     padding-left: 20px;
     padding-right: 20px;
 }
+.side-nav li>a {
+    overflow: scroll;
+    white-space: nowrap;
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
+}
