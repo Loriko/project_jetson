@@ -1,12 +1,22 @@
+@using Castle.Core.Internal
 @model BackEndServer.Models.ViewModels.LocationInformationList
 @{
     ViewBag.Title = "Project Jetson - Location Selection";
 }
 
 <h1 id="locationSelectionText" class="page-title center-align">To view information about a camera, please first select the location where the camera is located</h1>
-<div id="locations" class="collection">
-    @foreach (var location in Model.LocationList)
-    {
-        <a href="LocationSelected?locationId=@location.LocationId" class="collection-item" id=@location.LocationId>@location.LocationName</a>
-    }
-</div>
+@if (Model.LocationList.IsNullOrEmpty())
+{
+    <div id="alertList" class="unavailable-message center-align">
+        It seems there is no camera you have the privileges to view right now. <br>To register your own camera, select "Manage Cameras" on the navigation bar and follow the instructions on that page.
+    </div>
+}
+else
+{
+    <div id="locations" class="collection">
+        @foreach (var location in Model.LocationList)
+        {
+            <a href="LocationSelected?locationId=@location.LocationId" class="collection-item" id=@location.LocationId>@location.LocationName</a>
+        }
+    </div>
+}
