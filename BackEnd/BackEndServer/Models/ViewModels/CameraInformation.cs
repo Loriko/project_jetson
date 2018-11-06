@@ -29,6 +29,7 @@ namespace BackEndServer.Models.ViewModels
             ImagePath = dbCamera.ImagePath;
             TempImagePath = null;
             RoomId = dbCamera.RoomId.GetValueOrDefault(0);
+            GraphStatistics = new GraphStatistics();
         }
     }
 }

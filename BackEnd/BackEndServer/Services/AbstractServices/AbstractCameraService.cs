@@ -29,7 +29,6 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseUser> GetAllUsers();
         CameraDetails GetCameraInfoById(int cameraId);
         bool GiveAccessToUser(int cameraId, int userId);
-        CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null);
         CameraInformationList GetAllCamerasInRoom(int roomId);
         SharedGraphStatistics GetSharedRoomGraphStatistics(int roomId);
         JpgStatFrameList GetStatFrameList(int cameraId);

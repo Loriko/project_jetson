@@ -7,6 +7,9 @@
 google.charts.load('current', { packages: ['corechart', 'line'] });
 google.charts.setOnLoadCallback(function() {
     $("#graph_name_list li a.active").click();
+    if ($("#graph_name_list li a.active").attr("value") === "@PastPeriod.Custom") {
+        $("#start_date").change();
+    }
 });
 
 function drawChart(stats) {
@@ -50,11 +53,11 @@ function drawChart(stats) {
         </ul>
     </div>
     <div class="input-field col m2 s4 no-top-margin date-container hide">
-        <input id="start_date" type="text" class="datepicker no-bottom-margin">
+        <input id="start_date" type="text" class="datepicker no-bottom-margin" value="@Model.StartDate">
         <label for="start_date" data-error="Start Date cannot be higher than End Date">Start Date</label>
     </div>
     <div class="input-field col m2 s4 no-top-margin date-container hide">
-        <input id="end_date" type="text" class="datepicker no-bottom-margin">
+        <input id="end_date" type="text" class="datepicker no-bottom-margin" value="@Model.EndDate">
         <label for="end_date" data-error="End Date cannot be lower than Start Date">End Date</label>
     </div>
 </div>

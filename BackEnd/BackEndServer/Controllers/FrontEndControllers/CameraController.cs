@@ -70,8 +70,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            PastPeriod pastPeriod = PastPeriod.LastYear;
-            return RedirectToAction("GraphDashboard", "Graph", new { cameraId, pastPeriod });
+            return RedirectToAction("GraphDashboard", "Graph", new { cameraId });
         }
         
         [HttpGet]
