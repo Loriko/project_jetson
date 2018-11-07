@@ -102,8 +102,8 @@ CREATE TABLE IF NOT EXISTS `jetson`.`per_second_stat` (
   CONSTRAINT `fk_per_second_stat_camera`
     FOREIGN KEY (`camera_id`)
     REFERENCES `jetson`.`camera` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
@@ -136,13 +136,13 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user_camera_association` (
   CONSTRAINT `fk_camera_has_user_camera`
     FOREIGN KEY (`camera_id`)
     REFERENCES `jetson`.`camera` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_camera_has_user_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `jetson`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
@@ -187,13 +187,13 @@ CREATE TABLE IF NOT EXISTS `jetson`.`alert` (
   CONSTRAINT `fk_alert_has_camera`
     FOREIGN KEY (`camera_id`)
     REFERENCES `jetson`.`camera` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ,
   CONSTRAINT `fk_fk_alert_has_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `jetson`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
