@@ -85,17 +85,15 @@ namespace BackEndServer.Services
             var perSecondStats = GetDatabasePerSecondStatsForPastPeriod(cameraId, pastPeriod, startDate, endDate);
 
             List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
-            perSecondStatsFormattedStrings.Add(new [] { "DateTime", "People" });
+            perSecondStatsFormattedStrings.Add(new [] { "DateTime", "People Detected" });
             
             foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
             {
-                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToUniversalTime().ToString("s"), perSecondStat.NumDetectedObjects.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("s"), perSecondStat.NumDetectedObjects.ToString()});
             }
             
-            if (perSecondStats.Count == 0)
-            {
-                perSecondStatsFormattedStrings.Add(new []{DateTime.UtcNow.ToString("s"), 0.ToString()});
-            }
+            perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("s"), 0.ToString()});
+            perSecondStatsFormattedStrings.Add(new []{GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("s"), 0.ToString()});
             
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             graphStatistics.SelectedPeriod = pastPeriod;
@@ -133,7 +131,7 @@ namespace BackEndServer.Services
             {
                 int cameraId = cameraIds.ElementAt(i);
                 DatabaseCamera camera = _databaseQueryService.GetCameraById(cameraId);
-                titleString[i+1] = $"People Spotted by {camera.CameraName}";
+                titleString[i+1] = $"People Detected for {camera.CameraName}";
             }
             perSecondStatsFormattedStrings.Add(titleString);
 
@@ -143,33 +141,65 @@ namespace BackEndServer.Services
                 foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
                 {
                     string[] row = new string[perSecondStatsForEachCamera.Count+1];
-                    row[0] = perSecondStat.DateTime.ToUniversalTime().ToString("s");
+                    row[0] = perSecondStat.DateTime.ToString("s");
                     row[i] = perSecondStat.NumDetectedObjects.ToString();
                     perSecondStatsFormattedStrings.Add(row);
                 }
             }
             
-            if (perSecondStatsFormattedStrings.Count == 1)
+            string[] latestRow = new string[perSecondStatsForEachCamera.Count + 1];
+            string[] earliestRow = new string[perSecondStatsForEachCamera.Count + 1];
+            latestRow[0] = GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("s");
+            earliestRow[0] = DateTime.Now.ToString("s");
+            for (int i = 1; i <= perSecondStatsForEachCamera.Count; i++)
             {
-                string[] row = new string[perSecondStatsForEachCamera.Count+1];
-                row[0] = DateTime.UtcNow.ToString("s");
-                for (int i = 1; i <= perSecondStatsForEachCamera.Count; i++)
-                {
-                    row[i] = 0.ToString();
-                }
-                perSecondStatsFormattedStrings.Add(row);
+                latestRow[i] = 0.ToString();
+                earliestRow[i] = 0.ToString();
             }
+            perSecondStatsFormattedStrings.Add(latestRow);
+            perSecondStatsFormattedStrings.Add(earliestRow);
             
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             graphStatistics.SelectedPeriod = pastPeriod;
             return graphStatistics;
         }
         
+        private DateTime GetLatestDateForPastPeriod(PastPeriod pastPeriod, DateTime? startDate = null)
+        {
+            if (pastPeriod == PastPeriod.LastHalfHour)
+            {
+                return DateTime.Now.AddMinutes(-30);
+            }
+            else if (pastPeriod == PastPeriod.LastDay)
+            {
+                return DateTime.Now.AddDays(-1);
+            }
+            else if (pastPeriod == PastPeriod.LastWeek)
+            {
+                return DateTime.Now.AddDays(-7);
+            }
+            else if (pastPeriod == PastPeriod.LastMonth)
+            {
+                return DateTime.Now.AddMonths(-1);
+            }
+            else if (pastPeriod == PastPeriod.LastYear)
+            {
+                return DateTime.Now.AddYears(-1);
+            }
+            else if (pastPeriod == PastPeriod.Custom && startDate != null)
+            {
+                return startDate.Value;
+            }
+
+            throw new ArgumentException("Can't find Latest Valid Date for specified arguments");
+        }
+        
         private List<DatabasePerSecondStat> GetDatabasePerSecondStatsForPastPeriod(int cameraId, PastPeriod pastPeriod, 
             DateTime? startDate, DateTime? endDate)
         {
             List<DatabasePerSecondStat> perSecondStats = _databaseQueryService.GetPerSecondStatsForCamera(cameraId);
-
+            //Remove all stats set into the future
+            perSecondStats.RemoveAll(stat => DateTime.Now < stat.DateTime);
             if (pastPeriod == PastPeriod.LastHalfHour)
             {
                 perSecondStats.RemoveAll(stat => DateTime.Now.AddMinutes(-30) >= stat.DateTime);

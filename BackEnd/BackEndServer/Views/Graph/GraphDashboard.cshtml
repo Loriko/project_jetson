@@ -4,39 +4,42 @@
 <h1 id="headerGraph" class="page-title center-align">Statistics and Trends</h1>
 
 <script type="text/javascript">
-    google.charts.load('current', { packages: ['corechart', 'line'] });
-    google.charts.setOnLoadCallback(function() {
-        $("#graph_name_list li a.active").click();
-        if ($("#graph_name_list li a.active").attr("value") === "@PastPeriod.Custom") {
-            $("#start_date").change();
-        }
+google.charts.load('current', {'packages':['annotatedtimeline']});
+google.charts.setOnLoadCallback(function() {
+    $("#graph_name_list li a.active").click();
+    if ($("#graph_name_list li a.active").attr("value") === "@PastPeriod.Custom") {
+        $("#start_date").change();
+    }
 });
 
 function drawChart(stats) {
-    // Define the chart to be drawn.
-    var array = stats;
-    for (i = 1; i < array.length; i++) {
-        array[i][0] = new Date(array[i][0]);
-        array[i][1] = parseInt(array[i][1]);
+    var data = new google.visualization.DataTable();
+
+    if (stats.length === 0) {
+        Materialize.toast("Couldn't reload chart because of an unexpected server error", 4000);
+        return;
     }
-
-    var data = new google.visualization.arrayToDataTable(array);
-
-    var options = {
-        legend: { position: 'bottom' },
-        explorer: { 
-            actions: ['dragToZoom', 'rightClickToReset'],
-            axis: 'horizontal',
-            keepInBounds: true,
-            maxZoomIn: 110.0
-        },
-        vAxis: {minValue: 0}
+    
+    data.addColumn('datetime', stats[0][0]);
+    data.addColumn('number', stats[0][1]);
+    stats.splice(0, 1);
+    
+    var maxValue = 1;
+    for (i = 0; i < stats.length; i++) {
+        stats[i][0] = new Date(stats[i][0]);
+        stats[i][1] = +stats[i][1];
+        if (maxValue < stats[i][1]) {
+            //Weird trick that lets you see the maximum value on the vertical axis
+            maxValue = stats[i][1] * 1.2;
+        }
     }
-
-    // Instantiate and draw the chart.
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-    chart.draw(data, options);
+    
+    data.addRows(stats);
+    
+    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline_chart'));
+    chart.draw(data, { displayAnnotations: false, displayZoomButtons: false, fill: 1, allowRedraw: true, min:0, max:maxValue});
 }
+
 </script>
 
 <div class="row">
@@ -69,7 +72,7 @@ function drawChart(stats) {
                 <div id="past_month" class="card-title center-align">Number of people spotted by @Model.CameraName over the past month</div>
                 <div id="past_year" class="card-title center-align">Number of people spotted by @Model.CameraName over the past year</div>
                 <div id="past_custom" class="card-title center-align">Number of people spotted by @Model.CameraName over a custom period</div>
-                <div id="curve_chart"></div>
+                <div id="timeline_chart"></div>
                 <div id="select-range-message" class="center-align hide">
                     To draw the chart, please select a valid date range using the date pickers
                 </div>
@@ -85,7 +88,7 @@ function reloadGraphWithCustomDateRange() {
     var url = "GetCustomGraphStats?cameraId=" + "@Model.CameraId" + "&startDate=" + startDate + "&endDate=" + endDate;
     $.get(url, function(data) {
         $("#select-range-message").addClass("hide");
-        $("#curve_chart").removeClass("hide");
+        $("#timeline_chart").removeClass("hide");
         drawChart(data.stats);
     });
 };
@@ -102,11 +105,11 @@ $("#graph_name_list li a").click(function() {
     if (pastPeriod === "@PastPeriod.Custom") {
         $(".date-container").removeClass("hide");
         $("#select-range-message").removeClass("hide");
-        $("#curve_chart").addClass("hide");
+        $("#timeline_chart").addClass("hide");
     } else {
         $(".date-container").addClass("hide");
         $("#select-range-message").addClass("hide");
-        $("#curve_chart").removeClass("hide");
+        $("#timeline_chart").removeClass("hide");
         $("#start_date").val("").removeClass("valid");
         $("#end_date").val("").removeClass("valid");
         reloadGraph(pastPeriod);

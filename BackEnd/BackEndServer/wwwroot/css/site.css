@@ -269,3 +269,20 @@ label[data-error], label[data-success] {
     /*overflow: hidden;*/
     /*text-overflow: ellipsis;*/
 }
+#timeline_chart {
+    width: 95% !important;
+    margin-top: 15px !important;
+    margin-bottom: 10px !important;
+}
+
+#timeline_chart .border {
+    overflow: hidden;
+}
+.row-full{
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    height: 100px;
+    margin-top: 100px;
+    left: 50%;
+}
