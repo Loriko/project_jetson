@@ -79,6 +79,7 @@ namespace BackEndServer
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            applicationLifetime.ApplicationStarted.Register(OnStartup);
             applicationLifetime.ApplicationStopping.Register(OnShutdown);
 
             if (env.IsDevelopment())
@@ -100,11 +101,18 @@ namespace BackEndServer
             });
         }
 
+        // This code is called when the application is started.
+        private void OnStartup()
+        {
+            LogManager.GetLogger("Startup").Info($"Starting Jetson Server listening on {Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}...");
+        }
+        
         // This code is called when the application is stopped.
         private void OnShutdown()
         {
             // Deletes all files copied into the temp folder when testing. Prevents uploading them to GitHub.
             ClearWWWRootTempFolder();
+            LogManager.Flush();
         }
 
         private void ClearWWWRootTempFolder()
