@@ -44,29 +44,28 @@ namespace BackEndServer.Services
 
         #region Data Receival Controller (API)
 
-        public bool PersistNewPerSecondStats(List<PerSecondStat> distinctStats)
+        public bool PersistNewPerSecondStats(List<DatabasePerSecondStat> distinctStats)
         {
             // Define the bulk insert query without any values to insert.
             string bulkInsertCommand = $"INSERT INTO {DatabasePerSecondStat.TABLE_NAME} "
                 + $"({DatabasePerSecondStat.CAMERA_ID_LABEL},{DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL}, "
-                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL},{DatabasePerSecondStat.FRM_JPG_PATH_LABEL}) VALUES ";
+                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL},"
+                + $"{DatabasePerSecondStat.FRM_JPG_PATH_LABEL}) VALUES ";
 
             // Append the values one by one to the bulk insert query.
-            PerSecondStat lastStat = distinctStats.Last();
+            DatabasePerSecondStat lastStat = distinctStats.Last();
 
-            foreach (PerSecondStat stat in distinctStats)
+            foreach (DatabasePerSecondStat stat in distinctStats)
             {
-                //TODO: Usafe addition done for milestone 4
-                string cameraId = stat.CameraId.Value.ToString();
-                string numDetectedObjects = stat.NumTrackedPeople.ToString();
-                string hasImage = "0";
-
+                string hasImageString = "0";
                 if (stat.HasSavedImage)
                 {
-                    hasImage = "1";
+                    hasImageString = "1";
                 }
-
-                bulkInsertCommand += $"({cameraId},{numDetectedObjects},'{stat.DateTime}',{hasImage},{formatNullableString(stat.FrameAsJpgPath)})";
+                
+                bulkInsertCommand += $"({stat.CameraId},{stat.NumDetectedObjects},"
+                    + $"'{stat.DateTime.ToMySqlDateString()}',"
+                    + $"'{hasImageString}',{formatNullableString(stat.FrameJpgPath)})";
 
                 if (stat != lastStat)
                 {
@@ -78,22 +77,16 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
+                MySqlCommand cmd = new MySqlCommand(bulkInsertCommand, conn);
 
-                try
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
                 {
-                    MySqlCommand cmd = new MySqlCommand(bulkInsertCommand, conn);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // Write to Log
-                    return false; // This is probably not going to be executed...
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
-
         #endregion
 
         #region Hourly Stats Service (API)
@@ -737,7 +730,7 @@ namespace BackEndServer.Services
                     return true;
                 }
             }
-            return true;
+            return false;
         }
 
         // Performs an UPDATE to set the specified API key in the database to inactive. 
@@ -955,11 +948,11 @@ namespace BackEndServer.Services
         {
             using (MySqlConnection conn = GetConnection())
             {   
-                string query = $"DELETE FROM {DatabaseAlert.TABLE_NAME} " +
+                string command = $"DELETE FROM {DatabaseAlert.TABLE_NAME} " +
                                $"WHERE {DatabaseAlert.ALERT_ID_LABEL} = {alertId};";
                 
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(command, conn);
 
                 int success = cmd.ExecuteNonQuery();
                 if (success != 0)

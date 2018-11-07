@@ -28,7 +28,6 @@
     <Folder Include="wwwroot\frmjpg" />
     <Folder Include="wwwroot\images\camera_images\" />
     <Folder Include="Controllers\APIControllers\" />
-    <Folder Include="Classes\DataResponseClasses\" />
     <Folder Include="wwwroot\lib\materialize\fonts" />
   </ItemGroup>
 </Project>

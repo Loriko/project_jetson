@@ -11,7 +11,7 @@ namespace BackEndServer.Services.AbstractServices
         string ConnectionString { get; set; }
 
         // PERSIST methods:
-        bool PersistNewPerSecondStats(List<PerSecondStat> distinctStats);
+        bool PersistNewPerSecondStats(List<DatabasePerSecondStat> distinctStats);
         bool PersistNewPerHourStats(List<DatabasePerHourStat> perHourStats);
         bool PersistNewCamera(DatabaseCamera camera);
 

@@ -9,11 +9,12 @@ using NDbUnit.Core.MySqlClient;
 
 namespace WebAPI_UnitTests.ServicesTests
 {
+    
     [TestFixture]
     class HourlyStatsServiceTests
     {
         private HourlyStatsService _hourlyStatsService;
-
+        /*
         [OneTimeSetUp]
         public void SetUp()
         {
@@ -41,9 +42,8 @@ namespace WebAPI_UnitTests.ServicesTests
 
             //perSecondStats[0] = new PerSecondStat();
 
-            DataMessage input = new DataMessage("TESTING", perSecondStats);*/
+            DataMessage input = new DataMessage("TESTING", perSecondStats);
         }
-
-
+        */
     }
 }

@@ -93,6 +93,7 @@ namespace BackEndServer.Services
             return new_APIKey;
         }
         
+        // UNTESTED
         // Attempts to first verify that the key exists in the database and then sets the API key to inactive. 
         public bool UnregisterAPIKey(string unsalted_unhashed_api_key)
         {
