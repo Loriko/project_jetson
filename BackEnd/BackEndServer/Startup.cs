@@ -14,6 +14,7 @@ using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.PlaceholderServices;
 using System.IO;
+using Castle.Core.Internal;
 using NLog;
 
 namespace BackEndServer
@@ -123,14 +124,36 @@ namespace BackEndServer
         private void ConfigureLogger()
         {
             var config = new NLog.Config.LoggingConfiguration();
-
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "${basedir}/logs/webserver.log" };
+            LogManager.ThrowExceptions = true;
+            
+            string fileName = TryGetLogPath();
+            if (fileName.IsNullOrEmpty())
+            {
+                fileName = "${basedir}/logs/jetson_server.log";
+            }
+            
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = fileName };
             var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
             
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Info, LogLevel.Fatal, logfile);
             
             LogManager.Configuration = config;
+            //dot net core logs are available at /var/log/dotnet.out.log
+            LogManager.GetLogger("Startup").Info($"Trying to configure logger to log at {fileName} ...");
+            LogManager.ThrowExceptions = false;
+        }
+
+        private string TryGetLogPath()
+        {
+            IConfigurationSection section = Configuration.GetSection("LoggerConfiguration");
+            if (section != null)
+            {
+                return section["FileName"];
+            }
+
+            return null;
         }
     }
 }
