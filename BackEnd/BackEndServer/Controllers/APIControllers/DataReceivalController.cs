@@ -24,8 +24,8 @@ namespace WebAPI.Controllers
                                                                          AbstractHourlyStatsService);
         private AbstractAPIKeyService _apiKeyService;
         private AbstractAPIKeyService APIKeyService => _apiKeyService ?? (_apiKeyService =
-                                                               HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
-                                                                         AbstractAPIKeyService);
+                                                           HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
+                                                               AbstractAPIKeyService);
         #endregion
 
         /// <summary>
@@ -37,13 +37,12 @@ namespace WebAPI.Controllers
         [Route("DataMessage")] // "api/datareceival/datamessage"
         public IActionResult DataMessage([FromBody] DataMessage receivedMessage)
         {
-        //Temporarily disabling validation on API key
-//            // Verify device's API Key.
-//            if (_apiKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
-//            {
-//                // If API Key does not exist or is deactivated.
-//                return Unauthorized();
-//            }
+            // Verify device's API Key.
+            if (_apiKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
+            {
+                // If API Key does not exist or is deactivated.
+                return Unauthorized();
+            }
 
             if (DataMessageService.CheckDataMessageValidity(receivedMessage) == false)
             {
