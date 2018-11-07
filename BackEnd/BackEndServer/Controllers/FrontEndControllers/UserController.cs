@@ -119,7 +119,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            return View("UserCreation");
+            UserSettings userSettings = UserService.GetUserSettings(currentUserId.Value);
+            return View("UserCreation", userSettings);
         }
         
         [HttpPost]

@@ -38,6 +38,18 @@
             </div>
         </div>
         
+        @if (Model.IsAdministrator)
+        {
+            <div class="row">
+                <div class="input-field col s6 form-checkbox">
+                    <input id="administrator_checkbox" name="IsAdministrator" type="checkbox" value="true" />
+                    <label class="checkbox-label" for="administrator_checkbox">
+                        <span>Make User an Administrator?</span>
+                    </label>
+                </div>
+            </div>
+        }
+        
         <div class="row">
             <div class="input-field col s6 form-checkbox">
                 <input id="API_checkbox" name="CreateAPIKey" type="checkbox" value="true" />
