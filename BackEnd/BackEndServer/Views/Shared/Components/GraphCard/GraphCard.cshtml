@@ -1,80 +1,82 @@
 ﻿@model BackEndServer.Models.ViewModels.CameraStatistics
 
-<script type="text/javascript">
-    google.charts.load('current', {'packages':['annotatedtimeline']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        // Define the chart to be drawn.
-        @{
-            if (Model.GraphStatistics != null)
-            {
-                <text>    
-                    var stats = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
-                    var data = new google.visualization.DataTable();
-
-                    if (stats.length === 0) {
-                        Materialize.toast("Couldn't load chart because of an unexpected server error", 4000);
-                        return;
-                    }
+<div class="col s12 m8 center-align main-statistics valign-wrapper">
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['annotatedtimeline']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            // Define the chart to be drawn.
+            @{
+                if (Model.GraphStatistics != null)
+                {
+                    <text>    
+                        var stats = @Html.Raw(Json.Serialize(Model.GraphStatistics.Stats));
+                        var data = new google.visualization.DataTable();
     
-                    data.addColumn('datetime', stats[0][0]);
-                    data.addColumn('number', stats[0][1]);
-                    stats.splice(0, 1);
-    
-                    var maxValue = 1;
-                    for (i = 0; i < stats.length; i++) {
-                        stats[i][0] = new Date(stats[i][0]);
-                        stats[i][1] = +stats[i][1];
-                        if (maxValue < stats[i][1]) {
-                            //Weird trick that lets you see the maximum value on the vertical axis
-                            maxValue = stats[i][1] * 1.2;
+                        if (stats.length === 0) {
+                            Materialize.toast("Couldn't load chart because of an unexpected server error", 4000);
+                            return;
                         }
-                    }
-                    data.addRows(stats);
+        
+                        data.addColumn('datetime', stats[0][0]);
+                        data.addColumn('number', stats[0][1]);
+                        stats.splice(0, 1);
+        
+                        var maxValue = 1;
+                        for (i = 0; i < stats.length; i++) {
+                            stats[i][0] = new Date(stats[i][0]);
+                            stats[i][1] = +stats[i][1];
+                            if (maxValue < stats[i][1]) {
+                                //Weird trick that lets you see the maximum value on the vertical axis
+                                maxValue = stats[i][1] * 1.2;
+                            }
+                        }
+                        data.addRows(stats);
+        
+                        var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline_chart'));
+                        chart.draw(data, { displayAnnotations: false, displayZoomButtons: false, displayRangeSelector: false, 
+                                           fill: 1, min:0, max:maxValue});
+                    </text>
+                }
+            }
+        }
+    </script>
     
-                    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline_chart'));
-                    chart.draw(data, { displayAnnotations: false, displayZoomButtons: false, displayRangeSelector: false, 
-                                       fill: 1, min:0, max:maxValue});
-                </text>
-            }
-        }
-    }
-</script>
-
-<div class="card blue-grey darken-1 full-width" id="graph_card">
-    <div class="card-content white-text">
-        <span class="card-title">Past Camera Activity</span>
-        @{
-            if (Model.GraphStatistics == null || Model.GraphStatistics.Stats == null || Model.GraphStatistics.Stats.Length <= 1)
-            {
-                <div class="unavailable-message-light">
-                    The activity graph is unavailable since no activity was recorded by the camera in the last 30 minutes
-                </div>
-            }
-            else
-            {
-                <div class="card borderless-card graph-card">
-                    <div class="card-content smaller-padding-card-content">
-                        <p class="graph-title">Activity in the last 30 minutes</p>
-                        <div id="timeline_chart"></div>
+    <div class="card blue-grey darken-1 full-width" id="graph_card">
+        <div class="card-content white-text">
+            <span class="card-title">Past Camera Activity</span>
+            @{
+                if (Model.GraphStatistics == null || Model.GraphStatistics.Stats == null || Model.GraphStatistics.Stats.Length <= 1)
+                {
+                    <div class="unavailable-message-light">
+                        The activity graph is unavailable since no activity was recorded by the camera in the last 30 minutes
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="card borderless-card graph-card">
+                        <div class="card-content smaller-padding-card-content">
+                            <p class="graph-title">Activity in the last 30 minutes</p>
+                            <div id="timeline_chart"></div>
+                        </div>
+                    </div>
+                }
             }
-        }
-        @if(Model.MostRecentPeopleCount != null && Model.LastUpdatedTime != null) {
-            <table>
-                <tbody>
-                <tr>
-                    <td class="property-name">Last Amount Spotted</td>
-                    <td>@Model.MostRecentPeopleCount.Value @(Model.MostRecentPeopleCount.Value >= 2 ? "Persons" : "Person")</td>
-                </tr>
-                <tr>
-                    <td class="property-name">Last Update Received On</td>
-                    <td>@Model.LastUpdatedTime.Value.ToString("yyyy/MM/dd hh:mm:ss tt")</td>
-                </tr>
-                </tbody>
-            </table>
-        }
-        <a href="CameraSelected?cameraId=@Model.CameraInformation.CameraId" id="camera-stats-link" class="waves-effect waves-light btn"><i class="material-icons right">show_chart</i>View statistics and trends over past data</a>
+            @if(Model.MostRecentPeopleCount != null && Model.LastUpdatedTime != null) {
+                <table>
+                    <tbody>
+                    <tr>
+                        <td class="property-name">Last Amount Spotted</td>
+                        <td>@Model.MostRecentPeopleCount.Value @(Model.MostRecentPeopleCount.Value >= 2 ? "Persons" : "Person")</td>
+                    </tr>
+                    <tr>
+                        <td class="property-name">Last Update Received On</td>
+                        <td>@Model.LastUpdatedTime.Value.ToString("yyyy/MM/dd hh:mm:ss tt")</td>
+                    </tr>
+                    </tbody>
+                </table>
+            }
+            <a href="CameraSelected?cameraId=@Model.CameraInformation.CameraId" id="camera-stats-link" class="waves-effect waves-light btn"><i class="material-icons right">show_chart</i>View statistics and trends over past data</a>
+        </div>
     </div>
 </div>

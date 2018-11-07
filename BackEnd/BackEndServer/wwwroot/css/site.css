@@ -193,10 +193,18 @@ main {
 .full-width {
     width: 100%;
 }
+.full-height {
+    height: 100%;
+}
 
 .graph-card {
+    height: 80% !important;
     margin-bottom: 12px;
     color: black;
+}
+
+#graph_card > .card-content {
+    height: 380px !important;
 }
 
 .unavailable-message-light {
@@ -246,6 +254,7 @@ label[data-error], label[data-success] {
 }
 #camera_card, #graph_card {
     height: 510px;
+    overflow: scroll;
 }
 #stat_frames_card, #shared_room_card{
     height: 370px;
@@ -271,6 +280,7 @@ label[data-error], label[data-success] {
 }
 #timeline_chart {
     width: 95% !important;
+    height: 100% !important;
     margin-top: 15px !important;
     margin-bottom: 10px !important;
 }
