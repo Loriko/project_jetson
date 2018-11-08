@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
         public IActionResult DataMessage([FromBody] DataMessage receivedMessage)
         {
             // Verify device's API Key.
-            if (_apiKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
+            if (APIKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
             {
                 // If API Key does not exist or is deactivated.
                 return Unauthorized();

@@ -13,7 +13,7 @@ namespace WebAPI_UnitTests.ServicesTests
     [TestFixture]
     class HourlyStatsServiceTests
     {
-        private HourlyStatsService _hourlyStatsService;
+        //private HourlyStatsService _hourlyStatsService;
         /*
         [OneTimeSetUp]
         public void SetUp()

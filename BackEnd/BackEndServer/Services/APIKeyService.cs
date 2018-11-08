@@ -80,7 +80,7 @@ namespace BackEndServer.Services
             APIKey api_key_to_persist = new APIKey(salted_hashed_api_key, new_Salt, userId);
 
             // Attempt to persist the newly created API Key and Salt to the Database. The stored API key is salted and hashed for security reasons.
-            bool persistSuccess = _dbQueryService.PersistAPIKey(api_key_to_persist);
+            bool persistSuccess = _dbQueryService.PersistNewAPIKey(api_key_to_persist);
 
             if (persistSuccess == false)
             {
@@ -93,34 +93,9 @@ namespace BackEndServer.Services
             return new_APIKey;
         }
         
-        // UNTESTED
-        // Attempts to first verify that the key exists in the database and then sets the API key to inactive. 
-        public bool UnregisterAPIKey(string unsalted_unhashed_api_key)
-        {
-            int api_key_id = VerifyAPIKey(unsalted_unhashed_api_key);
-
-            // Check if the API key is in the database and is active. If not, return false.
-            if (api_key_id < 0)
-            {
-                return false;
-            }
-
-            // The API key is active, so attempt to deactivate it.
-            bool deactivateSuccess = _dbQueryService.DeactivateAPIKey(api_key_id);
-
-            if (deactivateSuccess == false)
-            {
-                // LOG ERROR HERE
-                return false;
-            }
-
-            return true;
-        }
-
         // Verifies the specified API Key against the database. 
-        // Returns a positive integer (>= 0) (the API key's ID in the database) if found and is active.
+        // Returns a positive integer (>= 0) (the API key's ID in the database) if found.
         // If API Key is not found, returns a -1.
-        // If API Key is found and is inactive, returns -2.
         public int VerifyAPIKey(string unsalted_unhashed_api_key)
         {
             // Get a list of salted and hashed Database API Keys.
@@ -141,17 +116,8 @@ namespace BackEndServer.Services
                 // If the salted and hashed API Keys are identical, then we have a match.
                 if (salted_hashed_api_key_to_check == db_api_key.Key)
                 {
-                    // Verify the Status of the API Key (ACTIVE or INACTIVE).
-                    if (db_api_key.IsActive == (int)DatabaseAPIKey.API_Key_Status.ACTIVE)
-                    {
-                        // Return a positive integer (Database API Key's ID), to indicate it is a valid API Key.
-                        return db_api_key.APIKeyId;
-                    }
-                    else if (db_api_key.IsActive == (int)DatabaseAPIKey.API_Key_Status.INACTIVE)
-                    {
-                        // API key is not valid because it is deactivated. Return a -2 for deactivated keys.
-                        return -2;
-                    }
+                    // Return a positive integer (Database API Key's ID), to indicate it is a valid API Key.
+                    return db_api_key.APIKeyId;
                 }
             }
 
