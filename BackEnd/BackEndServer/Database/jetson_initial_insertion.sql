@@ -5,8 +5,8 @@ INSERT INTO user (id, username, password)
 VALUES (1, 'paulhawit', 'jetson');
 
 -- Plain Text API Key for Testing: IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF 
-INSERT INTO jetson.api_key (user_id,api_key,salt,is_active) 
-VALUES (1,'91C6236CC7EFCE5A419AAD80A673A295','O98Qpv2QUGeRy',1);
+INSERT INTO jetson.api_key (user_id,api_key,salt) 
+VALUES (1,'91C6236CC7EFCE5A419AAD80A673A295','O98Qpv2QUGeRy');
 
 INSERT INTO location (id, location_name, address_line, city, state, zip)
 VALUES  (1, 'DMV Rockland', '120 Rockland Drive', 'Ottawa', 'Ontario', 'K1S5L5'), 
