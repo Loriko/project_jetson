@@ -194,5 +194,10 @@ namespace BackEndServer.Services
             
             return barDetails;
         }
+
+        public bool ValidateUsername(string username)
+        {
+            return _dbQueryService.GetUserByUsername(username) == null;
+        }
     }
 }

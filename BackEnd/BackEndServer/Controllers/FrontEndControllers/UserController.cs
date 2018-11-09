@@ -139,5 +139,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             return View("Error");
         }
+
+        [HttpPost]
+        public JsonResult ValidateUsername(string username)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(UserService.ValidateUsername(username));
+            }
+
+            return Json(false);
+        }
     }
 }
