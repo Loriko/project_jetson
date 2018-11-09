@@ -43,5 +43,10 @@ namespace BackEndServer.Services
             }
             return roomList;
         }
+
+        public bool ValidateNewRoomName(int locationId, string roomName)
+        {
+            return _dbQueryService.GetRoomIdByLocationIdAndRoomName(locationId, roomName) <= 0;
+        }
     }
 }

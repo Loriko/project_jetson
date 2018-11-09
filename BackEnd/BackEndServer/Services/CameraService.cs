@@ -432,5 +432,10 @@ namespace BackEndServer.Services
             DatabaseCamera dbCamera = _dbQueryService.GetCameraByKey(cameraKey);
             return dbCamera != null && dbCamera.UserId.GetValueOrDefault(0) == 0;
         }
+
+        public bool ValidateNewCameraName(int locationId, string cameraName)
+        {
+            return _dbQueryService.GetCameraWithNameAtLocation(locationId, cameraName) == null;
+        }
     }
 }

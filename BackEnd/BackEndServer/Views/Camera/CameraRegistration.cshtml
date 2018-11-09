@@ -16,7 +16,7 @@
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" value="@Model.CameraDetails.CameraName" type="text" class="validate" required>
-                <label for="camera_name">Camera Name *</label>
+                <label for="camera_name" data-error="A unique name must be entered">Camera Name *</label>
             </div>
             <div class="input-field col s6">
                 @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
@@ -34,7 +34,7 @@
             <div class="input-field col s8">
                 <div id="new_room_container">
                     <input id="new_room_name" name="NewRoomName" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
-                    <label for="new_room_name">Monitored Room *</label>
+                    <label data-error="You must enter an unused room name" for="new_room_name">Monitored Room *</label>
                 </div>
                 <div id="existing_room_container" class="hide">
                     @{ Html.RenderPartial("~/Views/Location/RoomSelectorWrapper.cshtml", new RoomSelectorInfo
@@ -190,6 +190,8 @@
             "&selectorId=existing_room_id&selectorName=ExistingRoomId&required=true&selectedRoomId=" +
             "@Model.CameraDetails.ExistingRoomId";
         $('#existing_room_container').load(url, roomSelectorLoaded);
+        validateNewRoomName();
+        validateNewCameraName();
     });
 
     @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
@@ -227,6 +229,76 @@
 
     // TODO: Add client side verification for image file input.
 
+    //How to handle edit case
+    $("#camera_name").focusout(function() {
+        validateNewCameraName();
+    });
+    
+    function validateNewCameraName() {
+        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty() == false)
+        {
+        <text>
+            if ($("#camera_name").val() === "@Model.CameraDetails.CameraName") {
+                return true;
+            }
+        </text>
+        }
+        
+        if ($("#camera_name").val() && $("#location_id").val()) {
+            var url = "ValidateNewCameraName";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "locationId": $("#location_id").val(),
+                    "cameraName": $("#camera_name").val()
+                },
+                success: function(data) {
+                    var newCameraName = $("#camera_name");
+                    newCameraName.addClass("validated");
+                    if (data === true) {
+                        newCameraName.addClass("valid");
+                        newCameraName.removeClass("invalid");
+                    } else {
+                        newCameraName.addClass("invalid");
+                        newCameraName.removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+    
+    function validateNewRoomName() {
+        if ($("#new_room_name").val() && $("#location_id").val()) {
+            var url = "../location/ValidateNewRoomName";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "locationId": $("#location_id").val(),
+                    "roomName": $("#new_room_name").val()
+                },
+                success: function(data) {
+                    var newRoomName = $("#new_room_name");
+                    newRoomName.addClass("validated");
+                    if (data === true) {
+                        newRoomName.addClass("valid");
+                        newRoomName.removeClass("invalid");
+                    } else {
+                        newRoomName.addClass("invalid");
+                        newRoomName.removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+    
+    $("#new_room_name").focusout(function() {
+        validateNewRoomName();
+    });
+    
     function roomSelectorLoaded() {
         $('#existing_room_id').material_select();
         $('#existing_room_checkbox').change();
@@ -250,14 +322,47 @@
     }
 
     function verifyCameraKeyValid() {
-        if ($("#camera_key").hasClass("validated") === false 
-            || $("#camera_key").hasClass("invalid")) {
+        if ($("#camera_key").hasClass("validated") === false || $("#camera_key").hasClass("invalid")) {
+            return false;
+        }
+        return true;
+    }
+
+    function checkNewRoomNameValid() {
+        if ($("#new_room_name").hasClass("validated") === false || $("#new_room_name").hasClass("invalid")) {
+            return false;
+        }
+        return true;
+    }
+
+    function checkCameraNameValid() {
+        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty() == false)
+        {
+        <text>
+            if ($("#camera_name").val() === "@Model.CameraDetails.CameraName") {
+                return true;
+            }
+        </text>
+        }
+        if ($("#camera_name").hasClass("validated") === false || $("#camera_name").hasClass("invalid")) {
             return false;
         }
         return true;
     }
     
     $("#camera_registration_form").submit(function(e) {
+        if (checkNewRoomNameValid() === false) {
+            return false;
+        }
+        //gotta do this differently for edit
+        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
+        {
+            <text>
+                if (checkCameraNameValid() === false) {
+                    return false;
+                }
+            </text>
+        }
         @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
         {
             <text>
@@ -269,8 +374,8 @@
             <text>return true;</text>
         }
     });
-    
-    $("#location-creation-form").submit(function (e) {
+
+    $("#location-creation-form").submit(function(e) {
 
         var form = $(this);
         var url = form.attr('action');

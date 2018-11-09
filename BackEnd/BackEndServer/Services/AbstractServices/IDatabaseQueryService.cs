@@ -82,5 +82,6 @@ namespace BackEndServer.Services.AbstractServices
         bool CreateUserCameraAssociation(int userId, int cameraId);
         bool PersistNewAPIKey(DatabaseAPIKey apiKey);
         List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
+        DatabaseCamera GetCameraWithNameAtLocation(int locationId, string cameraName);
     }
 }

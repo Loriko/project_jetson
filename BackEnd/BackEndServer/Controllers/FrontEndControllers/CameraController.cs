@@ -262,5 +262,17 @@ namespace BackEndServer.Controllers.FrontEndControllers
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
             return View("ManageCameras", availableCameras);
         }
+
+        [HttpPost]
+        public JsonResult ValidateNewCameraName(int locationId, string cameraName)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.ValidateNewCameraName(locationId, cameraName));
+            }
+
+            return Json(false);
+        }
     }
 }

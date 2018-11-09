@@ -34,5 +34,6 @@ namespace BackEndServer.Services.AbstractServices
         JpgStatFrameList GetStatFrameList(int cameraId);
         List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
         bool ValidateCameraKey(string cameraKey);
+        bool ValidateNewCameraName(int locationId, string cameraName);
     }
 }

@@ -9,5 +9,6 @@ namespace BackEndServer.Services.AbstractServices
         bool SaveLocation(LocationDetails locationDetails);
         LocationInformationList GetAvailableLocations();
         List<RoomInfo> GetRoomsAtLocation(int locationId);
+        bool ValidateNewRoomName(int locationid, string roomName);
     }
 }

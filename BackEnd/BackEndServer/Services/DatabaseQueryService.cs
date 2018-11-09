@@ -450,6 +450,32 @@ namespace BackEndServer.Services
             return camera;
         }
         
+        public DatabaseCamera GetCameraWithNameAtLocation(int locationId, string cameraName)
+        {
+            DatabaseCamera camera = null;
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
+                               $"WHERE UPPER({DatabaseCamera.CAMERA_NAME_LABEL}) = '{cameraName.ToUpper()}' " +
+                               $"AND {DatabaseCamera.LOCATION_ID_LABEL} = {locationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        camera = getDatabaseCameraFromReader(reader);
+                    }
+                }
+            }
+
+            return camera;
+        }
+        
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {
@@ -1886,7 +1912,7 @@ namespace BackEndServer.Services
             {
                 string query = $"SELECT {DatabaseRoom.ROOM_ID_LABEL} FROM {DatabaseRoom.TABLE_NAME} " + 
                                $"WHERE {DatabaseRoom.LOCATION_ID_LABEL} = {locationId} " +
-                               $"AND {DatabaseRoom.ROOM_NAME_LABEL} = '{roomName}' LIMIT 1;";
+                               $"AND UPPER({DatabaseRoom.ROOM_NAME_LABEL}) = '{roomName.ToUpper()}' LIMIT 1;";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);

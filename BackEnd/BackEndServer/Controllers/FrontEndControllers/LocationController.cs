@@ -54,6 +54,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return Json(false);
         }
 
+        [HttpPost]
+        public JsonResult ValidateNewRoomName(int locationId, string roomName)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(LocationService.ValidateNewRoomName(locationId, roomName));
+            }
+
+            return Json(false);
+        }
+
         public IActionResult LoadLocationSelector(string selectorId, string selectorName, bool required, int selectedLocationId)
         {
             return PartialView("LocationSelectorWrapper", new LocationSelectorInfo(selectorId, selectorName, required, selectedLocationId));
