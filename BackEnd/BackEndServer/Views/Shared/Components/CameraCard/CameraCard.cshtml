@@ -8,13 +8,13 @@
                     <div class="card-image">
     
                         @{
-                            if (String.IsNullOrWhiteSpace(Model.TempImagePath))
+                            if (String.IsNullOrWhiteSpace(Model.CameraInformation.TempImagePath))
                             {
                                 <img class="camera-card-image-sm" src="~/images/camera_images/no_location_picture.png" alt="@Model.CameraInformation.CameraName">
                             }
                             else
                             {
-                                <img class="camera-card-image-sm" src="@Model.TempImagePath" alt="@Model.CameraInformation.CameraName">
+                                <img class="camera-card-image-sm" src="../@Model.CameraInformation.TempImagePath.Replace("wwwroot/", "")" alt="@Model.CameraInformation.CameraName">
                             }
                         }
                     </div>

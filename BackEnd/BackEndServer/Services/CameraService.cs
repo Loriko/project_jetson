@@ -40,8 +40,8 @@ namespace BackEndServer.Services
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocationForUser(locationId, userId);
 
             CameraInformationList listOfCameraInfo = new CameraInformationList(dbCameraList);
-
-            return InitialiseImagesBeforeDisplaying(listOfCameraInfo);
+            return listOfCameraInfo;
+//            return InitialiseImagesBeforeDisplaying(listOfCameraInfo); TODO: Check if we still need this
         }
 
         public CameraKeyList GetCameraKeyListForAdmin()
@@ -203,7 +203,7 @@ namespace BackEndServer.Services
                     cameraStatistics.CameraDetails.Location = new LocationDetails(_dbQueryService.GetLocationById(camera.LocationId.Value));
                 }
 
-                cameraStatistics.TempImagePath = GenerateTempImageAndTempPath(camera.ImagePath);
+//                cameraStatistics.TempImagePath = GenerateTempImageAndTempPath(camera.ImagePath); TODO: Check if we still need this
 
                 return cameraStatistics;
             }
@@ -334,7 +334,8 @@ namespace BackEndServer.Services
 
                     // 2. Create the full file path (output path + filename).
                     string fullFilePath = Path.Combine(outputDirectory.FullName, cameraId + fileExtension);
-                    cameraDetails.SavedImagePath = fullFilePath;
+                    string filePath = Path.Combine(outputDirectory.Name, cameraId + fileExtension);
+                    cameraDetails.SavedImagePath = filePath;
 
                     // 3. Save IFormFile as an image file in the output path.
                     using (var fileStream = new FileStream(fullFilePath, FileMode.Create))

@@ -19,7 +19,7 @@
                             }
                             else
                             {
-                                <img class="camera-card-image" src="@(camera.TempImagePath)" alt="@camera.CameraName">
+                                <img class="camera-card-image" src="../@camera.TempImagePath.Replace("wwwroot/", "")" alt="@camera.CameraName">
                             }
                         }
                         <span class="camera-card-title card-title">@camera.CameraName</span>
