@@ -69,7 +69,7 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseUser GetUserByEmailAddress(string emailAddress);
         DatabaseUser GetUserByPasswordResetToken(string token);
         bool PersistPasswordResetToken(string passwordResetToken, string emailAddress);
-        bool PersistRemovePasswordResetToken(int userId);
+        bool PersistRemovePasswordResetToken(string resetToken);
         DatabaseUser GetUserByUsername(string username);
         DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end);
         List<DatabaseLocation> GetLocations();

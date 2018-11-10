@@ -17,5 +17,6 @@ namespace BackEndServer.Services.AbstractServices
         string GenerateUniqueAPIKey(int userId);
         NavigationBarDetails GetNavigationBarDetailsForUser(int? userId);
         bool ValidateUsername(string username);
+        bool ValidateEmail(string emailAddress);
     }
 }

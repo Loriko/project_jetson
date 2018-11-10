@@ -1717,7 +1717,7 @@ namespace BackEndServer.Services
             }
             return false;
         }
-        public bool PersistRemovePasswordResetToken(int userId)
+        public bool PersistRemovePasswordResetToken(string resetToken)
         {
             using (MySqlConnection conn = GetConnection())
             {
@@ -1725,7 +1725,7 @@ namespace BackEndServer.Services
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
                                $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = NULL " +
-                               $"WHERE {DatabaseUser.USER_ID_LABEL} = {userId};";
+                               $"WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{resetToken}';";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);

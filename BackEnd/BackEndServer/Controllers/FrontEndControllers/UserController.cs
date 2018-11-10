@@ -152,5 +152,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
             return Json(false);
         }
+
+        [HttpPost]
+        public JsonResult ValidateEmail(string emailAddress)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(UserService.ValidateEmail(emailAddress));
+            }
+
+            return Json(false);
+        }
     }
 }

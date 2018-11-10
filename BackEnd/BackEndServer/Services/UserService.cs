@@ -83,7 +83,7 @@ namespace BackEndServer.Services
             databaseUser.Password = passwordReset.Password;
             if (_dbQueryService.PersistPasswordChange(databaseUser))
             {
-                _dbQueryService.PersistRemovePasswordResetToken(databaseUser.UserId);
+                _dbQueryService.PersistRemovePasswordResetToken(passwordReset.Token);
                 return true;
             }
             else
@@ -198,6 +198,11 @@ namespace BackEndServer.Services
         public bool ValidateUsername(string username)
         {
             return _dbQueryService.GetUserByUsername(username) == null;
+        }
+
+        public bool ValidateEmail(string emailAddress)
+        {
+            return _dbQueryService.GetUserByEmailAddress(emailAddress) == null;
         }
     }
 }

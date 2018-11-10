@@ -24,7 +24,7 @@
             </div>
             <div class="input-field col s6">
                 <input id="email_address" name="EmailAddress" type="email" class="validate">
-                <label for="email_address">Email Address</label>
+                <label for="email_address" data-error="You must enter an email address no other user has entered">Email Address</label>
             </div>
         </div>
         <div class="row">
@@ -73,6 +73,34 @@
 </div>
 
 <script>
+    $("#email_address").focusout(function() {
+        validateEmail();
+    });
+
+    function validateEmail() {
+        if ($("#email_address").val()) {
+            var url = "ValidateEmail";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "emailAddress": $("#email_address").val()
+                },
+                success: function(data) {
+                    $("#email_address").addClass("validated");
+                    if (data === true) {
+                        $("#email_address").addClass("valid");
+                        $("#email_address").removeClass("invalid");
+                    } else {
+                        $("#email_address").addClass("invalid");
+                        $("#email_address").removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+    
     function validatePassword() {
         var password1 = $("#password");
         var password2 = $("#password2");
@@ -156,9 +184,22 @@
         return true;
     }
     
+    function checkEmailValidity() {
+        var email = $("#email_address");
+        //check if email doesn't exist
+        if (email.hasClass("invalid") 
+            || email.hasClass("validated") === false) {
+            return false;
+        }
+        return true;
+    }
+    
     $("#user_creation_form").submit(function (e) {
         var validForm = true;
         if (!validatePassword()) {
+            validForm = false;
+        }
+        if (!checkEmailValidity()) {
             validForm = false;
         }
         if (!checkUsernameValidity()) {
