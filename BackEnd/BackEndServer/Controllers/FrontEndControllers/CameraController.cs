@@ -97,8 +97,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUsedId.Value);
 
+            if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
+            {
+                return PartialView("ManageCameras", availableCameras);
+            }
+            
             return View("ManageCameras", availableCameras);
-
         }
 
         [HttpPost]
@@ -270,6 +274,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
             if (currentUserId != null)
             {
                 return Json(CameraService.ValidateNewCameraName(locationId, cameraName));
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public IActionResult UnclaimCamera(int cameraId)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.UnclaimCamera(cameraId));
             }
 
             return Json(false);

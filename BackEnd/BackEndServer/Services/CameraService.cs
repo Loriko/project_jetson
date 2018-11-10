@@ -437,5 +437,24 @@ namespace BackEndServer.Services
         {
             return _dbQueryService.GetCameraWithNameAtLocation(locationId, cameraName) == null;
         }
+
+        public bool UnclaimCamera(int cameraId)
+        {
+            DatabaseCamera dbCamera = _dbQueryService.GetCameraById(cameraId);
+            DatabaseCamera freshCamera = new DatabaseCamera
+            {
+                CameraKey = dbCamera.CameraKey
+            };
+            
+            if (_dbQueryService.DeleteAlertsWithCameraId(cameraId) 
+                && _dbQueryService.DeletePerSecondStatsWithCameraId(cameraId)
+                && (dbCamera.ImagePath.IsNullOrEmpty() 
+                    || DeleteCameraImage(new CameraDetails(dbCamera))))
+            {
+                return _dbQueryService.PersistExistingCameraByCameraKey(freshCamera, true);
+            }
+
+            return false;
+        }
     }
 }

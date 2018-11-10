@@ -475,7 +475,45 @@ namespace BackEndServer.Services
 
             return camera;
         }
-        
+
+        public bool DeleteAlertsWithCameraId(int cameraId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabaseAlert.TABLE_NAME} " +
+                               $"WHERE {DatabaseAlert.CAMERA_ID_LABEL} = {cameraId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeletePerSecondStatsWithCameraId(int cameraId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabasePerSecondStat.TABLE_NAME} " +
+                               $"WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {
@@ -535,15 +573,15 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} " +
-                               $"WHERE {DatabaseUser.USERNAME_LABEL} = '{username}' " +
-                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1";
+                               $"WHERE UPPER({DatabaseUser.USERNAME_LABEL}) = '{username.ToUpper()}' " +
+                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1;";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
-                    if (reader.Read() && Convert.ToString(reader["username"]) == username)
+                    if (reader.Read() && Convert.ToString(reader["username"]).ToUpper() == username.ToUpper())
                     {
                         return true;
                     }

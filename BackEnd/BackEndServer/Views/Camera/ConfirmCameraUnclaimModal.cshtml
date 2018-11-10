@@ -1,0 +1,35 @@
+﻿<div id="camera_unclaim_confirmation_modal" class="modal small-modal">
+    <input type="hidden" name="ToBeUnclaimedCameraId">
+    <div class="modal-content">
+        <h1 class="confirmation-title page-title left-align">Are you sure you want to delete this camera?</h1>
+        <p>Deleting this camera will delete all associated stats, alerts, and notifications.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect waves-light light-green" type="button" onclick="closeCameraUnclaimModal()">Cancel</button>
+        <button class="btn waves-effect waves-light red" type="button" onclick="unclaimCamera()">Delete</button>
+    </div>
+</div>
+
+<script>
+    function handleSuccess() {
+        closeCameraUnclaimModal();
+        //We reload the page but only partially
+        $('#body-container').load("@Url.Action("LoadUserCamera", "Camera")");
+        Materialize.toast("Camera successfully unclaimed!", 4000);
+    }
+
+    function handleFailure() {
+        closeCameraUnclaimModal();
+        Materialize.toast("Couldn't unclaim camera.", 4000);
+    }
+
+    function closeCameraUnclaimModal() {
+        $("#camera_unclaim_confirmation_modal").modal("close");
+    }
+
+    function unclaimCamera() {
+        var cameraId = $("input[name='ToBeUnclaimedCameraId']").val();
+        var data = { "cameraId": cameraId };
+        $.post("@Url.Action("UnclaimCamera", "Camera")", data, handleSuccess).fail(handleFailure);
+    }
+</script>

@@ -83,5 +83,7 @@ namespace BackEndServer.Services.AbstractServices
         bool PersistNewAPIKey(DatabaseAPIKey apiKey);
         List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
         DatabaseCamera GetCameraWithNameAtLocation(int locationId, string cameraName);
+        bool DeleteAlertsWithCameraId(int cameraId);
+        bool DeletePerSecondStatsWithCameraId(int cameraId);
     }
 }

@@ -35,5 +35,6 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
         bool ValidateCameraKey(string cameraKey);
         bool ValidateNewCameraName(int locationId, string cameraName);
+        bool UnclaimCamera(int cameraId);
     }
 }
