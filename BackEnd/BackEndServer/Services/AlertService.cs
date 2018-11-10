@@ -83,5 +83,12 @@ namespace BackEndServer.Services
             dbAlert.DisabledUntil = disabledUntilDateTime;
             return _dbQueryService.PersistExistingAlert(dbAlert);
         }
+
+        public bool EnableAlert(int alertId)
+        {
+            DatabaseAlert dbAlert = _dbQueryService.GetAlertById(alertId);
+            dbAlert.DisabledUntil = null;
+            return _dbQueryService.PersistExistingAlert(dbAlert);
+        }
     }
 }

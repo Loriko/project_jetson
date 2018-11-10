@@ -28,6 +28,9 @@ main {
 .error-message {
     color: red !important;
 }
+.disabled-message {
+    color: red !important;
+}
 .camera-card-title {
     width: 100%;
     background: rgba(0, 0, 0, 0.55);
@@ -179,7 +182,7 @@ main {
     font-style: italic;
 }
 
-#disable-alert-button {
+#disable_alert_button {
     width: 100%;
 }
 
