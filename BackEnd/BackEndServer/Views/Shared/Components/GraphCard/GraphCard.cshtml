@@ -1,4 +1,5 @@
-﻿@model BackEndServer.Models.ViewModels.CameraStatistics
+﻿@using Castle.Core.Internal
+@model BackEndServer.Models.ViewModels.CameraStatistics
 
 <div class="col s12 m8 center-align main-statistics valign-wrapper">
     <script type="text/javascript">
@@ -46,13 +47,7 @@
         <div class="card-content white-text">
             <span class="card-title">Past Camera Activity</span>
             @{
-                if (Model.GraphStatistics == null || Model.GraphStatistics.Stats == null || Model.GraphStatistics.Stats.Length <= 1)
-                {
-                    <div class="unavailable-message-light">
-                        The activity graph is unavailable since no activity was recorded by the camera in the last 30 minutes
-                    </div>
-                }
-                else
+                if (Model.GraphStatistics != null && Model.GraphStatistics.Stats.IsNullOrEmpty() == false)
                 {
                     <div class="card borderless-card graph-card">
                         <div class="card-content smaller-padding-card-content">
@@ -75,6 +70,12 @@
                     </tr>
                     </tbody>
                 </table>
+            }
+            else
+            {
+                <div class="unavailable-message-light no-stat">
+                    No statistic was ever received for this camera
+                </div>
             }
             <a href="CameraSelected?cameraId=@Model.CameraInformation.CameraId" id="camera-stats-link" class="waves-effect waves-light btn"><i class="material-icons right">show_chart</i>View statistics and trends over past data</a>
         </div>
