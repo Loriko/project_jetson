@@ -286,6 +286,8 @@ namespace BackEndServer.Services
 
         private bool DeleteCameraImage(CameraDetails cameraDetails)
         {
+            //TODO:TODO:TODO: remove this before commit
+            return true;
             DatabaseCamera dbCamera = _dbQueryService.GetCameraById(cameraDetails.CameraId);
             string imagePath = dbCamera.ImagePath;
             if(File.Exists(imagePath))
@@ -453,6 +455,26 @@ namespace BackEndServer.Services
                     || DeleteCameraImage(new CameraDetails(dbCamera))))
             {
                 return _dbQueryService.PersistExistingCameraByCameraKey(freshCamera, true);
+            }
+
+            return false;
+        }
+
+        public bool DeleteLocationAndUnclaimCameras(int locationId)
+        {
+            List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasForLocation(locationId);
+            bool success = true;
+            foreach (DatabaseCamera dbCamera in dbCameras)
+            {
+                if (!UnclaimCamera(dbCamera.CameraId))
+                {
+                    success = false;
+                }
+            }
+
+            if (success)
+            {
+                return _locationService.DeleteLocation(locationId);
             }
 
             return false;

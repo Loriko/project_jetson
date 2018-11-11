@@ -354,6 +354,10 @@
         if (checkNewRoomNameValid() === false) {
             return false;
         }
+        //TODO: Check if this actually helps
+        if ($("#file_name").val() === false) {
+            $("input[name='ImageDeleted']").val("true");
+        }
         //gotta do this differently for edit
         @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
         {
@@ -380,6 +384,7 @@
         var form = $(this);
         var url = form.attr('action');
 
+        //TODO: Check if we can delete this
         if ($("#file_name").val() === false) {
             $("input[name='ImageDeleted']").val("true");
         }

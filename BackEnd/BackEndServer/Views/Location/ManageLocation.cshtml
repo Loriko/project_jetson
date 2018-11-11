@@ -1,0 +1,101 @@
+﻿@using Castle.Core.Internal
+@model BackEndServer.Models.ViewModels.LocationDetailsList
+@{
+    ViewBag.Title = "Project Jetson - Manage Locations";
+}
+@{ Html.RenderPartial("~/Views/location/LocationCreationModal.cshtml"); }
+@{ Html.RenderPartial("~/Views/location/LocationDeleteConfirmationModal.cshtml"); }
+<h1 class="page-title center-align" id="manage_locations_header">Edit or Add New Locations</h1>
+@if (Model.LocationList.IsNullOrEmpty())
+{
+    <div class="row">
+        <div id="user_locations" class="unavailable-message center-align">
+            It seems you don't have any location so far.
+            <br>Clicking the green floating button will allow you to set up a location.
+        </div>
+    </div>
+}
+<div class="row">
+    <div class="right-align" style="margin-right: 11px;">
+        <a href="#location-creation-modal" id="create_location_button" class="btn-floating btn-large green modal-trigger">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+</div>
+@if (!Model.LocationList.IsNullOrEmpty())
+{
+    <div id="user_locations" class="collection">
+        @foreach (var location in Model.LocationList)
+        {
+            <div class="collection-item">
+                <input type="hidden" name="LocationId" value="@location.LocationId">
+                <input type="hidden" name="LocationName" value="@location.LocationName">
+                <input type="hidden" name="AddressLine" value="@location.AddressLine">
+                <input type="hidden" name="City" value="@location.City">
+                <input type="hidden" name="State" value="@location.State">
+                <input type="hidden" name="Zip" value="@location.Zip">
+                <span class="title" id="@location.LocationId">@location.LocationName</span>
+                <span class="secondary-content">
+                    <a onclick="showDeleteConfirmationModal('@location.LocationId')"><i class="material-icons">remove_circle</i></a>
+                    <a onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
+                </span>
+            </div>
+        }
+    </div>
+}
+
+<script>
+    function showAlertEditModal(locationDiv) {
+        var location = {
+            locationId: locationDiv.children["LocationId"].value,
+            locationName: locationDiv.children["LocationName"].value,
+            addressLine: locationDiv.children["AddressLine"].value,
+            city: locationDiv.children["City"].value,
+            state: locationDiv.children["State"].value,
+            zip: locationDiv.children["Zip"].value
+        };
+        window.setLocationModalToEditMode(location);
+        $('#location-creation-modal').modal("open");
+    }
+    $("#create_location_button").on("click", window.setLocationModalToCreateMode);
+    
+    function showDeleteConfirmationModal(locationId) {
+        $("input[name='ToBeDeletedLocationId']").val(locationId);
+        $('#location_delete_confirmation_modal').modal("open");
+    }
+    
+    @if (Context.Request.Headers["x-requested-with"]=="XMLHttpRequest")
+    {
+        <text>
+            window.loadMaterializeEffects();
+        </text>
+    }
+    
+    function handleLocationCreationFormSubmission(response) {
+        if (response === true) {
+            $('#location-creation-modal').modal('close');
+            Materialize.toast("Location successfully created!", 4000);
+            $('#body-container').load("@Url.Action("ManageLocations", "Location")");
+            
+        } else {
+            Materialize.toast("Couldn't create location.", 4000);
+        }
+    }
+    
+    $("#location-creation-form").submit(function(e) {
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                handleLocationCreationFormSubmission(data);
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+</script>

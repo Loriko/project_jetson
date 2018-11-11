@@ -41,6 +41,7 @@ namespace BackEndServer.Services.AbstractServices
         DatabasePerHourStat GetPerHourStatFromHour(DateTime hour);
         // For Location:
         List<DatabaseLocation> GetLocationsForUser(int userId);
+        List<DatabaseLocation> GetLocationsCreatedByUser(int userId);
         // For User:
         bool IsPasswordValidForUser(string username, string password);
         List<DatabaseCamera> GetCamerasAvailableToUser(int userId);
@@ -85,5 +86,8 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseCamera GetCameraWithNameAtLocation(int locationId, string cameraName);
         bool DeleteAlertsWithCameraId(int cameraId);
         bool DeletePerSecondStatsWithCameraId(int cameraId);
+        bool DeleteRoomsAtLocation(int locationId);
+        bool DeleteLocation(int locationId);
+        bool PersistExistingLocation(DatabaseLocation dbLocation);
     }
 }

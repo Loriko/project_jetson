@@ -4,9 +4,9 @@
 INSERT INTO user (id, username, password)
 VALUES (1, 'paulhawit', 'jetson');
 
-INSERT INTO location (id, location_name, address_line, city, state, zip)
-VALUES  (1, 'DMV Rockland', '120 Rockland Drive', 'Ottawa', 'Ontario', 'K1S5L5'), 
-        (2, 'Hospital Carling', '1053 Carling Avenue', 'Ottawa', 'Ontario', 'K1Y4E9');
+INSERT INTO location (id, user_id, location_name, address_line, city, state, zip)
+VALUES  (1, 1, 'DMV Rockland', '120 Rockland Drive', 'Ottawa', 'Ontario', 'K1S5L5'), 
+        (2, 1, 'Hospital Carling', '1053 Carling Avenue', 'Ottawa', 'Ontario', 'K1Y4E9');
 
 INSERT INTO room (id, location_id, room_name)
 VALUES  (1, 1, 'East Waiting Room'),

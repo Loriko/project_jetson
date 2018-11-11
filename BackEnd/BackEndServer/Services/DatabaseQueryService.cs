@@ -277,6 +277,39 @@ namespace BackEndServer.Services
                         locationList.Add(new DatabaseLocation()
                         {
                             LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
+                            LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
+                            AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
+                            City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
+                            State = Convert.ToString(reader[DatabaseLocation.STATE_LABEL]),
+                            Zip = Convert.ToString(reader[DatabaseLocation.ZIP_LABEL])
+                        });
+                    }
+                }
+            }
+            return locationList;
+        }
+
+        public List<DatabaseLocation> GetLocationsCreatedByUser(int userId)
+        {
+            List<DatabaseLocation> locationList = new List<DatabaseLocation>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.USER_ID_LABEL} = {userId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        locationList.Add(new DatabaseLocation
+                        {
+                            LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
                             LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
                             AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
                             City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
@@ -507,6 +540,68 @@ namespace BackEndServer.Services
 
                 int success = cmd.ExecuteNonQuery();
                 if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeleteRoomsAtLocation(int locationId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabaseRoom.TABLE_NAME} " +
+                               $"WHERE {DatabaseRoom.LOCATION_ID_LABEL} = {locationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeleteLocation(int locationId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.LOCATION_ID_LABEL} = {locationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool PersistExistingLocation(DatabaseLocation dbLocation)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"UPDATE {DatabaseLocation.TABLE_NAME} SET " +
+                               $"{DatabaseLocation.LOCATION_NAME_LABEL} = '{dbLocation.LocationName}'," +
+                               $"{DatabaseLocation.ADDRESS_LINE_LABEL} = {formatNullableString(dbLocation.AddressLine)}," +
+                               $"{DatabaseLocation.CITY_LABEL} = {formatNullableString(dbLocation.City)}," +
+                               $"{DatabaseLocation.STATE_LABEL} = {formatNullableString(dbLocation.State)}," +
+                               $"{DatabaseLocation.ZIP_LABEL} = {formatNullableString(dbLocation.Zip)} " +
+                               $"WHERE {DatabaseLocation.LOCATION_ID_LABEL} = {dbLocation.LocationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
                 {
                     return true;
                 }
@@ -1076,10 +1171,10 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {   
                 string query = $"INSERT INTO {DatabaseLocation.TABLE_NAME}(" +
-                               $"{DatabaseLocation.LOCATION_NAME_LABEL}, {DatabaseLocation.ADDRESS_LINE_LABEL}, " +
+                               $"{DatabaseLocation.USER_ID_LABEL}, {DatabaseLocation.LOCATION_NAME_LABEL}, {DatabaseLocation.ADDRESS_LINE_LABEL}, " +
                                $"{DatabaseLocation.CITY_LABEL}, {DatabaseLocation.STATE_LABEL}, {DatabaseLocation.ZIP_LABEL}" +
                                ") VALUES " +
-                               $"('{dbLocation.LocationName}',{formatNullableString(dbLocation.AddressLine)}," +
+                               $"({dbLocation.UserId},'{dbLocation.LocationName}',{formatNullableString(dbLocation.AddressLine)}," +
                                $"{formatNullableString(dbLocation.City)},{formatNullableString(dbLocation.State)}," +
                                $"{formatNullableString(dbLocation.Zip)});";
                 
@@ -1356,6 +1451,7 @@ namespace BackEndServer.Services
                         location = new DatabaseLocation
                         {
                             LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
                             LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
                             AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
                             City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
@@ -1878,6 +1974,7 @@ namespace BackEndServer.Services
                         locationList.Add(new DatabaseLocation
                         {
                             LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
                             LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
                             AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
                             City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),

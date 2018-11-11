@@ -186,6 +186,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return View("CreateCameraKey", newCameraKey);
         }
 
+        //TODO: should be a post
         [HttpGet]
         public IActionResult DeleteCameraKey(string cameraKey)
         {
@@ -280,7 +281,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         }
 
         [HttpPost]
-        public IActionResult UnclaimCamera(int cameraId)
+        public JsonResult UnclaimCamera(int cameraId)
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
             if (currentUserId != null)

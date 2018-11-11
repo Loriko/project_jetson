@@ -36,5 +36,6 @@ namespace BackEndServer.Services.AbstractServices
         bool ValidateCameraKey(string cameraKey);
         bool ValidateNewCameraName(int locationId, string cameraName);
         bool UnclaimCamera(int cameraId);
+        bool DeleteLocationAndUnclaimCameras(int locationId);
     }
 }
