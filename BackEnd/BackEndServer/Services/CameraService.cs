@@ -40,8 +40,7 @@ namespace BackEndServer.Services
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocationForUser(locationId, userId);
 
             CameraInformationList listOfCameraInfo = new CameraInformationList(dbCameraList);
-            return listOfCameraInfo;
-//            return InitialiseImagesBeforeDisplaying(listOfCameraInfo); TODO: Check if we still need this
+            return InitialiseImagesBeforeDisplaying(listOfCameraInfo);
         }
 
         public CameraKeyList GetCameraKeyListForAdmin()
@@ -89,10 +88,20 @@ namespace BackEndServer.Services
         {
             foreach(CameraInformation camInfo in list.CameraList)
             {
-                camInfo.TempImagePath = GenerateTempImageAndTempPath(camInfo.ImagePath);
+                camInfo.TempImagePath = GetTempPathFromFullPath(camInfo.ImagePath);
             }
 
             return list;
+        }
+
+        private string GetTempPathFromFullPath(string imagePath)
+        {
+            if (String.IsNullOrWhiteSpace(imagePath) == false && File.Exists(imagePath))
+            {
+                return Path.GetRelativePath("./", imagePath);
+            }
+
+            return null;
         }
 
         private string GenerateTempImageAndTempPath(string imagePath)
@@ -203,8 +212,8 @@ namespace BackEndServer.Services
                     cameraStatistics.CameraDetails.Location = new LocationDetails(_dbQueryService.GetLocationById(camera.LocationId.Value));
                 }
 
-//                cameraStatistics.TempImagePath = GenerateTempImageAndTempPath(camera.ImagePath); TODO: Check if we still need this
-
+                cameraStatistics.CameraInformation.TempImagePath = GetTempPathFromFullPath(camera.ImagePath);
+                
                 return cameraStatistics;
             }
             
@@ -286,8 +295,6 @@ namespace BackEndServer.Services
 
         private bool DeleteCameraImage(CameraDetails cameraDetails)
         {
-            //TODO:TODO:TODO: remove this before commit
-            return true;
             DatabaseCamera dbCamera = _dbQueryService.GetCameraById(cameraDetails.CameraId);
             string imagePath = dbCamera.ImagePath;
             if(File.Exists(imagePath))
@@ -336,8 +343,7 @@ namespace BackEndServer.Services
 
                     // 2. Create the full file path (output path + filename).
                     string fullFilePath = Path.Combine(outputDirectory.FullName, cameraId + fileExtension);
-                    string filePath = Path.Combine(outputDirectory.Name, cameraId + fileExtension);
-                    cameraDetails.SavedImagePath = filePath;
+                    cameraDetails.SavedImagePath = fullFilePath;
 
                     // 3. Save IFormFile as an image file in the output path.
                     using (var fileStream = new FileStream(fullFilePath, FileMode.Create))

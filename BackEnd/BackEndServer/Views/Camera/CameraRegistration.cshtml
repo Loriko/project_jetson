@@ -25,7 +25,7 @@
                 }
                 else
                 {
-                    <input id="camera_key" name="CameraKey" type="text" class="validate" readonly required value="@Model.CameraDetails.CameraKey">
+                    <input id="camera_key" name="CameraKey" type="text" readonly required value="@Model.CameraDetails.CameraKey">
                 }
                 <label for="camera_key" data-error="The given key is not a valid unclaimed Camera Key">Camera Key *</label>
             </div>
@@ -65,7 +65,7 @@
                 }
             </div>
             <div class="input-field col s3 right-align">
-                <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
+                <a id="create_location_button" class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
             </div>
         </div>
 
@@ -154,6 +154,7 @@
 </div>
 
 <script>
+    $("#create_location_button").on("click", window.setLocationModalToCreateMode);
     $('#resolution_checkbox').click(function() {
         if ($("#resolution_checkbox").is(':checked')) {
             $("#custom_resolution_row").removeClass("hide");
@@ -351,10 +352,9 @@
     }
     
     $("#camera_registration_form").submit(function(e) {
-        if (checkNewRoomNameValid() === false) {
+        if ($("#existing_room_checkbox").is(':checked') === false && checkNewRoomNameValid() === false) {
             return false;
         }
-        //TODO: Check if this actually helps
         if ($("#file_name").val() === false) {
             $("input[name='ImageDeleted']").val("true");
         }
@@ -383,11 +383,6 @@
 
         var form = $(this);
         var url = form.attr('action');
-
-        //TODO: Check if we can delete this
-        if ($("#file_name").val() === false) {
-            $("input[name='ImageDeleted']").val("true");
-        }
 
         $.ajax({
             type: "POST",
