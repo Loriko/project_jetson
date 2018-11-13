@@ -259,6 +259,10 @@ label[data-error], label[data-success] {
     height: 510px;
     overflow: scroll;
 }
+#notification_frames_card, #notification_card {
+    height: 430px;
+    overflow: scroll;
+}
 #stat_frames_card, #shared_room_card{
     height: 370px;
 }
@@ -302,4 +306,7 @@ label[data-error], label[data-success] {
 .no-stat {
     margin-bottom: 10px;
     margin-top: 22px;
+}
+.standard-bottom-margin {
+    margin-bottom: 20px;
 }

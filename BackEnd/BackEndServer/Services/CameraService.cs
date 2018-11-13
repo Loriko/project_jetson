@@ -485,5 +485,22 @@ namespace BackEndServer.Services
 
             return false;
         }
+
+        public JpgStatFrameList GetTriggeringStatsFrameList(int notificationId)
+        {
+            DatabaseNotification dbNotification = _dbQueryService.GetNotificationById(notificationId);
+            DatabaseAlert dbAlert = _dbQueryService.GetAlertById(dbNotification.AlertId);
+            List<DatabasePerSecondStat> statsForCamera = _dbQueryService.GetPerSecondStatsWithFrmTriggeringAlert(dbAlert, dbNotification.TriggerDateTime, dbNotification.TriggerDateTime.AddMinutes(30));
+            JpgStatFrameList frmList = new JpgStatFrameList();
+            frmList.JpgFramePathList = new List<FrameInformation>();
+            foreach(DatabasePerSecondStat stat in statsForCamera){
+                if (!stat.FrameJpgPath.IsNullOrEmpty())
+                {
+                    frmList.JpgFramePathList.Add(new FrameInformation(stat));
+                }
+            }
+
+            return frmList;
+        }
     }
 }

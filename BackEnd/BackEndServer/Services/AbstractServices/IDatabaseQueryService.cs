@@ -52,6 +52,9 @@ namespace BackEndServer.Services.AbstractServices
         bool PersistNewLocation(DatabaseLocation dbLocation);
         DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime,
             DateTime checkupDateTime);
+
+        List<DatabasePerSecondStat> GetPerSecondStatsWithFrmTriggeringAlert(DatabaseAlert alert,
+            DateTime lastUpdatedTime, DateTime checkupDateTime);
         List<DatabaseNotification> GetNotificationsForUser(int userId);
         List<DatabaseAlert> GetAlertsById(List<int> alertIds);
         DatabaseNotification GetNotificationById(int notificationId);

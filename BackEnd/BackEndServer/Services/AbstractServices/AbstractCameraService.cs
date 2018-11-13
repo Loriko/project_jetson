@@ -37,5 +37,6 @@ namespace BackEndServer.Services.AbstractServices
         bool ValidateNewCameraName(int locationId, string cameraName);
         bool UnclaimCamera(int cameraId);
         bool DeleteLocationAndUnclaimCameras(int locationId);
+        JpgStatFrameList GetTriggeringStatsFrameList(int notificationId);
     }
 }

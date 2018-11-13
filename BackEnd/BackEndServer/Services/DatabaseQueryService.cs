@@ -1269,6 +1269,46 @@ namespace BackEndServer.Services
             return perSecondStat;
         }
 
+        public List<DatabasePerSecondStat> GetPerSecondStatsWithFrmTriggeringAlert(DatabaseAlert alert,
+            DateTime lastUpdatedTime, DateTime checkupDateTime)
+        {
+            List<DatabasePerSecondStat> perSecondStats = new List<DatabasePerSecondStat>();
+            TriggerOperator triggerOperator = (TriggerOperator)Enum.Parse(typeof(TriggerOperator), alert.TriggerOperator, true);
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} " + 
+                               $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
+                               $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
+                               $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s') " +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s') ";
+                
+                query += $" ORDER BY {DatabasePerSecondStat.DATE_TIME_LABEL} ASC;";
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStats.Add(new DatabasePerSecondStat
+                        {
+                            PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
+                            DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
+                            NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])),
+                            FrameJpgPath = Convert.ToString(reader[DatabasePerSecondStat.FRM_JPG_PATH_LABEL]),
+                            // Null by default, this is what will be updated later by the HourlyStatsService.
+                            PerHourStatId = -1
+                        });
+                    }
+                }
+            }
+            return perSecondStats;
+        }
+        
         public List<DatabaseNotification> GetNotificationsForUser(int userId)
         {
             List<DatabaseNotification> notificationList = new List<DatabaseNotification>();

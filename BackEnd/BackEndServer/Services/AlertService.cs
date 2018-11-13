@@ -7,6 +7,7 @@ using BackEndServer.Models.DBModels;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
+using Castle.Core.Internal;
 using Moq;
 
 namespace BackEndServer.Services
@@ -100,8 +101,8 @@ namespace BackEndServer.Services
             foreach (var dbAlert in dbAlerts)
             {
                 if (dbAlert.DisabledUntil.GetValueOrDefault(DateTime.MinValue) < DateTime.Now 
-                    && dbAlert.StartTime.ToDateTime() < DateTime.Now
-                    && dbAlert.EndTime.ToDateTime() > DateTime.Now)
+                    && (dbAlert.StartTime.IsNullOrEmpty() || dbAlert.StartTime.ToDateTime() < DateTime.Now)
+                    && (dbAlert.EndTime.IsNullOrEmpty() || dbAlert.EndTime.ToDateTime() > DateTime.Now))
                 {
                     alertList.Add(new AlertSummary(dbAlert));
                 }
