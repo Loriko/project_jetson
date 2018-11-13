@@ -7,6 +7,8 @@ using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using Castle.Core.Internal;
+using Newtonsoft.Json;
+using NLog;
 
 namespace BackEndServer.Services
 {
@@ -40,6 +42,7 @@ namespace BackEndServer.Services
                 
                 //Check all alerts after last checkup date
                 lastCheckup = DateTime.Now;
+                LogManager.GetLogger("AlertMonitoringService").Info($"Just performed alert monitoring checkup at {lastCheckup.ToLongTimeString()}");
                 Thread.Sleep(TIME_BETWEEN_ALERT_CHECKS_MS);
             }
         }
@@ -52,6 +55,8 @@ namespace BackEndServer.Services
 
             if (earliestStatThatTriggersAlert != null)
             {
+                LogManager.GetLogger("AlertMonitoringService").Info($"Following stat triggered {alert.AlertName}: " +
+                    $"{earliestStatThatTriggersAlert.NumDetectedObjects} at {earliestStatThatTriggersAlert.DateTime}");
                 HandleTriggeringOfAlert(alert, earliestStatThatTriggersAlert);
                 //Snooze alert so that it doesn't get retriggered constantly if it monitors a constantly busy area
                 SnoozeAlert(alert);

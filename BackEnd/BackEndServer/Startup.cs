@@ -64,6 +64,7 @@ namespace BackEndServer
             AbstractNotificationService notificationService = new NotificationService(dbQueryService);
             AbstractAPIKeyService apiKeyService = new APIKeyService(dbQueryService);
             AbstractUserService userService = new UserService(dbQueryService,notificationService,Configuration.GetSection("WebServiceConfiguration")["Hostname"],emailService);
+            AlertSummaryService alertSummaryService = new AlertSummaryService(alertService);
 
             services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
             services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));
@@ -74,6 +75,7 @@ namespace BackEndServer
             services.Add(new ServiceDescriptor(typeof(AbstractNotificationService), notificationService));
             services.Add(new ServiceDescriptor(typeof(AbstractUserService), userService));
             services.Add(new ServiceDescriptor(typeof(AbstractAPIKeyService), apiKeyService));
+            services.Add(new ServiceDescriptor(typeof(AlertSummaryService), alertSummaryService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

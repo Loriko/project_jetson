@@ -10,6 +10,7 @@ using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.APIModels;
 using System.ComponentModel;
 using BackEndServer.Models.Enums;
+using BackEndServer.Models.ViewModels;
 using Castle.Core.Internal;
 using static BackEndServer.Models.Enums.TriggerOperatorExtension;
 
@@ -607,6 +608,32 @@ namespace BackEndServer.Services
                 }
             }
             return false;
+        }
+
+        public List<DatabaseAlert> GetAlertsByCameraId(int cameraId)
+        {
+            List<DatabaseAlert> alertList = new List<DatabaseAlert>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               $"FROM {DatabaseAlert.TABLE_NAME} " +
+                               $"WHERE {DatabaseAlert.CAMERA_ID_LABEL} = {cameraId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseAlert alert = getDatabaseAlertFromReader(reader);
+                        alertList.Add(alert);
+                    }
+                }
+            }
+            
+            return alertList;
         }
 
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
@@ -1559,6 +1586,39 @@ namespace BackEndServer.Services
             return cameraList;
         }
 
+        private DatabaseAlert getDatabaseAlertFromReader(MySqlDataReader reader)
+        {
+            DatabaseAlert alert = new DatabaseAlert
+            {
+                AlertId = Convert.ToInt32(reader[DatabaseAlert.ALERT_ID_LABEL]),
+                CameraId = Convert.ToInt32(reader[DatabaseAlert.CAMERA_ID_LABEL]),
+                UserId = Convert.ToInt32(reader[DatabaseAlert.USER_ID_LABEL]),
+                AlertName = Convert.ToString(reader[DatabaseAlert.ALERT_NAME_LABEL]),
+                ContactMethod = Convert.ToString(reader[DatabaseAlert.CONTACT_METHOD_LABEL]),
+                TriggerOperator = Convert.ToString(reader[DatabaseAlert.TRIGGER_OPERATOR_LABEL]),
+                TriggerNumber = Convert.ToInt32(reader[DatabaseAlert.TRIGGER_NUMBER_LABEL]),
+                AlwaysActive = Convert.ToBoolean(reader[DatabaseAlert.ALWAYS_ACTIVE_LABEL])
+            };
+            if (reader[DatabaseAlert.START_TIME_LABEL] != DBNull.Value)
+            {
+                alert.StartTime = Convert.ToString(reader[DatabaseAlert.START_TIME_LABEL]);
+            }
+            if (reader[DatabaseAlert.END_TIME_LABEL] != DBNull.Value)
+            {
+                alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
+            }
+            if (reader[DatabaseAlert.DISABLED_UNTIL_LABEL] != DBNull.Value)
+            {
+                alert.DisabledUntil = Convert.ToDateTime(reader[DatabaseAlert.DISABLED_UNTIL_LABEL]);
+            }
+            if (reader[DatabaseAlert.SNOOZED_UNTIL_LABEL] != DBNull.Value)
+            {
+                alert.SnoozedUntil = Convert.ToDateTime(reader[DatabaseAlert.SNOOZED_UNTIL_LABEL]);
+            }
+
+            return alert;
+        }
+        
         private DatabaseCamera getDatabaseCameraFromReader(MySqlDataReader reader)
         {
             DatabaseCamera camera = new DatabaseCamera
