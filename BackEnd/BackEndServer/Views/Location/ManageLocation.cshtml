@@ -3,8 +3,8 @@
 @{
     ViewBag.Title = "Project Jetson - Manage Locations";
 }
-@{ Html.RenderPartial("~/Views/location/LocationCreationModal.cshtml"); }
-@{ Html.RenderPartial("~/Views/location/LocationDeleteConfirmationModal.cshtml"); }
+@{ Html.RenderPartial("~/Views/Location/LocationCreationModal.cshtml"); }
+@{ Html.RenderPartial("~/Views/Location/LocationDeleteConfirmationModal.cshtml"); }
 <h1 class="page-title center-align" id="manage_locations_header">Edit or Add New Locations</h1>
 @if (Model.LocationList.IsNullOrEmpty())
 {
