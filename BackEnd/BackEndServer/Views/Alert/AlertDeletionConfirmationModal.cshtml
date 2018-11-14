@@ -11,7 +11,7 @@
 </div>
 
 <script>
-    function handleSuccess() {
+    function handleDeleteSuccess() {
         closeAlertDeletionModal();
         //We reload the page but only partially
         $('#body-container').load("@Url.Action("Index", "Alert")");
@@ -30,6 +30,6 @@
     function deleteAlert() {
         var alertId = $("input[name='ToBeDeletedAlertId']").val();
         var data = { "alertId": alertId };
-        $.post("@Url.Action("DeleteAlert", "Alert")", data, handleSuccess).fail(handleFailure);
+        $.post("@Url.Action("DeleteAlert", "Alert")", data, handleDeleteSuccess).fail(handleFailure);
     }
 </script>

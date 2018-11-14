@@ -18,6 +18,11 @@ namespace BackEndServer.Controllers.FrontEndControllers
         private AbstractLocationService LocationService => _locationService ?? (_locationService =
                                                                HttpContext.RequestServices.GetService(typeof(AbstractLocationService)) as
                                                                    AbstractLocationService);
+        
+        private AbstractCameraService _cameraService;
+        private AbstractCameraService CameraService => _cameraService ?? (_cameraService =
+                                                               HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
+                                                                 AbstractCameraService);
 
         // GET
         public IActionResult LocationSelection()
@@ -48,7 +53,20 @@ namespace BackEndServer.Controllers.FrontEndControllers
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
             if (currentUserId != null)
             {
+                locationDetails.UserId = currentUserId.Value;
                 return Json(LocationService.SaveLocation(locationDetails));
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public JsonResult ValidateNewRoomName(int locationId, string roomName)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(LocationService.ValidateNewRoomName(locationId, roomName));
             }
 
             return Json(false);
@@ -62,6 +80,36 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public IActionResult LoadRoomSelector(int locationId, string selectorId, string selectorName, bool required, int selectedRoomId)
         {
             return PartialView("RoomSelectorWrapper", new RoomSelectorInfo(locationId, selectorId, selectorName, required, selectedRoomId));
+        }
+
+        [HttpPost]
+        public JsonResult DeleteLocation(int locationId)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.DeleteLocationAndUnclaimCameras(locationId));
+            }
+
+            return Json(false);
+        }
+        
+        public IActionResult ManageLocations()
+        {
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            LocationDetailsList availableLocations = LocationService.GetLocationsCreatedByUser(currentUsedId.Value);
+
+            if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
+            {
+                return PartialView("ManageLocation", availableLocations);
+            }
+            
+            return View("ManageLocation", availableLocations);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace BackEndServer.Services.AbstractServices
 
         // For Location:
         List<DatabaseLocation> GetLocationsForUser(int userId);
-
+        List<DatabaseLocation> GetLocationsCreatedByUser(int userId);
         // For User:
         bool IsPasswordValidForUser(string username, string password);
         List<DatabaseCamera> GetCamerasAvailableToUser(int userId);
@@ -62,6 +62,9 @@ namespace BackEndServer.Services.AbstractServices
         bool DeleteAlert(int alertId);
         DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime,
             DateTime checkupDateTime);
+
+        List<DatabasePerSecondStat> GetPerSecondStatsWithFrmTriggeringAlert(DatabaseAlert alert,
+            DateTime lastUpdatedTime, DateTime checkupDateTime);
         List<DatabaseNotification> GetNotificationsForUser(int userId);
         List<DatabaseAlert> GetAlertsById(List<int> alertIds);
         DatabaseNotification GetNotificationById(int notificationId);
@@ -74,6 +77,8 @@ namespace BackEndServer.Services.AbstractServices
         bool IsUserAdministrator(int userId);
         DatabaseUser GetUserByEmailAddress(string emailAddress);
         DatabaseUser GetUserByPasswordResetToken(string token);
+        bool PersistPasswordResetToken(string passwordResetToken, string emailAddress);
+        bool PersistRemovePasswordResetToken(string resetToken);
         DatabaseUser GetUserByUsername(string username);
         DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end);
         List<DatabaseLocation> GetLocations();
@@ -84,5 +89,12 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseUser> GetAllUsers();
         bool CreateUserCameraAssociation(int userId, int cameraId);
         List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
+        DatabaseCamera GetCameraWithNameAtLocation(int locationId, string cameraName);
+        bool DeleteAlertsWithCameraId(int cameraId);
+        bool DeletePerSecondStatsWithCameraId(int cameraId);
+        bool DeleteRoomsAtLocation(int locationId);
+        bool DeleteLocation(int locationId);
+        bool PersistExistingLocation(DatabaseLocation dbLocation);
+        List<DatabaseAlert> GetAlertsByCameraId(int cameraId);
     }
 }

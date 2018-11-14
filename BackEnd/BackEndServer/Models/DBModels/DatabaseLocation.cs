@@ -8,6 +8,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string TABLE_NAME = "location";
         // Attributes of Location table.
         public static readonly string LOCATION_ID_LABEL = "id";
+        public static readonly string USER_ID_LABEL = "user_id";
         public static readonly string LOCATION_NAME_LABEL = "location_name";
         public static readonly string ADDRESS_LINE_LABEL = "address_line";
         public static readonly string CITY_LABEL = "city";
@@ -16,6 +17,7 @@ namespace BackEndServer.Models.DBModels
 
         // Database Model Class Attributes
         public int LocationId { get; set; }
+        public int UserId { get; set; }
         public string LocationName { get; set; }
         public string AddressLine { get; set; }
         public string City { get; set; }
@@ -29,6 +31,7 @@ namespace BackEndServer.Models.DBModels
         public DatabaseLocation(LocationDetails locationDetails)
         {
             LocationId = locationDetails.LocationId;
+            UserId = locationDetails.UserId;
             LocationName = locationDetails.LocationName;
             AddressLine = locationDetails.AddressLine;
             City = locationDetails.City;

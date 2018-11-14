@@ -14,6 +14,7 @@ using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Services.PlaceholderServices;
 using System.IO;
+using Castle.Core.Internal;
 using NLog;
 
 namespace BackEndServer
@@ -63,6 +64,7 @@ namespace BackEndServer
             AbstractNotificationService notificationService = new NotificationService(dbQueryService);
             AbstractAPIKeyService apiKeyService = new APIKeyService(dbQueryService);
             AbstractUserService userService = new UserService(dbQueryService,notificationService,Configuration.GetSection("WebServiceConfiguration")["Hostname"],emailService);
+            AlertSummaryService alertSummaryService = new AlertSummaryService(alertService);
 
             services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
             services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));
@@ -73,11 +75,13 @@ namespace BackEndServer
             services.Add(new ServiceDescriptor(typeof(AbstractNotificationService), notificationService));
             services.Add(new ServiceDescriptor(typeof(AbstractUserService), userService));
             services.Add(new ServiceDescriptor(typeof(AbstractAPIKeyService), apiKeyService));
+            services.Add(new ServiceDescriptor(typeof(AlertSummaryService), alertSummaryService));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IApplicationLifetime applicationLifetime)
         {
+            applicationLifetime.ApplicationStarted.Register(OnStartup);
             applicationLifetime.ApplicationStopping.Register(OnShutdown);
 
             if (env.IsDevelopment())
@@ -99,11 +103,18 @@ namespace BackEndServer
             });
         }
 
+        // This code is called when the application is started.
+        private void OnStartup()
+        {
+            LogManager.GetLogger("Startup").Info($"Starting Jetson Server listening on {Environment.GetEnvironmentVariable("ASPNETCORE_URLS")}...");
+        }
+        
         // This code is called when the application is stopped.
         private void OnShutdown()
         {
             // Deletes all files copied into the temp folder when testing. Prevents uploading them to GitHub.
             ClearWWWRootTempFolder();
+            LogManager.Flush();
         }
 
         private void ClearWWWRootTempFolder()
@@ -123,14 +134,36 @@ namespace BackEndServer
         private void ConfigureLogger()
         {
             var config = new NLog.Config.LoggingConfiguration();
-
-            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = "${basedir}/logs/webserver.log" };
+            LogManager.ThrowExceptions = true;
+            
+            string fileName = TryGetLogPath();
+            if (fileName.IsNullOrEmpty())
+            {
+                fileName = "${basedir}/logs/jetson_server.log";
+            }
+            
+            Directory.CreateDirectory(Path.GetDirectoryName(fileName));
+            var logfile = new NLog.Targets.FileTarget("logfile") { FileName = fileName };
             var logconsole = new NLog.Targets.ConsoleTarget("logconsole");
             
             config.AddRule(LogLevel.Debug, LogLevel.Fatal, logconsole);
             config.AddRule(LogLevel.Info, LogLevel.Fatal, logfile);
             
             LogManager.Configuration = config;
+            //dot net core logs are available at /var/log/dotnet.out.log
+            LogManager.GetLogger("Startup").Info($"Trying to configure logger to log at {fileName} ...");
+            LogManager.ThrowExceptions = false;
+        }
+
+        private string TryGetLogPath()
+        {
+            IConfigurationSection section = Configuration.GetSection("LoggerConfiguration");
+            if (section != null)
+            {
+                return section["FileName"];
+            }
+
+            return null;
         }
     }
 }

@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Classes.ErrorResponseClasses;
+using BackEndServer.Models.ViewModels;
+using BackEndServer.Services;
 using BackEndServer.Services.AbstractServices;
+using Castle.Core.Internal;
 
 namespace WebAPI.Controllers
 {
@@ -21,7 +26,12 @@ namespace WebAPI.Controllers
         private AbstractAPIKeyService _apiKeyService;
         private AbstractAPIKeyService APIKeyService => _apiKeyService ?? (_apiKeyService =
                                                            HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
-                                                               AbstractAPIKeyService);
+                                                                         AbstractAPIKeyService);
+        private AlertSummaryService _alertSummaryService;
+        private AlertSummaryService AlertSummaryService => _alertSummaryService ?? (_alertSummaryService =
+                                                           HttpContext.RequestServices.GetService(typeof(AlertSummaryService)) as
+                                                            AlertSummaryService);
+                                                            
         #endregion
 
         /// <summary>
@@ -49,9 +59,9 @@ namespace WebAPI.Controllers
                 // Asynchronously check hourly stats are ready for calculation and perform if needed.
                 //Task hourlyStatsCheck = Task.Factory.StartNew(
                     //() => _hourlyStatsService.AutoCalculateHourlyStats(receivedMessage));
-                
+                DataReceivalResponse receivalResponse = AlertSummaryService.GetReceivalResponse(receivedMessage);
                 // Return HTTP OK, without waiting on asynchronous Task.
-                return Ok("Received datamessage with " + receivedMessage.GetLength() + " per second stats.");
+                return StatusCode(200, new JsonResult(receivalResponse));
             }
 
             return StatusCode(500, new JsonResult(new FailedPersistResponseBody()));

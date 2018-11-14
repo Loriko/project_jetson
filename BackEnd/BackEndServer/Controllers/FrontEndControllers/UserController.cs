@@ -119,7 +119,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            return View("UserCreation");
+            UserSettings userSettings = UserService.GetUserSettings(currentUserId.Value);
+            return View("UserCreation", userSettings);
         }
         
         [HttpPost]
@@ -137,6 +138,32 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return View("SuccessfulCreation", createdUser);
             }
             return View("Error");
+        }
+
+        [HttpPost]
+        public JsonResult ValidateUsername(string username)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(UserService.ValidateUsername(username));
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public JsonResult ValidateEmail(string emailAddress)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(UserService.ValidateEmail(emailAddress));
+            }
+
+            return Json(false);
         }
     }
 }

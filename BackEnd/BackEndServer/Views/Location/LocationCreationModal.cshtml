@@ -2,8 +2,10 @@
 <div id="location-creation-modal" class="modal modal-fixed-footer">
     <form id="location-creation-form" class="col s12" method="post" asp-controller="Location" asp-action="SaveLocation">
         <div class="modal-content">
-            <h1 class="page-title left-align">Create a Location</h1>
+            <h1 class="page-title left-align" id="create-title">Create a Location</h1>
+            <h1 class="page-title left-align" id="edit-title">Edit a Location</h1>
             <div class="row">
+                <input type="hidden" id="modal_location_id" name="LocationId">
                 <div class="input-field col s12">
                     <input id="location_name" name="LocationName" type="text" class="validate" required>
                     <label for="location_name">Location Name</label>
@@ -33,3 +35,30 @@
         </div>
     </form>
 </div>
+
+<script>
+    function setLocationModalToCreateMode() {
+        $("#edit-title").addClass("hide");
+        $("#create-title").removeClass("hide");
+
+        var modal = $("#location-creation-modal");
+        modal.find("form").trigger("reset");
+    }
+
+    function setLocationModalToEditMode(location) {
+        $("#create-title").addClass("hide");
+        $("#edit-title").removeClass("hide");
+        var modal = $("#location-creation-modal");
+        modal.find("input[name='LocationId']").val(location.locationId);
+        modal.find("input[name='LocationName']").val(location.locationName);
+        modal.find("label[for='location_name']").addClass("active");
+        modal.find("input[name='AddressLine']").val(location.addressLine);
+        modal.find("label[for='address_line']").addClass("active");
+        modal.find("input[name='City']").val(location.city);
+        modal.find("label[for='city']").addClass("active");
+        modal.find("input[name='State']").val(location.state);
+        modal.find("label[for='state']").addClass("active");
+        modal.find("input[name='Zip']").val(location.zip);
+        modal.find("label[for='zip']").addClass("active");
+    }
+</script>

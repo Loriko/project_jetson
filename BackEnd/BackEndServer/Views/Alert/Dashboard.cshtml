@@ -6,6 +6,8 @@
 @model AlertDashboardInformation
 @{ Html.RenderPartial("~/Views/Alert/AlertCreationModal.cshtml", Model.Availablecameras); }
 @{ Html.RenderPartial("~/Views/Alert/AlertDeletionConfirmationModal.cshtml"); }
+@{ Html.RenderPartial("~/Views/Alert/AlertDisablingModal.cshtml"); }
+@{ Html.RenderPartial("~/Views/Alert/AlertEnablingModal.cshtml"); }
 <h1 id="alertTitle" class="page-title center-align">Your Alerts</h1>
 
 @if (!Model.ExistingAlertsByCameraId.Any(x => x.Value.Count > 0))
@@ -62,12 +64,25 @@
                                             <i class="material-icons circle light-green">error</i>
                                         }
                                         <span class="title">@alert.AlertName</span>
+                                        @if (alert.DisabledUntil != null && alert.DisabledUntil.Value > DateTime.Now)
+                                        {
+                                            <span class="disabled-message"> (disabled)</span>   
+                                        }
                                         <p>
                                             @alert.TriggerString()
                                     </p>
                                     <span class="secondary-content">
                                         <a href="#!" onclick="showAlertDeletionConfirmationModal(this.parentNode.parentNode)"><i class="material-icons">remove_circle</i></a>
                                         <a href="#!" onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
+                                        
+                                        @if (alert.DisabledUntil != null && alert.DisabledUntil.Value > DateTime.Now)
+                                        {
+                                            <a href="#!" onclick="showEnableAlertModal('@alert.AlertId')"><i class="material-icons">notifications_active</i></a>
+                                        }
+                                        else
+                                        {
+                                            <a href="#!" onclick="showDisableAlertModal('@alert.AlertId')"><i class="material-icons">notifications_off</i></a>
+                                        }
                                     </span>
                                 </span>
                             }
@@ -109,4 +124,12 @@
             window.loadMaterializeEffects();
         </text>
     }
+    function showDisableAlertModal(alertId) {
+        $('#alert-disabling-modal input[name="AlertId"]').val(alertId);
+        $('#alert-disabling-modal').modal("open");
+    };
+    function showEnableAlertModal(alertId) {
+        $('#confirm_camera_enabling_modal input[name="ToBeEnabledAlertId"]').val(alertId);
+        $('#confirm_camera_enabling_modal').modal("open");
+    };
 </script>
