@@ -20,7 +20,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string RESOLUTION_LABEL = "resolution";
         public static readonly string IMAGE_PATH_LABEL = "image_path";
         // Represents the virtual path that the Images of the Camera's monitored areas will be stored.
-        public static readonly string PATH_FOR_USER_UPLOADED_IMAGES = "ImageStorage/CameraImages";
+        public static readonly string PATH_FOR_USER_UPLOADED_IMAGES = "wwwroot/cameraimages/";
 
         // Database Model Class Attributes
         public int CameraId { get; set; }

@@ -97,8 +97,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUsedId.Value);
 
+            if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
+            {
+                return PartialView("ManageCameras", availableCameras);
+            }
+            
             return View("ManageCameras", availableCameras);
-
         }
 
         [HttpPost]
@@ -182,6 +186,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return View("CreateCameraKey", newCameraKey);
         }
 
+        //TODO: should be a post
         [HttpGet]
         public IActionResult DeleteCameraKey(string cameraKey)
         {
@@ -261,6 +266,30 @@ namespace BackEndServer.Controllers.FrontEndControllers
             
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
             return View("ManageCameras", availableCameras);
+        }
+
+        [HttpPost]
+        public JsonResult ValidateNewCameraName(int locationId, string cameraName)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.ValidateNewCameraName(locationId, cameraName));
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public JsonResult UnclaimCamera(int cameraId)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.UnclaimCamera(cameraId));
+            }
+
+            return Json(false);
         }
     }
 }

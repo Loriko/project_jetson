@@ -40,7 +40,6 @@ namespace BackEndServer.Services
             List<DatabaseCamera> dbCameraList = _dbQueryService.GetCamerasForLocationForUser(locationId, userId);
 
             CameraInformationList listOfCameraInfo = new CameraInformationList(dbCameraList);
-
             return InitialiseImagesBeforeDisplaying(listOfCameraInfo);
         }
 
@@ -89,10 +88,20 @@ namespace BackEndServer.Services
         {
             foreach(CameraInformation camInfo in list.CameraList)
             {
-                camInfo.TempImagePath = GenerateTempImageAndTempPath(camInfo.ImagePath);
+                camInfo.TempImagePath = GetTempPathFromFullPath(camInfo.ImagePath);
             }
 
             return list;
+        }
+
+        private string GetTempPathFromFullPath(string imagePath)
+        {
+            if (String.IsNullOrWhiteSpace(imagePath) == false && File.Exists(imagePath))
+            {
+                return Path.GetRelativePath("./", imagePath);
+            }
+
+            return null;
         }
 
         private string GenerateTempImageAndTempPath(string imagePath)
@@ -203,8 +212,8 @@ namespace BackEndServer.Services
                     cameraStatistics.CameraDetails.Location = new LocationDetails(_dbQueryService.GetLocationById(camera.LocationId.Value));
                 }
 
-                cameraStatistics.TempImagePath = GenerateTempImageAndTempPath(camera.ImagePath);
-
+                cameraStatistics.CameraInformation.TempImagePath = GetTempPathFromFullPath(camera.ImagePath);
+                
                 return cameraStatistics;
             }
             
@@ -431,6 +440,67 @@ namespace BackEndServer.Services
         {
             DatabaseCamera dbCamera = _dbQueryService.GetCameraByKey(cameraKey);
             return dbCamera != null && dbCamera.UserId.GetValueOrDefault(0) == 0;
+        }
+
+        public bool ValidateNewCameraName(int locationId, string cameraName)
+        {
+            return _dbQueryService.GetCameraWithNameAtLocation(locationId, cameraName) == null;
+        }
+
+        public bool UnclaimCamera(int cameraId)
+        {
+            DatabaseCamera dbCamera = _dbQueryService.GetCameraById(cameraId);
+            DatabaseCamera freshCamera = new DatabaseCamera
+            {
+                CameraKey = dbCamera.CameraKey
+            };
+            
+            if (_dbQueryService.DeleteAlertsWithCameraId(cameraId) 
+                && _dbQueryService.DeletePerSecondStatsWithCameraId(cameraId)
+                && (dbCamera.ImagePath.IsNullOrEmpty() 
+                    || DeleteCameraImage(new CameraDetails(dbCamera))))
+            {
+                return _dbQueryService.PersistExistingCameraByCameraKey(freshCamera, true);
+            }
+
+            return false;
+        }
+
+        public bool DeleteLocationAndUnclaimCameras(int locationId)
+        {
+            List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasForLocation(locationId);
+            bool success = true;
+            foreach (DatabaseCamera dbCamera in dbCameras)
+            {
+                if (!UnclaimCamera(dbCamera.CameraId))
+                {
+                    success = false;
+                }
+            }
+
+            if (success)
+            {
+                return _locationService.DeleteLocation(locationId);
+            }
+
+            return false;
+        }
+
+        public JpgStatFrameList GetTriggeringStatsFrameList(int notificationId)
+        {
+            DatabaseNotification dbNotification = _dbQueryService.GetNotificationById(notificationId);
+            DatabaseAlert dbAlert = _dbQueryService.GetAlertById(dbNotification.AlertId);
+            List<DatabasePerSecondStat> statsForCamera = _dbQueryService.GetPerSecondStatsWithFrmTriggeringAlert(dbAlert, dbNotification.TriggerDateTime, dbNotification.TriggerDateTime.AddMinutes(30));
+            JpgStatFrameList frmList = new JpgStatFrameList();
+            frmList.JpgFramePathList = new List<FrameInformation>();
+            foreach(DatabasePerSecondStat stat in statsForCamera){
+                if (!stat.FrameJpgPath.IsNullOrEmpty())
+                {
+                    frmList.JpgFramePathList.Add(new FrameInformation(stat));
+                }
+            }
+
+            return frmList;
         }
     }
 }

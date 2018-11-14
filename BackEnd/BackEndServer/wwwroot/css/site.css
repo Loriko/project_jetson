@@ -28,6 +28,9 @@ main {
 .error-message {
     color: red !important;
 }
+.disabled-message {
+    color: red !important;
+}
 .camera-card-title {
     width: 100%;
     background: rgba(0, 0, 0, 0.55);
@@ -179,7 +182,7 @@ main {
     font-style: italic;
 }
 
-#disable-alert-button {
+#disable_alert_button {
     width: 100%;
 }
 
@@ -193,10 +196,18 @@ main {
 .full-width {
     width: 100%;
 }
+.full-height {
+    height: 100%;
+}
 
 .graph-card {
+    height: 80% !important;
     margin-bottom: 12px;
     color: black;
+}
+
+#graph_card > .card-content {
+    height: 380px !important;
 }
 
 .unavailable-message-light {
@@ -246,6 +257,11 @@ label[data-error], label[data-success] {
 }
 #camera_card, #graph_card {
     height: 510px;
+    overflow: scroll;
+}
+#notification_frames_card, #notification_card {
+    height: 430px;
+    overflow: scroll;
 }
 #stat_frames_card, #shared_room_card{
     height: 370px;
@@ -271,6 +287,7 @@ label[data-error], label[data-success] {
 }
 #timeline_chart {
     width: 95% !important;
+    height: 100% !important;
     margin-top: 15px !important;
     margin-bottom: 10px !important;
 }
@@ -285,4 +302,11 @@ label[data-error], label[data-success] {
     height: 100px;
     margin-top: 100px;
     left: 50%;
+}
+.no-stat {
+    margin-bottom: 10px;
+    margin-top: 22px;
+}
+.standard-bottom-margin {
+    margin-bottom: 20px;
 }

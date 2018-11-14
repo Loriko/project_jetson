@@ -21,10 +21,23 @@ namespace BackEndServer.Services
             return new LocationInformationList(dbAddressList);
         }
 
+        public LocationDetailsList GetLocationsCreatedByUser(int userId)
+        {
+            List<DatabaseLocation> dbAddressList = _dbQueryService.GetLocationsCreatedByUser(userId);
+            return new LocationDetailsList(dbAddressList);
+        }
+
         public bool SaveLocation(LocationDetails locationDetails)
         {
             DatabaseLocation dbLocation = new DatabaseLocation(locationDetails);
-            return _dbQueryService.PersistNewLocation(dbLocation);
+            if (dbLocation.LocationId > 0)
+            {
+                return _dbQueryService.PersistExistingLocation(dbLocation);
+            }
+            else
+            {
+                return _dbQueryService.PersistNewLocation(dbLocation);
+            }
         }
 
         public LocationInformationList GetAvailableLocations()
@@ -42,6 +55,22 @@ namespace BackEndServer.Services
                 roomList.Add(new RoomInfo(dbRoom));
             }
             return roomList;
+        }
+
+        public bool ValidateNewRoomName(int locationId, string roomName)
+        {
+            return _dbQueryService.GetRoomIdByLocationIdAndRoomName(locationId, roomName) <= 0;
+        }
+
+        //Will only work if all associated cameras have been unclaimed/deleted
+        public bool DeleteLocation(int locationId)
+        {
+            if (_dbQueryService.DeleteRoomsAtLocation(locationId))
+            {
+                return _dbQueryService.DeleteLocation(locationId);
+            }
+
+            return false;
         }
     }
 }

@@ -1,10 +1,8 @@
-﻿@model BackEndServer.Models.ViewModels.AlertDisablingInformation
-
-<div id="alert-disabling-modal" class="modal small-modal">
+﻿<div id="alert-disabling-modal" class="modal small-modal">
     <form class="col s12" method="post" asp-controller="Alert" asp-action="DisableAlert" id="alert-disabling-form">
         <div class="modal-content">
             <h1 class="page-title left-align">Disable an Alert</h1>
-            <input type="hidden" name="AlertId" value="@Model.AlertId">
+            <input type="hidden" name="AlertId">
             <div class="row disabled-forever-row">
                 <div class="input-field col s12 no-top-margin">
                     <p class="no-top-margin">
@@ -45,6 +43,7 @@
 
     function handleAlertDisablingFormSubmission(response) {
         if (response === true) {
+            $('#body-container').load("@Url.Action("Index", "Alert")");
             Materialize.toast("Alert successfully disabled!", 4000);
         } else {
             Materialize.toast("Couldn't disable the alert.", 4000);//TODO add more details about what kind of error is stopping the disabling of the alert

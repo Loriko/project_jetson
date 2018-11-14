@@ -1,0 +1,35 @@
+﻿<div id="confirm_camera_enabling_modal" class="modal small-modal">
+    <input type="hidden" name="ToBeEnabledAlertId">
+    <div class="modal-content">
+        <h1 class="confirmation-title page-title left-align">Are you sure you want to enable this alert?</h1>
+        <p>Enabling this alert will not make it enter a triggerable state if it was recently triggered.</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect waves-light light-green" type="button" onclick="closeAlertEnablingModal()">Cancel</button>
+        <button class="btn waves-effect waves-light red" type="button" onclick="enableAlert()">Enable</button>
+    </div>
+</div>
+
+<script>
+    function handleSuccess() {
+        closeAlertEnablingModal();
+        //We reload the page but only partially
+        $('#body-container').load("@Url.Action("Index", "Alert")");
+        Materialize.toast("Alert successfully enabled!", 4000);
+    }
+
+    function handleFailure() {
+        closeAlertEnablingModal();
+        Materialize.toast("Couldn't enable alert.", 4000);
+    }
+
+    function closeAlertEnablingModal() {
+        $("#confirm_camera_enabling_modal").modal("close");
+    }
+
+    function enableAlert() {
+        var alertId = $("input[name='ToBeEnabledAlertId']").val();
+        var data = { "alertId": alertId };
+        $.post("@Url.Action("EnableAlert", "Alert")", data, handleSuccess).fail(handleFailure);
+    }
+</script>

@@ -7,18 +7,42 @@ CREATE SCHEMA IF NOT EXISTS `jetson` DEFAULT CHARACTER SET utf8 ;
 USE `jetson` ;
 
 -- -----------------------------------------------------
+-- Table `jetson`.`user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `jetson`.`user` ;
+
+CREATE TABLE IF NOT EXISTS `jetson`.`user` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  `email_address` VARCHAR(45) NULL,
+  `first_name` VARCHAR(45) NULL,
+  `last_name` VARCHAR(45) NULL,
+  `password_reset_token` VARCHAR(100) NULL,
+  `is_administrator` TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
+DEFAULT CHARACTER SET = utf8;
+
+-- -----------------------------------------------------
 -- Table `jetson`.`location`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `jetson`.`location` ;
 
 CREATE TABLE IF NOT EXISTS `jetson`.`location` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` INT(5) UNSIGNED NOT NULL,
   `location_name` VARCHAR(45) NOT NULL,
   `address_line` VARCHAR(200) NULL DEFAULT NULL,
   `city` VARCHAR(45) NULL DEFAULT NULL,
   `state` VARCHAR(45) NULL DEFAULT NULL,
   `zip` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_location_has_user_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `jetson`.`user` (`id`)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
@@ -102,26 +126,8 @@ CREATE TABLE IF NOT EXISTS `jetson`.`per_second_stat` (
   CONSTRAINT `fk_per_second_stat_camera`
     FOREIGN KEY (`camera_id`)
     REFERENCES `jetson`.`camera` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-DEFAULT CHARACTER SET = utf8;
-
--- -----------------------------------------------------
--- Table `jetson`.`user`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jetson`.`user` ;
-
-CREATE TABLE IF NOT EXISTS `jetson`.`user` (
-  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
-  `email_address` VARCHAR(45) NULL,
-  `first_name` VARCHAR(45) NULL,
-  `last_name` VARCHAR(45) NULL,
-  `password_reset_token` VARCHAR(100) NULL,
-  `is_administrator` TINYINT UNSIGNED NOT NULL DEFAULT 0,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC))
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
@@ -136,13 +142,13 @@ CREATE TABLE IF NOT EXISTS `jetson`.`user_camera_association` (
   CONSTRAINT `fk_camera_has_user_camera`
     FOREIGN KEY (`camera_id`)
     REFERENCES `jetson`.`camera` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE,
   CONSTRAINT `fk_camera_has_user_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `jetson`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
@@ -187,13 +193,13 @@ CREATE TABLE IF NOT EXISTS `jetson`.`alert` (
   CONSTRAINT `fk_alert_has_camera`
     FOREIGN KEY (`camera_id`)
     REFERENCES `jetson`.`camera` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE ,
   CONSTRAINT `fk_fk_alert_has_user`
     FOREIGN KEY (`user_id`)
     REFERENCES `jetson`.`user` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE 
+    ON UPDATE CASCADE)
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
