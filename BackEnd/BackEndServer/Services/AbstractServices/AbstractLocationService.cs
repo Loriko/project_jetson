@@ -12,5 +12,6 @@ namespace BackEndServer.Services.AbstractServices
         List<RoomInfo> GetRoomsAtLocation(int locationId);
         bool ValidateNewRoomName(int locationid, string roomName);
         bool DeleteLocation(int locationId);
+        bool ValidateNewLocationName(string locationName, int userId);
     }
 }

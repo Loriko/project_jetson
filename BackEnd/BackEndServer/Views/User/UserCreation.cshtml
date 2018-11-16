@@ -187,8 +187,7 @@
     function checkEmailValidity() {
         var email = $("#email_address");
         //check if email doesn't exist
-        if (email.hasClass("invalid") 
-            || email.hasClass("validated") === false) {
+        if (email.val() && (email.hasClass("invalid") || email.hasClass("validated") === false)) {
             return false;
         }
         return true;

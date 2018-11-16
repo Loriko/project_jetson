@@ -72,5 +72,11 @@ namespace BackEndServer.Services
 
             return false;
         }
+
+        public bool ValidateNewLocationName(string locationName, int userId)
+        {
+            List<DatabaseLocation> userLocations = _dbQueryService.GetLocationsCreatedByUser(userId);
+            return userLocations.TrueForAll(location => location.LocationName.ToUpper() != locationName.ToUpper());
+        }
     }
 }
