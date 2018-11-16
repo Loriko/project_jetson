@@ -10,7 +10,7 @@ const driver = new webdriver.Builder()
 describe('Sanity' , function(){
     this.timeout(15000);
     before(function(done){
-        driver.get('http://localhost:5000/').then(done);
+        driver.get('http://localhost:5001/').then(done);
     });
 
     after(function(done){
@@ -74,7 +74,7 @@ describe('Sanity' , function(){
                 if (err) throw err;
                 var roomData = [];
                 for(var i = 0; i < result.length;i++){
-                    roomData.push(result[i].monitored_area)
+                    roomData.push(result[i].camera_name)
                 }
                 var resultString = roomData.join("");
                 roomsWeb = roomsWeb.split("\n").join("");
@@ -82,6 +82,7 @@ describe('Sanity' , function(){
             });
             connection.end();
         })
+
     })
 
     it('Check camera info page', async function(){
@@ -134,9 +135,17 @@ describe('Sanity' , function(){
             connection.query(sql, function (err, result) {
                 if (err) throw err;
                 var cameraData = [];
-                for(var i = 0; i < result.length;i++){
-                    cameraData.push(result[i].monitored_area)
+                if(result.length >= 1){
+                    for(var i = 0; i < result.length;i++){
+                        cameraData.push(result[i].camera_name+"\nremove_circle edit remove_red_eye");
+                        if(i<result.length-1){
+                            cameraData.push("\n");
+                        }
+                    }
                 }
+
+                cameraData[result.length-1]
+                
                 var resultString = cameraData.join("");
                 cameraWeb = cameraWeb.split("\nedit\n").join("");
                 cameraWeb = cameraWeb.split("\nedit").join("");
@@ -144,6 +153,52 @@ describe('Sanity' , function(){
             });
             connection.end();
         })
+    })
+
+    it('Check manage locations', async function(){
+        await driver.findElement(webdriver.By.id("manageLocation")).click();
+        var header =  await driver.findElement(webdriver.By.id("manage_locations_header")).getText();
+        expect(header).to.equal("Edit or Add New Locations");
+    })
+
+    it('Locations in manage locations', async function(){
+        var locationWeb = await driver.findElement(webdriver.By.id("user_locations")).getText();
+        var connection = mysql.createConnection({
+            host     : 'localhost',
+            user     : 'root',
+            password : 'password',
+            database : 'jetson'
+        });
+        connection.connect(function(err) {
+            if (err) {
+              console.error('error connecting: ' + err.stack);
+              return;
+            }
+            var sql = "SELECT * FROM jetson.location";
+            connection.query(sql, function (err, result) {
+                if (err) throw err;
+                var resultString = "";
+                if(result.length <= 1){
+                    resultString += result[0].location_name + "\nremove_circle edit";
+                }
+                else{
+                    for(var i in result){
+                        resultString += result[i].location_name+"\nremove_circle edit";
+                        if(i<result.length-1){
+                            resultString+="\n";
+                        }
+                    }
+                }
+                expect(resultString).to.equal(locationWeb);
+            });
+            connection.end();
+        })
+    })
+
+    it('Open Notifications', async function(){
+        await driver.findElement(webdriver.By.id("manageLocation")).click();
+        var header =  await driver.findElement(webdriver.By.id("manage_locations_header")).getText();
+        expect(header).to.equal("Edit or Add New Locations");
     })
 
     it('Go to Alert page', async function(){
@@ -180,7 +235,7 @@ describe('Sanity' , function(){
             connection.end();
         })
     })
-    
+
     it('Check profile dropdown', async function(){
         await driver.findElement(webdriver.By.id('profile')).click();
         await driver.sleep(2000);
@@ -189,8 +244,17 @@ describe('Sanity' , function(){
         expect(signOutText).to.equal("Sign Out");
         expect(modPerText).to.equal("Modify Personal Settings");
     })
+    
+    it('Check open modify Personal settings', async function(){
+        await driver.findElement(webdriver.By.id('modifyPersonalSettings')).click();
+        await driver.sleep(2000);
+        var modPerText = await driver.findElement(webdriver.By.id("headerModifySettings")).getText();
+        expect(modPerText).to.equal("Please modify your personal settings as you will");
+    })
 
     it('Sign out', async function(){
+        await driver.findElement(webdriver.By.id('profile')).click();
+        await driver.sleep(2000);
         await driver.findElement(webdriver.By.id("signOut")).click();
         var title = await driver.findElement(webdriver.By.id("headerHome")).getText();
         expect(title).to.equal("Welcome to the Real Time Object Monitoring System");
