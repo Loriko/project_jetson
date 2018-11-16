@@ -27,15 +27,7 @@
                 <label for="email_address" data-error="You must enter an email address no other user has entered">Email Address</label>
             </div>
         </div>
-        <div class="row">
-            <div class="s12">
-                <a class="btn waves-effect waves-light right-align" name="action" href="/User/PasswordChange">
-                    Change Password
-                    <i class="material-icons right">lock</i>
-                </a>
-            </div>
-        </div>
-
+        
         <!-- Submit Button -->
         <div class="row">
             <div class="s12">
@@ -46,6 +38,18 @@
             </div>
         </div>
 
+        <div class="divider standard-bottom-margin"></div>
+        
+        <!-- Change Password -->
+        <div class="row">
+            <div class="s12">
+                <a class="btn waves-effect waves-light right-align" name="action" href="/User/PasswordChange">
+                    Change Password
+                    <i class="material-icons right">lock</i>
+                </a>
+            </div>
+        </div>
+        
     </form>
 </div>
 
@@ -99,8 +103,7 @@
     function checkEmailValidity() {
         var email = $("#email_address");
         //check if email doesn't exist
-        if (email.hasClass("invalid") 
-            || email.hasClass("validated") === false) {
+        if (email.val() && (email.hasClass("invalid") || email.hasClass("validated") === false)) {
             return false;
         }
         return true;

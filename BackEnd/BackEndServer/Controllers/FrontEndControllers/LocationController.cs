@@ -111,5 +111,17 @@ namespace BackEndServer.Controllers.FrontEndControllers
             
             return View("ManageLocation", availableLocations);
         }
+
+        [HttpPost]
+        public JsonResult ValidateNewLocationName(string locationName)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(LocationService.ValidateNewLocationName(locationName, currentUserId.Value));
+            }
+
+            return Json(false);
+        }
     }
 }
