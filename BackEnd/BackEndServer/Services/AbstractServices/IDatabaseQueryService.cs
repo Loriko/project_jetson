@@ -23,8 +23,6 @@ namespace BackEndServer.Services.AbstractServices
         bool PersistExistingUser(DatabaseUser databaseUser);
         bool PersistPasswordChange(DatabaseUser databaseUser);
         bool PersistNewUser(DatabaseUser databaseUser);
-        bool PersistPasswordResetToken(string passwordResetToken, string emailAddress);
-        bool PersistRemovePasswordResetToken(int userId);
         bool PersistNewNotification(DatabaseNotification dbNotification);
         bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted);
 
