@@ -93,22 +93,6 @@ CREATE TABLE IF NOT EXISTS `jetson`.`camera` (
 DEFAULT CHARACTER SET = utf8;
 
 -- -----------------------------------------------------
--- Table `jetson`.`per_hour_stat`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `jetson`.`per_hour_stat` ;
-
-CREATE TABLE IF NOT EXISTS `jetson`.`per_hour_stat` (
-  `id` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `camera_id` INT(5) UNSIGNED NOT NULL,
-  `date_day` DATE NOT NULL,
-  `date_hour` INT(2) UNSIGNED NOT NULL,
-  `max_detected_object` INT(5) UNSIGNED NOT NULL,
-  `min_detected_object` INT(5) UNSIGNED NOT NULL,
-  `avg_detected_object` FLOAT(5,3) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`))
-DEFAULT CHARACTER SET = utf8;
-
--- -----------------------------------------------------
 -- Table `jetson`.`per_second_stat`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `jetson`.`per_second_stat` ;
@@ -161,7 +145,6 @@ CREATE TABLE IF NOT EXISTS `jetson`.`api_key` (
   `user_id` INT(5) UNSIGNED NOT NULL,
   `api_key` CHAR(32) NOT NULL,
   `salt` VARCHAR(24) NOT NULL,
-  `is_active` TINYINT UNSIGNED NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
   CONSTRAINT `fk_apikey_has_user`
     FOREIGN KEY (`user_id`)

@@ -23,19 +23,15 @@ namespace WebAPI.Controllers
         private AbstractDataMessageService DataMessageService => _dataMessageService ?? (_dataMessageService =
                                                                HttpContext.RequestServices.GetService(typeof(AbstractDataMessageService)) as
                                                                          AbstractDataMessageService);
-        private AbstractHourlyStatsService _hourlyStatsService;
-        private AbstractHourlyStatsService HourlyStatsService => _hourlyStatsService ?? (_hourlyStatsService =
-                                                               HttpContext.RequestServices.GetService(typeof(AbstractHourlyStatsService)) as
-                                                                         AbstractHourlyStatsService);
         private AbstractAPIKeyService _apiKeyService;
         private AbstractAPIKeyService APIKeyService => _apiKeyService ?? (_apiKeyService =
-                                                               HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
+                                                           HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
                                                                          AbstractAPIKeyService);
         private AlertSummaryService _alertSummaryService;
         private AlertSummaryService AlertSummaryService => _alertSummaryService ?? (_alertSummaryService =
                                                            HttpContext.RequestServices.GetService(typeof(AlertSummaryService)) as
                                                             AlertSummaryService);
-        
+                                                            
         #endregion
 
         /// <summary>
@@ -47,13 +43,12 @@ namespace WebAPI.Controllers
         [Route("DataMessage")] // "api/datareceival/datamessage"
         public IActionResult DataMessage([FromBody] DataMessage receivedMessage)
         {
-        //Temporarily disabling validation on API key
-//            // Verify device's API Key.
-//            if (_apiKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
-//            {
-//                // If API Key does not exist or is deactivated.
-//                return Unauthorized();
-//            }
+            // Verify device's API Key.
+            if (APIKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
+            {
+                // If API Key does not exist or is deactivated.
+                return Unauthorized();
+            }
 
             if (DataMessageService.CheckDataMessageValidity(receivedMessage) == false)
             {
@@ -62,8 +57,8 @@ namespace WebAPI.Controllers
             else if (DataMessageService.StoreStatsFromDataMessage(receivedMessage))
             {
                 // Asynchronously check hourly stats are ready for calculation and perform if needed.
-                Task hourlyStatsCheck = Task.Factory.StartNew(
-                    () => _hourlyStatsService.AutoCalculateHourlyStats(receivedMessage));
+                //Task hourlyStatsCheck = Task.Factory.StartNew(
+                    //() => _hourlyStatsService.AutoCalculateHourlyStats(receivedMessage));
                 DataReceivalResponse receivalResponse = AlertSummaryService.GetReceivalResponse(receivedMessage);
                 // Return HTTP OK, without waiting on asynchronous Task.
                 return StatusCode(200, new JsonResult(receivalResponse));
