@@ -40,7 +40,7 @@ namespace WebServer_UnitTests.ServiceTests
             dbAlerts.Add(databaseAlert);
 
         }
-
+        [Ignore("Not implemented")]
         [Test]
         public void createAlertTest()
         {
@@ -59,11 +59,13 @@ namespace WebServer_UnitTests.ServiceTests
 
 
         }
+        [Ignore("Not implemented")]
         [Test]
         public void deleteAnAlertTest()
         {
             Assert.Fail();
         }
+        [Ignore("Not implemented")]
         [Test]
         public void modifyExistingAlertTest()
         {

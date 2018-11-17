@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Moq;
 using BackEndServer.Services;
+using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
 namespace WebServer_UnitTests.ServiceTests
@@ -27,7 +28,18 @@ namespace WebServer_UnitTests.ServiceTests
         [Test]
         public void modifyUserDetailsTest()
         {
-            Assert.Fail();
+            Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
+            
+
+            UserService userService = new UserService(mockDBService.Object, new NotificationService(mockDBService.Object), "test", new EmailService("email", "email"));
+            UserSettings userSettings = new UserSettings();
+            userSettings.FirstName = "First";
+            userSettings.LastName = "Last";
+            userSettings.UserId = 1;
+            mockDBService.Setup(x => x.PersistExistingUser(It.Is<DatabaseUser>(p => p.FirstName == "First"))).Returns(true);
+
+            Assert.That(userService.ModifyUser(userSettings), Is.EqualTo(true));
+
         }
     }
 }

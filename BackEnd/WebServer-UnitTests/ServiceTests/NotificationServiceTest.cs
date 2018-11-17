@@ -13,7 +13,7 @@ namespace WebServer_UnitTests.ServiceTests
     [TestFixture]
     class NotificationServiceTest
     {
-
+        [Ignore("Not implemented")]
         [Test]
         public void getNotificationWhenAlertConditionIsMetTest()
         {

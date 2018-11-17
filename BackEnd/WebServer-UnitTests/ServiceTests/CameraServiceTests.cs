@@ -7,6 +7,7 @@ using Moq;
 using BackEndServer.Services;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
+using BackEndServer.Models.ViewModels;
 
 namespace WebServer_UnitTests.ServiceTests
 {
@@ -55,22 +56,51 @@ namespace WebServer_UnitTests.ServiceTests
             Assert.That(cameraService.getCameraStatisticsForNowById(1).MostRecentPeopleCount.Value, Is.EqualTo(23));
 
         }
-
+        
         [Test]
-        public void createNewCameraTest()
+        public void registerNewCameraTest()
         {
-            Assert.Fail();
+            DatabaseCamera testCamera = new DatabaseCamera
+            {
+                CameraId = 1,
+                CameraName = "cameraName",
+                LocationId = 1,
+                UserId = 1
+            };
+
+            Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
+            mockDBService.Setup(x => x.PersistExistingCameraByCameraKey(It.IsAny<DatabaseCamera>(),false)).Returns(true);
+            CameraService cameraService = new CameraService(mockDBService.Object, new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object));
+
+            CameraDetails cameraDetails = new CameraDetails(testCamera);
+            cameraDetails.ImageDeleted = false;
+            cameraDetails.ExistingRoomId = 1;
+
+
+            Assert.That(cameraService.RegisterCamera(cameraDetails), Is.EqualTo(true));
+
+
         }
+        [Test]
+        public void createNewKeyTest()
+        {
+            Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
+            mockDBService.Setup(x => x.GetCameraIdFromKey(It.IsAny<string>())).Returns(-1);
+            mockDBService.Setup(x => x.PersistNewCamera(It.IsAny<DatabaseCamera>())).Returns(true);
+            CameraService cameraService = new CameraService(mockDBService.Object, new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object));
+
+            NewCameraKey cameraKey = cameraService.GenerateUniqueCameraKey();
+            Assert.That(cameraKey.CameraKey.Length, Is.EqualTo(12));
+
+
+        }
+        [Ignore("Not implemented")]
         [Test]
         public void editCameraTest()
         {
             Assert.Fail();
         }
-        [Test]
-        public void deleteCameraTest()
-        {
-            Assert.Fail();
-        }
+
 
     }
 }

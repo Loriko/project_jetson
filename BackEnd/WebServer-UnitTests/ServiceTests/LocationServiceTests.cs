@@ -51,20 +51,36 @@ namespace WebServer_UnitTests.ServiceTests
             LocationService locationService = new LocationService(mockDBService.Object);
             mockDBService.Setup(x => x.GetLocationsForUser(1)).Returns(dbAddressList);
 
-            LocationInformationList locationInformationList = locationService.getAvailableLocationsForUser(1);
+            LocationInformationList locationInformationList = locationService.GetAvailableLocationsForUser(1);
             Assert.That(locationInformationList.LocationList[0].LocationName, Is.EqualTo("DMV"));
             Assert.That(locationInformationList.LocationList[1].LocationName, Is.EqualTo("DMV2"));
         }
         [Test]
-        public void createNewLocationTest()
-        {
-            Assert.Fail();
-        }
-        [Test]
         public void modifyExistingLocationTest()
         {
-            Assert.Fail();
+            Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
+            mockDBService.Setup(x => x.PersistExistingLocation(It.IsAny<DatabaseLocation>())).Returns(true);
+            LocationService locationService = new LocationService(mockDBService.Object);
+            LocationDetails locationDetails = new LocationDetails(testLocation);
+
+
+            locationService.SaveLocation(locationDetails);
+            mockDBService.Verify(m => m.PersistExistingLocation(It.IsAny<DatabaseLocation>()), Times.AtLeastOnce());
+            
         }
+        [Test]
+        public void createNewLocationTest()
+        {
+            Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
+            mockDBService.Setup(x => x.PersistNewLocation(It.IsAny<DatabaseLocation>())).Returns(true);
+            LocationService locationService = new LocationService(mockDBService.Object);
+            LocationDetails locationDetails = new LocationDetails();
+
+
+            locationService.SaveLocation(locationDetails);
+            mockDBService.Verify(m => m.PersistNewLocation(It.IsAny<DatabaseLocation>()), Times.AtLeastOnce());
+        }
+        [Ignore("Not implemented")]
         [Test]
         public void deleteLocation()
         {
