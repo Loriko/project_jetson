@@ -4,9 +4,9 @@ namespace BackEndServer.Services
 {
     public class AuthenticationService : AbstractAuthenticationService
     {
-        private readonly DatabaseQueryService _dbQueryService;
+        private readonly IDatabaseQueryService _dbQueryService;
 
-        public AuthenticationService(DatabaseQueryService dbQueryService)
+        public AuthenticationService(IDatabaseQueryService dbQueryService)
         {
             this._dbQueryService = dbQueryService;
         }
