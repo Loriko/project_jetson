@@ -9,6 +9,6 @@ namespace BackEndServer.Services.AbstractServices
         InvalidDataMessageResponseBody CreateInvalidDataMessageResponseBody(DataMessage message);
         bool StoreStatsFromDataMessage(DataMessage message);
         bool CheckTimeIntervalValidity(TimeInterval timeInterval);
-        DataMessage RetrievePerSecondStatsBetweenInterval(TimeInterval timeInterval);
+        //DataMessage RetrievePerSecondStatsBetweenInterval(TimeInterval timeInterval);
     }
 }

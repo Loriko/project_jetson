@@ -23,7 +23,7 @@ namespace BackEndServer.Models.DBModels
         public bool HasSavedImage { get; set; }
         public int NumDetectedObjects { get; set; }
         public int CameraId { get; set; }
-        public int PerHourStatId { get; set; }
+        public int? PerHourStatId { get; set; }
         public string FrameJpgPath { get; set; }
     }
 }

@@ -16,9 +16,9 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
 
         // Constructor which is also the JSON deserialising constructor.
         [JsonConstructor]
-        public DataMessage(string api_key, PerSecondStat[] perSecondStats)
+        public DataMessage(string plain_text_api_key, PerSecondStat[] perSecondStats)
         {
-            this.API_Key = api_key;
+            this.API_Key = plain_text_api_key;
             this.RealTimeStats = perSecondStats;
         }
 
