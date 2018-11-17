@@ -16,7 +16,6 @@ namespace BackEndServer.Services
         private readonly AbstractNotificationService _notificationService;
         private string _hostname;
 
-
         public UserService(IDatabaseQueryService dbQueryService, AbstractNotificationService notificationService, 
                            string hostname, EmailService emailService)
         {
@@ -49,7 +48,8 @@ namespace BackEndServer.Services
                 createdUser.CreateAPIKey = userSettings.CreateAPIKey;
                 if (createdUser.CreateAPIKey)
                 {
-                    createdUser.APIKey = GenerateUniqueAPIKey(createdUser.UserId);
+                    // TODO call APIKeyService.RegisterNewAPIKey(currentUserId)
+                    createdUser.APIKey = "ERROR";
                 }
                 return createdUser;
             }
@@ -143,38 +143,6 @@ namespace BackEndServer.Services
             }
 
             return res.ToString();
-        }
-
-        public string GenerateUniqueAPIKey(int userId)
-        {
-            int count = 0;
-            while (count < 5)
-            {
-                count++;
-                // API Key must be exactly 12 characters.
-                string randomAPIKey = StringGenerator.GenerateRandomString(12, 12);
-
-                // Ensure Key does not exist in database (return value is -1).
-                if (_dbQueryService.GetAPIKeyIdFromKey(randomAPIKey) == -1)
-                {
-                    // Persist new api key to database.
-                    DatabaseAPIKey apiKey = new DatabaseAPIKey
-                    {
-                        Key = randomAPIKey,
-                        UserId = userId,
-                        Salt = "placeholder"
-                    };
-
-                    if (_dbQueryService.PersistNewAPIKey(apiKey))
-                    {
-                        return randomAPIKey;
-                    }
-
-                    return null;
-                }
-            }
-
-            return null;
         }
 
         public NavigationBarDetails GetNavigationBarDetailsForUser(int? userId)

@@ -45,29 +45,28 @@ namespace BackEndServer.Services
 
         #region Data Receival Controller (API)
 
-        public bool PersistNewPerSecondStats(List<PerSecondStat> distinctStats)
+        public bool PersistNewPerSecondStats(List<DatabasePerSecondStat> distinctStats)
         {
             // Define the bulk insert query without any values to insert.
             string bulkInsertCommand = $"INSERT INTO {DatabasePerSecondStat.TABLE_NAME} "
                 + $"({DatabasePerSecondStat.CAMERA_ID_LABEL},{DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL}, "
-                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL},{DatabasePerSecondStat.FRM_JPG_PATH_LABEL}) VALUES ";
+                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL},"
+                + $"{DatabasePerSecondStat.FRM_JPG_PATH_LABEL}) VALUES ";
 
             // Append the values one by one to the bulk insert query.
-            PerSecondStat lastStat = distinctStats.Last();
+            DatabasePerSecondStat lastStat = distinctStats.Last();
 
-            foreach (PerSecondStat stat in distinctStats)
+            foreach (DatabasePerSecondStat stat in distinctStats)
             {
-                //TODO: Usafe addition done for milestone 4
-                string cameraId = stat.CameraId.Value.ToString();
-                string numDetectedObjects = stat.NumTrackedPeople.ToString();
-                string hasImage = "0";
-
+                string hasImageString = "0";
                 if (stat.HasSavedImage)
                 {
-                    hasImage = "1";
+                    hasImageString = "1";
                 }
-
-                bulkInsertCommand += $"({cameraId},{numDetectedObjects},'{stat.DateTime}',{hasImage},{formatNullableString(stat.FrameAsJpgPath)})";
+                
+                bulkInsertCommand += $"({stat.CameraId},{stat.NumDetectedObjects},"
+                    + $"'{stat.DateTime.ToMySqlDateTimeString()}',"
+                    + $"'{hasImageString}',{formatNullableString(stat.FrameJpgPath)})";
 
                 if (stat != lastStat)
                 {
@@ -79,22 +78,16 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
+                MySqlCommand cmd = new MySqlCommand(bulkInsertCommand, conn);
 
-                try
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
                 {
-                    MySqlCommand cmd = new MySqlCommand(bulkInsertCommand, conn);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // Write to Log
-                    return false; // This is probably not going to be executed...
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
-
         #endregion
 
         #region Hourly Stats Service (API)
@@ -856,7 +849,6 @@ namespace BackEndServer.Services
                             APIKeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
                             Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
                             Salt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
-                            IsActive = Convert.ToInt16(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL])
                         };
                     }
                 }
@@ -885,7 +877,6 @@ namespace BackEndServer.Services
                             APIKeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
                             Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
                             Salt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
-                            IsActive = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL]),
                             UserId = Convert.ToInt32(reader[DatabaseAPIKey.USER_ID_LABEL])
                         });
                     }
@@ -895,21 +886,14 @@ namespace BackEndServer.Services
         }
 
         // Performs an INSERT to persist a newly created API Key (salted and hashed key and its Salt value).
-        public bool PersistAPIKey(APIKey api_key)
+        public bool PersistNewAPIKey(APIKey api_key)
         {
-            int isKeyActive = (int)DatabaseAPIKey.API_Key_Status.INACTIVE;
-
-            if (api_key.IsActive)
-            {
-                isKeyActive = (int)DatabaseAPIKey.API_Key_Status.ACTIVE;
-            }
-
             // Define the insert command with the values to insert.
             string insertCommand = $"INSERT INTO {DatabaseAPIKey.TABLE_NAME} "
                 + $"({DatabaseAPIKey.API_KEY_LABEL},{DatabaseAPIKey.API_KEY_SALT_LABEL},"
-                + $"{DatabaseAPIKey.USER_ID_LABEL},{DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}) VALUES "
+                + $"{DatabaseAPIKey.USER_ID_LABEL}) VALUES "
                 + $"('{api_key.API_Key}','{api_key.API_KeySalt}',"
-                + $"{formatNullableInt(api_key.UserId)},{isKeyActive})";
+                + $"{formatNullableInt(api_key.UserId)})";
 
             // Open connection and execute the insert command.
             using (MySqlConnection conn = GetConnection())
@@ -923,48 +907,7 @@ namespace BackEndServer.Services
                     return true;
                 }
             }
-            return true;
-        }
-
-        // Performs an UPDATE to set the specified API key in the database to inactive. 
-        public bool DeactivateAPIKey(int api_key_id)
-        {
-            DatabaseAPIKey api_key = GetAPIKeyFromId(api_key_id);
-            
-            if (api_key == null)
-            {
-                // Key was not found in database.
-                return false;
-            }
-            else if (api_key.IsActive == (int)DatabaseAPIKey.API_Key_Status.INACTIVE)
-            {
-                // Key is already Inactive (Deactivated).
-                return false;
-            }
-
-            // Define the update command with the values to update.
-            string updateCommand = $"UPDATE {DatabaseAPIKey.TABLE_NAME} "
-                + $"SET {DatabaseAPIKey.API_KEY_ISACTIVE_LABEL} = {(int)DatabaseAPIKey.API_Key_Status.INACTIVE} "
-                + $"WHERE {DatabaseAPIKey.API_KEY_ID_LABEL} = {api_key_id}";
-
-            // Open connection and execute the update command.
-            using (MySqlConnection conn = GetConnection())
-            {
-                conn.Open();
-
-                try
-                {
-                    MySqlCommand cmd = new MySqlCommand(updateCommand, conn);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // Write to Log
-                    return false; // This is probably not going to be executed...
-                }
-            }
-            return true;
+            return false;
         }
         #endregion
 
@@ -1141,11 +1084,11 @@ namespace BackEndServer.Services
         {
             using (MySqlConnection conn = GetConnection())
             {   
-                string query = $"DELETE FROM {DatabaseAlert.TABLE_NAME} " +
+                string command = $"DELETE FROM {DatabaseAlert.TABLE_NAME} " +
                                $"WHERE {DatabaseAlert.ALERT_ID_LABEL} = {alertId};";
                 
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
+                MySqlCommand cmd = new MySqlCommand(command, conn);
 
                 int success = cmd.ExecuteNonQuery();
                 if (success != 0)
@@ -2215,29 +2158,6 @@ namespace BackEndServer.Services
                 }
             }
             return cameraList;
-        }
-
-        public bool PersistNewAPIKey(DatabaseAPIKey apiKey)
-        {
-            using (MySqlConnection conn = GetConnection())
-            {   
-                string query = $"INSERT INTO {DatabaseAPIKey.TABLE_NAME}(" +
-                               $"{DatabaseAPIKey.API_KEY_LABEL}, {DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}, " +
-                               $"{DatabaseAPIKey.API_KEY_SALT_LABEL}, {DatabaseAPIKey.USER_ID_LABEL}" +
-                               ") VALUES " +
-                               $"('{apiKey.Key}',{apiKey.IsActive}," +
-                               $"'{apiKey.Salt}',{apiKey.UserId});";
-                
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand(query, conn);
-
-                int success = cmd.ExecuteNonQuery();
-                if (success != 0)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public string GetCameraKeyFromId(int cameraId)

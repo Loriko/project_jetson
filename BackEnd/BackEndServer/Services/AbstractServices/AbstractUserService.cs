@@ -14,7 +14,6 @@ namespace BackEndServer.Services.AbstractServices
         UserSettings CreateAndReturnUser(UserSettings userSettings);
         UserSettings GetUserByUsername(string username);
         UserSettings GetUserByEmailAddress(string email);
-        string GenerateUniqueAPIKey(int userId);
         NavigationBarDetails GetNavigationBarDetailsForUser(int? userId);
         bool ValidateUsername(string username);
         bool ValidateEmail(string emailAddress);

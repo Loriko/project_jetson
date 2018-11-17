@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Classes.ErrorResponseClasses;
 using System.Linq;
 using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.DBModels;
-using Castle.Core.Internal;
 
 namespace BackEndServer.Services
 {
@@ -54,9 +52,9 @@ namespace BackEndServer.Services
 
                 for (int c = 0; c < message.GetLength(); c++)
                 {
-                    if (message.RealTimeStats[c].CameraId < 0)
+                    if (String.IsNullOrWhiteSpace(message.RealTimeStats[c].CameraKey))
                     {
-                        temp.Add("CameraId");
+                        temp.Add("CameraKey");
                     }
 
                     if (message.RealTimeStats[c].NumTrackedPeople < 0)
@@ -95,37 +93,49 @@ namespace BackEndServer.Services
         // Once a DataMessage is verified, this method allows persisting all contents (PerSecondStat objects) into the database.
         public bool StoreStatsFromDataMessage(DataMessage verifiedMessage)
         {
-            List<PerSecondStat> temp = new List<PerSecondStat>();
-
-            for (int y = 0; y < verifiedMessage.GetLength(); y++)
-            {
-                int associatedCameraId = _dbQueryService.GetCameraIdFromKey(verifiedMessage.RealTimeStats[y].CameraKey);
-                if (associatedCameraId != -1)
-                {
-                    verifiedMessage.RealTimeStats[y].CameraId = associatedCameraId;
-                }
-                else
-                {
-                    //If we can't get the camera id from the camera key, we won't know what to save the stat against,
-                    //might as well drop it all 
-                    return false;
-                }
-
-                temp.Add(verifiedMessage.RealTimeStats[y]);
-            }
+            List<DatabasePerSecondStat> dbSecondsToPersist = new List<DatabasePerSecondStat>();
 
             // Remove any possible duplicates.
-            List<PerSecondStat> distinctStats = temp.Distinct().ToList();
+            List<PerSecondStat> distinctPerSecondStats = verifiedMessage.RealTimeStats.Distinct().ToList();
 
-            foreach (PerSecondStat stat in distinctStats)
+            for (int y = 0; y < distinctPerSecondStats.Count; y++)
             {
-                SaveStatJpgIfNecessary(stat);
+                PerSecondStat stat = distinctPerSecondStats[y];
+
+                int cameraId = _dbQueryService.GetCameraIdFromKey(stat.CameraKey);
+
+                // Only persist PerSecondStats from valid Cameras (with valid CameraKeys).
+                if (cameraId > 0)
+                {
+                    DatabasePerSecondStat dbPerSecondStat = new DatabasePerSecondStat();
+                    dbPerSecondStat.CameraId = cameraId;
+                    dbPerSecondStat.DateTime = MySqlDateTimeConverter.ToDateTime(stat.DateTime);
+                    dbPerSecondStat.HasSavedImage = stat.HasSavedImage;
+                    dbPerSecondStat.PerHourStatId = null;
+                    dbPerSecondStat.NumDetectedObjects = stat.NumTrackedPeople;
+
+                    // If PerSecondStat has a key frame.
+                    if (stat.HasSavedImage && String.IsNullOrWhiteSpace(stat.FrameAsJpg) == false)
+                    {
+                        // Save it to the server.
+                        dbPerSecondStat.FrameJpgPath = SaveKeyImage(stat);
+                    }
+                    else
+                    {
+                        dbPerSecondStat.HasSavedImage = false;
+                        dbPerSecondStat.FrameJpgPath = null;
+                    }
+
+                    dbSecondsToPersist.Add(dbPerSecondStat);
+                }
             }
 
-            return _dbQueryService.PersistNewPerSecondStats(distinctStats);
+            return _dbQueryService.PersistNewPerSecondStats(dbSecondsToPersist);
         }
 
-        private static void SaveStatJpgIfNecessary(PerSecondStat stat)
+        // Saves the key frame by converting the string attrubute to a Jpeg image file on the server and
+        // Returns the file path to where it was saved.
+        private static string SaveKeyImage(PerSecondStat stat)
         {
             string modifiedTimestamp = stat.DateTime.Replace(" ", "").Replace(":", "").Replace("-", "");
             //TODO store full path here
@@ -134,10 +144,10 @@ namespace BackEndServer.Services
                 filePath);
             if (success)
             {
-                stat.FrameAsJpgPath = filePath;
+                return filePath;
             }
+            return null;
         }
-
 
         // Before processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval, this method is used to validate the received TimeInterval.
         public bool CheckTimeIntervalValidity(TimeInterval timeInterval)
@@ -164,6 +174,7 @@ namespace BackEndServer.Services
             return true;
         }
 
+        /*
         // Used for processing a request for a DataMessage with all PerSecondStat objects within a TimeInterval.
         public DataMessage RetrievePerSecondStatsBetweenInterval(TimeInterval verifiedTimeInterval)
         {
@@ -196,5 +207,6 @@ namespace BackEndServer.Services
 
             return new DataMessage("SYSTEM_RESPONSE", stats);
         }
+        */
     }
 }

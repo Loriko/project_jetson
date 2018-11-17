@@ -31,6 +31,7 @@ namespace BackEndServer.Services.HelperServices
 
             if (!success)
             {
+                // TODO Log error here
                 throw new FormatException("Invalid SQL DateTime Format When Parsing.");
             }
 

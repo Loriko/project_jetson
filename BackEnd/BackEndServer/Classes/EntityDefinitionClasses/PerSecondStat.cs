@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using BackEndServer.Services.HelperServices;
 
 namespace BackEndServer.Classes.EntityDefinitionClasses
@@ -16,32 +17,30 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         // The Key of the camera which produced these statistics for this exact second.
         public string CameraKey { get; set; }
 
-        // The Database Id of the camera which produced these statistics for this exact second
-        //TODO: Adding nullable CameraId is not so good but done for milestone 4
-        public int? CameraId { get; set; }
-
         // Statistic #1: Stores the number of people identified within the second.
         public int NumTrackedPeople { get; set; }
 
         // Statistic #2: Indicates if the embedded system has stored an image locally of this second. This happens when a key statistic has occured. 
         public bool HasSavedImage { get; set; }
         
+        // Key frame JPEG image file sent as a string.
         public string FrameAsJpg { get; set; }
         
-        public string FrameAsJpgPath { get; set; }
-
         #endregion
 
         public PerSecondStat()
         {
         }
 
-        public PerSecondStat (string dateTime, string cameraKey, int numTrackedPeople, bool hasSavedImage)
+        // Constructor which is also the JSON deserialising constructor.
+        [JsonConstructor]
+        public PerSecondStat (string dateTime, string cameraKey, int numTrackedPeople, bool hasSavedImage, string frameAsJPG)
         {
             this.DateTime = dateTime;
             this.CameraKey = cameraKey;
             this.NumTrackedPeople = numTrackedPeople;
             this.HasSavedImage = hasSavedImage;
+            this.FrameAsJpg = frameAsJPG; // Server responsible for generating a path and saving the path in the DatabasePerSecondStat.
         }
 
         /// <summary>
