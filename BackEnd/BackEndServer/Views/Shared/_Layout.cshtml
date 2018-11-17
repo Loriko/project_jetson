@@ -87,9 +87,15 @@
             closeOnSelect: true, // Close upon selecting a date,
             container: 'body' // ex. 'body' will append picker to body
         });
+        $(".button-collapse").sideNav();
     }
     $(document).ready(function() {
         loadMaterializeEffects();
+    });
+    $(":text, :password, input[type='email']").change(function() {
+        if ($(this).val()) {
+            $(this).val($(this).val().trim());
+        }
     });
 </script>
 

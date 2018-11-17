@@ -2,11 +2,14 @@
 <div id="location-creation-modal" class="modal modal-fixed-footer">
     <form id="location-creation-form" class="col s12" method="post" asp-controller="Location" asp-action="SaveLocation">
         <div class="modal-content">
-            <h1 class="page-title left-align">Create a Location</h1>
+            <h1 class="page-title left-align" id="create-title">Create a Location</h1>
+            <h1 class="page-title left-align" id="edit-title">Edit a Location</h1>
             <div class="row">
+                <input type="hidden" id="modal_location_id" name="LocationId">
+                <input type="hidden" id="previous_location_name">
                 <div class="input-field col s12">
-                    <input id="location_name" name="LocationName" type="text" class="validate" required>
-                    <label for="location_name">Location Name</label>
+                    <input id="location_name" name="LocationName" type="text" class="" required>
+                    <label for="location_name" data-error="You must enter a unique location name">Location Name</label>
                 </div>
                 <div class="input-field col s12">
                     <input id="address_line" name="AddressLine" type="text" class="validate"></input>
@@ -33,3 +36,94 @@
         </div>
     </form>
 </div>
+
+<script>
+    $("#location_name").change(function() {
+        validateLocationName();
+    });
+    
+    function validateLocationName() {
+        if ($("#location_name").val().toUpperCase() === $("#previous_location_name").val().toUpperCase()) {
+            return true;
+        }
+
+        if ($("#location_name").val()) {
+            var url = "../location/ValidateNewLocationName";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "locationName": $("#location_name").val()
+                },
+                success: function(data) {
+                    var newLocationName = $("#location_name");
+                    newLocationName.addClass("validated");
+                    if (data === true) {
+                        newLocationName.addClass("valid");
+                        newLocationName.removeClass("invalid");
+                    } else {
+                        newLocationName.addClass("invalid");
+                        newLocationName.removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+
+    function setLocationModalToCreateMode() {
+        $("#edit-title").addClass("hide");
+        $("#create-title").removeClass("hide");
+
+        var modal = $("#location-creation-modal");
+        modal.find("form").trigger("reset");
+        modal.find("input[name='location_name']").removeClass("valid");
+        modal.find("input[name='location_name']").removeClass("invalid");
+        modal.find("input[name='location_name']").removeClass("validated");
+        modal.find("#previous_location_name").val("");
+    }
+
+    function setLocationModalToEditMode(location) {
+        $("#create-title").addClass("hide");
+        $("#edit-title").removeClass("hide");
+        var modal = $("#location-creation-modal");
+        modal.find("input[name='LocationId']").val(location.locationId);
+        modal.find("input[name='LocationName']").val(location.locationName);
+        modal.find("label[for='location_name']").addClass("active");
+        modal.find("input[name='AddressLine']").val(location.addressLine);
+        modal.find("label[for='address_line']").addClass("active");
+        modal.find("input[name='City']").val(location.city);
+        modal.find("label[for='city']").addClass("active");
+        modal.find("input[name='State']").val(location.state);
+        modal.find("label[for='state']").addClass("active");
+        modal.find("input[name='Zip']").val(location.zip);
+        modal.find("label[for='zip']").addClass("active");
+        modal.find("#previous_location_name").val(location.locationName);
+    }
+
+    function checkNewLocationName() {
+        if ($("#location_name").hasClass("validated") === false || $("#location_name").hasClass("invalid")) {
+            return false;
+        }
+        return true;
+    }
+
+    $("#location-creation-form").submit(function(e) {
+        if (checkNewLocationName() === false) {
+            return false;
+        }
+        
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(), // serializes the form's elements.
+            success: function (data) {
+                window.handleLocationCreationFormSubmission(data);
+            }
+        });
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+</script>

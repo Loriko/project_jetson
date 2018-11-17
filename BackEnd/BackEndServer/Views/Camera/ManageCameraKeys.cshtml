@@ -1,4 +1,5 @@
-﻿@model BackEndServer.Models.ViewModels.CameraKeyList
+﻿@using Castle.Core.Internal
+@model BackEndServer.Models.ViewModels.CameraKeyList
 
 @{
     ViewBag.Title = "Project Jetson - Manage Camera Keys";
@@ -17,7 +18,7 @@
         if (isReg == "True")
         {
             messageHead.innerHTML = "Delete Registered Camera Key";
-            message += "This is a <b>Registered Camera Key</b>, meaning it represents a camera that is currently being used by the capture system. <b>Deleting this Camera Key will also delete its associated Camera.</b>";
+            message += "This is a <b>Registered Camera Key</b>, meaning it represents a camera that is currently being used by the capture system. <b>Deleting this Camera Key will also delete its associated Camera and any alert monitoring that camera.</b>";
         }
         else
         {
@@ -37,6 +38,13 @@
 
 <!--Title of page -->
 <h1 class="page-title center-align" id="headerManageCameraKeys">Manage Camera Keys</h1>
+
+@if (Model.ListOfCameraKeys.IsNullOrEmpty())
+{
+    <div id="alertList" class="unavailable-message center-align">
+        It seems you don't have any camera key so far. <br>Clicking the green floating button will allow you to generate a camera key.
+    </div>
+}
 
 <!-- Add New Camera Key Button-->
 <div class="row">
@@ -84,26 +92,29 @@
     </div>
 </div>
 
-<!-- Camera Key List with Delete Buttons -->
-<div id="adminCameraKeys" class="collection">
-    @foreach (var cameraKey in Model.ListOfCameraKeys)
-    {
-    <div class="collection-item">
-        <span class="title">@cameraKey.Key</span>
-        <span class="secondary-content">
-            @if (cameraKey.IsRegistered == true)
-            {
-                <span id="@cameraKey.CameraId">Registered</span>
-            }
-            else
-            {
-                <span id="'@cameraKey.CameraId'">Not Registered</span>
-            }
-            <a data-toggle="modal" data-target="#deleteWarning"
-               onclick="updateDeleteModal('@cameraKey.CameraId','@cameraKey.Key','@cameraKey.IsRegistered')">
-                <i class="material-icons">delete</i>
-            </a>
-        </span>
+@if (!Model.ListOfCameraKeys.IsNullOrEmpty())
+{
+    <!-- Camera Key List with Delete Buttons -->
+    <div id="adminCameraKeys" class="collection">
+        @foreach (var cameraKey in Model.ListOfCameraKeys)
+        {
+            <div class="collection-item">
+                <span class="title">@cameraKey.Key</span>
+                <span class="secondary-content">
+                    @if (cameraKey.IsRegistered == true)
+                    {
+                        <span id="@cameraKey.CameraId">Registered</span>
+                    }
+                    else
+                    {
+                        <span id="'@cameraKey.CameraId'">Not Registered</span>
+                    }
+                    <a data-toggle="modal" data-target="#deleteWarning"
+                       onclick="updateDeleteModal('@cameraKey.CameraId','@cameraKey.Key','@cameraKey.IsRegistered')">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </span>
+            </div>
+        }
     </div>
-    }
-</div>
+}

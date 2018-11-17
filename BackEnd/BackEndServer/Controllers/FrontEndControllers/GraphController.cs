@@ -28,24 +28,17 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
         
         // GET: /<controller>/
-        public IActionResult GraphDashboard(int cameraId, PastPeriod pastPeriod)
+        public IActionResult GraphDashboard(int cameraId, PastPeriod pastPeriod = PastPeriod.LastYear, DateTime? startDate = null, DateTime? endDate = null)
         {
             if (HttpContext.Session.GetString("currentUsername") == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            CameraInformation cameraInfoWithStatistics = CameraService.GetCameraInformationForPastPeriod(cameraId, pastPeriod);
-            return View(cameraInfoWithStatistics);
-        }
-
-        public IActionResult LoadCustomGraph(int cameraId, DateTime startDate, DateTime endDate)
-        {
-            if (HttpContext.Session.GetString("currentUsername") == null)
-            {
-                return RedirectToAction("SignIn", "Home");
-            }
-            CameraInformation cameraInfoWithStatistics = CameraService.GetCameraInformationForPastPeriod(cameraId, PastPeriod.Custom, startDate, endDate);
-            return View("GraphDashboard", cameraInfoWithStatistics);
+            CameraInformation cameraInfo = CameraService.getCameraInformationById(cameraId);
+            cameraInfo.GraphStatistics.SelectedPeriod = pastPeriod;
+            cameraInfo.GraphStatistics.StartDate = startDate;
+            cameraInfo.GraphStatistics.EndDate = endDate;
+            return View(cameraInfo);
         }
 
         public JsonResult GetCustomGraphStats(int cameraId, DateTime startDate, DateTime endDate)
@@ -94,13 +87,16 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return Json(statistics);
         }
         
-        public IActionResult SharedRoomGraphDashboard(int roomId)
+        public IActionResult SharedRoomGraphDashboard(int roomId, PastPeriod pastPeriod = PastPeriod.LastYear, DateTime? startDate = null, DateTime? endDate = null)
         {
             if (HttpContext.Session.GetString("currentUsername") == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
             SharedGraphStatistics sharedGraphStatistics = CameraService.GetSharedRoomGraphStatistics(roomId);
+            sharedGraphStatistics.SelectedPeriod = pastPeriod;
+            sharedGraphStatistics.StartDate = startDate;
+            sharedGraphStatistics.EndDate = endDate;
             return View("RoomStatistics", sharedGraphStatistics);
         }
     }

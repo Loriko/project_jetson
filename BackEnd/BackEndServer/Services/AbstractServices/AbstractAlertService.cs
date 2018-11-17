@@ -11,5 +11,7 @@ namespace BackEndServer.Services.AbstractServices
         SortedDictionary<int, List<AlertDetails>> GetAllAlertsByCameraIdForUser(int userId);
         bool DeleteAlert(int alertId);
         bool DisableAlert(AlertDisablingInformation alertDisablingInformation);
+        bool EnableAlert(int alertId);
+        List<AlertSummary> GetAllActiveAlertsForCameraKey(string cameraKey);
     }
 }

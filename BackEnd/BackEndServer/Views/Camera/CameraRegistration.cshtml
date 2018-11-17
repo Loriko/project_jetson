@@ -10,12 +10,13 @@
 @Html.Partial("~/Views/Location/LocationCreationModal.cshtml")
 
 <div class="row">
-    <form class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
+    <form id="camera_registration_form" class="col s12" method="post" asp-controller="Camera" asp-action="RegisterCamera" enctype="multipart/form-data">
         <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId" />
+        <input type="hidden" name="ImageDeleted" value="false" />
         <div class="row">
             <div class="input-field col s6">
                 <input id="camera_name" name="CameraName" value="@Model.CameraDetails.CameraName" type="text" class="validate" required>
-                <label for="camera_name">Camera Name *</label>
+                <label for="camera_name" data-error="A unique name must be entered">Camera Name *</label>
             </div>
             <div class="input-field col s6">
                 @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
@@ -24,16 +25,16 @@
                 }
                 else
                 {
-                    <input id="camera_key" name="CameraKey" type="text" class="validate" readonly required value="@Model.CameraDetails.CameraKey">
+                    <input id="camera_key" name="CameraKey" type="text" readonly required value="@Model.CameraDetails.CameraKey">
                 }
-                <label for="camera_key">Camera Key *</label>
+                <label for="camera_key" data-error="The given key is not a valid unclaimed Camera Key">Camera Key *</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s8">
                 <div id="new_room_container">
                     <input id="new_room_name" name="NewRoomName" value="@Model.CameraDetails.MonitoredArea" type="text" class="validate">
-                    <label for="new_room_name">Monitored Room</label>
+                    <label data-error="You must enter an unused room name" for="new_room_name">Monitored Room *</label>
                 </div>
                 <div id="existing_room_container" class="hide">
                     @{ Html.RenderPartial("~/Views/Location/RoomSelectorWrapper.cshtml", new RoomSelectorInfo
@@ -64,7 +65,7 @@
                 }
             </div>
             <div class="input-field col s3 right-align">
-                <a class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
+                <a id="create_location_button" class="waves-effect waves-light btn modal-trigger" href="#location-creation-modal">New Location?</a>
             </div>
         </div>
 
@@ -153,7 +154,8 @@
 </div>
 
 <script>
-    $('#resolution_checkbox').click(function () {
+    $("#create_location_button").on("click", window.setLocationModalToCreateMode);
+    $('#resolution_checkbox').click(function() {
         if ($("#resolution_checkbox").is(':checked')) {
             $("#custom_resolution_row").removeClass("hide");
             $("#camera_resolution_div .select-dropdown").prop('disabled', true);
@@ -163,8 +165,8 @@
             $("#camera_resolution_div .select-dropdown").prop('disabled', false);
         }
     });
-    
-    $('#existing_room_checkbox').change(function () {
+
+    $('#existing_room_checkbox').change(function() {
         if ($("#existing_room_checkbox").is(':checked')) {
             $("#existing_room_container").removeClass("hide");
             $("#new_room_container").addClass("hide");
@@ -184,16 +186,125 @@
 
     $("#location_id").change(function() {
         var locationId = $(this).val();
-        var url = "../location/LoadRoomSelector?locationId=" + locationId + "&selectorId=existing_room_id&selectorName=ExistingRoomId&required=true&selectedRoomId=" + "@Model.CameraDetails.ExistingRoomId";
+        var url = "../location/LoadRoomSelector?locationId=" +
+            locationId +
+            "&selectorId=existing_room_id&selectorName=ExistingRoomId&required=true&selectedRoomId=" +
+            "@Model.CameraDetails.ExistingRoomId";
         $('#existing_room_container').load(url, roomSelectorLoaded);
+        validateNewRoomName();
+        validateNewCameraName();
     });
-    
+
+    @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
+    {
+        <text>
+            $("#camera_key").focusout(function() {
+                validateCameraKey();
+            }).focusout();
+        </text>
+    }
+
+    function validateCameraKey() {
+        if ($("#camera_key").val()) {
+            var url = "ValidateCameraKey";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "cameraKey": $("#camera_key").val()
+                },
+                success: function(data) {
+                    $("#camera_key").addClass("validated");
+                    if (data === true) {
+                        $("#camera_key").addClass("valid");
+                        $("#camera_key").removeClass("invalid");
+                    } else {
+                        $("#camera_key").addClass("invalid");
+                        $("#camera_key").removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+
     // TODO: Add client side verification for image file input.
 
-    function roomSelectorLoaded() {
-        $('#existing_room_id').material_select();
+    //How to handle edit case
+    $("#camera_name").focusout(function() {
+        validateNewCameraName();
+    });
+    
+    function validateNewCameraName() {
+        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty() == false)
+        {
+        <text>
+            if ($("#camera_name").val() === "@Model.CameraDetails.CameraName") {
+                return true;
+            }
+        </text>
+        }
+        
+        if ($("#camera_name").val() && $("#location_id").val()) {
+            var url = "ValidateNewCameraName";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "locationId": $("#location_id").val(),
+                    "cameraName": $("#camera_name").val()
+                },
+                success: function(data) {
+                    var newCameraName = $("#camera_name");
+                    newCameraName.addClass("validated");
+                    if (data === true) {
+                        newCameraName.addClass("valid");
+                        newCameraName.removeClass("invalid");
+                    } else {
+                        newCameraName.addClass("invalid");
+                        newCameraName.removeClass("valid");
+                    }
+                }
+            });
+        }
     }
     
+    function validateNewRoomName() {
+        if ($("#new_room_name").val() && $("#location_id").val()) {
+            var url = "../location/ValidateNewRoomName";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "locationId": $("#location_id").val(),
+                    "roomName": $("#new_room_name").val()
+                },
+                success: function(data) {
+                    var newRoomName = $("#new_room_name");
+                    newRoomName.addClass("validated");
+                    if (data === true) {
+                        newRoomName.addClass("valid");
+                        newRoomName.removeClass("invalid");
+                    } else {
+                        newRoomName.addClass("invalid");
+                        newRoomName.removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+    
+    $("#new_room_name").focusout(function() {
+        validateNewRoomName();
+    });
+    
+    function roomSelectorLoaded() {
+        $('#existing_room_id').material_select();
+        $('#existing_room_checkbox').change();
+    }
+
     function locationSelectorLoaded() {
         $("#location_id option:last").attr("selected", "selected");
         $('#location_id').material_select();
@@ -211,25 +322,61 @@
         }
     }
 
-    $("#location-creation-form").submit(function (e) {
+    function verifyCameraKeyValid() {
+        if ($("#camera_key").hasClass("validated") === false || $("#camera_key").hasClass("invalid")) {
+            return false;
+        }
+        return true;
+    }
 
-        var form = $(this);
-        var url = form.attr('action');
+    function checkNewRoomNameValid() {
+        if ($("#new_room_name").hasClass("validated") === false || $("#new_room_name").hasClass("invalid")) {
+            return false;
+        }
+        return true;
+    }
 
+    function checkCameraNameValid() {
+        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty() == false)
+        {
+        <text>
+            if ($("#camera_name").val() === "@Model.CameraDetails.CameraName") {
+                return true;
+            }
+        </text>
+        }
+        if ($("#camera_name").hasClass("validated") === false || $("#camera_name").hasClass("invalid")) {
+            return false;
+        }
+        return true;
+    }
+    
+    $("#camera_registration_form").submit(function(e) {
+        if ($("#existing_room_checkbox").is(':checked') === false && checkNewRoomNameValid() === false) {
+            return false;
+        }
         if ($("#file_name").val() === false) {
             $("input[name='ImageDeleted']").val("true");
         }
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(), // serializes the form's elements.
-            success: function (data) {
-                handleLocationCreationFormSubmission(data);
-            }
-        });
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
+        //gotta do this differently for edit
+        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
+        {
+            <text>
+                if (checkCameraNameValid() === false) {
+                    return false;
+                }
+            </text>
+        }
+        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
+        {
+            <text>
+                return verifyCameraKeyValid();        
+            </text>
+        }
+        else
+        {
+            <text>return true;</text>
+        }
     });
 
 </script>

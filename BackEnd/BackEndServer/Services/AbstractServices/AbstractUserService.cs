@@ -8,8 +8,15 @@ namespace BackEndServer.Services.AbstractServices
     {
         UserSettings GetUserSettings(int userId);
         bool ModifyUser(UserSettings userSettings);
+        bool ModifyPassword(UserSettings userSettings);
+        bool ResetPassword(PasswordReset passwordReset);
+        bool SendResetPasswordLink(string email);
         UserSettings CreateAndReturnUser(UserSettings userSettings);
         UserSettings GetUserByUsername(string username);
+        UserSettings GetUserByEmailAddress(string email);
         string GenerateUniqueAPIKey(int userId);
+        NavigationBarDetails GetNavigationBarDetailsForUser(int? userId);
+        bool ValidateUsername(string username);
+        bool ValidateEmail(string emailAddress);
     }
 }

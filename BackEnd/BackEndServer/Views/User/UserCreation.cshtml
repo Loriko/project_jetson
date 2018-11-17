@@ -19,24 +19,36 @@
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="username" name="UserName" type="text" class="validate">
-                <label for="username">Username</label>
+                <input id="username" name="UserName" type="text" class="validate" required>
+                <label data-error="A unique name must be entered" for="username">Username *</label>
             </div>
             <div class="input-field col s6">
                 <input id="email_address" name="EmailAddress" type="email" class="validate">
-                <label for="email_address">Email Address</label>
+                <label for="email_address" data-error="You must enter an email address no other user has entered">Email Address</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
-                <input id="password" name="Password" type="password" class="validate">
-                <label for="password">Password</label>
+                <input id="password" name="Password" type="password" class="validate" required>
+                <label for="password">Password *</label>
             </div>
             <div class="input-field col s6">
-                <input id="password2" type="password" class="validate">
-                <label data-error="The passwords do not match" for="password2">Retype Password</label>
+                <input id="password2" type="password" class="validate" required>
+                <label for="password2">Retype Password *</label>
             </div>
         </div>
+        
+        @if (Model.IsAdministrator)
+        {
+            <div class="row">
+                <div class="input-field col s6 form-checkbox">
+                    <input id="administrator_checkbox" name="IsAdministrator" type="checkbox" value="true" />
+                    <label class="checkbox-label" for="administrator_checkbox">
+                        <span>Make User an Administrator?</span>
+                    </label>
+                </div>
+            </div>
+        }
         
         <div class="row">
             <div class="input-field col s6 form-checkbox">
@@ -61,18 +73,137 @@
 </div>
 
 <script>
+    $("#email_address").focusout(function() {
+        validateEmail();
+    });
 
-    $("#user_creation_form").submit(function (e) {
+    function validateEmail() {
+        if ($("#email_address").val()) {
+            var url = "ValidateEmail";
 
-        var form = $(this);
-
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "emailAddress": $("#email_address").val()
+                },
+                success: function(data) {
+                    $("#email_address").addClass("validated");
+                    if (data === true) {
+                        $("#email_address").addClass("valid");
+                        $("#email_address").removeClass("invalid");
+                    } else {
+                        $("#email_address").addClass("invalid");
+                        $("#email_address").removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+    
+    function validatePassword() {
         var password1 = $("#password");
         var password2 = $("#password2");
-        
-        if(password1.val().toLowerCase() != password2.val().toLowerCase()) {
+
+        if (password1.val().toLowerCase() !== password2.val().toLowerCase()) {
+            var errorMessage = "The passwords do not match";
+            $("label[for='password']").attr("data-error", errorMessage);
+            $("label[for='password2']").attr("data-error", errorMessage);
+            password1.removeClass("valid");
+            password1.addClass("invalid");
+            password2.removeClass("valid");
             password2.addClass("invalid");
-            password2.prop("aria-invalid", "true");
             return false;
         }
+//        The password must contain a combination of letters and numbers
+        if (/\d/.test(password1.val()) === false || /[a-z]/i.test(password1) === false) {
+            var errorMessage2 = "The password must contain a combination of letters and numbers";
+            $("label[for='password']").attr("data-error", errorMessage2);
+            $("label[for='password2']").attr("data-error", errorMessage2);
+            password1.addClass("invalid");
+            password2.addClass("invalid");
+            password1.removeClass("valid");
+            password2.removeClass("valid");
+            return false;
+        }
+
+        if (password1.val().length < 8) {
+            var errorMessage3 = "The password must be at least 8 characters long";
+            $("label[for='password']").attr("data-error", errorMessage3);
+            $("label[for='password2']").attr("data-error", errorMessage3);
+            password1.addClass("invalid");
+            password2.addClass("invalid");
+            password1.removeClass("valid");
+            password2.removeClass("valid");
+            return false;
+        }
+        
+        password1.addClass("valid");
+        password2.addClass("valid");
+        password1.removeClass("invalid");
+        password2.removeClass("invalid");
+        
+        return true;
+    }
+
+    $("#username").focusout(function() {
+        validateUsername();
+    });
+
+    function validateUsername() {
+        if ($("#username").val()) {
+            var url = "ValidateUsername";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "username": $("#username").val()
+                },
+                success: function(data) {
+                    $("#username").addClass("validated");
+                    if (data === true) {
+                        $("#username").addClass("valid");
+                        $("#username").removeClass("invalid");
+                    } else {
+                        $("#username").addClass("invalid");
+                        $("#username").removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+
+    function checkUsernameValidity() {
+        var username = $("#username");
+        //check if username doesn't exist
+        if (username.hasClass("invalid") 
+            || username.hasClass("validated") === false) {
+            return false;
+        }
+        return true;
+    }
+    
+    function checkEmailValidity() {
+        var email = $("#email_address");
+        //check if email doesn't exist
+        if (email.val() && (email.hasClass("invalid") || email.hasClass("validated") === false)) {
+            return false;
+        }
+        return true;
+    }
+    
+    $("#user_creation_form").submit(function (e) {
+        var validForm = true;
+        if (!validatePassword()) {
+            validForm = false;
+        }
+        if (!checkEmailValidity()) {
+            validForm = false;
+        }
+        if (!checkUsernameValidity()) {
+            validForm = false;
+        }
+        return validForm;
     });
 </script>

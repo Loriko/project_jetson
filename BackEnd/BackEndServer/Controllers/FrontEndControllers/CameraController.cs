@@ -7,6 +7,7 @@ using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using Microsoft.AspNetCore.Http;
 using System.IO;
+using System.Security.Policy;
 using Castle.Core.Internal;
 using System.Threading.Tasks;
 using BackEndServer.Models.Enums;
@@ -69,8 +70,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            PastPeriod pastPeriod = PastPeriod.LastYear;
-            return RedirectToAction("GraphDashboard", "Graph", new { cameraId, pastPeriod });
+            return RedirectToAction("GraphDashboard", "Graph", new { cameraId });
         }
         
         [HttpGet]
@@ -97,8 +97,25 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUsedId.Value);
 
+            if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
+            {
+                return PartialView("ManageCameras", availableCameras);
+            }
+            
             return View("ManageCameras", availableCameras);
+        }
 
+        [HttpPost]
+        public JsonResult ValidateCameraKey(string cameraKey)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(CameraService.ValidateCameraKey(cameraKey));
+            }
+
+            return Json(false);
         }
 
         [HttpPost]
@@ -169,6 +186,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return View("CreateCameraKey", newCameraKey);
         }
 
+        //TODO: should be a post
         [HttpGet]
         public IActionResult DeleteCameraKey(string cameraKey)
         {
@@ -202,6 +220,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
             }
             List<DatabaseUser> dbUserList = CameraService.GetAllUsers();
             List<DatabaseUser> userList = new List<DatabaseUser>();
+            List<DatabaseUserCameraAssociation> cameraAssociations = CameraService.GetAllUserCameraAssociations();
+            List<string> names = new List<string>();
+            foreach (var user in dbUserList)
+            {
+                foreach (var userCameraAss in cameraAssociations)
+                {
+                    if ((userCameraAss.UserId == user.UserId) && (cameraId == userCameraAss.CameraId))
+                    {
+                        names.Add(user.Username);
+                    }
+                }
+            }
             foreach (var user in dbUserList)
             {
                 if (currentUserId != user.UserId)
@@ -214,7 +244,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return View("Error");
             }
-            UserSettingsList users = new UserSettingsList(userList, cameraId);
+            UserSettingsList users = new UserSettingsList(userList, cameraId, names);
             return View("UserViewAccess", users);
         }
         
@@ -236,6 +266,30 @@ namespace BackEndServer.Controllers.FrontEndControllers
             
             CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
             return View("ManageCameras", availableCameras);
+        }
+
+        [HttpPost]
+        public JsonResult ValidateNewCameraName(int locationId, string cameraName)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.ValidateNewCameraName(locationId, cameraName));
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public JsonResult UnclaimCamera(int cameraId)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.UnclaimCamera(cameraId));
+            }
+
+            return Json(false);
         }
     }
 }

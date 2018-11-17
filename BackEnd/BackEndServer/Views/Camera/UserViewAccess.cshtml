@@ -20,7 +20,6 @@
                 <label for="user_id">Select User</label>
             </div>
         </div>
-
         <!-- Submit Button -->
         <div class="row">
             <div class="s12 center-align">
@@ -30,8 +29,29 @@
                 </button>
             </div>
         </div>
-
+        
+        <div class="divider standard-bottom-margin"></div>
+        
+        <div id="userCameraAssociation" class="collection">
+            <label for="userCameraAssociation">Users given access to this camera:</label>
+            @{
+                if (Model.Names.Count != 0)
+                {
+                    foreach (var names in Model.Names)
+                    {
+                        <p>@names</p>
+                    }
+                }
+                else
+                {
+                    <div id="noUsersGivenAccessTitle" class="unavailable-message center-align">
+                        No user has been given access to this camera
+                    </div>
+                }
+            }
+        </div>
     </form>
+    
 </div>
 
 

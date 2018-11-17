@@ -73,5 +73,10 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             return Json(AlertService.DisableAlert(alertDisablingInformation));
         }
+
+        public IActionResult EnableAlert(int alertId)
+        {
+            return Json(AlertService.EnableAlert(alertId));
+        }
     }
 }

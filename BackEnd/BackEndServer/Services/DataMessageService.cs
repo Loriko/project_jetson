@@ -128,6 +128,7 @@ namespace BackEndServer.Services
         private static void SaveStatJpgIfNecessary(PerSecondStat stat)
         {
             string modifiedTimestamp = stat.DateTime.Replace(" ", "").Replace(":", "").Replace("-", "");
+            //TODO store full path here
             string filePath = DatabasePerSecondStat.FRM_JPG_FOLDER_PATH + "stat_frm" + modifiedTimestamp + ".jpg";
             bool success = ImageDecodingTools.SaveBase64StringToFile(stat.FrameAsJpg,
                 filePath);

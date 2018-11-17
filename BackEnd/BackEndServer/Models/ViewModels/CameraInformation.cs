@@ -27,8 +27,9 @@ namespace BackEndServer.Models.ViewModels
             CameraId = dbCamera.CameraId;
             CameraName = dbCamera.CameraName;
             ImagePath = dbCamera.ImagePath;
-            TempImagePath = null;
+            TempImagePath = dbCamera.ImagePath;
             RoomId = dbCamera.RoomId.GetValueOrDefault(0);
+            GraphStatistics = new GraphStatistics();
         }
     }
 }

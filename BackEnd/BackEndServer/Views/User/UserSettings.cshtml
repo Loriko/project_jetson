@@ -1,3 +1,4 @@
+@using Castle.Core.Internal
 @model BackEndServer.Models.ViewModels.UserSettings
 @{
     ViewBag.Title = "Project Jetson - User Settings";
@@ -23,10 +24,10 @@
         <div class="row">
             <div class="input-field col s6">
                 <input id="email_address" name="EmailAddress" type="text" class="validate" value="@Model.EmailAddress">
-                <label for="email_address">Email Address</label>
+                <label for="email_address" data-error="You must enter an email address no other user has entered">Email Address</label>
             </div>
         </div>
-
+        
         <!-- Submit Button -->
         <div class="row">
             <div class="s12">
@@ -37,10 +38,60 @@
             </div>
         </div>
 
+        <div class="divider standard-bottom-margin"></div>
+        
+        <!-- Change Password -->
+        <div class="row">
+            <div class="s12">
+                <a class="btn waves-effect waves-light right-align" name="action" href="/User/PasswordChange">
+                    Change Password
+                    <i class="material-icons right">lock</i>
+                </a>
+            </div>
+        </div>
+        
     </form>
 </div>
 
 <script>
+    $("#email_address").focusout(function() {
+        validateEmail();
+    });
+
+    function validateEmail() {
+        
+        @if (Model.EmailAddress.IsNullOrEmpty() == false)
+        {
+        <text>
+            if ($("#email_address").val() === "@Model.EmailAddress") {
+                return true;
+            }
+        </text>
+        }
+        
+        if ($("#email_address").val()) {
+            var url = "ValidateEmail";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "emailAddress": $("#email_address").val()
+                },
+                success: function(data) {
+                    $("#email_address").addClass("validated");
+                    if (data === true) {
+                        $("#email_address").addClass("valid");
+                        $("#email_address").removeClass("invalid");
+                    } else {
+                        $("#email_address").addClass("invalid");
+                        $("#email_address").removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+    
     function handleUserModificationFormSubmission(response) {
         if (response === true) {
             Materialize.toast("Personal settings successfully modified!", 4000);
@@ -49,8 +100,21 @@
         }
     }
 
+    function checkEmailValidity() {
+        var email = $("#email_address");
+        //check if email doesn't exist
+        if (email.val() && (email.hasClass("invalid") || email.hasClass("validated") === false)) {
+            return false;
+        }
+        return true;
+    }
+    
     $("#user_settings_modification_form").submit(function (e) {
 
+        if (!checkEmailValidity()) {
+            return false;
+        }
+        
         var form = $(this);
         var url = form.attr('action');
 

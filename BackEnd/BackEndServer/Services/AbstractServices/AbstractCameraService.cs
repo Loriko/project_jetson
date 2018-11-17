@@ -29,9 +29,14 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseUser> GetAllUsers();
         CameraDetails GetCameraInfoById(int cameraId);
         bool GiveAccessToUser(int cameraId, int userId);
-        CameraInformation GetCameraInformationForPastPeriod(int cameraId, PastPeriod pastPeriod, DateTime? startDate = null, DateTime? endDate = null);
         CameraInformationList GetAllCamerasInRoom(int roomId);
         SharedGraphStatistics GetSharedRoomGraphStatistics(int roomId);
         JpgStatFrameList GetStatFrameList(int cameraId);
+        List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
+        bool ValidateCameraKey(string cameraKey);
+        bool ValidateNewCameraName(int locationId, string cameraName);
+        bool UnclaimCamera(int cameraId);
+        bool DeleteLocationAndUnclaimCameras(int locationId);
+        JpgStatFrameList GetTriggeringStatsFrameList(int notificationId);
     }
 }

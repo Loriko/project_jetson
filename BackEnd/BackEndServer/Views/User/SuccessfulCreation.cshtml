@@ -29,6 +29,10 @@
                         <td class="property-name">Email Address</td>
                         <td>@Model.EmailAddress</td>
                     </tr>
+                    <tr>
+                        <td class="property-name">Administrator?</td>
+                        <td>@(Model.IsAdministrator ? "Yes" : "No")</td>
+                    </tr>
                     @if (Model.CreateAPIKey)
                     {
                         <tr>
@@ -41,7 +45,7 @@
                 
                 @if (Model.CreateAPIKey)
                 {
-                    <div class="unavailable-message-light center-align">This user's API Key will also be sent to him by email.<br/> It will never be shown again so please note it down!</div>
+                    <div class="unavailable-message-light left-align">This user's API Key will also be sent to him by email.<br/> It will never be shown again so please note it down!</div>
                 }
             </div>
         </div>

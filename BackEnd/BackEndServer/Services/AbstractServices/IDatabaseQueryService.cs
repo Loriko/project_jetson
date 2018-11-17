@@ -25,6 +25,7 @@ namespace BackEndServer.Services.AbstractServices
 
         // For Camera:
         DatabaseCamera GetCameraById(int cameraId);
+        DatabaseCamera GetCameraByKey(string cameraKey);
         List<DatabaseCamera> GetCamerasForLocation(int locationId);
         List<DatabaseCamera> GetAllCameras();
         List<string> GetExistingCameraResolutions();
@@ -40,6 +41,7 @@ namespace BackEndServer.Services.AbstractServices
         DatabasePerHourStat GetPerHourStatFromHour(DateTime hour);
         // For Location:
         List<DatabaseLocation> GetLocationsForUser(int userId);
+        List<DatabaseLocation> GetLocationsCreatedByUser(int userId);
         // For User:
         bool IsPasswordValidForUser(string username, string password);
         List<DatabaseCamera> GetCamerasAvailableToUser(int userId);
@@ -48,7 +50,11 @@ namespace BackEndServer.Services.AbstractServices
         bool DeleteAlert(int alertId);
         bool PersistExistingAlert(DatabaseAlert alert);
         bool PersistNewLocation(DatabaseLocation dbLocation);
-        DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime);
+        DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime,
+            DateTime checkupDateTime);
+
+        List<DatabasePerSecondStat> GetPerSecondStatsWithFrmTriggeringAlert(DatabaseAlert alert,
+            DateTime lastUpdatedTime, DateTime checkupDateTime);
         List<DatabaseNotification> GetNotificationsForUser(int userId);
         List<DatabaseAlert> GetAlertsById(List<int> alertIds);
         DatabaseNotification GetNotificationById(int notificationId);
@@ -60,8 +66,14 @@ namespace BackEndServer.Services.AbstractServices
         bool PersistExistingCameraByCameraKey(DatabaseCamera databaseCamera, bool imageDeleted);
         List<DatabaseCamera> GetCamerasForLocationForUser(int locationId, int userId);
         DatabaseUser GetUserById(int userId);
+        bool IsUserAdministrator(int userId);
         bool PersistExistingUser(DatabaseUser databaseUser);
+        bool PersistPasswordChange(DatabaseUser databaseUser);
         bool PersistNewUser(DatabaseUser databaseUser);
+        DatabaseUser GetUserByEmailAddress(string emailAddress);
+        DatabaseUser GetUserByPasswordResetToken(string token);
+        bool PersistPasswordResetToken(string passwordResetToken, string emailAddress);
+        bool PersistRemovePasswordResetToken(string resetToken);
         DatabaseUser GetUserByUsername(string username);
         DatabaseGraphStat getGraphStatByTimeInterval(int cameraID, DateTime start, DateTime end);
         List<DatabaseLocation> GetLocations();
@@ -73,5 +85,13 @@ namespace BackEndServer.Services.AbstractServices
         List<DatabaseUser> GetAllUsers();
         bool CreateUserCameraAssociation(int userId, int cameraId);
         bool PersistNewAPIKey(DatabaseAPIKey apiKey);
+        List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations();
+        DatabaseCamera GetCameraWithNameAtLocation(int locationId, string cameraName);
+        bool DeleteAlertsWithCameraId(int cameraId);
+        bool DeletePerSecondStatsWithCameraId(int cameraId);
+        bool DeleteRoomsAtLocation(int locationId);
+        bool DeleteLocation(int locationId);
+        bool PersistExistingLocation(DatabaseLocation dbLocation);
+        List<DatabaseAlert> GetAlertsByCameraId(int cameraId);
     }
 }

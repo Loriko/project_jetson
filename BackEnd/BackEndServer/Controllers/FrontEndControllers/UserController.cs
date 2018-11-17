@@ -27,6 +27,34 @@ namespace BackEndServer.Controllers.FrontEndControllers
             UserSettings userSettings = UserService.GetUserSettings(currentUserId.Value);
             return View("UserSettings", userSettings);
         }
+        public IActionResult PasswordChange()
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId == null)
+            {
+                return RedirectToAction("SignIn", "Home");
+            }
+
+            UserPassword userPassword = new UserPassword();
+            userPassword.UserId = currentUserId;
+            return View("PasswordChange", userPassword);
+        }
+        public IActionResult ForgotPassword()
+        {
+            return View("ForgotPassword");
+        }
+        public IActionResult PasswordReset([FromQuery(Name ="id")] string token)
+        {
+            PasswordReset passwordReset = new PasswordReset();
+            passwordReset.Token = token;
+            return View("PasswordReset", passwordReset);
+        }
+
+        [HttpPost]
+        public JsonResult InitializePasswordReset(PasswordReset passwordReset)
+        {
+            return Json(UserService.ResetPassword(passwordReset));
+        }
 
         [HttpPost]
         public JsonResult ModifyUserSettings(UserSettings userSettings)
@@ -39,7 +67,50 @@ namespace BackEndServer.Controllers.FrontEndControllers
             
             return Json(false);
         }
+        [HttpPost]
+        public JsonResult GeneratePasswordResetLink(PasswordResetLink passwordResetLink)
+        {
+            UserSettings userSettings = UserService.GetUserByEmailAddress(passwordResetLink.Email);
+            if(userSettings == null)
+            {
+                PostRequestResult result = new PostRequestResult
+                {
+                    Success = false,
+                    ErrorMessage = "A user with the specified email address could not be found"
+                };
+
+                return Json(result);
+            }
+            else
+            {
+                bool success = UserService.SendResetPasswordLink(passwordResetLink.Email);
+                PostRequestResult result = new PostRequestResult
+                {
+                    Success = success,
+                    ErrorMessage = success ? "" : "Couldn't send email because of an unexpected error"
+                };
+
+                return Json(result);
+            }
+        }
         
+        [HttpPost]
+        public JsonResult ChangePassword(UserPassword userPassword)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            UserSettings userSettings = UserService.GetUserSettings(currentUserId.Value);
+            if(userSettings.Password != userPassword.OldPassword)
+            {
+                return Json(false);
+            }
+            if (currentUserId != null)
+            {
+                userSettings.Password = userPassword.NewPassword;
+                return Json(UserService.ModifyPassword(userSettings));
+            }
+            return Json(false);
+        }
+
         public IActionResult BeginUserCreation()
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
@@ -48,7 +119,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("SignIn", "Home");
             }
 
-            return View("UserCreation");
+            UserSettings userSettings = UserService.GetUserSettings(currentUserId.Value);
+            return View("UserCreation", userSettings);
         }
         
         [HttpPost]
@@ -66,6 +138,32 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return View("SuccessfulCreation", createdUser);
             }
             return View("Error");
+        }
+
+        [HttpPost]
+        public JsonResult ValidateUsername(string username)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(UserService.ValidateUsername(username));
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public JsonResult ValidateEmail(string emailAddress)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+
+            if (currentUserId != null)
+            {
+                return Json(UserService.ValidateEmail(emailAddress));
+            }
+
+            return Json(false);
         }
     }
 }

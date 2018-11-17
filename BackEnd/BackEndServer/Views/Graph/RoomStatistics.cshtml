@@ -4,37 +4,57 @@
 <h1 id="headerGraph" class="page-title center-align">Statistics for cameras monitoring <b>@Model.Room.RoomName</b></h1>
 
 <script type="text/javascript">
-google.charts.load('current', { packages: ['corechart', 'line'] });
+google.charts.load('current', {'packages':['annotatedtimeline']});
 google.charts.setOnLoadCallback(function() {
     $("#graph_name_list li a.active").click();
+    if ($("#graph_name_list li a.active").attr("value") === "@PastPeriod.Custom") {
+        $("#start_date").change();
+    }
 });
 
 function drawChart(stats) {
-    // Define the chart to be drawn.
-    var array = stats;
-    for (let i = 1; i < array.length; i++) {
-        array[i][0] = new Date(array[i][0]);
-        for (let j = 1; j < array[i].length; j++) {
-            array[i][j] = parseInt(array[i][j]);
+    var data = new google.visualization.DataTable();
+
+    if (stats.length === 0) {
+        Materialize.toast("Couldn't reload chart because of an unexpected server error", 4000);
+        return;
+    }
+    
+    data.addColumn('datetime', stats[0][0]);
+    for (j = 1; j < stats[0].length; j++) {
+        data.addColumn('number', stats[0][j]);
+    }
+    stats.splice(0, 1);
+
+    var maxValue = 1;
+    for (let i = 0; i < stats.length; i++) {
+        stats[i][0] = new Date(stats[i][0]);
+        for (let j = 1; j < stats[i].length; j++) {
+            stats[i][j] = +stats[i][j];
+            if (maxValue < stats[i][j]) {
+                //Weird trick that lets you see the maximum value on the vertical axis
+                maxValue = stats[i][j] * 1.2;
+            }
         }
     }
 
-    var data = new google.visualization.arrayToDataTable(array);
-
-    var options = {
-        legend: { position: 'bottom' },
-        explorer: { 
-            actions: ['dragToZoom', 'rightClickToReset'],
-            axis: 'horizontal',
-            keepInBounds: true,
-            maxZoomIn: 110.0
-        },
-        vAxis: {minValue: 0}
-    }
-
+    data.addRows(stats);
+    
     // Instantiate and draw the chart.
-    var chart = new google.visualization.AreaChart(document.getElementById('area_chart'));
-    chart.draw(data, options);
+    var chart = new google.visualization.AnnotatedTimeLine(document.getElementById('timeline_chart'));
+    try {
+        chart.draw(data,
+            {
+                displayAnnotations: false,
+                displayZoomButtons: false,
+                fill: 1,
+                allowRedraw: true,
+                min: 0,
+                max: maxValue
+            });
+    } catch (e) {
+        console.log(e);
+    }
 }
 </script>
 
@@ -45,16 +65,16 @@ function drawChart(stats) {
             <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastWeek ? "active" : "")" value="@PastPeriod.LastWeek" href="#past_week">Past Week</a></li>
             <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastMonth ? "active" : "")" value="@PastPeriod.LastMonth" href="#past_month">Past Month</a></li>
             <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.LastYear ? "active" : "")" value="@PastPeriod.LastYear" href="#past_year">Past Year</a></li>
-            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.Custom ? "active" : "")" value="@PastPeriod.Custom" href="#past_custom">Custom Duration</a></li>
+            <li class="tab"><a class="teal-text @(Model.SelectedPeriod == PastPeriod.Custom ? "active" : "")" value="@PastPeriod.Custom" href="#past_custom">Custom</a></li>
             <div class="indicator teal" style="z-index:1"></div>
         </ul>
     </div>
     <div class="input-field col m2 s4 no-top-margin date-container hide">
-        <input id="start_date" type="text" class="datepicker no-bottom-margin">
+        <input id="start_date" type="text" class="datepicker no-bottom-margin" value="@Model.StartDate">
         <label for="start_date" data-error="Start Date cannot be higher than End Date">Start Date</label>
     </div>
     <div class="input-field col m2 s4 no-top-margin date-container hide">
-        <input id="end_date" type="text" class="datepicker no-bottom-margin">
+        <input id="end_date" type="text" class="datepicker no-bottom-margin" value="@Model.EndDate">
         <label for="end_date" data-error="End Date cannot be lower than Start Date">End Date</label>
     </div>
 </div>
@@ -68,7 +88,7 @@ function drawChart(stats) {
                 <div id="past_month" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over the past month</div>
                 <div id="past_year" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over the past year</div>
                 <div id="past_custom" class="card-title center-align">Number of people spotted inside @Model.Room.RoomName over a custom period</div>
-                <div id="area_chart"></div>
+                <div id="timeline_chart"></div>
                 <div id="select-range-message" class="center-align hide">
                     To draw the chart, please select a valid date range using the date pickers
                 </div>
@@ -83,9 +103,8 @@ function reloadGraphWithCustomDateRange() {
     var endDate = $("#end_date").val();
     var url = "GetSharedRoomCustomGraphStats?roomId=" + "@Model.Room.RoomId" + "&startDate=" + startDate + "&endDate=" + endDate;
     $.get(url, function(data) {
-        console.dir(data);
         $("#select-range-message").addClass("hide");
-        $("#area_chart").removeClass("hide");
+        $("#timeline_chart").removeClass("hide");
         drawChart(data.stats);
     });
 };
@@ -93,7 +112,6 @@ function reloadGraphWithCustomDateRange() {
 function reloadGraph(pastPeriod) {
     var url = "GetSharedRoomGraphStats?roomId=" + "@Model.Room.RoomId" + "&pastPeriod=" + pastPeriod;
     $.get(url, function(data) {
-        console.dir(data);
         drawChart(data.stats);
     });
 }
@@ -103,11 +121,11 @@ $("#graph_name_list li a").click(function() {
     if (pastPeriod === "@PastPeriod.Custom") {
         $(".date-container").removeClass("hide");
         $("#select-range-message").removeClass("hide");
-        $("#area_chart").addClass("hide");
+        $("#timeline_chart").addClass("hide");
     } else {
         $(".date-container").addClass("hide");
         $("#select-range-message").addClass("hide");
-        $("#area_chart").removeClass("hide");
+        $("#timeline_chart").removeClass("hide");
         $("#start_date").val("").removeClass("valid");
         $("#end_date").val("").removeClass("valid");
         reloadGraph(pastPeriod);

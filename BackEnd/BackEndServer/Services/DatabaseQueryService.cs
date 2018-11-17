@@ -10,6 +10,7 @@ using BackEndServer.Services.HelperServices;
 using BackEndServer.Models.APIModels;
 using System.ComponentModel;
 using BackEndServer.Models.Enums;
+using BackEndServer.Models.ViewModels;
 using Castle.Core.Internal;
 using static BackEndServer.Models.Enums.TriggerOperatorExtension;
 
@@ -277,6 +278,39 @@ namespace BackEndServer.Services
                         locationList.Add(new DatabaseLocation()
                         {
                             LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
+                            LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
+                            AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
+                            City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
+                            State = Convert.ToString(reader[DatabaseLocation.STATE_LABEL]),
+                            Zip = Convert.ToString(reader[DatabaseLocation.ZIP_LABEL])
+                        });
+                    }
+                }
+            }
+            return locationList;
+        }
+
+        public List<DatabaseLocation> GetLocationsCreatedByUser(int userId)
+        {
+            List<DatabaseLocation> locationList = new List<DatabaseLocation>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.USER_ID_LABEL} = {userId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        locationList.Add(new DatabaseLocation
+                        {
+                            LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
                             LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
                             AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
                             City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
@@ -426,6 +460,182 @@ namespace BackEndServer.Services
             return camera;
         }
         
+        public DatabaseCamera GetCameraByKey(string cameraKey)
+        {
+            DatabaseCamera camera = null;
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{cameraKey}'";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        camera = getDatabaseCameraFromReader(reader);
+                    }
+                }
+            }
+
+            return camera;
+        }
+        
+        public DatabaseCamera GetCameraWithNameAtLocation(int locationId, string cameraName)
+        {
+            DatabaseCamera camera = null;
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
+                               $"WHERE UPPER({DatabaseCamera.CAMERA_NAME_LABEL}) = '{cameraName.ToUpper()}' " +
+                               $"AND {DatabaseCamera.LOCATION_ID_LABEL} = {locationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        camera = getDatabaseCameraFromReader(reader);
+                    }
+                }
+            }
+
+            return camera;
+        }
+
+        public bool DeleteAlertsWithCameraId(int cameraId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabaseAlert.TABLE_NAME} " +
+                               $"WHERE {DatabaseAlert.CAMERA_ID_LABEL} = {cameraId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeletePerSecondStatsWithCameraId(int cameraId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabasePerSecondStat.TABLE_NAME} " +
+                               $"WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeleteRoomsAtLocation(int locationId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabaseRoom.TABLE_NAME} " +
+                               $"WHERE {DatabaseRoom.LOCATION_ID_LABEL} = {locationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool DeleteLocation(int locationId)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string query = $"DELETE FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.LOCATION_ID_LABEL} = {locationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success >= 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool PersistExistingLocation(DatabaseLocation dbLocation)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"UPDATE {DatabaseLocation.TABLE_NAME} SET " +
+                               $"{DatabaseLocation.LOCATION_NAME_LABEL} = '{dbLocation.LocationName}'," +
+                               $"{DatabaseLocation.ADDRESS_LINE_LABEL} = {formatNullableString(dbLocation.AddressLine)}," +
+                               $"{DatabaseLocation.CITY_LABEL} = {formatNullableString(dbLocation.City)}," +
+                               $"{DatabaseLocation.STATE_LABEL} = {formatNullableString(dbLocation.State)}," +
+                               $"{DatabaseLocation.ZIP_LABEL} = {formatNullableString(dbLocation.Zip)} " +
+                               $"WHERE {DatabaseLocation.LOCATION_ID_LABEL} = {dbLocation.LocationId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<DatabaseAlert> GetAlertsByCameraId(int cameraId)
+        {
+            List<DatabaseAlert> alertList = new List<DatabaseAlert>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               $"FROM {DatabaseAlert.TABLE_NAME} " +
+                               $"WHERE {DatabaseAlert.CAMERA_ID_LABEL} = {cameraId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseAlert alert = getDatabaseAlertFromReader(reader);
+                        alertList.Add(alert);
+                    }
+                }
+            }
+            
+            return alertList;
+        }
+
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {
@@ -485,15 +695,15 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} " +
-                               $"WHERE {DatabaseUser.USERNAME_LABEL} = '{username}' " +
-                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1";
+                               $"WHERE UPPER({DatabaseUser.USERNAME_LABEL}) = '{username.ToUpper()}' " +
+                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1;";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
                 using (var reader = cmd.ExecuteReader())
                 {
-                    if (reader.Read() && Convert.ToString(reader["username"]) == username)
+                    if (reader.Read() && Convert.ToString(reader["username"]).ToUpper() == username.ToUpper())
                     {
                         return true;
                     }
@@ -590,7 +800,7 @@ namespace BackEndServer.Services
             List<string> resolutionsInDB = new List<string>();
             using (MySqlConnection conn = GetConnection())
             {
-                string query = "SELECT resolution FROM Camera WHERE resolution IS NOT NULL GROUP BY resolution ORDER BY COUNT(*) DESC;";
+                string query = "SELECT resolution FROM camera WHERE resolution IS NOT NULL GROUP BY resolution ORDER BY COUNT(*) DESC;";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -657,7 +867,7 @@ namespace BackEndServer.Services
         // Performs a SELECT to query all API Keys in the database.
         public List<DatabaseAPIKey> GetAllAPIKeys()
         {
-            List<DatabaseAPIKey> api_keys_list = null;
+            List<DatabaseAPIKey> api_keys_list = new List<DatabaseAPIKey>();
 
             using (MySqlConnection conn = GetConnection())
             {
@@ -675,7 +885,8 @@ namespace BackEndServer.Services
                             APIKeyId = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ID_LABEL]),
                             Key = Convert.ToString(reader[DatabaseAPIKey.API_KEY_LABEL]),
                             Salt = Convert.ToString(reader[DatabaseAPIKey.API_KEY_SALT_LABEL]),
-                            IsActive = Convert.ToInt16(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL])
+                            IsActive = Convert.ToInt32(reader[DatabaseAPIKey.API_KEY_ISACTIVE_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseAPIKey.USER_ID_LABEL])
                         });
                     }
                 }
@@ -686,26 +897,30 @@ namespace BackEndServer.Services
         // Performs an INSERT to persist a newly created API Key (salted and hashed key and its Salt value).
         public bool PersistAPIKey(APIKey api_key)
         {
+            int isKeyActive = (int)DatabaseAPIKey.API_Key_Status.INACTIVE;
+
+            if (api_key.IsActive)
+            {
+                isKeyActive = (int)DatabaseAPIKey.API_Key_Status.ACTIVE;
+            }
+
             // Define the insert command with the values to insert.
             string insertCommand = $"INSERT INTO {DatabaseAPIKey.TABLE_NAME} "
-                + $"({DatabaseAPIKey.API_KEY_LABEL},{DatabaseAPIKey.API_KEY_SALT_LABEL},{DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}) VALUES "
-                + $"({api_key.API_Key},{api_key.API_KeySalt},{api_key.IsActive})";
+                + $"({DatabaseAPIKey.API_KEY_LABEL},{DatabaseAPIKey.API_KEY_SALT_LABEL},"
+                + $"{DatabaseAPIKey.USER_ID_LABEL},{DatabaseAPIKey.API_KEY_ISACTIVE_LABEL}) VALUES "
+                + $"('{api_key.API_Key}','{api_key.API_KeySalt}',"
+                + $"{formatNullableInt(api_key.UserId)},{isKeyActive})";
 
             // Open connection and execute the insert command.
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
+                MySqlCommand cmd = new MySqlCommand(insertCommand, conn);
 
-                try
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
                 {
-                    MySqlCommand cmd = new MySqlCommand(insertCommand, conn);
-                    cmd.ExecuteNonQuery();
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    // Write to Log
-                    return false; // This is probably not going to be executed...
+                    return true;
                 }
             }
             return true;
@@ -832,7 +1047,13 @@ namespace BackEndServer.Services
         public bool PersistNewAlert(DatabaseAlert alert)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
+            {
+                if (alert.AlwaysActive)
+                {
+                    alert.StartTime = null;
+                    alert.EndTime = null;
+                }
+
                 string query = $"INSERT INTO {DatabaseAlert.TABLE_NAME}(" +
                                $"{DatabaseAlert.ALERT_NAME_LABEL}, {DatabaseAlert.CAMERA_ID_LABEL}, {DatabaseAlert.USER_ID_LABEL}, " +
                                $"{DatabaseAlert.CONTACT_METHOD_LABEL}, {DatabaseAlert.TRIGGER_OPERATOR_LABEL}, {DatabaseAlert.TRIGGER_NUMBER_LABEL}, " +
@@ -938,7 +1159,13 @@ namespace BackEndServer.Services
         public bool PersistExistingAlert(DatabaseAlert alert)
         {
             using (MySqlConnection conn = GetConnection())
-            {   
+            {
+                if (alert.AlwaysActive)
+                {
+                    alert.StartTime = null;
+                    alert.EndTime = null;
+                }
+
                 //We use formatNullableString for non nullable strings so that
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseAlert.TABLE_NAME} SET " +
@@ -971,10 +1198,10 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {   
                 string query = $"INSERT INTO {DatabaseLocation.TABLE_NAME}(" +
-                               $"{DatabaseLocation.LOCATION_NAME_LABEL}, {DatabaseLocation.ADDRESS_LINE_LABEL}, " +
+                               $"{DatabaseLocation.USER_ID_LABEL}, {DatabaseLocation.LOCATION_NAME_LABEL}, {DatabaseLocation.ADDRESS_LINE_LABEL}, " +
                                $"{DatabaseLocation.CITY_LABEL}, {DatabaseLocation.STATE_LABEL}, {DatabaseLocation.ZIP_LABEL}" +
                                ") VALUES " +
-                               $"('{dbLocation.LocationName}',{formatNullableString(dbLocation.AddressLine)}," +
+                               $"({dbLocation.UserId},'{dbLocation.LocationName}',{formatNullableString(dbLocation.AddressLine)}," +
                                $"{formatNullableString(dbLocation.City)},{formatNullableString(dbLocation.State)}," +
                                $"{formatNullableString(dbLocation.Zip)});";
                 
@@ -990,7 +1217,8 @@ namespace BackEndServer.Services
             return false;
         }
 
-        public DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert, DateTime lastUpdatedTime)
+        public DatabasePerSecondStat GetEarliestPerSecondStatTriggeringAlert(DatabaseAlert alert,
+            DateTime lastUpdatedTime, DateTime checkupDateTime)
         {
             DatabasePerSecondStat perSecondStat = null;
             TriggerOperator triggerOperator = (TriggerOperator)Enum.Parse(typeof(TriggerOperator), alert.TriggerOperator, true);
@@ -1001,7 +1229,8 @@ namespace BackEndServer.Services
                                $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s')";
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s')" +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s')";
                 
                 if (alert.SnoozedUntil != null)
                 {
@@ -1040,6 +1269,46 @@ namespace BackEndServer.Services
             return perSecondStat;
         }
 
+        public List<DatabasePerSecondStat> GetPerSecondStatsWithFrmTriggeringAlert(DatabaseAlert alert,
+            DateTime lastUpdatedTime, DateTime checkupDateTime)
+        {
+            List<DatabasePerSecondStat> perSecondStats = new List<DatabasePerSecondStat>();
+            TriggerOperator triggerOperator = (TriggerOperator)Enum.Parse(typeof(TriggerOperator), alert.TriggerOperator, true);
+            
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} " + 
+                               $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
+                               $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
+                               $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s') " +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s') ";
+                
+                query += $" ORDER BY {DatabasePerSecondStat.DATE_TIME_LABEL} ASC;";
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        perSecondStats.Add(new DatabasePerSecondStat
+                        {
+                            PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
+                            DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
+                            NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
+                            HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])),
+                            FrameJpgPath = Convert.ToString(reader[DatabasePerSecondStat.FRM_JPG_PATH_LABEL]),
+                            // Null by default, this is what will be updated later by the HourlyStatsService.
+                            PerHourStatId = -1
+                        });
+                    }
+                }
+            }
+            return perSecondStats;
+        }
+        
         public List<DatabaseNotification> GetNotificationsForUser(int userId)
         {
             List<DatabaseNotification> notificationList = new List<DatabaseNotification>();
@@ -1249,6 +1518,7 @@ namespace BackEndServer.Services
                         location = new DatabaseLocation
                         {
                             LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
                             LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
                             AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
                             City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
@@ -1356,6 +1626,39 @@ namespace BackEndServer.Services
             return cameraList;
         }
 
+        private DatabaseAlert getDatabaseAlertFromReader(MySqlDataReader reader)
+        {
+            DatabaseAlert alert = new DatabaseAlert
+            {
+                AlertId = Convert.ToInt32(reader[DatabaseAlert.ALERT_ID_LABEL]),
+                CameraId = Convert.ToInt32(reader[DatabaseAlert.CAMERA_ID_LABEL]),
+                UserId = Convert.ToInt32(reader[DatabaseAlert.USER_ID_LABEL]),
+                AlertName = Convert.ToString(reader[DatabaseAlert.ALERT_NAME_LABEL]),
+                ContactMethod = Convert.ToString(reader[DatabaseAlert.CONTACT_METHOD_LABEL]),
+                TriggerOperator = Convert.ToString(reader[DatabaseAlert.TRIGGER_OPERATOR_LABEL]),
+                TriggerNumber = Convert.ToInt32(reader[DatabaseAlert.TRIGGER_NUMBER_LABEL]),
+                AlwaysActive = Convert.ToBoolean(reader[DatabaseAlert.ALWAYS_ACTIVE_LABEL])
+            };
+            if (reader[DatabaseAlert.START_TIME_LABEL] != DBNull.Value)
+            {
+                alert.StartTime = Convert.ToString(reader[DatabaseAlert.START_TIME_LABEL]);
+            }
+            if (reader[DatabaseAlert.END_TIME_LABEL] != DBNull.Value)
+            {
+                alert.EndTime = Convert.ToString(reader[DatabaseAlert.END_TIME_LABEL]);
+            }
+            if (reader[DatabaseAlert.DISABLED_UNTIL_LABEL] != DBNull.Value)
+            {
+                alert.DisabledUntil = Convert.ToDateTime(reader[DatabaseAlert.DISABLED_UNTIL_LABEL]);
+            }
+            if (reader[DatabaseAlert.SNOOZED_UNTIL_LABEL] != DBNull.Value)
+            {
+                alert.SnoozedUntil = Convert.ToDateTime(reader[DatabaseAlert.SNOOZED_UNTIL_LABEL]);
+            }
+
+            return alert;
+        }
+        
         private DatabaseCamera getDatabaseCameraFromReader(MySqlDataReader reader)
         {
             DatabaseCamera camera = new DatabaseCamera
@@ -1399,6 +1702,32 @@ namespace BackEndServer.Services
             return camera;
         }
         
+        public bool IsUserAdministrator(int userId)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseUser.IS_ADMINISTRATOR_LABEL} " +
+                               $"FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USER_ID_LABEL} = {userId} " +
+                               "LIMIT 1;";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        return Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL]);
+                    }
+                }
+            }
+
+            return false;
+        }
+        
         public DatabaseUser GetUserById(int userId)
         {
             DatabaseUser user = null;
@@ -1422,7 +1751,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                     }
                 }
@@ -1453,7 +1783,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                         userList.Add(user);
                     }
@@ -1485,7 +1816,8 @@ namespace BackEndServer.Services
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
-                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL])
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
                         };
                     }
                 }
@@ -1493,7 +1825,116 @@ namespace BackEndServer.Services
 
             return user;
         }
-        
+
+        public DatabaseUser GetUserByEmailAddress(string email)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{email}';";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
+
+        public DatabaseUser GetUserByPasswordResetToken(string token)
+        {
+            DatabaseUser user = null;
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{token}';";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    if (reader.Read())
+                    {
+                        user = new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
+                        };
+                    }
+                }
+            }
+
+            return user;
+        }
+
+        public bool PersistPasswordResetToken(string passwordResetToken, string emailAddress)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = {formatNullableString(passwordResetToken)} " +
+                               $"WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{emailAddress}';";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool PersistRemovePasswordResetToken(string resetToken)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = NULL " +
+                               $"WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{resetToken}';";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool PersistExistingUser(DatabaseUser databaseUser)
         {
             using (MySqlConnection conn = GetConnection())
@@ -1517,7 +1958,29 @@ namespace BackEndServer.Services
             }
             return false;
         }
-        
+
+        public bool PersistPasswordChange(DatabaseUser databaseUser)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                //We use formatNullableString for non nullable strings so that
+                //we don't accidently insert an empty string and instead cause an SQL exception
+                string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
+                               $"{DatabaseUser.PASSWORD_LABEL} = {formatNullableString(databaseUser.Password)} " +
+                               $"WHERE {DatabaseUser.USER_ID_LABEL} = {databaseUser.UserId};";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public bool PersistNewUser(DatabaseUser databaseUser)
         {
             using (MySqlConnection conn = GetConnection())
@@ -1529,11 +1992,12 @@ namespace BackEndServer.Services
                                $"{DatabaseUser.FIRST_NAME_LABEL}," +
                                $"{DatabaseUser.LAST_NAME_LABEL}," +
                                $"{DatabaseUser.EMAIL_ADDRESS_LABEL}," +
-                               $"{DatabaseUser.PASSWORD_LABEL}" +
+                               $"{DatabaseUser.PASSWORD_LABEL}," +
+                               $"{DatabaseUser.IS_ADMINISTRATOR_LABEL}" +
                                $") VALUES "+
                                $"('{databaseUser.Username}', {formatNullableString(databaseUser.FirstName)}, " +
                                $"{formatNullableString(databaseUser.LastName)}, {formatNullableString(databaseUser.EmailAddress)}, " +
-                               $"'{databaseUser.Password}');";
+                               $"'{databaseUser.Password}', {(databaseUser.IsAdministrator ? "1" : "0")});";
 
                 conn.Open();     
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1610,6 +2074,7 @@ namespace BackEndServer.Services
                         locationList.Add(new DatabaseLocation
                         {
                             LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
                             LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
                             AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
                             City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
@@ -1682,7 +2147,7 @@ namespace BackEndServer.Services
             {
                 string query = $"SELECT {DatabaseRoom.ROOM_ID_LABEL} FROM {DatabaseRoom.TABLE_NAME} " + 
                                $"WHERE {DatabaseRoom.LOCATION_ID_LABEL} = {locationId} " +
-                               $"AND {DatabaseRoom.ROOM_NAME_LABEL} = '{roomName}' LIMIT 1;";
+                               $"AND UPPER({DatabaseRoom.ROOM_NAME_LABEL}) = '{roomName.ToUpper()}' LIMIT 1;";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1821,6 +2286,33 @@ namespace BackEndServer.Services
                 }
             }
             return false;
+        }
+
+        public List<DatabaseUserCameraAssociation> GetAllUserCameraAssociations()
+        {
+            List<DatabaseUserCameraAssociation> userList = new List<DatabaseUserCameraAssociation>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUserCameraAssociation.TABLE_NAME}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseUserCameraAssociation user = new DatabaseUserCameraAssociation
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUserCameraAssociation.USER_ID]),
+                            CameraId = Convert.ToInt32(reader[DatabaseUserCameraAssociation.CAMERA_ID])
+                        };
+                        userList.Add(user);
+                    }
+                }
+            }
+            return userList;
         }
 
     }
