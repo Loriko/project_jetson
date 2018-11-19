@@ -11,14 +11,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
         private AbstractAPIKeyService APIKeyService => _apiKeyService ?? (_apiKeyService =
                                                            HttpContext.RequestServices.GetService(typeof(AbstractAPIKeyService)) as
                                                                AbstractAPIKeyService);
+        
+        private AbstractUserService _userService;
+        private AbstractUserService UserService => _userService ?? (_userService =
+                                                       HttpContext.RequestServices.GetService(typeof(AbstractUserService)) as
+                                                           AbstractUserService);
+        
         [HttpGet]
         public IActionResult ManageAPIKeys()
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            // TODO: Ensure User is an ADMIN
-
-            if (currentUserId == null)
+            if (currentUserId == null || UserService.IsUserAdministrator(currentUserId.Value) == false)
             {
                 return RedirectToAction("SignIn", "Home");
             }
@@ -27,13 +31,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
         }
 
         [HttpGet]
+        //TODO: should be a post
         public IActionResult CreateAPIKey()
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            // TODO: Ensure User is an ADMIN
-
-            if (currentUserId == null)
+            if (currentUserId == null  || UserService.IsUserAdministrator(currentUserId.Value) == false)
             {
                 return RedirectToAction("SignIn", "Home");
             }

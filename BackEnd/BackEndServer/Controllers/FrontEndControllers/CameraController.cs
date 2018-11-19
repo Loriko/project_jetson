@@ -24,6 +24,11 @@ namespace BackEndServer.Controllers.FrontEndControllers
                                                            HttpContext.RequestServices.GetService(typeof(AbstractCameraService)) as
                                                                AbstractCameraService);
         
+        private AbstractUserService _userService;
+        private AbstractUserService UserService => _userService ?? (_userService =
+                                                       HttpContext.RequestServices.GetService(typeof(AbstractUserService)) as
+                                                           AbstractUserService);
+        
         [HttpGet] // /<controller>/
         public IActionResult CameraSelectionForLocation(int locationId)
         {
@@ -157,9 +162,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            // TODO: Ensure User is an ADMIN
-
-            if (currentUserId == null)
+            if (currentUserId == null || UserService.IsUserAdministrator(currentUserId.Value) == false)
             {
                 return RedirectToAction("SignIn", "Home");
             }
@@ -174,9 +177,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            // TODO: Ensure User is an ADMIN
-
-            if (currentUserId == null)
+            if (currentUserId == null || UserService.IsUserAdministrator(currentUserId.Value) == false)
             {
                 return RedirectToAction("SignIn", "Home");
             }
@@ -192,9 +193,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            // TODO: Ensure User is an ADMIN
-
-            if (currentUserId == null)
+            if (currentUserId == null || UserService.IsUserAdministrator(currentUserId.Value) == false)
             {
                 return RedirectToAction("SignIn", "Home");
             }

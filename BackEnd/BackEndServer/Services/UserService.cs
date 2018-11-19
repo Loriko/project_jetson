@@ -145,6 +145,11 @@ namespace BackEndServer.Services
             return res.ToString();
         }
 
+        public bool IsUserAdministrator(int userId)
+        {
+            return _dbQueryService.IsUserAdministrator(userId); 
+        }
+
         public NavigationBarDetails GetNavigationBarDetailsForUser(int? userId)
         {
             NavigationBarDetails barDetails = new NavigationBarDetails();

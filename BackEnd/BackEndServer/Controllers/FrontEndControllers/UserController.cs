@@ -114,7 +114,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public IActionResult BeginUserCreation()
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
-            if (currentUserId == null)
+            if (currentUserId == null || UserService.IsUserAdministrator(currentUserId.Value) == false)
             {
                 return RedirectToAction("SignIn", "Home");
             }
@@ -127,7 +127,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public IActionResult CreateUser(UserSettings userSettings)
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
-            if (currentUserId == null)
+            if (currentUserId == null || UserService.IsUserAdministrator(currentUserId.Value) == false)
             {
                 return RedirectToAction("SignIn", "Home");
             }
