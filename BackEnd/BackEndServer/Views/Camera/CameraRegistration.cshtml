@@ -204,7 +204,7 @@
         </text>
     }
 
-    function validateCameraKey() {
+    function validateCameraKey(successCB) {
         if ($("#camera_key").val()) {
             var url = "ValidateCameraKey";
 
@@ -219,6 +219,9 @@
                     if (data === true) {
                         $("#camera_key").addClass("valid");
                         $("#camera_key").removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
                     } else {
                         $("#camera_key").addClass("invalid");
                         $("#camera_key").removeClass("valid");
@@ -235,7 +238,7 @@
         validateNewCameraName();
     });
     
-    function validateNewCameraName() {
+    function validateNewCameraName(successCB) {
         @if (Model.CameraDetails.CameraKey.IsNullOrEmpty() == false)
         {
         <text>
@@ -261,6 +264,9 @@
                     if (data === true) {
                         newCameraName.addClass("valid");
                         newCameraName.removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
                     } else {
                         newCameraName.addClass("invalid");
                         newCameraName.removeClass("valid");
@@ -270,7 +276,7 @@
         }
     }
     
-    function validateNewRoomName() {
+    function validateNewRoomName(successCB) {
         if ($("#new_room_name").val() && $("#location_id").val()) {
             var url = "../location/ValidateNewRoomName";
 
@@ -287,6 +293,9 @@
                     if (data === true) {
                         newRoomName.addClass("valid");
                         newRoomName.removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
                     } else {
                         newRoomName.addClass("invalid");
                         newRoomName.removeClass("valid");
@@ -316,7 +325,7 @@
             $('#location-creation-modal').modal('close');
             $('#location-selector-container').load("@Html.Raw(Url.Action("LoadLocationSelector", "Location",
                                                         new {selectorId = "location_id", selectorName = "LocationId", required = true, selectedLocationId = Model.CameraDetails.LocationId}))", locationSelectorLoaded);
-            
+            $("#location_id").change();
         } else {
             Materialize.toast("Couldn't create location.", 4000);
         }
@@ -353,6 +362,9 @@
     
     $("#camera_registration_form").submit(function(e) {
         if ($("#existing_room_checkbox").is(':checked') === false && checkNewRoomNameValid() === false) {
+            validateNewRoomName(function() {
+                $("#camera_registration_form").submit();
+            });
             return false;
         }
         if ($("#file_name").val() === false) {
@@ -363,20 +375,20 @@
         {
             <text>
                 if (checkCameraNameValid() === false) {
+                    validateNewCameraName(function() {
+                        $("#camera_registration_form").submit();
+                    });
+                    return false;
+                }
+                if (verifyCameraKeyValid() === false) {
+                    validateCameraKey(function() {
+                        $("#camera_registration_form").submit();
+                    });
                     return false;
                 }
             </text>
         }
-        @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
-        {
-            <text>
-                return verifyCameraKeyValid();        
-            </text>
-        }
-        else
-        {
-            <text>return true;</text>
-        }
+        return true;
     });
 
 </script>

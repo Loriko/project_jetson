@@ -58,7 +58,7 @@
         validateEmail();
     });
 
-    function validateEmail() {
+    function validateEmail(successCB) {
         
         @if (Model.EmailAddress.IsNullOrEmpty() == false)
         {
@@ -83,6 +83,9 @@
                     if (data === true) {
                         $("#email_address").addClass("valid");
                         $("#email_address").removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
                     } else {
                         $("#email_address").addClass("invalid");
                         $("#email_address").removeClass("valid");
@@ -112,6 +115,9 @@
     $("#user_settings_modification_form").submit(function (e) {
 
         if (!checkEmailValidity()) {
+            validateEmail(function() {
+                $("#user_settings_modification_form").submit();
+            });
             return false;
         }
         

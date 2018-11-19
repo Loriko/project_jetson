@@ -42,7 +42,7 @@
         validateLocationName();
     });
     
-    function validateLocationName() {
+    function validateLocationName(successCB) {
         if ($("#location_name").val().toUpperCase() === $("#previous_location_name").val().toUpperCase()) {
             return true;
         }
@@ -62,6 +62,9 @@
                     if (data === true) {
                         newLocationName.addClass("valid");
                         newLocationName.removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
                     } else {
                         newLocationName.addClass("invalid");
                         newLocationName.removeClass("valid");
@@ -110,6 +113,9 @@
 
     $("#location-creation-form").submit(function(e) {
         if (checkNewLocationName() === false) {
+            validateLocationName(function() {
+                $("#location-creation-form").submit();
+            });
             return false;
         }
         

@@ -77,7 +77,7 @@
         validateEmail();
     });
 
-    function validateEmail() {
+    function validateEmail(successCB) {
         if ($("#email_address").val()) {
             var url = "ValidateEmail";
 
@@ -92,6 +92,9 @@
                     if (data === true) {
                         $("#email_address").addClass("valid");
                         $("#email_address").removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
                     } else {
                         $("#email_address").addClass("invalid");
                         $("#email_address").removeClass("valid");
@@ -150,7 +153,7 @@
         validateUsername();
     });
 
-    function validateUsername() {
+    function validateUsername(successCB) {
         if ($("#username").val()) {
             var url = "ValidateUsername";
 
@@ -165,6 +168,9 @@
                     if (data === true) {
                         $("#username").addClass("valid");
                         $("#username").removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
                     } else {
                         $("#username").addClass("invalid");
                         $("#username").removeClass("valid");
@@ -194,16 +200,21 @@
     }
     
     $("#user_creation_form").submit(function (e) {
-        var validForm = true;
         if (!validatePassword()) {
-            validForm = false;
+            return false;
         }
         if (!checkEmailValidity()) {
-            validForm = false;
+            validateEmail(function() {
+                $("#user_creation_form").submit();
+            });
+            return false;
         }
         if (!checkUsernameValidity()) {
-            validForm = false;
+            validateUsername(function() {
+                $("#user_creation_form").submit();
+            });
+            return false;
         }
-        return validForm;
+        return true;
     });
 </script>
