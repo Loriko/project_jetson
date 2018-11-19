@@ -108,7 +108,7 @@
         var password1 = $("#password");
         var password2 = $("#password2");
 
-        if (password1.val().toLowerCase() !== password2.val().toLowerCase()) {
+        if (password1.val() !== password2.val()) {
             var errorMessage = "The passwords do not match";
             $("label[for='password']").attr("data-error", errorMessage);
             $("label[for='password2']").attr("data-error", errorMessage);
@@ -118,7 +118,7 @@
             password2.addClass("invalid");
             return false;
         }
-//        The password must contain a combination of letters and numbers
+        //The password must contain a combination of letters and numbers
         if (/\d/.test(password1.val()) === false || /[a-z]/i.test(password1) === false) {
             var errorMessage2 = "The password must contain a combination of letters and numbers";
             $("label[for='password']").attr("data-error", errorMessage2);
@@ -129,11 +129,22 @@
             password2.removeClass("valid");
             return false;
         }
-
+        //Length must be at least 8
         if (password1.val().length < 8) {
             var errorMessage3 = "The password must be at least 8 characters long";
             $("label[for='password']").attr("data-error", errorMessage3);
             $("label[for='password2']").attr("data-error", errorMessage3);
+            password1.addClass("invalid");
+            password2.addClass("invalid");
+            password1.removeClass("valid");
+            password2.removeClass("valid");
+            return false;
+        }
+        //must contain at least one uppercase char
+        if (/[A-Z]+/.test(password1.val()) === false) {
+            var errorMessage4 = "The password must contain an uppercase letter";
+            $("label[for='password']").attr("data-error", errorMessage4);
+            $("label[for='password2']").attr("data-error", errorMessage4);
             password1.addClass("invalid");
             password2.addClass("invalid");
             password1.removeClass("valid");
