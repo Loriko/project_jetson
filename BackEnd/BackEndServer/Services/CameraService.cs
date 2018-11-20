@@ -20,7 +20,6 @@ namespace BackEndServer.Services
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractGraphStatisticService _graphStatisticsService;
         private readonly AbstractLocationService _locationService;
-        private AbstractCameraService _abstractCameraServiceImplementation;
 
         public CameraService(IDatabaseQueryService dbQueryService, AbstractGraphStatisticService graphStatisticService, AbstractLocationService locationService)
         {

@@ -88,7 +88,23 @@ namespace BackEndServer.Classes.EntityDefinitionClasses
         public override bool Equals(object obj)
         {
             PerSecondStat other = obj as PerSecondStat;
-            return (other.DateTime == DateTime && CameraKey == other.CameraKey);
+            return Equals(other);
+        }
+
+        protected bool Equals(PerSecondStat other)
+        {
+            return string.Equals(DateTime, other.DateTime) && string.Equals(CameraKey, other.CameraKey) && NumTrackedPeople == other.NumTrackedPeople;
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (DateTime != null ? DateTime.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (CameraKey != null ? CameraKey.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ NumTrackedPeople;
+                return hashCode;
+            }
         }
     }
 }

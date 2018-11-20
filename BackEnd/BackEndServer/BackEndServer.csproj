@@ -11,7 +11,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
     <PackageReference Include="Moq" Version="4.8.2" />
     <PackageReference Include="MySql.Data" Version="6.10.6" />
-    <PackageReference Include="MySql.Web" Version="8.0.10-rc" />
+    <PackageReference Include="MySql.Web" Version="8.0.10-rc">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="NLog" Version="4.5.10" />
     <PackageReference Include="NUnit" Version="3.10.1" />

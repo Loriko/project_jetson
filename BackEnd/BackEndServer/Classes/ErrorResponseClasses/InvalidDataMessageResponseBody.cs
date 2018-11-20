@@ -7,8 +7,10 @@ namespace BackEndServer.Classes.ErrorResponseClasses
     /// </summary>
     public class InvalidDataMessageResponseBody
     {
+#pragma warning disable 414
         string Message;
-        string[] InvalidAttributes; 
+        string[] InvalidAttributes;
+#pragma warning restore 414
 
         public InvalidDataMessageResponseBody(bool receivedEmptyMessage, string[] invalidAttributes)
         {

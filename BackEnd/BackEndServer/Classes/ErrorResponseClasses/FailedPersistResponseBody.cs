@@ -2,7 +2,9 @@
 {
     public class FailedPersistResponseBody
     {
+#pragma warning disable 414
         string Message;
+#pragma warning restore 414
 
         public FailedPersistResponseBody()
         {

@@ -2,7 +2,9 @@
 {
     public class InvalidLocationIdResponseBody
     {
+#pragma warning disable 414
         string Message;
+#pragma warning restore 414
 
         public InvalidLocationIdResponseBody()
         {

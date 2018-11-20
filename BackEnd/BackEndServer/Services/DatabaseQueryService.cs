@@ -22,7 +22,6 @@ namespace BackEndServer.Services
 {   
     public class DatabaseQueryService : IDatabaseQueryService
     {
-        private IDatabaseQueryService _databaseQueryServiceImplementation;
 
         #region Database Context
 
@@ -409,10 +408,6 @@ namespace BackEndServer.Services
                 string query = $"SELECT {DatabaseAPIKey.API_KEY_ID_LABEL} FROM {DatabaseAPIKey.TABLE_NAME} "
                                + $"WHERE {DatabaseAPIKey.API_KEY_LABEL} = '{apiKey}' LIMIT 1;";
 
-                Console.WriteLine("\n");
-                Console.WriteLine(query);
-                Console.WriteLine("\n");
-                
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
 
@@ -1647,7 +1642,6 @@ namespace BackEndServer.Services
         
         public bool IsUserAdministrator(int userId)
         {
-            DatabaseUser user = null;
 
             using (MySqlConnection conn = GetConnection())
             {

@@ -24,7 +24,6 @@ namespace BackEndServer.Services
             _databaseQueryService = databaseQueryService;
             _emailService = emailService;
             this.snoozeDurationMinutes = snoozeDurationMinutes;
-            Console.WriteLine(snoozeDurationMinutes);
         }
         
         public void StartMonitoring()
