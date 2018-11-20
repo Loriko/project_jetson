@@ -16,13 +16,15 @@ namespace BackEndServer.Services
     {
         private readonly IDatabaseQueryService _databaseQueryService;
         private readonly EmailService _emailService;
-        private static readonly double ALERT_SNOOZE_HOURS = 2;
+        private readonly int snoozeDurationMinutes;
         private static readonly int TIME_BETWEEN_ALERT_CHECKS_MS = 30000;
         
-        public AlertMonitoringService(IDatabaseQueryService databaseQueryService, EmailService emailService)
+        public AlertMonitoringService(IDatabaseQueryService databaseQueryService, EmailService emailService, int snoozeDurationMinutes)
         {
             _databaseQueryService = databaseQueryService;
             _emailService = emailService;
+            this.snoozeDurationMinutes = snoozeDurationMinutes;
+            Console.WriteLine(snoozeDurationMinutes);
         }
         
         public void StartMonitoring()
@@ -163,7 +165,7 @@ namespace BackEndServer.Services
 
         private void SnoozeAlert(DatabaseAlert alert)
         {
-            alert.SnoozedUntil = DateTime.Now.AddHours(ALERT_SNOOZE_HOURS);
+            alert.SnoozedUntil = DateTime.Now.AddMinutes(snoozeDurationMinutes);
             _databaseQueryService.PersistExistingAlert(alert);
         }
     }

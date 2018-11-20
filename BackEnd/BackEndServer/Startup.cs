@@ -43,12 +43,13 @@ namespace BackEndServer
             DatabaseQueryService dbQueryService = new DatabaseQueryService(Configuration.GetConnectionString("DefaultConnection"));
             EmailService emailService = new EmailService(Configuration.GetSection("EmailServiceConfiguration")["SourceEmailAddress"], 
                 Configuration.GetSection("EmailServiceConfiguration")["SourceEmailPassword"]);
-            bool alertMonitoringEnabled = false;
-            if (alertMonitoringEnabled)
+            IConfigurationSection alertMonitoringConfig = Configuration.GetSection("AlertMonitoringServiceConfiguration");
+            if (alertMonitoringConfig != null && Convert.ToBoolean(alertMonitoringConfig["Enabled"]))
             {
                 Thread alertMonitoringThread = new Thread(delegate()
                 {
-                    AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService, emailService);
+                    int snoozeDurationMinutes = Convert.ToInt32(alertMonitoringConfig["SnoozeDurationMinutes"]);
+                    AlertMonitoringService alertMonitoringService = new AlertMonitoringService(dbQueryService, emailService, snoozeDurationMinutes);
                     alertMonitoringService.StartMonitoring();
                 });
                 alertMonitoringThread.Start();
