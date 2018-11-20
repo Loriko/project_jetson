@@ -7,7 +7,6 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <link rel="stylesheet" href="~/lib/materialize/css/materialize.css" />
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/ImageUpload.css" />
         <script src="~/js/ImageUpload.js"></script>
@@ -15,11 +14,11 @@
     <environment exclude="Development">
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <link rel="stylesheet" href="~/lib/materialize/css/materialize.min.css"/>
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     </environment>
+    <link href="~/css/icon.css" rel="stylesheet">
     <!-- This script needs to be loaded asap, otherwise graphs won't work, which is why it is in the head -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="~/js/loader.js"></script>
     <script type="text/javascript" src="~/js/moment.min.js"></script>
 </head>
 <body>
