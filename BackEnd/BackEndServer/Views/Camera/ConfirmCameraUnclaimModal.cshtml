@@ -11,14 +11,22 @@
 </div>
 
 <script>
-    function handleSuccess() {
+    function handleUnclaimResponse(response) {
+        if (response === true) {
+            handleUnclaimSuccess();
+        } else {
+            handleUnclaimFailure();
+        }
+    }
+    
+    function handleUnclaimSuccess() {
         closeCameraUnclaimModal();
         //We reload the page but only partially
         $('#body-container').load("@Url.Action("LoadUserCamera", "Camera")");
         Materialize.toast("Camera successfully unclaimed!", 4000);
     }
 
-    function handleFailure() {
+    function handleUnclaimFailure() {
         closeCameraUnclaimModal();
         Materialize.toast("Couldn't unclaim camera.", 4000);
     }
@@ -30,6 +38,6 @@
     function unclaimCamera() {
         var cameraId = $("input[name='ToBeUnclaimedCameraId']").val();
         var data = { "cameraId": cameraId };
-        $.post("@Url.Action("UnclaimCamera", "Camera")", data, handleSuccess).fail(handleFailure);
+        $.post("@Url.Action("UnclaimCamera", "Camera")", data, handleUnclaimResponse).fail(handleUnclaimFailure);
     }
 </script>

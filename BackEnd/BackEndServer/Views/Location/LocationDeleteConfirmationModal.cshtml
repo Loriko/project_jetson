@@ -11,14 +11,22 @@
 </div>
 
 <script>
-    function handleSuccess() {
+    function handleLocationDeleteResponse(response) {
+        if (response === true) {
+            handleLocationDeleteFailure();
+        } else {
+            handleLocationDeleteFailure();
+        }
+    }
+    
+    function handleLocationDeleteFailure() {
         closeLocationDeleteModal();
         //We reload the page but only partially
         $('#body-container').load("@Url.Action("ManageLocations", "Location")");
         Materialize.toast("Location successfully deleted!", 4000);
     }
 
-    function handleFailure() {
+    function handleLocationDeleteFailure() {
         closeLocationDeleteModal();
         Materialize.toast("Location couldn't be deleted.", 4000);
     }
@@ -30,6 +38,6 @@
     function deleteLocation() {
         var locationId = $("input[name='ToBeDeletedLocationId']").val();
         var data = { "locationId": locationId };
-        $.post("@Url.Action("DeleteLocation", "Location")", data, handleSuccess).fail(handleFailure);
+        $.post("@Url.Action("DeleteLocation", "Location")", data, handleLocationDeleteResponse).fail(handleLocationDeleteFailure);
     }
 </script>

@@ -11,14 +11,22 @@
 </div>
 
 <script>
-    function handleSuccess() {
+    function handleAlertEnableResponse(response) {
+        if (response === true) {
+            handleAlertEnableSuccess();
+        } else {
+            handleAlertEnableFailure();
+        }
+    }
+
+    function handleAlertEnableSuccess() {
         closeAlertEnablingModal();
         //We reload the page but only partially
         $('#body-container').load("@Url.Action("Index", "Alert")");
         Materialize.toast("Alert successfully enabled!", 4000);
     }
 
-    function handleFailure() {
+    function handleAlertEnableFailure() {
         closeAlertEnablingModal();
         Materialize.toast("Couldn't enable alert.", 4000);
     }
@@ -30,6 +38,6 @@
     function enableAlert() {
         var alertId = $("input[name='ToBeEnabledAlertId']").val();
         var data = { "alertId": alertId };
-        $.post("@Url.Action("EnableAlert", "Alert")", data, handleSuccess).fail(handleFailure);
+        $.post("@Url.Action("EnableAlert", "Alert")", data, handleAlertEnableResponse).fail(handleAlertEnableFailure);
     }
 </script>

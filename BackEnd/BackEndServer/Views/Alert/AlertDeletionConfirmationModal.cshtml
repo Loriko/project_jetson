@@ -11,14 +11,22 @@
 </div>
 
 <script>
-    function handleDeleteSuccess() {
+    function handleAlertDeleteResponse(response) {
+        if (response === true) {
+            handleAlertDeleteSuccess();
+        } else {
+            handleAlertDeleteFailure();
+        }
+    }
+    
+    function handleAlertDeleteSuccess() {
         closeAlertDeletionModal();
         //We reload the page but only partially
         $('#body-container').load("@Url.Action("Index", "Alert")");
         Materialize.toast("Alert successfully deleted!", 4000);
     }
 
-    function handleFailure() {
+    function handleAlertDeleteFailure() {
         closeAlertDeletionModal();
         Materialize.toast("Alert couldn't be deleted.", 4000);
     }
@@ -30,6 +38,6 @@
     function deleteAlert() {
         var alertId = $("input[name='ToBeDeletedAlertId']").val();
         var data = { "alertId": alertId };
-        $.post("@Url.Action("DeleteAlert", "Alert")", data, handleDeleteSuccess).fail(handleFailure);
+        $.post("@Url.Action("DeleteAlert", "Alert")", data, handleAlertDeleteResponse).fail(handleAlertDeleteFailure);
     }
 </script>
