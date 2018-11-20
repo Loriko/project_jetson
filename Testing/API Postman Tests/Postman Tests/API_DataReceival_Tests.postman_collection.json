@@ -7,6 +7,20 @@
 	"item": [
 		{
 			"name": "API_DataReceival_Test1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f2840484-6539-4320-b079-c6910ce74353",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -17,7 +31,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":3,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:45\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:46\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":4,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":15,\"HasSavedImage\":true},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:47\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:42\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":15,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:42\",\"CameraKey\":\"HGTIBNERMESD\",\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:42\",\"CameraKey\":\"EPOVHTRKMQZU\",\"NumTrackedPeople\":8,\"HasSavedImage\":true}]}"
+					"raw": "{\n    \"API_Key\": \"IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF\",\n    \"RealTimeStats\": [\n        {\n            \"DateTime\": \"2000-08-30 10:23:45\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 5,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:45\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 3,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:45\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:46\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:46\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:46\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:47\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 15,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:47\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 2,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:47\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 5,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:42\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 15,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:42\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 2,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:42\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 8,\n            \"HasSavedImage\": false\n        }\n    ]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:55556/api/datareceival/datamessage",
@@ -37,6 +51,20 @@
 		},
 		{
 			"name": "API_DataReceival_Test2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8542d01c-25cd-496e-84a9-910691932a21",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -47,7 +75,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:49\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-8-30 10:23:50\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":2,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:51\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":2,\"HasSavedImage\":false}]}"
+					"raw": "{\n    \"API_Key\": \"IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF\",\n    \"RealTimeStats\": [\n        {\n            \"DateTime\": \"2000-08-30 10:23:48\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 1,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:49\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 1,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-8-30 10:23:50\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 2,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:51\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 2,\n            \"HasSavedImage\": false\n        }\n    ]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:55556/api/datareceival/datamessage",
@@ -67,6 +95,20 @@
 		},
 		{
 			"name": "API_DataReceival_Test3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aa43819f-9297-4210-a8d6-b23fc16d93ce",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -77,7 +119,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"123ABC_Invalid_Key\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false}]}"
+					"raw": "{\n    \"API_Key\": \"IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF\",\n    \"RealTimeStats\": [\n        {\n            \"DateTime\": \"2000-08-30 10:23:48\",\n            \"CameraKey\": \"123ABC_Invalid_Key\",\n            \"NumTrackedPeople\": 1,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:48\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 1,\n            \"HasSavedImage\": false\n        }\n    ]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:55556/api/datareceival/datamessage",
@@ -97,6 +139,20 @@
 		},
 		{
 			"name": "API_DataReceival_Test4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09a8967a-d94a-4055-b948-868f420e367a",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -107,7 +163,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:49\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":-1,\"HasSavedImage\":false}]}"
+					"raw": "{\n    \"API_Key\": \"IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF\",\n    \"RealTimeStats\": [\n        {\n            \"DateTime\": \"2000-08-30 10:23:48\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 1,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:49\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": -1,\n            \"HasSavedImage\": false\n        }\n    ]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:55556/api/datareceival/datamessage",
@@ -127,6 +183,20 @@
 		},
 		{
 			"name": "API_DataReceival_Test5",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "beeafc5f-4ace-4ccd-be80-948dffa71221",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -137,7 +207,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"API_Key\":\"FAKE_API_KEY_123\",\"RealTimeStats\":[{\"DateTime\":\"20000-08-30 10:23:48\",\"CameraKey\":\"123ABC_Invalid_Key\",\"NumTrackedPeople\":1,\"HasSavedImage\":false},{\"DateTime\":\"2000-08-30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":-8,\"HasSavedImage\":false},{\"DateTime\":\"2000/08/30 10:23:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false}]}"
+					"raw": "{\n    \"API_Key\": \"IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF\",\n    \"RealTimeStats\": [\n        {\n            \"DateTime\": \"20000-08-30 10:23:48\",\n            \"CameraKey\": \"123ABC_Invalid_Key\",\n            \"NumTrackedPeople\": 1,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:48\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": -8,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000/08/30 10:23:48\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 5,\n            \"HasSavedImage\": false\n        }\n    ]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:55556/api/datareceival/datamessage",
@@ -157,6 +227,20 @@
 		},
 		{
 			"name": "API_DataReceival_Test6",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d2015a84-b7a4-4e20-88a4-b8f9897c7803",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -167,7 +251,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"API_Key\":\"Invalid_Key_1090_test\",\"RealTimeStats\":[{\"DateTime\":\"2018-10-14 21:59:48\",\"CameraKey\":\"AFRJNILIJHRU\",\"NumTrackedPeople\":5,\"HasSavedImage\":false}]}"
+					"raw": "{\n    \"API_Key\": \"invalid_api_key\",\n    \"RealTimeStats\": [\n        {\n            \"DateTime\": \"2000-08-30 10:23:45\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 5,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:45\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 3,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:45\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:46\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:46\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:46\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 4,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:47\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 15,\n            \"HasSavedImage\": true\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:47\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 2,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:47\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 5,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:42\",\n            \"CameraKey\": \"AFRJNILIJHRU\",\n            \"NumTrackedPeople\": 15,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:42\",\n            \"CameraKey\": \"HGTIBNERMESD\",\n            \"NumTrackedPeople\": 2,\n            \"HasSavedImage\": false\n        },\n        {\n            \"DateTime\": \"2000-08-30 10:23:42\",\n            \"CameraKey\": \"EPOVHTRKMQZU\",\n            \"NumTrackedPeople\": 8,\n            \"HasSavedImage\": true\n        }\n    ]\n}"
 				},
 				"url": {
 					"raw": "http://localhost:55556/api/datareceival/datamessage",

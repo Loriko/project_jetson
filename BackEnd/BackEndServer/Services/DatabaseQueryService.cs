@@ -953,6 +953,36 @@ namespace BackEndServer.Services
             return cameraList;
         }
 
+        // Used to validate all CameraKeys within a DataMessage's RealTimeStats array of PerSecondStats.
+        public List<string> GetAllCameraKeys()
+        {
+            List<string> cameraKeyList = new List<string>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT {DatabaseCamera.CAMERA_KEY_LABEL} "
+                    + $"FROM {DatabaseCamera.TABLE_NAME}";
+
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.HasRows == false)
+                    {
+                        return null;
+                    }
+
+                    while (reader.Read())
+                    {
+                        string cameraKey = Convert.ToString(reader[DatabaseCamera.CAMERA_KEY_LABEL]);
+                        cameraKeyList.Add(cameraKey);
+                    }
+                }
+            }
+            return cameraKeyList;
+        }
+
         public List<DatabaseCamera> GetCamerasAvailableToUser(int userId)
         {
             List<DatabaseCamera> cameraList = new List<DatabaseCamera>();
