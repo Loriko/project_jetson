@@ -217,34 +217,21 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            List<DatabaseUser> dbUserList = CameraService.GetAllUsers();
-            List<DatabaseUser> userList = new List<DatabaseUser>();
-            List<DatabaseUserCameraAssociation> cameraAssociations = CameraService.GetAllUserCameraAssociations();
-            List<string> names = new List<string>();
-            foreach (var user in dbUserList)
+
+            List<UserSettings> users = UserService.GetUserSettingsForCamera(cameraId);
+            CameraDetails camera = CameraService.GetCameraInfoById(cameraId);
+            UserSettingsList settingsList = new UserSettingsList
             {
-                foreach (var userCameraAss in cameraAssociations)
-                {
-                    if ((userCameraAss.UserId == user.UserId) && (cameraId == userCameraAss.CameraId))
-                    {
-                        names.Add(user.Username);
-                    }
-                }
-            }
-            foreach (var user in dbUserList)
+                CameraDetails = camera,
+                UserList = users
+            };
+            
+            if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
             {
-                if (currentUserId != user.UserId)
-                {
-                    userList.Add(user);
-                }
-                
+                return PartialView("UserViewAccess", settingsList);
             }
-            if (userList == null)
-            {
-                return View("Error");
-            }
-            UserSettingsList users = new UserSettingsList(userList, cameraId, names);
-            return View("UserViewAccess", users);
+            
+            return View("UserViewAccess", settingsList);
         }
         
         [HttpPost]
@@ -255,16 +242,8 @@ namespace BackEndServer.Controllers.FrontEndControllers
             {
                 return RedirectToAction("SignIn", "Home");
             }
-            CameraDetails cameraInfo = CameraService.GetCameraInfoById(association.CameraId);
 
-           
-            if (!CameraService.GiveAccessToUser(association.CameraId, association.UserId))
-            {
-                return View("Error");
-            }
-            
-            CameraInformationList availableCameras = CameraService.GetAllCamerasOwnedByUser(currentUserId.Value);
-            return View("ManageCameras", availableCameras);
+            return Json(CameraService.TryGiveAccessToUser(association));
         }
 
         [HttpPost]
@@ -286,6 +265,18 @@ namespace BackEndServer.Controllers.FrontEndControllers
             if (currentUserId != null)
             {
                 return Json(CameraService.UnclaimCamera(cameraId));
+            }
+
+            return Json(false);
+        }
+
+        [HttpPost]
+        public IActionResult RevokeAccess(UserCameraAssociation association)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(CameraService.RevokeAccess(association));
             }
 
             return Json(false);

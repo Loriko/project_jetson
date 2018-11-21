@@ -167,6 +167,26 @@ namespace BackEndServer.Services
             return new CameraDetails(camera);
         }
 
+        public bool TryGiveAccessToUser(int cameraId, string usernameEmail)
+        {
+            List<DatabaseUser> users = GetAllUsers();
+            DatabaseUser targetUser =
+                users.Find(user => user.Username == usernameEmail || user.EmailAddress == usernameEmail);
+            if (targetUser == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                return GiveAccessToUser(cameraId, targetUser.UserId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         public CameraStatistics getCameraStatisticsForNowById(int cameraId)
         {
             DatabaseCamera camera = _dbQueryService.GetCameraById(cameraId);
@@ -500,6 +520,33 @@ namespace BackEndServer.Services
             }
 
             return frmList;
+        }
+
+        public bool TryGiveAccessToUser(UserCameraAssociation association)
+        {
+            List<DatabaseUser> users = GetAllUsers();
+            DatabaseUser targetUser =
+                users.Find(user => user.Username.ToUpper() == association.UsernameEmail.ToUpper() 
+                                   || user.EmailAddress.ToUpper() == association.UsernameEmail.ToUpper());
+            if (targetUser == null || targetUser.UserId == association.UserId)
+            {
+                return false;
+            }
+
+            try
+            {
+                return GiveAccessToUser(association.CameraId, targetUser.UserId);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool RevokeAccess(UserCameraAssociation association)
+        {
+            DatabaseUserCameraAssociation dbAssociation = new DatabaseUserCameraAssociation(association);
+            return _dbQueryService.DeleteUserCameraAssociation(dbAssociation);
         }
     }
 }

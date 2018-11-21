@@ -12,7 +12,7 @@
 
 <script>
     function handleAlertDeleteResponse(response) {
-        if (response === true) {
+        if (response !== false) {
             handleAlertDeleteSuccess();
         } else {
             handleAlertDeleteFailure();

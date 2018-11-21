@@ -9,25 +9,6 @@ namespace BackEndServer.Models.ViewModels
     {
 
         public List<UserSettings> UserList { get; set; }
-        public List<string> Names { get; set; }
-        public int CameraId { get; set; }
-        
-        
-        public UserSettingsList(List<DatabaseUser> dbUserList, int cameraId, List<string> userCameraList)
-        {
-            UserList = new List<UserSettings>();
-            foreach (var dbUser in dbUserList)
-            {
-                UserList.Add(new UserSettings(dbUser));
-            }
-            Names = new List<string>();
-
-            foreach (var userCamAss in userCameraList)
-            {
-                Names.Add(userCamAss);
-            }
-
-            CameraId = cameraId;
-        }
+        public CameraDetails CameraDetails { get; set; }
     }
 }

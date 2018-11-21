@@ -2,56 +2,50 @@
 @{
     ViewBag.Title = "Project Jetson - Give view access to other users";
 }
-<h1 id="headerUserView" class="page-title center-align">Give a user access to your camera</h1>
+@{ Html.RenderPartial("~/Views/Camera/ShareCameraModal.cshtml", Model); }
+@{ Html.RenderPartial("~/Views/Camera/RevokeAccessModal.cshtml", Model); }
+
+<h1 class="page-title center-align">Users given access to <b>@Model.CameraDetails.CameraName</b></h1>
+
+@if (Model.UserList.Count == 0) {
+    <div id="noUsersGivenAccessTitle" class="unavailable-message center-align">
+        No user has been given access to your camera. 
+        <br/>Clicking the green floating button will allow you to share access to your camera with another user.
+    </div>
+}
+
 <div class="row">
-    <form class="col s12" method="post" asp-controller="Camera" asp-action="GiveUserAccess">
-        <input type="hidden" name="CameraId" value="@Model.CameraId">
-        <div class="row">
-            <div class="input-field col s8" id="camera_resolution_div">
-                <select id="user_id" name="UserId">
-                    <option value="" disabled selected>Select the user you want to give access to</option>
-                    @{
-                        foreach (var user in Model.UserList)
-                        {
-                            <option value="@user.UserId">@user.Username</option>
-                        }
-                    }
-                </select>
-                <label for="user_id">Select User</label>
-            </div>
-        </div>
-        <!-- Submit Button -->
-        <div class="row">
-            <div class="s12 center-align">
-                <button class="btn waves-effect waves-light right-align" type="submit" name="action">
-                    Submit
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
-        </div>
-        
-        <div class="divider standard-bottom-margin"></div>
-        
-        <div id="userCameraAssociation" class="collection">
-            <label for="userCameraAssociation">Users given access to this camera:</label>
-            @{
-                if (Model.Names.Count != 0)
-                {
-                    foreach (var names in Model.Names)
-                    {
-                        <p>@names</p>
-                    }
-                }
-                else
-                {
-                    <div id="noUsersGivenAccessTitle" class="unavailable-message center-align">
-                        No user has been given access to this camera
-                    </div>
-                }
-            }
-        </div>
-    </form>
-    
+    <div class="right-align" style="margin-right: 11px;">
+        <a id="create_alert_btn" class="btn-floating btn-large green modal-trigger" href="#share_camera_modal">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
 </div>
 
+@if (Model.UserList.Count != 0)
+{
+    <div id="userCameraAssociation" class="collection">
+        @foreach (var user in Model.UserList)
+        {
+            <div class="collection-item">
+                <span class="title">@user.Username</span>
+                <span class="secondary-content">
+                    <a onclick="showRemoveAccessModal(@user.UserId)"><i class="material-icons">remove_circle</i></a>
+                </span>
+            </div>
+        }
+    </div>
+}
 
+<script>
+    @if (Context.Request.Headers["x-requested-with"]=="XMLHttpRequest")
+    {
+        <text>
+            window.loadMaterializeEffects();
+        </text>
+    }
+    function showRemoveAccessModal(userId) {
+        $("input[name='UserId']").val(userId);
+        $('#revoke_access_modal').modal("open");
+    }
+</script>

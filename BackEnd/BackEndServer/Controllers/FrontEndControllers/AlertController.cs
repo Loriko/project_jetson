@@ -64,7 +64,11 @@ namespace BackEndServer.Controllers.FrontEndControllers
         
         public IActionResult DeleteAlert(int alertId)
         {
-            AlertService.DeleteAlert(alertId);
+            if (AlertService.DeleteAlert(alertId) == false)
+            {
+                return Json(false);
+            }
+
             return RedirectToAction("Index", "Alert");
         }
 

@@ -1,0 +1,70 @@
+﻿@model BackEndServer.Models.ViewModels.UserSettingsList
+
+<!-- Modal Structure -->
+<div id="share_camera_modal" class="modal small-modal">
+    <form id="share_camera_form" class="col s12" method="post" asp-controller="Camera" asp-action="GiveUserAccess">
+        <div class="modal-content">
+            <h1 class="page-title left-align">Give a user access to your camera</h1>
+            <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId">
+            <div class="row no-bottom-margin">
+                <div class="input-field col s12">
+                    <input id="username_email" name="UsernameEmail" type="text" class="validate" required/>
+                    <label for="username_email">Email or Username of the target user</label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <!-- Submit Button -->
+            <button class="btn waves-effect waves-light right-align" type="submit" name="action">
+                Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function handleShareCameraResponse(response) {
+        if (response !== false) {
+            handleShareCameraSuccess();
+        } else {
+            handleShareCameraFailure();
+        }
+    }
+    
+    function handleShareCameraSuccess() {
+        closeShareCameraModal();
+        //We reload the page but only partially
+        $('#body-container').load("@Url.Action("ViewAllUsersExceptCurrent", "Camera", new {cameraId = Model.CameraDetails.CameraId})");
+        Materialize.toast("Successfully shared camera!", 4000);
+    }
+    
+    function handleShareCameraFailure() {
+        closeShareCameraModal();
+        Materialize.toast("Couldn't share the camera with the target user.", 4000);
+    }
+    
+    function closeShareCameraModal() {
+        $("#share_camera_modal").modal("close");
+    }
+    
+    $("#share_camera_form").submit(function(e) {
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(data) {
+                handleShareCameraResponse(data);
+            },
+            failure: function(data) {
+                handleShareCameraFailure(data);
+            }
+        });
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+</script>
