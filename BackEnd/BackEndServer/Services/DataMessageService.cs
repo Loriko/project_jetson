@@ -28,9 +28,23 @@ namespace BackEndServer.Services
                 return false;
             }
 
+            // Obtain a list of all valid Camera Keys currently in the system.
+            List<string> validCameraKeyList = _dbQueryService.GetAllCameraKeys();
+
             for (int z = 0; z < message.GetLength(); z++)
             {
+                // Verify the attributes of the PerSecondStat object, except for the  CameraKey.
                 if (message.RealTimeStats[z].isValidSecondStat() == false)
+                {
+                    return false;
+                }
+
+                // Verify its CameraKey.
+                string cameraKeyToVerify = message.RealTimeStats[z].CameraKey;
+
+                bool cameraKeyIsValid = validCameraKeyList.Where(o => string.Equals(cameraKeyToVerify, o, StringComparison.OrdinalIgnoreCase)).Any();
+
+                if (cameraKeyIsValid == false)
                 {
                     return false;
                 }
@@ -56,6 +70,8 @@ namespace BackEndServer.Services
                     {
                         temp.Add("CameraKey");
                     }
+
+                    // Does not query the camera keys again in order to avoid server slow down.
 
                     if (message.RealTimeStats[c].NumTrackedPeople < 0)
                     {
