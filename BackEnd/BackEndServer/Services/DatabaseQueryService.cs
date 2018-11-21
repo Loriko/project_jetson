@@ -624,6 +624,64 @@ namespace BackEndServer.Services
             return alertList;
         }
 
+        public bool DeleteUserCameraAssociation(DatabaseUserCameraAssociation dbAssociation)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {   
+                string command = $"DELETE FROM {DatabaseUserCameraAssociation.TABLE_NAME} " +
+                                 $"WHERE {DatabaseUserCameraAssociation.CAMERA_ID} = {dbAssociation.CameraId} " +
+                                 $"AND {DatabaseUserCameraAssociation.USER_ID} = {dbAssociation.UserId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(command, conn);
+
+                int success = cmd.ExecuteNonQuery();
+                if (success != 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public List<DatabaseUser> GetUsersWithCameraViewAccess(int cameraId)
+        {
+            List<DatabaseUser> users = new List<DatabaseUser>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} " +
+                               $"WHERE {DatabaseUser.USER_ID_LABEL} IN (" +
+                                   $"SELECT {DatabaseUserCameraAssociation.USER_ID} " +
+                                   $"FROM {DatabaseUserCameraAssociation.TABLE_NAME} " +
+                                   $"WHERE {DatabaseUserCameraAssociation.CAMERA_ID} = {cameraId}" +
+                               ");";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    // Expecting one result.
+                    while (reader.Read())
+                    {
+                        users.Add(new DatabaseUser
+                        {
+                            UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
+                            Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
+                            Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
+                            FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
+                            LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
+                            IsAdministrator = Convert.ToBoolean(reader[DatabaseUser.IS_ADMINISTRATOR_LABEL])
+                        });
+                    }
+                }
+            }
+
+            return users;
+        }
+
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {

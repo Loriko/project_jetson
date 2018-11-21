@@ -18,5 +18,6 @@ namespace BackEndServer.Services.AbstractServices
         NavigationBarDetails GetNavigationBarDetailsForUser(int? userId);
         bool ValidateUsername(string username);
         bool ValidateEmail(string emailAddress);
+        List<UserSettings> GetUserSettingsForCamera(int cameraId);
     }
 }

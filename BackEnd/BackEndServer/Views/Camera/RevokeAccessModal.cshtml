@@ -1,0 +1,48 @@
+﻿@model BackEndServer.Models.ViewModels.UserSettingsList
+
+<!-- Modal Structure -->
+<div id="revoke_access_modal" class="modal small-modal">
+    <input type="hidden" name="CameraId" value="@Model.CameraDetails.CameraId">
+    <input type="hidden" name="UserId">
+    <div class="modal-content">
+        <h1 class="confirmation-title page-title left-align">Are you sure you want to revoke this user's access to the camera?</h1>
+        <p>Revoking his access will cause the deletion of any alert he set up on the camera</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn waves-effect waves-light light-green" type="button" onclick="closeRevokeAccessModal()">Cancel</button>
+        <button class="btn waves-effect waves-light red" type="button" onclick="revokeAccess()">Delete</button>
+    </div>
+</div>
+
+<script>
+    function handleRevokeAccessResponse(response) {
+        if (response !== false) {
+            handleRevokeAccessSuccess();
+        } else {
+            handleRevokeAccessFailure();
+        }
+    }
+    
+    function handleRevokeAccessSuccess() {
+        closeRevokeAccessModal();
+        //We reload the page but only partially
+        $('#body-container').load("@Url.Action("ViewAllUsersExceptCurrent", "Camera", new {cameraId = Model.CameraDetails.CameraId})");
+        Materialize.toast("Successfully revoked user's access!", 4000);
+    }
+    
+    function handleRevokeAccessFailure() {
+        closeRevokeAccessModal();
+        Materialize.toast("Couldn't revoke this user's access to the camera.", 4000);
+    }
+    
+    function closeRevokeAccessModal() {
+        $("#revoke_access_modal").modal("close");
+    }
+    
+    function revokeAccess() {
+        var cameraId = $("input[name='CameraId']").val();
+        var userId = $("input[name='UserId']").val();
+        var data = { "cameraId": cameraId, "userId": userId };
+        $.post("@Url.Action("RevokeAccess", "Camera")", data, handleRevokeAccessResponse).fail(handleRevokeAccessFailure);
+    }
+</script>

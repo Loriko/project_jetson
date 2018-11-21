@@ -38,5 +38,7 @@ namespace BackEndServer.Services.AbstractServices
         bool UnclaimCamera(int cameraId);
         bool DeleteLocationAndUnclaimCameras(int locationId);
         JpgStatFrameList GetTriggeringStatsFrameList(int notificationId);
+        bool TryGiveAccessToUser(UserCameraAssociation association);
+        bool RevokeAccess(UserCameraAssociation association);
     }
 }

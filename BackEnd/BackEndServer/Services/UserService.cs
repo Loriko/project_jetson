@@ -177,5 +177,17 @@ namespace BackEndServer.Services
         {
             return _dbQueryService.GetUserByEmailAddress(emailAddress) == null;
         }
+
+        public List<UserSettings> GetUserSettingsForCamera(int cameraId)
+        {
+            List<DatabaseUser> dbUserList = _dbQueryService.GetUsersWithCameraViewAccess(cameraId);
+            List<UserSettings> userSettingses = new List<UserSettings>();
+            foreach (DatabaseUser dbUser in dbUserList)
+            {
+                userSettingses.Add(new UserSettings(dbUser));
+            }
+
+            return userSettingses;
+        }
     }
 }

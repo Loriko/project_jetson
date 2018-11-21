@@ -95,5 +95,7 @@ namespace BackEndServer.Services.AbstractServices
         bool DeleteLocation(int locationId);
         bool PersistExistingLocation(DatabaseLocation dbLocation);
         List<DatabaseAlert> GetAlertsByCameraId(int cameraId);
+        bool DeleteUserCameraAssociation(DatabaseUserCameraAssociation dbAssociation);
+        List<DatabaseUser> GetUsersWithCameraViewAccess(int cameraId);
     }
 }
