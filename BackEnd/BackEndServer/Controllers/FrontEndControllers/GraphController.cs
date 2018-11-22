@@ -28,7 +28,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
 
         
         // GET: /<controller>/
-        public IActionResult GraphDashboard(int cameraId, PastPeriod pastPeriod = PastPeriod.LastYear, DateTime? startDate = null, DateTime? endDate = null)
+        public IActionResult GraphDashboard(int cameraId, PastPeriod pastPeriod = PastPeriod.LastDay, DateTime? startDate = null, DateTime? endDate = null)
         {
             if (HttpContext.Session.GetString("currentUsername") == null)
             {
@@ -87,7 +87,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
             return Json(statistics);
         }
         
-        public IActionResult SharedRoomGraphDashboard(int roomId, PastPeriod pastPeriod = PastPeriod.LastYear, DateTime? startDate = null, DateTime? endDate = null)
+        public IActionResult SharedRoomGraphDashboard(int roomId, PastPeriod pastPeriod = PastPeriod.LastDay, DateTime? startDate = null, DateTime? endDate = null)
         {
             if (HttpContext.Session.GetString("currentUsername") == null)
             {

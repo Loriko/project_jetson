@@ -1,8 +1,8 @@
 -- Based on insertScript.docx by paulhawit
 -- Requires clean tables, will surely fail otherwise
 
-INSERT INTO user (id, username, password)
-VALUES (1, 'paulhawit', 'jetson');
+INSERT INTO user (id, username, password, is_administrator)
+VALUES (1, 'paulhawit', 'jetson', 1);
 
 -- Plain Text API Key for Testing: IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF 
 INSERT INTO jetson.api_key (user_id,api_key,salt) 
