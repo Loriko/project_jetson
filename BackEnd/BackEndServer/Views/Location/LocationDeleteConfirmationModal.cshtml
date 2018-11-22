@@ -13,13 +13,13 @@
 <script>
     function handleLocationDeleteResponse(response) {
         if (response === true) {
-            handleLocationDeleteFailure();
+            handleLocationDeleteSuccess();
         } else {
             handleLocationDeleteFailure();
         }
     }
     
-    function handleLocationDeleteFailure() {
+    function handleLocationDeleteSuccess() {
         closeLocationDeleteModal();
         //We reload the page but only partially
         $('#body-container').load("@Url.Action("ManageLocations", "Location")");
