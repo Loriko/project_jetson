@@ -23,7 +23,7 @@
         closeCameraUnclaimModal();
         //We reload the page but only partially
         $('#body-container').load("@Url.Action("LoadUserCamera", "Camera")");
-        Materialize.toast("Camera successfully unclaimed!", 4000);
+        Materialize.toast("Camera successfully deleted!", 4000);
     }
 
     function handleUnclaimFailure() {

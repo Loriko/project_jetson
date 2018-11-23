@@ -4,7 +4,7 @@ namespace BackEndServer.Models.DBModels
 {
     public class DatabasePerSecondStat
     {
-        public static readonly string FRM_JPG_FOLDER_PATH = "wwwroot/frmjpg/";
+        public static readonly string FRM_JPG_FOLDER_PATH = "wwwroot/frmjpg/camera_";
         
         // Table Name
         public static readonly string TABLE_NAME = "per_second_stat";

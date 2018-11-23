@@ -310,3 +310,6 @@ label[data-error], label[data-success] {
 .standard-bottom-margin {
     margin-bottom: 20px;
 }
+#user_details_card {
+    overflow: scroll;
+}

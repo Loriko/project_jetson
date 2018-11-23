@@ -7,6 +7,7 @@ using BackEndServer.Services.HelperServices;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Models.Enums;
 using Castle.Core.Internal;
 using Microsoft.AspNetCore.Http;
@@ -93,7 +94,7 @@ namespace BackEndServer.Services
             return list;
         }
 
-        private string GetTempPathFromFullPath(string imagePath)
+        public static string GetTempPathFromFullPath(string imagePath)
         {
             if (String.IsNullOrWhiteSpace(imagePath) == false && File.Exists(imagePath))
             {
@@ -475,7 +476,7 @@ namespace BackEndServer.Services
             };
             
             if (_dbQueryService.DeleteAlertsWithCameraId(cameraId) 
-                && _dbQueryService.DeletePerSecondStatsWithCameraId(cameraId)
+                && DeletePerSecondStatsWithCameraId(cameraId)
                 && (dbCamera.ImagePath.IsNullOrEmpty() 
                     || DeleteCameraImage(new CameraDetails(dbCamera))))
             {
@@ -485,6 +486,37 @@ namespace BackEndServer.Services
             return false;
         }
 
+        private bool DeletePerSecondStatsWithCameraId(int cameraId)
+        {
+//            List<DatabasePerSecondStat> dbStats = _dbQueryService.GetPerSecondStatsForCamera(cameraId);
+//            foreach (DatabasePerSecondStat stat in dbStats)
+//            {
+//                DeletePerSecondStatJpgFrm(stat);
+//            }
+
+            string cameraKey = _dbQueryService.GetCameraKeyFromId(cameraId);
+            Directory.Delete(DatabasePerSecondStat.FRM_JPG_FOLDER_PATH + cameraKey, true);
+            return _dbQueryService.DeletePerSecondStatsWithCameraId(cameraId);
+        }
+
+        private bool DeletePerSecondStatJpgFrm(DatabasePerSecondStat dbStat)
+        {
+            string imagePath = dbStat.FrameJpgPath;
+            if(File.Exists(imagePath))
+            {
+                try
+                {
+                    File.Delete(imagePath);
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    logger.Error(e);
+                }
+            }
+            return false;
+        }
+        
         public bool DeleteLocationAndUnclaimCameras(int locationId)
         {
             List<DatabaseCamera> dbCameras = _dbQueryService.GetCamerasForLocation(locationId);

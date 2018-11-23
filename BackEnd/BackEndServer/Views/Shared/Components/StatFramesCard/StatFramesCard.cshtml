@@ -8,7 +8,7 @@
                 @foreach (var statInfo in Model.JpgFramePathList)
                 {
                     <li class="carousel-item">
-                        <img src="../@statInfo.FrmJpgPath.Replace("wwwroot/", "")">
+                        <img src="../@statInfo.FrmJpgRelPath.Replace("wwwroot/", "")">
                         <p>People Identified: @statInfo.PeopleCount</p>
                         <p>Timestamp:<br>@statInfo.Timestamp</p>
                     </li>

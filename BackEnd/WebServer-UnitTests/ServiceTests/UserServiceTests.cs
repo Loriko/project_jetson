@@ -31,7 +31,7 @@ namespace WebServer_UnitTests.ServiceTests
             Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
             
 
-            UserService userService = new UserService(mockDBService.Object, new NotificationService(mockDBService.Object), "test", new EmailService("email", "email"));
+            UserService userService = new UserService(mockDBService.Object, new NotificationService(mockDBService.Object), "test", new EmailService("email", "email"), new APIKeyService());
             UserSettings userSettings = new UserSettings();
             userSettings.FirstName = "First";
             userSettings.LastName = "Last";

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Services.AbstractServices;
 using BackEndServer.Classes.ErrorResponseClasses;
@@ -153,14 +154,15 @@ namespace BackEndServer.Services
         // Returns the file path to where it was saved.
         private static string SaveKeyImage(PerSecondStat stat)
         {
-            string modifiedTimestamp = stat.DateTime.Replace(" ", "").Replace(":", "").Replace("-", "");
-            //TODO store full path here
-            string filePath = DatabasePerSecondStat.FRM_JPG_FOLDER_PATH + "stat_frm" + modifiedTimestamp + ".jpg";
+            string modifiedTimestamp = stat.DateTime.Substring(0, 19).Replace(" ", "").Replace(":", "").Replace("-", "");
+            string folderPath = DatabasePerSecondStat.FRM_JPG_FOLDER_PATH + stat.CameraKey;
+            DirectoryInfo outputDirectory = Directory.CreateDirectory(folderPath);
+            string fullFilePath = Path.Combine(outputDirectory.FullName, "stat_frm" + modifiedTimestamp + ".jpg");
             bool success = ImageDecodingTools.SaveBase64StringToFile(stat.FrameAsJpg,
-                filePath);
+                fullFilePath);
             if (success)
             {
-                return filePath;
+                return fullFilePath;
             }
             return null;
         }

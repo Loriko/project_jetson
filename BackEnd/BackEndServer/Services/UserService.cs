@@ -15,14 +15,16 @@ namespace BackEndServer.Services
         private readonly EmailService _emailService;
         private readonly AbstractNotificationService _notificationService;
         private string _hostname;
+        private AbstractAPIKeyService _apiKeyService;
 
-        public UserService(IDatabaseQueryService dbQueryService, AbstractNotificationService notificationService, 
-                           string hostname, EmailService emailService)
+        public UserService(IDatabaseQueryService dbQueryService, AbstractNotificationService notificationService,
+            string hostname, EmailService emailService, AbstractAPIKeyService apiKeyService)
         {
             _dbQueryService = dbQueryService;
             _hostname = hostname;
             _emailService = emailService;
             _notificationService = notificationService;
+            _apiKeyService = apiKeyService;
         }
 
         public UserSettings GetUserSettings(int userId)
@@ -48,8 +50,7 @@ namespace BackEndServer.Services
                 createdUser.CreateAPIKey = userSettings.CreateAPIKey;
                 if (createdUser.CreateAPIKey)
                 {
-                    // TODO call APIKeyService.RegisterNewAPIKey(currentUserId)
-                    createdUser.APIKey = "ERROR";
+                    createdUser.APIKey = _apiKeyService.RegisterNewAPIKey(createdUser.UserId);
                 }
                 return createdUser;
             }
