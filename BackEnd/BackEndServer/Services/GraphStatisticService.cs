@@ -88,11 +88,11 @@ namespace BackEndServer.Services
             
             foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
             {
-                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("s"), perSecondStat.NumDetectedObjects.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("o"), perSecondStat.NumDetectedObjects.ToString()});
             }
             
-            perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("s"), 0.ToString()});
-            perSecondStatsFormattedStrings.Add(new []{GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("s"), 0.ToString()});
+            perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("o"), 0.ToString()});
+            perSecondStatsFormattedStrings.Add(new []{GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("o"), 0.ToString()});
             
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             graphStatistics.SelectedPeriod = pastPeriod;
@@ -140,7 +140,7 @@ namespace BackEndServer.Services
                 foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
                 {
                     string[] row = new string[perSecondStatsForEachCamera.Count+1];
-                    row[0] = perSecondStat.DateTime.ToString("s");
+                    row[0] = perSecondStat.DateTime.ToString("o");
                     row[i] = perSecondStat.NumDetectedObjects.ToString();
                     perSecondStatsFormattedStrings.Add(row);
                 }
@@ -148,8 +148,8 @@ namespace BackEndServer.Services
             
             string[] latestRow = new string[perSecondStatsForEachCamera.Count + 1];
             string[] earliestRow = new string[perSecondStatsForEachCamera.Count + 1];
-            latestRow[0] = GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("s");
-            earliestRow[0] = DateTime.Now.ToString("s");
+            latestRow[0] = GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("o");
+            earliestRow[0] = DateTime.Now.ToString("o");
             for (int i = 1; i <= perSecondStatsForEachCamera.Count; i++)
             {
                 latestRow[i] = 0.ToString();
