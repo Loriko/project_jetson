@@ -10,7 +10,7 @@ namespace BackEndServer.Services.HelperServices
         // Does not validate validity of the datetime, only the format.
         public static bool CheckIfSQLFormat(this string dateTimeString)
         {
-            Regex regex = new Regex(@"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$");
+            Regex regex = new Regex(@"^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}( [+-][0-9]{4})?$");
             return regex.IsMatch(dateTimeString);
         }
 
