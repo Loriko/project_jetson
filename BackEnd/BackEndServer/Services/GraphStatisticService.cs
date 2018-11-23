@@ -88,7 +88,7 @@ namespace BackEndServer.Services
             
             foreach (DatabasePerSecondStat perSecondStat in perSecondStats)
             {
-                perSecondStatsFormattedStrings.Add(new []{perSecondStat.DateTime.ToString("o"), perSecondStat.NumDetectedObjects.ToString()});
+                perSecondStatsFormattedStrings.Add(new []{DateTime.SpecifyKind(perSecondStat.DateTime, DateTimeKind.Local).ToString("o"), perSecondStat.NumDetectedObjects.ToString()});
             }
             
             perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("o"), 0.ToString()});
