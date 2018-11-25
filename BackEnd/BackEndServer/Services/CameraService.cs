@@ -296,13 +296,16 @@ namespace BackEndServer.Services
                     if (cameraDetails.ExistingRoomId <= 0)
                     {
                         DatabaseRoom dbRoom = new DatabaseRoom(cameraDetails);
+                        dbRoom.EscapeStringFields();
                         if (!_dbQueryService.PersistNewRoom(dbRoom))
                         {
                             return false;
                         }
                         cameraDetails.ExistingRoomId = _dbQueryService.GetRoomIdByLocationIdAndRoomName(dbRoom.LocationId, dbRoom.RoomName);
                     }
-                    return _dbQueryService.PersistExistingCameraByCameraKey(new DatabaseCamera(cameraDetails), cameraDetails.ImageDeleted);
+                    DatabaseCamera dbCamera = new DatabaseCamera(cameraDetails);
+                    dbCamera.EscapeStringFields();
+                    return _dbQueryService.PersistExistingCameraByCameraKey(dbCamera, cameraDetails.ImageDeleted);
                 }
             }
             catch (Exception e)
@@ -488,14 +491,17 @@ namespace BackEndServer.Services
 
         private bool DeletePerSecondStatsWithCameraId(int cameraId)
         {
-//            List<DatabasePerSecondStat> dbStats = _dbQueryService.GetPerSecondStatsForCamera(cameraId);
-//            foreach (DatabasePerSecondStat stat in dbStats)
-//            {
-//                DeletePerSecondStatJpgFrm(stat);
-//            }
-
             string cameraKey = _dbQueryService.GetCameraKeyFromId(cameraId);
-            Directory.Delete(DatabasePerSecondStat.FRM_JPG_FOLDER_PATH + cameraKey, true);
+            try
+            {
+                Directory.Delete(DatabasePerSecondStat.FRM_JPG_FOLDER_PATH + cameraKey, true);
+            }
+            catch (Exception)
+            {
+                //Will fail if no stat has been received
+                //+ unclaim operation shouldn't fail because of a directory problem
+            }
+
             return _dbQueryService.DeletePerSecondStatsWithCameraId(cameraId);
         }
 

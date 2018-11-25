@@ -1,6 +1,7 @@
 ﻿using BackEndServer.Models.ViewModels;
 using Castle.Core.Internal;
 using BackEndServer.Models.Enums;
+using MySql.Data.MySqlClient;
 
 namespace BackEndServer.Models.DBModels
 {
@@ -50,6 +51,20 @@ namespace BackEndServer.Models.DBModels
             Resolution = !cameraDetails.CustomResolution.IsNullOrEmpty() ? cameraDetails.CustomResolution : cameraDetails.Resolution;
             ImagePath = cameraDetails.SavedImagePath;
             RoomId = cameraDetails.ExistingRoomId;
+        }
+        
+        public void EscapeStringFields()
+        {
+            if (CameraKey != null)
+                CameraKey = MySqlHelper.EscapeString(CameraKey);
+            if (CameraName != null)
+                CameraName = MySqlHelper.EscapeString(CameraName);
+            if (Brand != null)
+                Brand = MySqlHelper.EscapeString(Brand);
+            if (Model != null)
+                Model = MySqlHelper.EscapeString(Model);
+            if (Resolution != null)
+                Resolution = MySqlHelper.EscapeString(Resolution);
         }
     }
 }

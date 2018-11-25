@@ -1,4 +1,5 @@
 ﻿using BackEndServer.Models.ViewModels;
+using MySql.Data.MySqlClient;
 
 namespace BackEndServer.Models.DBModels
 {
@@ -37,6 +38,20 @@ namespace BackEndServer.Models.DBModels
             City = locationDetails.City;
             State = locationDetails.State;
             Zip = locationDetails.Zip;
+        }
+        
+        public void EscapeStringFields()
+        {
+            if (LocationName != null)
+                LocationName = MySqlHelper.EscapeString(LocationName);
+            if (AddressLine != null)
+                AddressLine = MySqlHelper.EscapeString(AddressLine);
+            if (City != null)
+                City = MySqlHelper.EscapeString(City);
+            if (State != null)
+                State = MySqlHelper.EscapeString(State);
+            if (Zip != null)
+                Zip = MySqlHelper.EscapeString(Zip);
         }
     }
 }

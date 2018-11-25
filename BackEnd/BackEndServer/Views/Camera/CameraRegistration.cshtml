@@ -184,17 +184,19 @@
         }
     }).change();
 
-    $("#location_id").change(function() {
-        var locationId = $(this).val();
-        var url = "../location/LoadRoomSelector?locationId=" +
-            locationId +
-            "&selectorId=existing_room_id&selectorName=ExistingRoomId&required=true&selectedRoomId=" +
-            "@Model.CameraDetails.ExistingRoomId";
-        $('#existing_room_container').load(url, roomSelectorLoaded);
-        validateNewRoomName();
-        validateNewCameraName();
-    });
-
+    function setLocationChangeHandler() {
+        $("#location_id").change(function() {
+            var locationId = $(this).val();
+            var url = "../location/LoadRoomSelector?locationId=" +
+                locationId +
+                "&selectorId=existing_room_id&selectorName=ExistingRoomId&required=true&selectedRoomId=" +
+                "@Model.CameraDetails.ExistingRoomId";
+            $('#existing_room_container').load(url, roomSelectorLoaded);
+            validateNewRoomName();
+            validateNewCameraName();
+        });
+    };
+    
     @if (Model.CameraDetails.CameraKey.IsNullOrEmpty())
     {
         <text>
@@ -315,17 +317,19 @@
     }
 
     function locationSelectorLoaded() {
-        $("#location_id option:last").attr("selected", "selected");
         $('#location_id').material_select();
+        $("#location_id").change();
     }
 
     function handleLocationCreationFormSubmission(response) {
-        if (response === true) {
+        if (response !== false) {
+            //then response == location_id of newly created location
             Materialize.toast("Location successfully created!", 4000);
             $('#location-creation-modal').modal('close');
-            $('#location-selector-container').load("@Html.Raw(Url.Action("LoadLocationSelector", "Location",
-                                                        new {selectorId = "location_id", selectorName = "LocationId", required = true, selectedLocationId = Model.CameraDetails.LocationId}))", locationSelectorLoaded);
-            $("#location_id").change();
+            var url = "@Html.Raw(Url.Action("LoadLocationSelector", "Location",
+                new {selectorId = "location_id", selectorName = "LocationId", required = true, selectedLocationId = "_location_id_to_replace_"}))";
+            url = url.replace("_location_id_to_replace_", response);
+            $('#location-selector-container').load(url, locationSelectorLoaded);
         } else {
             Materialize.toast("Couldn't create location.", 4000);
         }

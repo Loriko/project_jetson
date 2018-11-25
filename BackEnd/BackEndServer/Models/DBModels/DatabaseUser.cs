@@ -1,5 +1,6 @@
 ﻿using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.HelperServices;
+using MySql.Data.MySqlClient;
 
 namespace BackEndServer.Models.DBModels
 {
@@ -43,5 +44,19 @@ namespace BackEndServer.Models.DBModels
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public bool IsAdministrator { get; set; }
+
+        public void EscapeStringFields()
+        {
+            if (Username != null)
+                Username = MySqlHelper.EscapeString(Username);
+            if (Password != null)
+                Password = MySqlHelper.EscapeString(Password);
+            if (EmailAddress != null)
+                EmailAddress = MySqlHelper.EscapeString(EmailAddress);
+            if (FirstName != null)
+                FirstName = MySqlHelper.EscapeString(FirstName);
+            if (LastName != null)
+                LastName = MySqlHelper.EscapeString(LastName);
+        }
     }
 }

@@ -2,6 +2,7 @@
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Services.AbstractServices;
+using MySql.Data.MySqlClient;
 
 namespace BackEndServer.Services
 {
@@ -27,9 +28,16 @@ namespace BackEndServer.Services
             return new LocationDetailsList(dbAddressList);
         }
 
+        public LocationInformationList GetLocationCreatedByUserInformationList(int userId)
+        {
+            List<DatabaseLocation> dbAddressList = _dbQueryService.GetLocationsCreatedByUser(userId);
+            return new LocationInformationList(dbAddressList);
+        }
+
         public bool SaveLocation(LocationDetails locationDetails)
         {
             DatabaseLocation dbLocation = new DatabaseLocation(locationDetails);
+            dbLocation.EscapeStringFields();
             if (dbLocation.LocationId > 0)
             {
                 return _dbQueryService.PersistExistingLocation(dbLocation);
@@ -59,7 +67,7 @@ namespace BackEndServer.Services
 
         public bool ValidateNewRoomName(int locationId, string roomName)
         {
-            return _dbQueryService.GetRoomIdByLocationIdAndRoomName(locationId, roomName) <= 0;
+            return _dbQueryService.GetRoomIdByLocationIdAndRoomName(locationId, MySqlHelper.EscapeString(roomName)) <= 0;
         }
 
         //Will only work if all associated cameras have been unclaimed/deleted
@@ -77,6 +85,12 @@ namespace BackEndServer.Services
         {
             List<DatabaseLocation> userLocations = _dbQueryService.GetLocationsCreatedByUser(userId);
             return userLocations.TrueForAll(location => location.LocationName.ToUpper() != locationName.ToUpper());
+        }
+
+        public int GetLocationIdByUserIdAndLocationName(int userId, string locationName)
+        {
+            DatabaseLocation dbLocation = _dbQueryService.GetLocationByUserIdAndLocationName(userId, locationName);
+            return dbLocation.LocationId;
         }
     }
 }

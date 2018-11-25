@@ -72,7 +72,7 @@
     }
     
     function handleLocationCreationFormSubmission(response) {
-        if (response === true) {
+        if (response !== false) {
             $('#location-creation-modal').modal('close');
             Materialize.toast("Location successfully created!", 4000);
             $('#body-container').load("@Url.Action("ManageLocations", "Location")");

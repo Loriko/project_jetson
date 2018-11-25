@@ -1,6 +1,7 @@
 import unittest
 from performance_tests_support import run_cameras_in_parallel
 from pyunitreport import HTMLTestRunner
+import logging
 
 ACCEPTED_ERROR_RATE_THRESHOLD = 0.03
 
@@ -68,4 +69,5 @@ class RandomBasedCameraEmulatorTests(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    logging.basicConfig(filename='./jetson_stats_sender.log',level=logging.INFO)
     unittest.main(testRunner=HTMLTestRunner(output=""))

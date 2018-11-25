@@ -3,7 +3,7 @@ from jetson_stats_sender import http_service
 import datetime
 import time
 import random
-
+import pytz
 
 class CameraEmulator:
     def __init__(self, camera_key, api_key, destination_address, delay_between_stats_sec):
@@ -18,7 +18,7 @@ class CameraEmulator:
         return (self.stats_sent - self.stats_acked) / float(self.stats_sent) if self.stats_sent != 0 else 0.0
 
     def start(self):
-        generated_random_per_second_stat = PerSecondStats(self.camera_key, datetime.datetime.now(), 0, False)
+        generated_random_per_second_stat = PerSecondStats(datetime.datetime.now(tz=pytz.utc), 0, self.camera_key)
         self.send_per_second_stat(generated_random_per_second_stat)
         while not self.stopped:
             time.sleep(self.delay_between_stats_sec)
@@ -42,4 +42,4 @@ def generate_random_per_second_stat(previous_per_second_stat):
     new_people_count = previous_people_count + people_count_variation
     if new_people_count < 0:
         new_people_count = 0
-    return PerSecondStats(previous_per_second_stat.camera_key, datetime.datetime.now(), new_people_count, False)
+    return PerSecondStats(datetime.datetime.now(tz=pytz.utc), new_people_count, previous_per_second_stat.camera_key)

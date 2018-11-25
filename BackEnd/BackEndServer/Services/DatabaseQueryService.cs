@@ -383,7 +383,7 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT {DatabaseCamera.CAMERA_ID_LABEL} FROM {DatabaseCamera.TABLE_NAME} "
-                    + $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{cameraKey}' LIMIT 1";
+                    + $"WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{MySqlHelper.EscapeString(cameraKey)}' LIMIT 1";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -406,7 +406,7 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT {DatabaseAPIKey.API_KEY_ID_LABEL} FROM {DatabaseAPIKey.TABLE_NAME} "
-                               + $"WHERE {DatabaseAPIKey.API_KEY_LABEL} = '{apiKey}' LIMIT 1;";
+                               + $"WHERE {DatabaseAPIKey.API_KEY_LABEL} = '{MySqlHelper.EscapeString(apiKey)}' LIMIT 1;";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -454,7 +454,7 @@ namespace BackEndServer.Services
             
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{cameraKey}'";
+                string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL} = '{MySqlHelper.EscapeString(cameraKey)}'";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -479,7 +479,7 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT * FROM {DatabaseCamera.TABLE_NAME} " +
-                               $"WHERE UPPER({DatabaseCamera.CAMERA_NAME_LABEL}) = '{cameraName.ToUpper()}' " +
+                               $"WHERE UPPER({DatabaseCamera.CAMERA_NAME_LABEL}) = '{MySqlHelper.EscapeString(cameraName).ToUpper()}' " +
                                $"AND {DatabaseCamera.LOCATION_ID_LABEL} = {locationId};";
                 
                 conn.Open();
@@ -682,6 +682,38 @@ namespace BackEndServer.Services
             return users;
         }
 
+        public DatabaseLocation GetLocationByUserIdAndLocationName(int userId, string locationName)
+        {
+            DatabaseLocation location = new DatabaseLocation();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = $"SELECT * FROM {DatabaseLocation.TABLE_NAME} " +
+                               $"WHERE {DatabaseLocation.USER_ID_LABEL} = {userId} " +
+                               $"AND {DatabaseLocation.LOCATION_NAME_LABEL} = '{MySqlHelper.EscapeString(locationName)}';";
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        location = new DatabaseLocation
+                        {
+                            LocationId = Convert.ToInt32(reader[DatabaseLocation.LOCATION_ID_LABEL]),
+                            UserId = Convert.ToInt32(reader[DatabaseLocation.USER_ID_LABEL]),
+                            LocationName = Convert.ToString(reader[DatabaseLocation.LOCATION_NAME_LABEL]),
+                            AddressLine = Convert.ToString(reader[DatabaseLocation.ADDRESS_LINE_LABEL]),
+                            City = Convert.ToString(reader[DatabaseLocation.CITY_LABEL]),
+                            State = Convert.ToString(reader[DatabaseLocation.STATE_LABEL]),
+                            Zip = Convert.ToString(reader[DatabaseLocation.ZIP_LABEL])
+                        };
+                    }
+                }
+            }
+            return location;
+        }
+
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {
@@ -742,8 +774,8 @@ namespace BackEndServer.Services
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} " +
-                               $"WHERE UPPER({DatabaseUser.USERNAME_LABEL}) = '{username.ToUpper()}' " +
-                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1";
+                               $"WHERE UPPER({DatabaseUser.USERNAME_LABEL}) = '{MySqlHelper.EscapeString(username).ToUpper()}' " +
+                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{MySqlHelper.EscapeString(password)}' LIMIT 1;";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -764,7 +796,7 @@ namespace BackEndServer.Services
             int? idToReturn = null;
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT id FROM {DatabaseUser.TABLE_NAME} WHERE username = '{username}';";
+                string query = $"SELECT id FROM {DatabaseUser.TABLE_NAME} WHERE username = '{MySqlHelper.EscapeString(username)}';";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -825,7 +857,7 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string command = $"DELETE FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL}='{cameraKey}'";
+                string command = $"DELETE FROM {DatabaseCamera.TABLE_NAME} WHERE {DatabaseCamera.CAMERA_KEY_LABEL}='{MySqlHelper.EscapeString(cameraKey)}'";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(command, conn);
@@ -1826,7 +1858,7 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USERNAME_LABEL} = '{username}';";
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USERNAME_LABEL} = '{MySqlHelper.EscapeString(username)}';";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1859,7 +1891,7 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{email}';";
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{MySqlHelper.EscapeString(email)}';";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1892,7 +1924,7 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{token}';";
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{MySqlHelper.EscapeString(token)}';";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1921,13 +1953,19 @@ namespace BackEndServer.Services
 
         public bool PersistPasswordResetToken(string passwordResetToken, string emailAddress)
         {
+            string escapedToken = null;
+            if (passwordResetToken != null)
+            {
+                escapedToken = MySqlHelper.EscapeString(String.Copy(passwordResetToken));
+            }
+            
             using (MySqlConnection conn = GetConnection())
             {
                 //We use formatNullableString for non nullable strings so that
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
-                               $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = {formatNullableString(passwordResetToken)} " +
-                               $"WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{emailAddress}';";
+                               $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = {formatNullableString(escapedToken)} " +
+                               $"WHERE {DatabaseUser.EMAIL_ADDRESS_LABEL} = '{MySqlHelper.EscapeString(emailAddress)}';";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1948,7 +1986,7 @@ namespace BackEndServer.Services
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
                                $"{DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = NULL " +
-                               $"WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{resetToken}';";
+                               $"WHERE {DatabaseUser.PASSWORD_RESET_TOKEN_LABEL} = '{MySqlHelper.EscapeString(resetToken)}';";
 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);

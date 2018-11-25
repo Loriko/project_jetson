@@ -54,7 +54,10 @@ namespace BackEndServer.Controllers.FrontEndControllers
             if (currentUserId != null)
             {
                 locationDetails.UserId = currentUserId.Value;
-                return Json(LocationService.SaveLocation(locationDetails));
+                if (LocationService.SaveLocation(locationDetails))
+                {
+                    return Json(LocationService.GetLocationIdByUserIdAndLocationName(locationDetails.UserId, locationDetails.LocationName));
+                }
             }
 
             return Json(false);

@@ -1,6 +1,7 @@
 ﻿using System;
 using BackEndServer.Models.Enums;
 using BackEndServer.Models.ViewModels;
+using MySql.Data.MySqlClient;
 
 namespace BackEndServer.Models.DBModels
 {
@@ -59,6 +60,16 @@ namespace BackEndServer.Models.DBModels
             {
                 SnoozedUntil = cameraDetails.SnoozedUntil;
             }
+        }
+        
+        public void EscapeStringFields()
+        {
+            if (AlertName != null)
+                AlertName = MySqlHelper.EscapeString(AlertName);
+            if (ContactMethod != null)
+                ContactMethod = MySqlHelper.EscapeString(ContactMethod);
+            if (TriggerOperator != null)
+                TriggerOperator = MySqlHelper.EscapeString(TriggerOperator);
         }
     }
 }

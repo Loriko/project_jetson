@@ -1,5 +1,6 @@
 ﻿using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndServer.ViewComponents
@@ -13,7 +14,12 @@ namespace BackEndServer.ViewComponents
         
         public IViewComponentResult Invoke(LocationSelectorInfo selectorInfo)
         {
-            selectorInfo.Locations = LocationService.GetAvailableLocations();
+            int? currentUsedId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUsedId == null)
+            {
+                return Content(string.Empty);
+            }
+            selectorInfo.Locations = LocationService.GetLocationCreatedByUserInformationList(currentUsedId.Value);
             return View("LocationSelector", selectorInfo);
         }
     }

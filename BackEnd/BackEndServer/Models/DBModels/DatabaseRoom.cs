@@ -1,4 +1,5 @@
 ﻿using BackEndServer.Models.ViewModels;
+using MySql.Data.MySqlClient;
 
 namespace BackEndServer.Models.DBModels
 {
@@ -30,6 +31,12 @@ namespace BackEndServer.Models.DBModels
             RoomId = roomInfo.RoomId;
             LocationId = roomInfo.LocationId;
             RoomName = roomInfo.RoomName;
+        }
+        
+        public void EscapeStringFields()
+        {
+            if (RoomName != null)
+                RoomName = MySqlHelper.EscapeString(RoomName);
         }
     }
 }

@@ -32,7 +32,9 @@ namespace BackEndServer.Services
 
         public bool ModifyUser(UserSettings userSettings)
         {
-            return _dbQueryService.PersistExistingUser(new DatabaseUser(userSettings));
+            DatabaseUser dbUser = new DatabaseUser(userSettings);
+            dbUser.EscapeStringFields();
+            return _dbQueryService.PersistExistingUser(dbUser);
         }
 
         public bool ModifyPassword(UserSettings userSettings)
@@ -42,7 +44,9 @@ namespace BackEndServer.Services
 
         public UserSettings CreateAndReturnUser(UserSettings userSettings)
         {
-            if (_dbQueryService.PersistNewUser(new DatabaseUser(userSettings)))
+            DatabaseUser dbUser = new DatabaseUser(userSettings);
+            dbUser.EscapeStringFields();
+            if (_dbQueryService.PersistNewUser(dbUser))
             {
                 UserSettings createdUser = GetUserByUsername(userSettings.Username);
                 createdUser.CreateAPIKey = userSettings.CreateAPIKey;

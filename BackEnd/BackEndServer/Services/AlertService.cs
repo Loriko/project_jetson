@@ -25,13 +25,15 @@ namespace BackEndServer.Services
 
         public bool SaveAlert(AlertDetails alertDetails)
         {
+            DatabaseAlert dbAlert = new DatabaseAlert(alertDetails);
+            dbAlert.EscapeStringFields();
             if (alertDetails.AlertId != 0)
             {
-                return _dbQueryService.PersistExistingAlert(new DatabaseAlert(alertDetails));
+                return _dbQueryService.PersistExistingAlert(dbAlert);
             }
             else
             {
-                return _dbQueryService.PersistNewAlert(new DatabaseAlert(alertDetails));
+                return _dbQueryService.PersistNewAlert(dbAlert);
             }
         }
 
