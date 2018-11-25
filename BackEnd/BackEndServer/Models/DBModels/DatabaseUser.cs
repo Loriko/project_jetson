@@ -1,4 +1,5 @@
 ﻿using BackEndServer.Models.ViewModels;
+using BackEndServer.Services.HelperServices;
 
 namespace BackEndServer.Models.DBModels
 {
@@ -10,6 +11,7 @@ namespace BackEndServer.Models.DBModels
         public static readonly string USER_ID_LABEL = "id";
         public static readonly string USERNAME_LABEL = "username";
         public static readonly string PASSWORD_LABEL = "password";
+        public static readonly string SALT_LABEL = "salt";
         public static readonly string EMAIL_ADDRESS_LABEL = "email_address";
         public static readonly string FIRST_NAME_LABEL = "first_name";
         public static readonly string LAST_NAME_LABEL = "last_name";
@@ -27,7 +29,8 @@ namespace BackEndServer.Models.DBModels
             EmailAddress = userSettings.EmailAddress;
             FirstName = userSettings.FirstName;
             LastName = userSettings.LastName;
-            Password = userSettings.Password;
+            Salt = UserPasswordTools.GenerateRandomPasswordSalt();
+            Password = UserPasswordTools.HashAndSaltPassword(userSettings.Password, this.Salt);
             IsAdministrator = userSettings.IsAdministrator;
         }
 
@@ -35,6 +38,7 @@ namespace BackEndServer.Models.DBModels
         public int UserId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
+        public string Salt { get; set; }
         public string EmailAddress { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }

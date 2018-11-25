@@ -14,7 +14,8 @@ DROP TABLE IF EXISTS `jetson`.`user` ;
 CREATE TABLE IF NOT EXISTS `jetson`.`user` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(45) NOT NULL,
+  `password` CHAR(32) NOT NULL,
+  `salt` VARCHAR(12) NOT NULL,
   `email_address` VARCHAR(45) NULL,
   `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,

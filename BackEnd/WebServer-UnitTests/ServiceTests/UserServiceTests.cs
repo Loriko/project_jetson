@@ -13,7 +13,7 @@ namespace WebServer_UnitTests.ServiceTests
     [TestFixture]
     class UserServiceTests
     {
-
+        // TODO: Update to use Salted and Hashed password.
         [Test]
         public void authenticateUserTest()
         {
