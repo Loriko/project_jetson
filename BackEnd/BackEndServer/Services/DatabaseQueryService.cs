@@ -736,13 +736,14 @@ namespace BackEndServer.Services
             return cameraList;
         }
         
+        // TODO: REMOVE THIS METHOD from here and from the Abstract Service.
         public bool IsPasswordValidForUser(string username, string password)
         {
             using (MySqlConnection conn = GetConnection())
             {
                 string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} " +
                                $"WHERE UPPER({DatabaseUser.USERNAME_LABEL}) = '{username.ToUpper()}' " +
-                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1;";
+                               $"AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
@@ -1806,6 +1807,7 @@ namespace BackEndServer.Services
                             UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
                             Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            Salt = Convert.ToString(reader[DatabaseUser.SALT_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
                             LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),

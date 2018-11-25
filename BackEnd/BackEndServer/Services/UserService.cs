@@ -3,9 +3,6 @@ using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
 using System.Collections.Generic;
 using BackEndServer.Services.HelperServices;
-using System.Security.Cryptography;
-using System;
-using System.Text;
 
 namespace BackEndServer.Services
 {
@@ -37,6 +34,7 @@ namespace BackEndServer.Services
         {
             return _dbQueryService.PersistExistingUser(new DatabaseUser(userSettings));
         }
+
         public bool ModifyPassword(UserSettings userSettings)
         {
             return _dbQueryService.PersistPasswordChange(new DatabaseUser(userSettings));
@@ -62,6 +60,7 @@ namespace BackEndServer.Services
         {
             return new UserSettings(_dbQueryService.GetUserByUsername(username));
         }
+
         public UserSettings GetUserByEmailAddress(string email)
         {
             DatabaseUser databaseUser = _dbQueryService.GetUserByEmailAddress(email);
@@ -74,6 +73,7 @@ namespace BackEndServer.Services
                 return new UserSettings(databaseUser);
             }
         }
+
         public bool ResetPassword(PasswordReset passwordReset)
         {
             DatabaseUser databaseUser = _dbQueryService.GetUserByPasswordResetToken(passwordReset.Token);
@@ -81,7 +81,10 @@ namespace BackEndServer.Services
             {
                 return false;
             }
-            databaseUser.Password = passwordReset.Password;
+
+            databaseUser.Salt = UserPasswordTools.GenerateRandomPasswordSalt();
+            databaseUser.Password = UserPasswordTools.HashAndSaltPassword(passwordReset.Password, databaseUser.Salt);
+
             if (_dbQueryService.PersistPasswordChange(databaseUser))
             {
                 _dbQueryService.PersistRemovePasswordResetToken(passwordReset.Token);
@@ -120,14 +123,17 @@ namespace BackEndServer.Services
             string emailBody = GetEmailBody(passwordResetLink);
             return _emailService.SendEmail(passwordResetLink.Email, emailSubject, emailBody);
         }
+
         private string GetEmailBody(PasswordResetLink passwordResetLink)
         {
             string emailBody =
                 RazorEngineWrapper.RunCompile("Views/User", "PasswordResetEmailBodyTemplate.cshtml", passwordResetLink);
             return emailBody;
         }
+
         private string GeneratePasswordResetToken()
         {
+            /*
             int length = 64;
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
             StringBuilder res = new StringBuilder();
@@ -142,8 +148,10 @@ namespace BackEndServer.Services
                     res.Append(valid[(int)(num % (uint)valid.Length)]);
                 }
             }
-
             return res.ToString();
+            */
+
+            return StringGenerator.GenerateRandomString(64,64);
         }
 
         public bool IsUserAdministrator(int userId)
@@ -182,13 +190,13 @@ namespace BackEndServer.Services
         public List<UserSettings> GetUserSettingsForCamera(int cameraId)
         {
             List<DatabaseUser> dbUserList = _dbQueryService.GetUsersWithCameraViewAccess(cameraId);
-            List<UserSettings> userSettingses = new List<UserSettings>();
+            List<UserSettings> userSettings = new List<UserSettings>();
             foreach (DatabaseUser dbUser in dbUserList)
             {
-                userSettingses.Add(new UserSettings(dbUser));
+                userSettings.Add(new UserSettings(dbUser));
             }
 
-            return userSettingses;
+            return userSettings;
         }
     }
 }
