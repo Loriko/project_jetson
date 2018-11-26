@@ -37,9 +37,22 @@ namespace BackEndServer.Services
             return _dbQueryService.PersistExistingUser(dbUser);
         }
 
-        public bool ModifyPassword(UserSettings userSettings)
+        public bool ModifyPassword(UserPassword userPassword)
         {
-            return _dbQueryService.PersistPasswordChange(new DatabaseUser(userSettings));
+            if (userPassword.UserId != null)
+            {
+                DatabaseUser dbUser = _dbQueryService.GetUserById(userPassword.UserId.Value);
+                string saltedHashedPasswordToCheck = 
+                    UserPasswordTools.HashAndSaltPassword(userPassword.OldPassword, dbUser.Salt);
+                // If the salted and hashed passwords are identical, then we have a match.
+                if (saltedHashedPasswordToCheck == dbUser.Password)
+                {
+                    dbUser.Password = UserPasswordTools.HashAndSaltPassword(userPassword.NewPassword, dbUser.Salt);
+                    return _dbQueryService.PersistPasswordChange(dbUser);
+                }
+            }
+
+            return false;
         }
 
         public UserSettings CreateAndReturnUser(UserSettings userSettings)
@@ -94,11 +107,8 @@ namespace BackEndServer.Services
                 _dbQueryService.PersistRemovePasswordResetToken(passwordReset.Token);
                 return true;
             }
-            else
-            {
-                return false;
-            }
 
+            return false;
         }
         public bool SendResetPasswordLink(string email)
         {

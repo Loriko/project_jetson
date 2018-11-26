@@ -49,8 +49,8 @@ namespace BackEndServer.Services
             // Define the bulk insert query without any values to insert.
             string bulkInsertCommand = $"INSERT INTO {DatabasePerSecondStat.TABLE_NAME} "
                 + $"({DatabasePerSecondStat.CAMERA_ID_LABEL},{DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL}, "
-                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL},"
-                + $"{DatabasePerSecondStat.FRM_JPG_PATH_LABEL}) VALUES ";
+                + $"{DatabasePerSecondStat.DATE_TIME_LABEL},{DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL}," 
+                + $"{DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL},{DatabasePerSecondStat.FRM_JPG_PATH_LABEL}) VALUES ";
 
             // Append the values one by one to the bulk insert query.
             DatabasePerSecondStat lastStat = distinctStats.Last();
@@ -65,6 +65,7 @@ namespace BackEndServer.Services
                 
                 bulkInsertCommand += $"({stat.CameraId},{stat.NumDetectedObjects},"
                     + $"'{stat.DateTime.ToMySqlDateTimeString()}',"
+                    + $"'{stat.DateTimeReceived.ToMySqlDateTimeString()}',"
                     + $"'{hasImageString}',{formatNullableString(stat.FrameJpgPath)})";
 
                 if (stat != lastStat)
@@ -1288,16 +1289,16 @@ namespace BackEndServer.Services
                                $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s')" +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s')";
+                               $"AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s')" +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s')";
                 
                 if (alert.SnoozedUntil != null)
                 {
-                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{alert.SnoozedUntil.Value}', '%m/%d/%Y %H:%i:%s')";
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} >= STR_TO_DATE('{alert.SnoozedUntil.Value}', '%m/%d/%Y %H:%i:%s')";
                 }
                 if (alert.DisabledUntil != null)
                 {
-                    query += $" AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{alert.DisabledUntil.Value}', '%m/%d/%Y %H:%i:%s')";
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} >= STR_TO_DATE('{alert.DisabledUntil.Value}', '%m/%d/%Y %H:%i:%s')";
                 }
                 if (!alert.AlwaysActive)
                 {
@@ -1316,6 +1317,7 @@ namespace BackEndServer.Services
                         {
                             PerSecondStatId = Convert.ToInt32(reader[DatabasePerSecondStat.PER_SECOND_STAT_ID_LABEL]),
                             DateTime = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_LABEL]),
+                            DateTimeReceived = Convert.ToDateTime(reader[DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL]),
                             CameraId = Convert.ToInt32(reader[DatabasePerSecondStat.CAMERA_ID_LABEL]),
                             NumDetectedObjects = Convert.ToInt32(reader[DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL]),
                             HasSavedImage = Convert.ToBoolean(Convert.ToInt16(reader[DatabasePerSecondStat.HAS_SAVED_IMAGE_LABEL])),
@@ -1807,6 +1809,7 @@ namespace BackEndServer.Services
                             UserId = Convert.ToInt32(reader[DatabaseUser.USER_ID_LABEL]),
                             Username = Convert.ToString(reader[DatabaseUser.USERNAME_LABEL]),
                             Password = Convert.ToString(reader[DatabaseUser.PASSWORD_LABEL]),
+                            Salt = Convert.ToString(reader[DatabaseUser.SALT_LABEL]),
                             EmailAddress = Convert.ToString(reader[DatabaseUser.EMAIL_ADDRESS_LABEL]),
                             FirstName = Convert.ToString(reader[DatabaseUser.FIRST_NAME_LABEL]),
                             LastName = Convert.ToString(reader[DatabaseUser.LAST_NAME_LABEL]),
@@ -2031,7 +2034,8 @@ namespace BackEndServer.Services
                 //We use formatNullableString for non nullable strings so that
                 //we don't accidently insert an empty string and instead cause an SQL exception
                 string query = $"UPDATE {DatabaseUser.TABLE_NAME} SET " +
-                               $"{DatabaseUser.PASSWORD_LABEL} = {formatNullableString(databaseUser.Password)} " +
+                               $"{DatabaseUser.PASSWORD_LABEL} = '{databaseUser.Password}', " +
+                               $"{DatabaseUser.SALT_LABEL} = '{databaseUser.Salt}' " +
                                $"WHERE {DatabaseUser.USER_ID_LABEL} = {databaseUser.UserId};";
 
                 conn.Open();

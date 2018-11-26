@@ -103,6 +103,7 @@ CREATE TABLE IF NOT EXISTS `jetson`.`per_second_stat` (
   `camera_id` INT(5) UNSIGNED NOT NULL,
   `num_detected_object` INT(5) UNSIGNED NOT NULL,
   `date_time` DATETIME NOT NULL,
+  `date_time_received` DATETIME NOT NULL,
   `has_saved_image` TINYINT UNSIGNED NOT NULL DEFAULT 0,
   `per_hour_stat_id` INT(8) UNSIGNED NULL DEFAULT NULL,
   `frm_jpg_path` VARCHAR(150) NULL DEFAULT NULL,

@@ -130,7 +130,8 @@ namespace BackEndServer.Services
                     dbPerSecondStat.HasSavedImage = stat.HasSavedImage;
                     dbPerSecondStat.PerHourStatId = null;
                     dbPerSecondStat.NumDetectedObjects = stat.NumTrackedPeople;
-
+                    dbPerSecondStat.DateTimeReceived = DateTime.Now;
+                    
                     // If PerSecondStat has a key frame.
                     if (stat.HasSavedImage && String.IsNullOrWhiteSpace(stat.FrameAsJpg) == false)
                     {

@@ -14,7 +14,8 @@ namespace BackEndServer.Models.ViewModels
         public bool CreateAPIKey { get; set; }
         public string APIKey { get; set; }
         public bool IsAdministrator { get; set; }
-
+        public string Salt { get; set; }
+        
         public UserSettings()
         {
         }
@@ -28,6 +29,7 @@ namespace BackEndServer.Models.ViewModels
             LastName = dbUser.LastName;
             Password = dbUser.Password;
             IsAdministrator = dbUser.IsAdministrator;
+            Salt = dbUser.Salt;
         }
     }
 }

@@ -98,16 +98,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public JsonResult ChangePassword(UserPassword userPassword)
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
-            UserSettings userSettings = UserService.GetUserSettings(currentUserId.Value);
-            if(userSettings.Password != userPassword.OldPassword)
-            {
-                return Json(false);
-            }
             if (currentUserId != null)
             {
-                userSettings.Password = userPassword.NewPassword;
-                return Json(UserService.ModifyPassword(userSettings));
+                userPassword.UserId = currentUserId;
+                return Json(UserService.ModifyPassword(userPassword));
             }
+            
             return Json(false);
         }
 
