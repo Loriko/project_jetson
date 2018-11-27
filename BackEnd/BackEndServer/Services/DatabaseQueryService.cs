@@ -2062,11 +2062,12 @@ namespace BackEndServer.Services
                                $"{DatabaseUser.LAST_NAME_LABEL}," +
                                $"{DatabaseUser.EMAIL_ADDRESS_LABEL}," +
                                $"{DatabaseUser.PASSWORD_LABEL}," +
+                               $"{DatabaseUser.SALT_LABEL}," +
                                $"{DatabaseUser.IS_ADMINISTRATOR_LABEL}" +
                                $") VALUES "+
                                $"('{databaseUser.Username}', {formatNullableString(databaseUser.FirstName)}, " +
                                $"{formatNullableString(databaseUser.LastName)}, {formatNullableString(databaseUser.EmailAddress)}, " +
-                               $"'{databaseUser.Password}', {(databaseUser.IsAdministrator ? "1" : "0")});";
+                               $"'{databaseUser.Password}', '{databaseUser.Salt}', {(databaseUser.IsAdministrator ? "1" : "0")});";
 
                 conn.Open();     
                 MySqlCommand cmd = new MySqlCommand(query, conn);

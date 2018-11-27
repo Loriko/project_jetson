@@ -59,6 +59,8 @@ namespace BackEndServer.Services
         public UserSettings CreateAndReturnUser(UserSettings userSettings)
         {
             DatabaseUser dbUser = new DatabaseUser(userSettings);
+            dbUser.Salt = UserPasswordTools.GenerateRandomPasswordSalt();
+            dbUser.Password = UserPasswordTools.HashAndSaltPassword(userSettings.Password, dbUser.Salt);
             dbUser.EscapeStringFields();
             if (_dbQueryService.PersistNewUser(dbUser))
             {
