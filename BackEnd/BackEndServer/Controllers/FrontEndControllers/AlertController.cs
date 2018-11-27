@@ -36,7 +36,6 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 ExistingAlertsByCameraId = existingAlertsByCameraId
             };
             //Check if it's an ajax request for page reloading, meaning we don't want the view + layout, just the view
-            //TODO: Create a controller extension class that has a IsAjaxRequest method
             if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
             {
                 return PartialView("Dashboard", info);
@@ -64,12 +63,13 @@ namespace BackEndServer.Controllers.FrontEndControllers
         
         public IActionResult DeleteAlert(int alertId)
         {
-            if (AlertService.DeleteAlert(alertId) == false)
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
             {
-                return Json(false);
+                return Json(AlertService.DeleteAlert(alertId));
             }
 
-            return RedirectToAction("Index", "Alert");
+            return Json(false);
         }
 
         [HttpPost]
@@ -81,6 +81,17 @@ namespace BackEndServer.Controllers.FrontEndControllers
         public IActionResult EnableAlert(int alertId)
         {
             return Json(AlertService.EnableAlert(alertId));
+        }
+
+        public JsonResult ValidateNewAlertName(string alertName, int cameraId)
+        {
+            int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
+            if (currentUserId != null)
+            {
+                return Json(AlertService.ValidateNewAlertName(alertName, cameraId));
+            }
+
+            return Json(false);
         }
     }
 }

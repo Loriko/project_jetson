@@ -47,6 +47,7 @@ namespace BackEndServer.Services
                 // If the salted and hashed passwords are identical, then we have a match.
                 if (saltedHashedPasswordToCheck == dbUser.Password)
                 {
+                    dbUser.Salt = UserPasswordTools.GenerateRandomPasswordSalt();
                     dbUser.Password = UserPasswordTools.HashAndSaltPassword(userPassword.NewPassword, dbUser.Salt);
                     return _dbQueryService.PersistPasswordChange(dbUser);
                 }

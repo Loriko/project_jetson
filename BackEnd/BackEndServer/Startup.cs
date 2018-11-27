@@ -64,7 +64,10 @@ namespace BackEndServer
             AbstractNotificationService notificationService = new NotificationService(dbQueryService);
             AbstractAPIKeyService apiKeyService = new APIKeyService(dbQueryService);
             AbstractUserService userService = new UserService(dbQueryService,notificationService,Configuration.GetSection("WebServiceConfiguration")["Hostname"],emailService,apiKeyService);
-            AlertSummaryService alertSummaryService = new AlertSummaryService(alertService);
+            
+            IConfigurationSection alertSummaryConfig = Configuration.GetSection("AlertSummaryServiceConfiguration");
+            bool sendFramesAsJpg = alertMonitoringConfig != null && Convert.ToBoolean(alertSummaryConfig["SendFramesAsJpg"]);
+            AlertSummaryService alertSummaryService = new AlertSummaryService(alertService, sendFramesAsJpg);
 
             services.Add(new ServiceDescriptor(typeof(AbstractAuthenticationService), authenticationService));
             services.Add(new ServiceDescriptor(typeof(AbstractCameraService), cameraService));

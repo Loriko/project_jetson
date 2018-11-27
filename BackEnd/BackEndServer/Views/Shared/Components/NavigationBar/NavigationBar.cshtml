@@ -9,6 +9,28 @@
     <li><a asp-controller="User" asp-action="BeginUserSettingsModification" id="modifyPersonalSettings">Modify Personal Settings</a></li>
     <li><a asp-controller="Home" asp-action="SignOut" id="signOut">Sign Out</a></li>
 </ul>
+<ul id="manageDropDown" class="dropdown-content">
+    <li>
+        <a asp-controller="Location" asp-action="ManageLocations" class="nav-link" id="manageLocation">Manage Locations</a>
+    </li>
+    <li>
+        <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
+    </li>
+    <li>
+        <a asp-controller="Alert" asp-action="Index" class="nav-link" id="alerts">Manage Alerts</a>
+    </li>
+</ul>
+<ul id="manageDropDown_mobile" class="dropdown-content">
+    <li>
+        <a asp-controller="Location" asp-action="ManageLocations" class="nav-link" id="manageLocation">Manage Locations</a>
+    </li>
+    <li>
+        <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
+    </li>
+    <li>
+        <a asp-controller="Alert" asp-action="Index" class="nav-link" id="alerts">Manage Alerts</a>
+    </li>
+</ul>
 @if (Model.IsAdministrator)
 {
     <ul id="adminDropDown" class="dropdown-content">
@@ -34,15 +56,7 @@
         @if (Model.SignedIn)
         {
             <ul class="right hide-on-med-and-down">
-                <li>
-                    <a asp-controller="Location" asp-action="ManageLocations" class="nav-link" id="manageLocation">Manage Locations</a>
-                </li>
-                <li>
-                    <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
-                </li>
-                <li>
-                    <a asp-controller="Alert" asp-action="Index" class="nav-link" id="alerts">Manage Alerts</a>
-                </li>
+                <li><a class="dropdown-button" href="#" data-activates="manageDropDown" id="manage">Manage<i class="material-icons right" id="manageDrop">arrow_drop_down</i></a></li>
                 @if (Model.IsAdministrator)
                 {
                     <li><a class="dropdown-button" href="#" data-activates="adminDropDown" id="admin">Admin Center<i class="material-icons right" id="adminDrop">arrow_drop_down</i></a></li>
@@ -91,15 +105,7 @@
             
             <a href="#" data-activates="mobile_nav" class="button-collapse right"><i class="material-icons">menu</i></a>
             <ul class="side-nav" id="mobile_nav">
-                <li>
-                    <a asp-controller="Location" asp-action="ManageLocations" class="nav-link" id="manageLocation">Manage Locations</a>
-                </li>
-                <li>
-                    <a asp-controller="Camera" asp-action="LoadUserCamera" class="nav-link" id="manageCamera">Manage Cameras</a>
-                </li>
-                <li>
-                    <a asp-controller="Alert" asp-action="Index" class="nav-link" id="alerts">Manage Alerts</a>
-                </li>
+                <li><a class="dropdown-button" href="#" data-activates="manageDropDown_mobile" id="manage">Manage<i class="material-icons right" id="manageDrop">arrow_drop_down</i></a></li>
                 @if (Model.IsAdministrator)
                 {
                     <li><a class="dropdown-button" href="#" data-activates="adminDropDown_mobile" id="admin">Admin Center<i class="material-icons right" id="adminDrop">arrow_drop_down</i></a></li>

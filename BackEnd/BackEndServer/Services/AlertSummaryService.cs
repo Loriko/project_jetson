@@ -13,13 +13,17 @@ namespace BackEndServer.Services
         private object SendAlertSummaryLock { get; set; }
         private static readonly int TIME_BETWEEN_SUMMARIES_MS = 30000;
         
-        public AlertSummaryService(AbstractAlertService alertService)
+        public AlertSummaryService(AbstractAlertService alertService, bool sendFramesAsJpg)
         {
             _alertService = alertService;
             SendAlertSummary = false;
             SendAlertSummaryLock = new object();
-            Thread alertSummaryBoolUpdateThread = new Thread(TurnOnSendAlertSummaryPeriodically);
-            alertSummaryBoolUpdateThread.Start();
+            //This being disabled will prevent images from being sent to the application by the Image Recognition system
+            if (sendFramesAsJpg)
+            {
+                Thread alertSummaryBoolUpdateThread = new Thread(TurnOnSendAlertSummaryPeriodically);
+                alertSummaryBoolUpdateThread.Start();
+            }
         }
 
         private void TurnOnSendAlertSummaryPeriodically()

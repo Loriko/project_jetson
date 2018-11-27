@@ -27,6 +27,12 @@ namespace BackEndServer.Controllers.FrontEndControllers
                 return RedirectToAction("LocationSelection", "Location");
             }
             AuthenticationInformation authenticationModel = new AuthenticationInformation();
+            
+            if (Request.Headers["x-requested-with"]=="XMLHttpRequest")
+            {
+                return PartialView(authenticationModel);
+            }
+            
             return View(authenticationModel);
         }
 

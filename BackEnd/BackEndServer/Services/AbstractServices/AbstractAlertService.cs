@@ -13,5 +13,6 @@ namespace BackEndServer.Services.AbstractServices
         bool DisableAlert(AlertDisablingInformation alertDisablingInformation);
         bool EnableAlert(int alertId);
         List<AlertSummary> GetAllActiveAlertsForCameraKey(string cameraKey);
+        bool ValidateNewAlertName(string alertName, int cameraId);
     }
 }

@@ -28,7 +28,7 @@ namespace BackEndServer.Services
             // Else, verify the provided credentials against all user credentials in the database.
             foreach (DatabaseUser user in db_users)
             {
-                if (user.Username == username) // If plaintext username is correct, check the password.
+                if (user.Username.ToUpper() == username.ToUpper()) // If plaintext username is correct, check the password.
                 {
                     // Using the DatabaseUser's Salt attribute, Hash and Salt the plain text password to verify/compare.
                     string salted_hashed_password_to_check = UserPasswordTools.HashAndSaltPassword(unsalted_unhashed_password, user.Salt);

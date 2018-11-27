@@ -112,5 +112,11 @@ namespace BackEndServer.Services
 
             return alertList;
         }
+
+        public bool ValidateNewAlertName(string alertName, int cameraId)
+        {
+            List<DatabaseAlert> dbAlerts = _dbQueryService.GetAlertsByCameraId(cameraId);
+            return dbAlerts.TrueForAll(alert => alert.AlertName.ToUpper() != alertName.ToUpper());
+        }
     }
 }

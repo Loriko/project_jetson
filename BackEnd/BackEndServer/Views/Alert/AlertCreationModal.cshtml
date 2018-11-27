@@ -10,10 +10,11 @@
             <h1 id="create-title" class="page-title left-align">Set up an alert</h1>
             <h1 id="edit-title" class="page-title left-align hide">Modify an alert</h1>
             <input type="hidden" id="alert_id" name="AlertId">
+            <input type="hidden" id="previous_alert_name">
             <div class="row">
                 <div class="input-field col s12">
                     <input id="alert_name" name="AlertName" type="text" class="validate" required>
-                    <label for="alert_name">Alert Name</label>
+                    <label for="alert_name" data-error="You must enter an alert name unique for the selected camera">Alert Name</label>
                 </div>
             </div>
             <div class="row">
@@ -137,6 +138,7 @@
         modal.find("label[for='end_time']").removeClass("active");
         modal.find("select[name='CameraId']").material_select();
         modal.find("select[name='ContactMethod']").material_select();
+        modal.find("#previous_alert_name").val("");
     }
 
     function setToEditMode(alert) {
@@ -158,6 +160,7 @@
         modal.find("label[for='start_time']").addClass("active");
         modal.find("input[name='EndTime']").val(alert.endTime);
         modal.find("label[for='end_time']").addClass("active");
+        modal.find("#previous_alert_name").val(alert.alertName);
     }
 
     function validateStartEndTime() {
@@ -190,8 +193,63 @@
         
         return true;
     }
+
+    $("#camera_id").change(function() {
+        validateAlertName();
+    });
+    
+    $("#alert_name").blur(function() {
+        validateAlertName();
+    });
+    
+    function validateAlertName(successCB) {
+        if ($("#alert_name").val().toUpperCase() === $("#previous_alert_name").val().toUpperCase()) {
+            return true;
+        }
+
+        if ($("#alert_name").val() && $("#camera_id").val()) {
+            var url = "../alert/ValidateNewAlertName";
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    "alertName": $("#alert_name").val(),
+                    "cameraId": $("#camera_id").val()
+                },
+                success: function(data) {
+                    var newAlertName = $("#alert_name");
+                    newAlertName.addClass("validated");
+                    if (data === true) {
+                        newAlertName.addClass("valid");
+                        newAlertName.removeClass("invalid");
+                        if (successCB) {
+                            successCB();
+                        }
+                    } else {
+                        newAlertName.addClass("invalid");
+                        newAlertName.removeClass("valid");
+                    }
+                }
+            });
+        }
+    }
+    
+    function checkNewAlertName() {
+        if ($("#alert_name").hasClass("validated") === false || $("#alert_name").hasClass("invalid")) {
+            return false;
+        }
+        return true;
+    }
     
     $("#alert_creation_form").submit(function (e) {
+        if (checkNewAlertName() === false) {
+            validateAlertName(function() {
+                $("#alert_creation_form").submit();
+            });
+            return false;
+        }
+        
         if (!validateStartEndTime()) {
             return false;
         }
