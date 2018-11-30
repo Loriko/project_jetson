@@ -1,8 +1,8 @@
 import unittest
 from performance_tests_support import run_cameras_in_parallel
+from pyunitreport import HTMLTestRunner
 
-
-ACCEPTED_ERROR_RATE_THRESHOLD = 0.02
+ACCEPTED_ERROR_RATE_THRESHOLD = 0.03
 
 
 class RandomBasedCameraEmulatorTests(unittest.TestCase):
@@ -67,4 +67,4 @@ class RandomBasedCameraEmulatorTests(unittest.TestCase):
             self.assertLessEqual(camera.get_error_rate(), ACCEPTED_ERROR_RATE_THRESHOLD)
 
 if __name__ == '__main__':
-    unittest.main()
+    unittest.main(testRunner=HTMLTestRunner(output=""))

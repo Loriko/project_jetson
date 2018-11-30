@@ -455,7 +455,7 @@ namespace BackEndServer.Services
         {
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM User WHERE username = '{username}' AND password = '{password}' LIMIT 1";
+                string query = $"SELECT * FROM {DatabaseUser.TABLE_NAME} WHERE {DatabaseUser.USERNAME_LABEL} = '{username}' AND {DatabaseUser.PASSWORD_LABEL} = '{password}' LIMIT 1";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);
