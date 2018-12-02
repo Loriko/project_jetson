@@ -203,10 +203,6 @@
     });
     
     function validateAlertName(successCB) {
-        if ($("#alert_name").val().toUpperCase() === $("#previous_alert_name").val().toUpperCase()) {
-            return true;
-        }
-
         if ($("#alert_name").val() && $("#camera_id").val()) {
             var url = "../alert/ValidateNewAlertName";
 
@@ -236,6 +232,9 @@
     }
     
     function checkNewAlertName() {
+        if ($("#alert_name").val().toUpperCase() === $("#previous_alert_name").val().toUpperCase()) {
+            return true;
+        }
         if ($("#alert_name").hasClass("validated") === false || $("#alert_name").hasClass("invalid")) {
             return false;
         }

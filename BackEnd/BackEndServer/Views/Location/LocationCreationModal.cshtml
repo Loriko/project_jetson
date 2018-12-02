@@ -43,10 +43,6 @@
     });
     
     function validateLocationName(successCB) {
-        if ($("#location_name").val().toUpperCase() === $("#previous_location_name").val().toUpperCase()) {
-            return true;
-        }
-
         if ($("#location_name").val()) {
             var url = "../location/ValidateNewLocationName";
 
@@ -105,6 +101,9 @@
     }
 
     function checkNewLocationName() {
+        if ($("#location_name").val().toUpperCase() === $("#previous_location_name").val().toUpperCase()) {
+            return true;
+        }
         if ($("#location_name").hasClass("validated") === false || $("#location_name").hasClass("invalid")) {
             return false;
         }

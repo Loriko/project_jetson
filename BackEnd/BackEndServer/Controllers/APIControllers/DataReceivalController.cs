@@ -43,6 +43,11 @@ namespace WebAPI.Controllers
         [Route("DataMessage")] // "api/datareceival/datamessage"
         public IActionResult DataMessage([FromBody] DataMessage receivedMessage)
         {
+            if (receivedMessage == null)
+            {
+                return BadRequest(new JsonResult(DataMessageService.CreateInvalidDataMessageResponseBody(receivedMessage)));
+            }
+            
             // Verify device's API Key.
             if (APIKeyService.VerifyAPIKey(receivedMessage.API_Key) < 0)
             {
