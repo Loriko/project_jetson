@@ -2,10 +2,12 @@
 @model BackEndServer.Models.ViewModels.NavigationBarDetails
 
 <ul id="profileDropDown" class="dropdown-content">
+    <li><a asp-controller="APIKey" asp-action="ManageAPIKeys" id="manageAPIKeys">Generate API Key</a></li>
     <li><a asp-controller="User" asp-action="BeginUserSettingsModification" id="modifyPersonalSettings">Modify Personal Settings</a></li>
     <li><a asp-controller="Home" asp-action="SignOut" id="signOut">Sign Out</a></li>
 </ul>
 <ul id="profileDropDown_mobile" class="dropdown-content">
+    <li><a asp-controller="APIKey" asp-action="ManageAPIKeys" id="manageAPIKeys">Generate API Key</a></li>
     <li><a asp-controller="User" asp-action="BeginUserSettingsModification" id="modifyPersonalSettings">Modify Personal Settings</a></li>
     <li><a asp-controller="Home" asp-action="SignOut" id="signOut">Sign Out</a></li>
 </ul>
@@ -36,12 +38,10 @@
     <ul id="adminDropDown" class="dropdown-content">
         <li><a asp-controller="User" asp-action="BeginUserCreation" id="userCreation">Create a New User</a></li>
         <li><a asp-controller="Camera" asp-action="ManageCameraKeys" id="manageCameraKeys">Manage Camera Keys</a></li>
-        <li><a asp-controller="APIKey" asp-action="ManageAPIKeys" id="manageAPIKeys">Manage API Keys</a></li>
     </ul>
     <ul id="adminDropDown_mobile" class="dropdown-content">
         <li><a asp-controller="User" asp-action="BeginUserCreation" id="userCreation">Create a New User</a></li>
         <li><a asp-controller="Camera" asp-action="ManageCameraKeys" id="manageCameraKeys">Manage Camera Keys</a></li>
-        <li><a asp-controller="APIKey" asp-action="ManageAPIKeys" id="manageAPIKeys">Manage API Keys</a></li>
     </ul>
 }
 <nav class="nav-extended">

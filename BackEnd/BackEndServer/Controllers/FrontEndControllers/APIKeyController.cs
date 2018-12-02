@@ -22,7 +22,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            if (currentUserId == null || UserService.IsUserAdministrator(currentUserId.Value) == false)
+            if (currentUserId == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }
@@ -36,7 +36,7 @@ namespace BackEndServer.Controllers.FrontEndControllers
         {
             int? currentUserId = HttpContext.Session.GetInt32("currentUserId");
 
-            if (currentUserId == null  || UserService.IsUserAdministrator(currentUserId.Value) == false)
+            if (currentUserId == null)
             {
                 return RedirectToAction("SignIn", "Home");
             }

@@ -30,7 +30,7 @@ namespace BackEndServer.Services
             }
 
             // Obtain a list of all valid Camera Keys currently in the system.
-            List<string> validCameraKeyList = _dbQueryService.GetAllCameraKeys();
+            List<string> validCameraKeyList = _dbQueryService.GetAllClaimedCameraKeys();
 
             for (int z = 0; z < message.GetLength(); z++)
             {

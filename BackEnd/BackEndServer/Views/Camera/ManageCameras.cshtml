@@ -29,7 +29,7 @@
             <div class="collection-item">
                 <span class="title" id="@camera.CameraId">@camera.CameraName</span>
                 <span class="secondary-content">
-                    <a onclick="showUnclaimConfirmationModal('@camera.CameraId')"><i class="material-icons">remove_circle</i></a>
+                    <a onclick="showUnclaimConfirmationModal('@camera.CameraId')"><i class="material-icons">delete</i></a>
                     <a asp-controller="Camera" asp-action="ModifyCameraRegistration" asp-route-cameraId="@camera.CameraId"><i class="material-icons">edit</i></a>
                     <a asp-controller="Camera" asp-action="ViewAllUsersExceptCurrent" asp-route-cameraId="@camera.CameraId"><i class="material-icons">remove_red_eye</i></a>
                 </span>

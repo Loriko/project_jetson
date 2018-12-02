@@ -1,4 +1,5 @@
 ﻿@using BackEndServer.Models.ViewModels
+@using Castle.Core.Internal
 @model JpgStatFrameList
 <div class="col s12 m8 center-align valign-wrapper">
     <div class="card blue-grey darken-1 full-width" id="notification_frames_card">
@@ -7,11 +8,14 @@
             <div id="frame_carousel" class="carousel">
                 @foreach (var statInfo in Model.JpgFramePathList)
                 {
-                    <li class="carousel-item">
-                        <img src="../@statInfo.FrmJpgRelPath.Replace("wwwroot/", "")">
-                        <p>People Identified: @statInfo.PeopleCount</p>
-                        <p>Timestamp:<br>@statInfo.Timestamp</p>
-                    </li>
+                    if (!statInfo.FrmJpgRelPath.IsNullOrEmpty())
+                    {
+                        <li class="carousel-item">
+                            <img src="../@statInfo.FrmJpgRelPath.Replace("wwwroot/", "")">
+                            <p>People Identified: @statInfo.PeopleCount</p>
+                            <p>Timestamp:<br>@statInfo.Timestamp</p>
+                        </li>
+                    }
                 }
             </div>
         </div>

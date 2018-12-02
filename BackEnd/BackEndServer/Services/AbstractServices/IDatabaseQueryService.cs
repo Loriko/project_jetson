@@ -40,7 +40,7 @@ namespace BackEndServer.Services.AbstractServices
         DatabaseCamera GetCameraByKey(string cameraKey);
         List<DatabaseCamera> GetCamerasForLocation(int locationId);
         List<DatabaseCamera> GetAllCameras();
-        List<string> GetAllCameraKeys(); 
+        List<string> GetAllClaimedCameraKeys(); 
         List<string> GetExistingCameraResolutions();
         int GetCameraIdFromKey(string cameraKey);
         int GetAPIKeyIdFromKey(string apiKey);

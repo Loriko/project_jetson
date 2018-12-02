@@ -432,7 +432,11 @@ namespace BackEndServer.Services
             foreach(DatabasePerSecondStat stat in statsForCamera){
                 if (!stat.FrameJpgPath.IsNullOrEmpty())
                 {
-                    frmList.JpgFramePathList.Add(new FrameInformation(stat));
+                    FrameInformation frmInfo = new FrameInformation(stat);
+                    if (frmInfo.FrmJpgRelPath.IsNullOrEmpty() == false)
+                    {
+                        frmList.JpgFramePathList.Add(frmInfo);
+                    }
                 }
             }
 
@@ -552,7 +556,11 @@ namespace BackEndServer.Services
             foreach(DatabasePerSecondStat stat in statsForCamera){
                 if (!stat.FrameJpgPath.IsNullOrEmpty())
                 {
-                    frmList.JpgFramePathList.Add(new FrameInformation(stat));
+                    FrameInformation frmInfo = new FrameInformation(stat);
+                    if (frmInfo.FrmJpgRelPath.IsNullOrEmpty() == false)
+                    {
+                        frmList.JpgFramePathList.Add(frmInfo);
+                    }
                 }
             }
 
