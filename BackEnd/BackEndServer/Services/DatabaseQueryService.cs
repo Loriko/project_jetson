@@ -1290,16 +1290,16 @@ namespace BackEndServer.Services
                                $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} > STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s') " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s')";
+                               $"AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} > STR_TO_DATE('{lastUpdatedTime.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s') " +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} < STR_TO_DATE('{checkupDateTime.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s')";
                 
                 if (alert.SnoozedUntil != null)
                 {
-                    query += $" AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} >= STR_TO_DATE('{alert.SnoozedUntil.Value}', '%m/%d/%Y %H:%i:%s') ";
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} >= STR_TO_DATE('{alert.SnoozedUntil.Value.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s') ";
                 }
                 if (alert.DisabledUntil != null)
                 {
-                    query += $" AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} >= STR_TO_DATE('{alert.DisabledUntil.Value}', '%m/%d/%Y %H:%i:%s') ";
+                    query += $" AND {DatabasePerSecondStat.DATE_TIME_RECEIVED_LABEL} >= STR_TO_DATE('{alert.DisabledUntil.Value.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s') ";
                 }
                 if (!alert.AlwaysActive)
                 {
@@ -1343,8 +1343,8 @@ namespace BackEndServer.Services
                                $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{lastUpdatedTime}', '%m/%d/%Y %H:%i:%s') " +
-                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime}', '%m/%d/%Y %H:%i:%s') ";
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{lastUpdatedTime.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s') " +
+                               $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s') ";
                 
                 query += $" ORDER BY {DatabasePerSecondStat.DATE_TIME_LABEL} ASC;";
                 conn.Open();

@@ -9,6 +9,7 @@ namespace BackEndServer.Services
     {
         private readonly SmtpClient _smtpClient;
         private readonly string _sourceEmailAddress;
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public EmailService(string sourceEmailAddress, string sourceEmailPassword)
         {
@@ -32,8 +33,9 @@ namespace BackEndServer.Services
                 MailMessage mail = CreateMail(destinationAddress, messageSubject, messageBody);
                 _smtpClient.Send(mail);
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                logger.Error(e);
                 return false;
             }
             return true;
