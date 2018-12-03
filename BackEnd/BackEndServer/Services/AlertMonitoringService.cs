@@ -73,7 +73,7 @@ namespace BackEndServer.Services
             else if ((ContactMethod) Enum.Parse(typeof(ContactMethod), alert.ContactMethod) == ContactMethod.Email)
             {
                 bool emailSuccess = SendAlertTriggeredEmail(alert, earliestStatThatTriggersAlert); 
-                CreateNotificationForTriggeredAlert(alert, earliestStatThatTriggersAlert, emailSuccess);
+                CreateNotificationForTriggeredAlert(alert, earliestStatThatTriggersAlert, !emailSuccess);
             }
         }
 
