@@ -1,4 +1,5 @@
-﻿@model BackEndServer.Models.ViewModels.CameraInformationList
+﻿@using BackEndServer.Services.HelperServices
+@model BackEndServer.Models.ViewModels.CameraInformationList
 @{
     ViewBag.Title = "Project Jetson - Alert Creation";
 }
@@ -38,9 +39,9 @@
                     <select id="contact_method" name="ContactMethod" class="validate" required>
                         <option value="" disabled selected>Please select the way you wish to be contacted when the alert is triggered</option>
                         @{
-                            foreach (var contactMethod in Enum.GetValues(typeof(BackEndServer.Models.Enums.ContactMethod)))
+                            foreach (BackEndServer.Models.Enums.ContactMethod contactMethod in Enum.GetValues(typeof(BackEndServer.Models.Enums.ContactMethod)))
                             {
-                                <option value="@((int) contactMethod)">@contactMethod.ToString()</option>
+                                <option value="@((int) contactMethod)">@contactMethod.GetDescription()</option>
                             }
                         }
                     </select>
