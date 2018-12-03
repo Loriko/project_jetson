@@ -116,6 +116,12 @@ describe('Sanity' , function(){
         expect(graphHeaderWeb).to.equal("Statistics and Trends");
     })
 
+    it('Check if user can view all graphs', async function(){
+        await driver.findElement(webdriver.By.id("camera-stats-link")).click();
+        var graphHeaderWeb = await driver.findElement(webdriver.By.id("headerGraph")).getText();
+        expect(graphHeaderWeb).to.equal("Statistics and Trends");
+    })
+
     it('Users camera shown on manage camera page', async function(){
         await driver.findElement(webdriver.By.id("manageCamera")).click();
         await driver.findElement(webdriver.By.id("headerManageCamera"));
@@ -158,6 +164,36 @@ describe('Sanity' , function(){
     it('Check manage locations', async function(){
         await driver.findElement(webdriver.By.id("manageLocation")).click();
         var header =  await driver.findElement(webdriver.By.id("manage_locations_header")).getText();
+        expect(header).to.equal("Edit or Add New Locations");
+    })
+
+    it('Check if user can edit camera information', async function(){
+        await driver.findElement(webdriver.By.id("manageLocation")).click();
+        var header =  await driver.findElement(webdriver.By.id("manage_locations_header")).getText();
+        expect(header).to.equal("Edit or Add New Locations");
+    })
+
+    it('Check if user can successfully add camera', async function(){
+        var connection = mysql.createConnection({
+            host     : 'localhost',
+            user     : 'root',
+            password : 'password',
+            database : 'jetson'
+        });
+        await driver.findElement(webdriver.By.id("manageLocation")).click();
+        var header =  await driver.findElement(webdriver.By.id("manage_locations_header")).getText();
+        connection.connect(function(err) {
+            if (err) {
+              console.error('error connecting: ' + err.stack);
+              return;
+            }
+            var sql = "SELECT * FROM jetson.location";
+            connection.query(sql, function (err, result) {
+                if (err) throw err;
+                expect(header).to.equal("Edit or Add New Locations");
+            });
+            connection.end();
+        })
         expect(header).to.equal("Edit or Add New Locations");
     })
 
@@ -207,7 +243,20 @@ describe('Sanity' , function(){
         expect(alertTitle).to.equal("Your Alerts");
     })
 
+    it('Check create alert', async function(){
+        var connection = mysql.createConnection({
+            host     : 'localhost',
+            user     : 'root',
+            password : 'password',
+            database : 'jetson'
+        });
+        await driver.findElement(webdriver.By.id("alerts")).click();
+        var alertTitle = await driver.findElement(webdriver.By.id("alertTitle")).getText();
+        expect(alertTitle).to.equal("Your Alerts");
+    })
+
     it('Check alerts', async function(){
+        
         var alertWebText = await driver.findElement(webdriver.By.id("alertList")).getText();
 
         var connection = mysql.createConnection({
