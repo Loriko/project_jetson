@@ -722,7 +722,8 @@ namespace BackEndServer.Services
 
             using (MySqlConnection conn = GetConnection())
             {
-                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId}";
+                string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} WHERE {DatabasePerSecondStat.CAMERA_ID_LABEL} = {cameraId} " +
+                               $"ORDER BY {DatabasePerSecondStat.DATE_TIME_LABEL} ASC;";
                 
                 conn.Open();
                 MySqlCommand cmd = new MySqlCommand(query, conn);

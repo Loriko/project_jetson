@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using BackEndServer.Models.DBModels;
@@ -81,8 +80,11 @@ namespace BackEndServer.Services
                 graphStatistics.EndDate = endDate;
             }
 
-            var perSecondStats = GetDatabasePerSecondStatsForPastPeriod(cameraId, pastPeriod, startDate, endDate);
+            List<DatabasePerSecondStat> perSecondStats = GetDatabasePerSecondStatsForPastPeriod(cameraId, pastPeriod, startDate, endDate);
 
+            AddDelimiterStatsForPastPeriod(perSecondStats, pastPeriod, startDate, endDate);
+            AddDummyStatsForDeadPeriods(perSecondStats);
+            
             List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
             perSecondStatsFormattedStrings.Add(new [] { "DateTime", "People Detected" });
             
@@ -91,12 +93,33 @@ namespace BackEndServer.Services
                 perSecondStatsFormattedStrings.Add(new []{DateTime.SpecifyKind(perSecondStat.DateTime, DateTimeKind.Local).ToString("o"), perSecondStat.NumDetectedObjects.ToString()});
             }
             
-            perSecondStatsFormattedStrings.Add(new []{DateTime.Now.ToString("o"), 0.ToString()});
-            perSecondStatsFormattedStrings.Add(new []{GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("o"), 0.ToString()});
-            
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             graphStatistics.SelectedPeriod = pastPeriod;
             return graphStatistics;
+        }
+
+        private void AddDummyStatsForDeadPeriods(List<DatabasePerSecondStat> perSecondStats)
+        {
+            List<DatabasePerSecondStat> dummyStats = new List<DatabasePerSecondStat>();
+            for (int i = 0; i < perSecondStats.Count - 1; i++)
+            {
+                DatabasePerSecondStat previousStat = perSecondStats[i];
+                DatabasePerSecondStat nextStat = perSecondStats[i + 1];
+                if (nextStat.DateTime.Subtract(previousStat.DateTime).Minutes > 2)
+                {
+                    dummyStats.Add(new DatabasePerSecondStat
+                    {
+                        DateTime = previousStat.DateTime.AddSeconds(5),
+                        NumDetectedObjects = 0
+                    });
+                    dummyStats.Add(new DatabasePerSecondStat
+                    {
+                        DateTime = nextStat.DateTime.AddSeconds(-5),
+                        NumDetectedObjects = 0
+                    });
+                }
+            }
+            perSecondStats.AddRange(dummyStats);
         }
 
         public GraphStatistics GetSharedRoomStatisticsForPastPeriod(int roomId, PastPeriod pastPeriod, DateTime? startDate = null,
@@ -123,6 +146,12 @@ namespace BackEndServer.Services
                 perSecondStatsForEachCamera.Add(GetDatabasePerSecondStatsForPastPeriod(cameraId, pastPeriod, startDate, endDate));
             }
 
+            foreach (var perSecondStats in perSecondStatsForEachCamera)
+            {
+                AddDelimiterStatsForPastPeriod(perSecondStats, pastPeriod, startDate, endDate);
+                AddDummyStatsForDeadPeriods(perSecondStats);
+            }
+            
             List<string[]> perSecondStatsFormattedStrings = new List<string[]>();
             string[] titleString = new string[perSecondStatsForEachCamera.Count+1];
             titleString[0] = "DateTime";
@@ -146,23 +175,27 @@ namespace BackEndServer.Services
                 }
             }
             
-            string[] latestRow = new string[perSecondStatsForEachCamera.Count + 1];
-            string[] earliestRow = new string[perSecondStatsForEachCamera.Count + 1];
-            latestRow[0] = GetLatestDateForPastPeriod(pastPeriod, startDate).ToString("o");
-            earliestRow[0] = DateTime.Now.ToString("o");
-            for (int i = 1; i <= perSecondStatsForEachCamera.Count; i++)
-            {
-                latestRow[i] = 0.ToString();
-                earliestRow[i] = 0.ToString();
-            }
-            perSecondStatsFormattedStrings.Add(latestRow);
-            perSecondStatsFormattedStrings.Add(earliestRow);
-            
             graphStatistics.Stats = perSecondStatsFormattedStrings.ToArray();
             graphStatistics.SelectedPeriod = pastPeriod;
             return graphStatistics;
         }
-        
+
+        private void AddDelimiterStatsForPastPeriod(List<DatabasePerSecondStat> perSecondStats, PastPeriod pastPeriod, 
+                                                    DateTime? startDate, DateTime? endDate = null)
+        {
+            perSecondStats.Insert(0, new DatabasePerSecondStat
+            {
+                DateTime = GetLatestDateForPastPeriod(pastPeriod, startDate),
+                NumDetectedObjects = 0
+            });
+            perSecondStats.Add(new DatabasePerSecondStat
+            {
+                DateTime = pastPeriod == PastPeriod.Custom && endDate != null ? 
+                    endDate.Value : DateTime.Now,
+                NumDetectedObjects = 0
+            });
+        }
+
         private DateTime GetLatestDateForPastPeriod(PastPeriod pastPeriod, DateTime? startDate = null)
         {
             if (pastPeriod == PastPeriod.LastHalfHour)
