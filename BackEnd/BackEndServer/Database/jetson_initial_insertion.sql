@@ -1,6 +1,8 @@
 -- Based on insertScript.docx by paulhawit
 -- Requires clean tables, will surely fail otherwise
 
+USE jetson;
+
 -- Plain Text Password for Tesing: jetson
 INSERT INTO user (id, username, password, salt, is_administrator)
 VALUES (1, 'paulhawit', 'E8EBBA3F101BF8BC096082512E0E8BE7', 'njw0cF', 1);

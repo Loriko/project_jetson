@@ -262,7 +262,7 @@ label[data-error], label[data-success] {
     overflow: scroll;
 }
 #notification_frames_card, #notification_card {
-    height: 430px;
+    height: 485px;
     overflow: scroll;
 }
 #stat_frames_card, #shared_room_card{
@@ -313,4 +313,8 @@ label[data-error], label[data-success] {
 }
 #user_details_card {
     overflow: scroll;
+}
+.notification-frm-img {
+    height: 275px;
+    margin-top: 10px;
 }

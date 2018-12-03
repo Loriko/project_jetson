@@ -8,6 +8,7 @@ namespace BackEndServer.Models.ViewModels
     {
         public bool IsMoreThanTrigger { get; set; }
         public int TriggerNumber { get; set; }
+        public bool NeedsImage { get; set; }
 
         public AlertSummary()
         {

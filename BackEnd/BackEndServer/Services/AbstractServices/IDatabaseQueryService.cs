@@ -99,5 +99,6 @@ namespace BackEndServer.Services.AbstractServices
         bool DeleteUserCameraAssociation(DatabaseUserCameraAssociation dbAssociation);
         List<DatabaseUser> GetUsersWithCameraViewAccess(int cameraId);
         DatabaseLocation GetLocationByUserIdAndLocationName(int userId, string locationName);
+        List<DatabaseNotification> GetNotificationsForAlert(int alertId);
     }
 }

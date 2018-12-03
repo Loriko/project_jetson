@@ -5,6 +5,7 @@ using BackEndServer.Services.AbstractServices;
 using BackEndServer.Services.HelperServices;
 using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Models.Enums;
@@ -592,6 +593,27 @@ namespace BackEndServer.Services
         {
             DatabaseUserCameraAssociation dbAssociation = new DatabaseUserCameraAssociation(association);
             return _dbQueryService.DeleteUserCameraAssociation(dbAssociation);
+        }
+
+        public FrameInformation GetEarliestStatFrameForNotification(int notificationId)
+        {
+            DatabaseNotification dbNotification = _dbQueryService.GetNotificationById(notificationId);
+            DatabaseAlert dbAlert = _dbQueryService.GetAlertById(dbNotification.AlertId);
+            List<DatabasePerSecondStat> statsForCamera = 
+                _dbQueryService.GetPerSecondStatsWithFrmTriggeringAlert(dbAlert, dbNotification.TriggerDateTime, dbNotification.TriggerDateTime.AddMinutes(30));
+            var sortedStats = statsForCamera.OrderBy(stat => stat.DateTime);
+            foreach(DatabasePerSecondStat stat in sortedStats){
+                if (!stat.FrameJpgPath.IsNullOrEmpty())
+                {
+                    FrameInformation frmInfo = new FrameInformation(stat);
+                    if (frmInfo.FrmJpgRelPath.IsNullOrEmpty() == false)
+                    {
+                        return frmInfo;
+                    }
+                }
+            }
+
+            return null;
         }
     }
 }

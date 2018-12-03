@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using BackEndServer.Models.DBModels;
 using BackEndServer.Models.ViewModels;
 
 namespace BackEndServer.Services.AbstractServices
@@ -9,5 +10,6 @@ namespace BackEndServer.Services.AbstractServices
         NotificationDetails GetNotificationDetailsById(int notificationId);
         void AcknowledgeNotification(int notificationId);
         bool IsNotificationAcknowledged(int notificationId);
+        bool DoesNotificationNeedImage(DatabaseAlert dbAlert, DatabaseNotification dbNotification);
     }
 }

@@ -60,8 +60,8 @@ namespace BackEndServer
             AbstractCameraService cameraService = new CameraService(dbQueryService, graphStatisticService, locationService);
             AbstractAuthenticationService authenticationService = new AuthenticationService(dbQueryService);
             AbstractDataMessageService dataMessageService = new DataMessageService(dbQueryService);
-            AbstractAlertService alertService = new AlertService(dbQueryService, cameraService);
             AbstractNotificationService notificationService = new NotificationService(dbQueryService);
+            AbstractAlertService alertService = new AlertService(dbQueryService, cameraService, notificationService);
             AbstractAPIKeyService apiKeyService = new APIKeyService(dbQueryService);
             AbstractUserService userService = new UserService(dbQueryService,notificationService,Configuration.GetSection("WebServiceConfiguration")["Hostname"],emailService,apiKeyService);
             

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using BackEndServer.Classes.EntityDefinitionClasses;
 using BackEndServer.Models.DBModels;
 using BackEndServer.Models.ViewModels;
 using BackEndServer.Services.AbstractServices;
+using Castle.Core.Internal;
 using Microsoft.CodeAnalysis;
 
 namespace BackEndServer.Services
@@ -52,6 +55,20 @@ namespace BackEndServer.Services
         {
             DatabaseNotification dbNotification = _databaseQueryService.GetNotificationById(notificationId);
             return dbNotification.Acknowledged;
+        }
+
+        public bool DoesNotificationNeedImage(DatabaseAlert dbAlert, DatabaseNotification dbNotification)
+        {
+            if (DateTime.Now.Subtract(dbNotification.TriggerDateTime).Minutes <= 30)
+            {
+                //does notification have an image associated with it?
+                List<DatabasePerSecondStat> perSecondStatsWithImageForNotification =
+                    _databaseQueryService.GetPerSecondStatsWithFrmTriggeringAlert(dbAlert,
+                        dbNotification.TriggerDateTime, dbNotification.TriggerDateTime.AddMinutes(30));
+                return perSecondStatsWithImageForNotification.IsNullOrEmpty();
+            }
+
+            return false;
         }
     }
 }

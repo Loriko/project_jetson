@@ -16,11 +16,13 @@ namespace BackEndServer.Services
     {
         private readonly IDatabaseQueryService _dbQueryService;
         private readonly AbstractCameraService _cameraService;
+        private readonly AbstractNotificationService _notificationService;
 
-        public AlertService(IDatabaseQueryService dbQueryService, AbstractCameraService cameraService)
+        public AlertService(IDatabaseQueryService dbQueryService, AbstractCameraService cameraService, AbstractNotificationService notificationService)
         {
             _dbQueryService = dbQueryService;
             _cameraService = cameraService;
+            _notificationService = notificationService;
         }
 
         public bool SaveAlert(AlertDetails alertDetails)
@@ -106,11 +108,34 @@ namespace BackEndServer.Services
                     && (dbAlert.StartTime.IsNullOrEmpty() || dbAlert.StartTime.ToDateTime() < DateTime.Now)
                     && (dbAlert.EndTime.IsNullOrEmpty() || dbAlert.EndTime.ToDateTime() > DateTime.Now))
                 {
-                    alertList.Add(new AlertSummary(dbAlert));
+                    AlertSummary alertSummary = new AlertSummary(dbAlert);
+                    alertSummary.NeedsImage = DoesAlertNeedsFrameImage(dbAlert);
+                    alertList.Add(alertSummary);
                 }
             }
 
             return alertList;
+        }
+
+        private bool DoesAlertNeedsFrameImage(DatabaseAlert dbAlert)
+        {
+            if (dbAlert.SnoozedUntil < DateTime.Now)
+            {
+                return true;
+            }
+            else
+            {
+                List<DatabaseNotification> dbNotifications = _dbQueryService.GetNotificationsForAlert(dbAlert.AlertId);
+                foreach (var dbNotification in dbNotifications)
+                {
+                    if (_notificationService.DoesNotificationNeedImage(dbAlert, dbNotification))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
 
         public bool ValidateNewAlertName(string alertName, int cameraId)

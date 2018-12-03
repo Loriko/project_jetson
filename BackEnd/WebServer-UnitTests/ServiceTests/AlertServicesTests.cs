@@ -51,7 +51,9 @@ namespace WebServer_UnitTests.ServiceTests
         {
             Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
             mockDBService.Setup(x => x.GetAllAlerts(1)).Returns(dbAlerts);
-            AlertService alertService = new AlertService(mockDBService.Object, new CameraService(mockDBService.Object, new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object)));
+            AlertService alertService = new AlertService(mockDBService.Object, 
+                new CameraService(mockDBService.Object, new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object)),
+                new NotificationService(mockDBService.Object));
 
             AlertDetails alertDetails = new AlertDetails(dbAlerts[0]);
 

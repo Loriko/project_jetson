@@ -40,5 +40,6 @@ namespace BackEndServer.Services.AbstractServices
         JpgStatFrameList GetTriggeringStatsFrameList(int notificationId);
         bool TryGiveAccessToUser(UserCameraAssociation association);
         bool RevokeAccess(UserCameraAssociation association);
+        FrameInformation GetEarliestStatFrameForNotification(int notificationId);
     }
 }

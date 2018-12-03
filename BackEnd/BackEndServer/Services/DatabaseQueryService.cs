@@ -715,6 +715,38 @@ namespace BackEndServer.Services
             return location;
         }
 
+        public List<DatabaseNotification> GetNotificationsForAlert(int alertId)
+        {
+            List<DatabaseNotification> notificationList = new List<DatabaseNotification>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+                string query = "SELECT * " +
+                               $"FROM {DatabaseNotification.TABLE_NAME} " +
+                               $"WHERE {DatabaseNotification.ALERT_ID_LABEL} = {alertId};";
+                
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(query, conn);
+
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DatabaseNotification notification = new DatabaseNotification
+                        {
+                            NotificationId = Convert.ToInt32(reader[DatabaseNotification.NOTIFICATION_ID_LABEL]),
+                            AlertId = Convert.ToInt32(reader[DatabaseNotification.ALERT_ID_LABEL]),
+                            Acknowledged = Convert.ToBoolean(reader[DatabaseNotification.ACKNOWLEDGED_LABEL]),
+                            TriggerDateTime = Convert.ToDateTime(reader[DatabaseNotification.TRIGGER_DATETIME_LABEL]),
+                            FailedEmail = Convert.ToBoolean(reader[DatabaseNotification.FAILED_EMAIL_LABEL])
+                        };
+                        notificationList.Add(notification);
+                    }
+                }
+            }
+            return notificationList;
+        }
+
         // FRANCIS, Not sure what this is for ??? Is there no cap ???
         public List<DatabasePerSecondStat> GetPerSecondStatsForCamera(int cameraId)
         {

@@ -15,12 +15,12 @@ namespace BackEndServer.ViewComponents
         
         public IViewComponentResult Invoke(int notificationId)
         {
-            JpgStatFrameList frameList = CameraService.GetTriggeringStatsFrameList(notificationId);
-            if (frameList == null || frameList.JpgFramePathList.IsNullOrEmpty())
+            FrameInformation frame = CameraService.GetEarliestStatFrameForNotification(notificationId);
+            if (frame == null)
             {
                 return Content(string.Empty);
             }
-            return View("NotificationFramesCard", frameList);
+            return View("NotificationFramesCard", frame);
         }
     }
 }
