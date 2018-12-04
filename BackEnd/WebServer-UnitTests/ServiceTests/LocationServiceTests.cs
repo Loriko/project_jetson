@@ -80,28 +80,19 @@ namespace WebServer_UnitTests.ServiceTests
             locationService.SaveLocation(locationDetails);
             mockDBService.Verify(m => m.PersistNewLocation(It.IsAny<DatabaseLocation>()), Times.AtLeastOnce());
         }
-        [Ignore("Not implemented")]
+
         [Test]
         public void deleteLocation()
         {
-            Assert.Fail();
+            Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
+            mockDBService.Setup(x => x.DeleteLocation(1)).Returns(true);
+            mockDBService.Setup(x => x.DeleteRoomsAtLocation(1)).Returns(true);
+            LocationService locationService = new LocationService(mockDBService.Object);
+            LocationDetails locationDetails = new LocationDetails();
+
+
+            locationService.DeleteLocation(1);
+            mockDBService.Verify(m => m.DeleteLocation(It.IsAny<int>()), Times.AtLeastOnce());
         }
-        /**
-        [Test]
-        public void noExistingLocation()
-        {
-            Assert.Pass();
-        }
-        
-        [Test]
-        public void invalidLocationIDTest()
-        {
-            Assert.Pass();
-        }
-        [Test]
-        public void createNewInvalidLocationTest()
-        {
-            Assert.Pass();
-        }**/
     }
 }
