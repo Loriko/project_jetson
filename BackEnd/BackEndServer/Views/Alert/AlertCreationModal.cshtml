@@ -1,4 +1,6 @@
-﻿@model BackEndServer.Models.ViewModels.CameraInformationList
+﻿@using BackEndServer.Models.Enums
+@using BackEndServer.Services.HelperServices
+@model BackEndServer.Models.ViewModels.CameraInformationList
 @{
     ViewBag.Title = "Project Jetson - Alert Creation";
 }
@@ -40,7 +42,7 @@
                         @{
                             foreach (BackEndServer.Models.Enums.ContactMethod contactMethod in Enum.GetValues(typeof(BackEndServer.Models.Enums.ContactMethod)))
                             {
-                                <option value="@((int) contactMethod)">@contactMethod.ToString()</option>
+                                <option value="@((int) contactMethod)">@contactMethod.GetDescription()</option>
                             }
                         }
                     </select>
