@@ -51,22 +51,6 @@ namespace WebServer_UnitTests.ServiceTests
             Assert.That(graphStatistics.Stats, Is.EqualTo(stats));
 
         }
-        /**
-        [Test]
-        public void getReveresedDatesTest()
-        {
-            Assert.Fail();
-        }
-
-        [Test]
-        public void noDataForSelectedDatesTest()
-        {
-            Assert.Fail();
-        }
-    **/
-
-
-
 
 
     }

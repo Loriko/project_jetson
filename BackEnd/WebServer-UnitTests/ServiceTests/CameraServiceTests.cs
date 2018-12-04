@@ -94,11 +94,24 @@ namespace WebServer_UnitTests.ServiceTests
 
 
         }
-        [Ignore("Not implemented")]
         [Test]
         public void editCameraTest()
         {
-            Assert.Fail();
+            DatabaseCamera testCamera = new DatabaseCamera
+            {
+                CameraId = 1,
+                CameraName = "cameraName",
+                LocationId = 1,
+                UserId = 1
+            };
+
+            Mock<IDatabaseQueryService> mockDBService = new Mock<IDatabaseQueryService>(MockBehavior.Strict);
+            CameraDetails cameraDetails = new CameraDetails(testCamera);
+            mockDBService.Setup(x => x.PersistNewCamera(It.Is<DatabaseCamera>(p => p.CameraId == 1))).Returns(true);
+            CameraService cameraService = new CameraService(mockDBService.Object, new GraphStatisticService(mockDBService.Object), new LocationService(mockDBService.Object));
+
+            cameraService.SaveNewCamera(cameraDetails);
+            mockDBService.Verify(m => m.PersistNewCamera(It.IsAny<DatabaseCamera>()), Times.AtLeastOnce());
         }
 
 
