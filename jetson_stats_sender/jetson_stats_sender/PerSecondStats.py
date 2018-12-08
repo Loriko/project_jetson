@@ -8,12 +8,10 @@ class PerSecondStats:
         self.frm_jpg = None
 
     def to_json(self):
-        if self.frm_jpg is not None:
-            self.has_saved_image = 1
         return {
             "CameraKey": self.camera_key,
             "DateTime": self.stat_time.strftime("%Y-%m-%d %H:%M:%S %z"),
             "NumTrackedPeople": self.num_tracked_people,
             "HasSavedImage": self.has_saved_image,
-            "FrameAsJpg": self.frm_jpg
+            "FrameAsJpg": self.frm_jpg if self.has_saved_image == 1 else None
         }
