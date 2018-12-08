@@ -66,26 +66,26 @@
                                         <span class="title">@alert.AlertName</span>
                                         @if (alert.DisabledUntil != null && alert.DisabledUntil.Value > DateTime.Now)
                                         {
-                                            <span class="disabled-message"> (disabled)</span>   
+                                            <span class="disabled-message"> (Disabled)</span>
                                         }
                                         <p>
                                             @alert.TriggerString()
-                                    </p>
-                                    <span class="secondary-content">
-                                        <a href="#!" onclick="showAlertDeletionConfirmationModal(this.parentNode.parentNode)"><i class="material-icons">delete</i></a>
-                                        <a href="#!" onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
-                                        
-                                        @if (alert.DisabledUntil != null && alert.DisabledUntil.Value > DateTime.Now)
-                                        {
-                                            <a href="#!" onclick="showEnableAlertModal('@alert.AlertId')"><i class="material-icons">notifications_active</i></a>
-                                        }
-                                        else
-                                        {
-                                            <a href="#!" onclick="showDisableAlertModal('@alert.AlertId')"><i class="material-icons">notifications_off</i></a>
-                                        }
+                                        </p>
+                                        <span class="secondary-content">
+                                            <a href="#!" onclick="showAlertDeletionConfirmationModal(this.parentNode.parentNode)"><i class="material-icons">delete</i></a>
+                                            <a href="#!" onclick="showAlertEditModal(this.parentNode.parentNode)"><i class="material-icons">edit</i></a>
+                                            
+                                            @if (alert.DisabledUntil != null && alert.DisabledUntil.Value > DateTime.Now)
+                                            {
+                                                <a href="#!" onclick="showEnableAlertModal('@alert.AlertId')"><i class="material-icons">notifications_active</i></a>
+                                            }
+                                            else
+                                            {
+                                                <a href="#!" onclick="showDisableAlertModal('@alert.AlertId')"><i class="material-icons">notifications_off</i></a>
+                                            }
+                                        </span>
                                     </span>
-                                </span>
-                            }
+                                }
                             </div>
                         </li>
                     </ul>

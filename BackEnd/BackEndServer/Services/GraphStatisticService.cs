@@ -105,7 +105,7 @@ namespace BackEndServer.Services
             {
                 DatabasePerSecondStat previousStat = perSecondStats[i];
                 DatabasePerSecondStat nextStat = perSecondStats[i + 1];
-                if (nextStat.DateTime.Subtract(previousStat.DateTime).Minutes > 2)
+                if (nextStat.DateTime.Subtract(previousStat.DateTime).TotalMinutes > 2)
                 {
                     dummyStats.Add(new DatabasePerSecondStat
                     {

@@ -59,7 +59,7 @@ namespace BackEndServer.Services
 
         public bool DoesNotificationNeedImage(DatabaseAlert dbAlert, DatabaseNotification dbNotification)
         {
-            if (DateTime.Now.Subtract(dbNotification.TriggerDateTime).Minutes <= 30)
+            if (DateTime.Now.Subtract(dbNotification.TriggerDateTime).TotalMinutes <= 30)
             {
                 //does notification have an image associated with it?
                 List<DatabasePerSecondStat> perSecondStatsWithImageForNotification =

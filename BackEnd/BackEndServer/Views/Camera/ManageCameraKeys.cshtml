@@ -103,11 +103,11 @@
                 <span class="secondary-content">
                     @if (cameraKey.IsRegistered == true)
                     {
-                        <span id="@cameraKey.CameraId">Registered</span>
+                        <span class="is-registered" id="@cameraKey.CameraId">Registered</span>
                     }
                     else
                     {
-                        <span id="'@cameraKey.CameraId'">Not Registered</span>
+                        <span class="is-registered" id="'@cameraKey.CameraId'">Not Registered</span>
                     }
                     <a data-toggle="modal" data-target="#deleteWarning"
                        onclick="updateDeleteModal('@cameraKey.CameraId','@cameraKey.Key','@cameraKey.IsRegistered')">

@@ -256,7 +256,7 @@ label[data-error], label[data-success] {
     color: #b3e59f;
 }
 #camera_card, #graph_card {
-    height: 510px;
+    height: 555px;
 }
 #camera_card {
     overflow: scroll;
@@ -317,4 +317,7 @@ label[data-error], label[data-success] {
 .notification-frm-img {
     height: 275px;
     margin-top: 10px;
+}
+.is-registered {
+    vertical-align: super;
 }

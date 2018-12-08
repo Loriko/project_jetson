@@ -119,7 +119,7 @@ namespace BackEndServer.Services
 
         private bool DoesAlertNeedsFrameImage(DatabaseAlert dbAlert)
         {
-            if (dbAlert.SnoozedUntil < DateTime.Now)
+            if (dbAlert.SnoozedUntil == null || dbAlert.SnoozedUntil.Value < DateTime.Now)
             {
                 return true;
             }

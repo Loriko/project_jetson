@@ -1375,6 +1375,7 @@ namespace BackEndServer.Services
                 string query = $"SELECT * FROM {DatabasePerSecondStat.TABLE_NAME} " + 
                                $"WHERE {DatabasePerSecondStat.NUM_DETECTED_OBJECTS_LABEL} " +
                                $"{triggerOperator.GetSqlForm()} {alert.TriggerNumber} " +
+                               $"AND {DatabasePerSecondStat.FRM_JPG_PATH_LABEL} IS NOT NULL " +
                                $"AND {DatabasePerSecondStat.CAMERA_ID_LABEL} = {alert.CameraId} " +
                                $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} >= STR_TO_DATE('{lastUpdatedTime.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s') " +
                                $"AND {DatabasePerSecondStat.DATE_TIME_LABEL} < STR_TO_DATE('{checkupDateTime.ToMySqlDateTimeString()}', '%Y-%m-%d %H:%i:%s') ";
