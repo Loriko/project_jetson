@@ -11,7 +11,7 @@ namespace BackEndServer.Services
         private readonly AbstractAlertService _alertService;
         private bool SendAlertSummary { get; set; }
         private object SendAlertSummaryLock { get; set; }
-        private static readonly int TIME_BETWEEN_SUMMARIES_MS = 45000;
+        private static readonly int TIME_BETWEEN_SUMMARIES_MS = 61000;
         
         public AlertSummaryService(AbstractAlertService alertService, bool sendFramesAsJpg)
         {

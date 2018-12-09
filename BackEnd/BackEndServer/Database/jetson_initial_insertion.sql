@@ -5,7 +5,7 @@ USE jetson;
 
 -- Plain Text Password for Tesing: jetson
 INSERT INTO user (id, username, password, salt, is_administrator)
-VALUES (1, 'paulhawit', 'E8EBBA3F101BF8BC096082512E0E8BE7', 'njw0cF', 1);
+VALUES (1, 'laganier', '684C22D69EFEF24F3A1DFA2494BD7375', 'PMtQ6HdU', 1);
 
 -- Plain Text API Key for Testing: IfpAF92lLGjU2PUUe3EicFSM513K0zDMVRi5SFwBhfF 
 INSERT INTO jetson.api_key (user_id,api_key,salt) 
